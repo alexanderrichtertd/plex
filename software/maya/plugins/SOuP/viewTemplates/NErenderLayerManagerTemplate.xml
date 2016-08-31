@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NErenderLayerManager'>
+		<attribute name='renderLayerId' type='maya.short'>
+			<label>Render Layer Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NErenderLayerManager'>
+		<property name='renderLayerId'/>
+	</view>
+</templates>

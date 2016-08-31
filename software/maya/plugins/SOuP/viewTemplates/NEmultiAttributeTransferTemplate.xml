@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEmultiAttributeTransfer'>
+		<attribute name='outGeometry' type='maya.vectorArray'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='outWeightList' type='maya.TdataCompound'>
+			<label>Out Weight List</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.vectorArray'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.Int32Array'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='boundingObjects' type='maya.TdataCompound'>
+			<label>Bounding Objects</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEmultiAttributeTransfer'>
+		<property name='outGeometry'/>
+		<property name='outWeightList'/>
+		<property name='inGeometry'/>
+		<property name='inComponents'/>
+		<property name='boundingObjects'/>
+		<property name='groupId'/>
+	</view>
+</templates>

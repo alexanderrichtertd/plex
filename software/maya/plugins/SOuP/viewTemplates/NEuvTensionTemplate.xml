@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEuvTension'>
+		<attribute name='outMesh' type='maya.mesh'>
+			<label>Out Mesh</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEuvTension'>
+		<property name='outMesh'/>
+		<property name='inMesh'/>
+	</view>
+</templates>

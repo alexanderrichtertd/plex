@@ -1,0 +1,58 @@
+[node alCel]
+	desc STRING "Connect an alSurface to the Surface shader parameter to remap its direct lighting and create a toon-shaded appearance."
+	c4d.classification STRING "surface"
+	c4d.menu STRING "surface"
+	maya.name STRING "alCel"
+	maya.classification STRING "shader/surface"
+	maya.id INT 0x0011641D
+	houdini.icon STRING "SOP_paint"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alCel.html"
+	houdini.parm.folder.ROOT STRING "Shading;7;AOVs;3;"
+	houdini.order STRING " ROOT"
+	houdini.order2 STRING " surfaceShader diffuseDirectStrength diffuseRamp diffuseColorRamp diffuseIndirectStrength diffuseIndirectSaturation diffuseIndirectTint"
+	houdini.order3 STRING " aov_direct_diffuse_cel aov_direct_diffuse_raw_cel aov_indirect_diffuse_cel"
+
+	[attr surfaceShader]
+		houdini.label STRING "Surface shader"
+		desc STRING "Connect an alSurface shader here to have its diffuse component run through the ramp for cel shading."
+		linkable BOOL TRUE
+	[attr diffuseDirectStrength]
+		houdini.label STRING "Diffuse strength"
+		desc STRING "A multiplier on the diffuse component before being passed through the ramp. This is useful to bring your diffuse illumination into the 0-1 range required by the ramp."
+		linkable BOOL TRUE
+	[attr diffuseRamp]
+		houdini.label STRING "Diffuse ramp"
+		desc STRING "Plug a MayaRamp node here to control the cel shading colors."
+		linkable BOOL TRUE
+	[attr diffuseColorRamp]
+		houdini.label STRING "Diffuse color ramp"
+		desc STRING "Plug a MayaRamp node here to tint the diffuse shading."
+		linkable BOOL TRUE
+	[attr diffuseIndirectStrength]
+		houdini.label STRING "Indirect diffuse strength"
+		desc STRING "Multipler on the strength of the indirect diffuse illumination."
+		linkable BOOL TRUE
+	[attr diffuseIndirectSaturation]
+		houdini.label STRING "Indirect diffuse saturation"
+		desc STRING "Controls the saturation of the indirect diffuse illumination. It can be useful to increase this for more stylized effects."
+		linkable BOOL TRUE
+	[attr diffuseIndirectTint]
+		houdini.label STRING "Indirect diffuse tint"
+		desc STRING "Color tint on the indirect diffuse illumination."
+		linkable BOOL TRUE
+	[attr aov_direct_diffuse_cel]
+		houdini.label STRING "Cel Diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_diffuse_cel"
+	[attr aov_direct_diffuse_raw_cel]
+		houdini.label STRING "Cel Raw Diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_diffuse_raw_cel"
+	[attr aov_indirect_diffuse_cel]
+		houdini.label STRING "Cel Indirect Diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_diffuse_cel"

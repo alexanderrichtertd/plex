@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NErgbaToColorAndAlpha'>
+		<attribute name='outRgbPP' type='maya.vectorArray'>
+			<label>Out Rgb PP</label>
+		</attribute>
+		<attribute name='outAlphaPP' type='maya.doubleArray'>
+			<label>Out Alpha PP</label>
+		</attribute>
+		<attribute name='inRgbaPP' type='maya.doubleArray'>
+			<label>In Rgba PP</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NErgbaToColorAndAlpha'>
+		<property name='outRgbPP'/>
+		<property name='outAlphaPP'/>
+		<property name='inRgbaPP'/>
+	</view>
+</templates>

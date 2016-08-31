@@ -1,0 +1,38 @@
+[node alInputVector]
+	desc STRING "Combining these vectors can be useful as building blocks for more complex effects."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alInputVector"
+	maya.classification STRING "utility/color"
+	maya.id INT 0x0011640E
+	houdini.icon STRING "VOP_global"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alInputVector.html"
+	houdini.parm.folder.ROOT STRING "Transform;2;"
+	houdini.order STRING "input userName vector type  ROOT"
+	houdini.order2 STRING " matrix coordinates"
+
+	[attr input]
+		houdini.label STRING "Input"
+		desc STRING "The vector from the shader globals to output. When User is selected, the user data vector named in the User name parameter will be output. When Custom is selected, the vector specified by the Custom parameter will be output."
+		linkable BOOL FALSE
+	[attr userName]
+		houdini.label STRING "User name"
+		desc STRING "Enter the name of a user data vector to output."
+		linkable BOOL FALSE
+	[attr vector]
+		houdini.label STRING "Custom"
+		desc STRING "A manually-specified vector to output."
+		linkable BOOL TRUE
+	[attr type]
+		houdini.label STRING "Type"
+		desc STRING "How to treat the vector when transorming it."
+		linkable BOOL FALSE
+	[attr matrix]
+		houdini.label STRING "Matrix"
+		desc STRING "A transformation matrix to apply to the vector. This can be useful for animating the position or scale of a point to drive a fractal."
+		linkable BOOL TRUE
+	[attr coordinates]
+		houdini.label STRING "Coordinates"
+		desc STRING "Coordinate system to interpret the vector as being in (result will be transformed to cartesian before being output)."
+		linkable BOOL FALSE

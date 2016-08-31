@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEpolyAverageVertex'>
+		<attribute name='inputComponents' type='maya.componentList'>
+			<label>Input Components</label>
+		</attribute>
+		<attribute name='inputPolymesh' type='maya.mesh'>
+			<label>Input Polymesh</label>
+		</attribute>
+		<attribute name='manipMatrix' type='maya.matrix'>
+			<label>Manip Matrix</label>
+		</attribute>
+		<attribute name='output' type='maya.mesh'>
+			<label>Output</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEpolyAverageVertex'>
+		<property name='inputComponents'/>
+		<property name='inputPolymesh'/>
+		<property name='manipMatrix'/>
+		<property name='output'/>
+	</view>
+</templates>

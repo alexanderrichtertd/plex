@@ -1,0 +1,189 @@
+<fragment uiName="standardShaderSpecular" name="standardShaderSpecular" type="plumbing" class="ShadeFragment" version="1.0" feature_level="0">
+    <description><![CDATA[Fragment for the arnold standard shader.]]></description>
+    <properties>
+        <struct name="lightingData" struct_name="standardShaderLightingData" />
+        <float name="roughness" />
+    </properties>
+    <values>
+        
+    </values>
+    <outputs>
+        <float3 name="outColor" />
+    </outputs>
+    <implementation>
+        <implementation render="OGSRenderer" language="Cg" lang_version="2.1">
+            <function_name val="standardShaderSpecular" />
+            <source>
+                <![CDATA[
+float SQR(float a)
+{
+    return a * a;
+}
+
+float3 standardShaderSpecular(
+        standardShaderLightingData lightingData,
+        float roughness)
+{
+    
+    float LdotN = saturate(dot(lightingData.SL, lightingData.N));
+    if (LdotN == 0.0f)
+        return float3(0.0f, 0.0f, 0.0f);
+    float VdotN = saturate(dot(lightingData.V, lightingData.N));
+    if (VdotN == 0.0f)
+        return float3(0.0f, 0.0f, 0.0f);
+
+    float3 iPlusO = lightingData.L + lightingData.V;
+    float3 microfacet = normalize(iPlusO);
+
+    float LdotM = saturate(dot(lightingData.SL, microfacet));
+    if (LdotM == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+    float VdotM = saturate(dot(lightingData.V, microfacet));
+    if (VdotM == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+    float MdotN = saturate(dot(microfacet, lightingData.N));
+    if (MdotN == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+
+    float LdotN2 = SQR(LdotN);
+    float VdotN2 = SQR(VdotN);
+    float MdotN2 = SQR(MdotN);
+    float MdotN4 = SQR(MdotN2);
+
+    float rx = SQR(saturate(roughness));
+
+    float rx2 = SQR(rx);
+    float tanThetaL  = sqrt(1.0f - LdotN2) / LdotN;
+    float tanThetaV  = sqrt(1.0f - VdotN2) / VdotN;
+    float tan2ThetaM = (1.0f - MdotN2 ) / MdotN2;
+
+    float a_im = 1.0f / (rx * tanThetaL);
+    float a_im2 = SQR(a_im);
+    float g1im = (a_im < 1.6f) ? (3.535f * a_im + 2.181f * a_im2) / (1.0f + 2.276f * a_im + 2.577f * a_im2) : 1.0f;
+    float a_om = 1.0f / (rx * tanThetaV);
+    float a_om2 = SQR(a_om);
+    float g1om = (a_om < 1.6f) ? (3.535f * a_om + 2.181f * a_om2) / (1.0f + 2.276f * a_om + 2.577f * a_om2) : 1.0f;
+    float G = g1im * g1om;
+
+    float D = (rx2 > 0.0f) ? exp(-tan2ThetaM / rx2) / (3.14159f * rx2 * MdotN4) : 0.0f;
+
+    return max(float3(0.0f, 0.0f, 0.0f), ((G * D) / (4.f * LdotN * VdotN)) * lightingData.specular);
+}
+                ]]>
+            </source>
+        </implementation>
+        <implementation render="OGSRenderer" language="HLSL" lang_version="11.0">
+            <function_name val="standardShaderSpecular" />
+            <source>
+                <![CDATA[
+float SQR(float a)
+{
+    return a * a;
+}
+
+float3 standardShaderSpecular(
+        standardShaderLightingData lightingData,
+        float roughness)
+{
+    
+    float LdotN = saturate(dot(lightingData.SL, lightingData.N));
+    if (LdotN == 0.0f)
+        return float3(0.0f, 0.0f, 0.0f);
+    float VdotN = saturate(dot(lightingData.V, lightingData.N));
+    if (VdotN == 0.0f)
+        return float3(0.0f, 0.0f, 0.0f);
+
+    float3 iPlusO = lightingData.L + lightingData.V;
+    float3 microfacet = normalize(iPlusO);
+
+    float LdotM = saturate(dot(lightingData.SL, microfacet));
+    if (LdotM == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+    float VdotM = saturate(dot(lightingData.V, microfacet));
+    if (VdotM == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+    float MdotN = saturate(dot(microfacet, lightingData.N));
+    if (MdotN == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+
+    float LdotN2 = SQR(LdotN);
+    float VdotN2 = SQR(VdotN);
+    float MdotN2 = SQR(MdotN);
+    float MdotN4 = SQR(MdotN2);
+
+    float rx = SQR(saturate(roughness));
+
+    float rx2 = SQR(rx);
+    float tanThetaL  = sqrt(1.0f - LdotN2) / LdotN;
+    float tanThetaV  = sqrt(1.0f - VdotN2) / VdotN;
+    float tan2ThetaM = (1.0f - MdotN2 ) / MdotN2;
+
+    float a_im = 1.0f / (rx * tanThetaL);
+    float a_im2 = SQR(a_im);
+    float g1im = (a_im < 1.6f) ? (3.535f * a_im + 2.181f * a_im2) / (1.0f + 2.276f * a_im + 2.577f * a_im2) : 1.0f;
+    float a_om = 1.0f / (rx * tanThetaV);
+    float a_om2 = SQR(a_om);
+    float g1om = (a_om < 1.6f) ? (3.535f * a_om + 2.181f * a_om2) / (1.0f + 2.276f * a_om + 2.577f * a_om2) : 1.0f;
+    float G = g1im * g1om;
+
+    float D = (rx2 > 0.0f) ? exp(-tan2ThetaM / rx2) / (3.14159f * rx2 * MdotN4) : 0.0f;
+
+    return max(float3(0.0f, 0.0f, 0.0f), ((G * D) / (4.f * LdotN * VdotN)) * lightingData.specular);
+}
+                ]]>
+            </source>
+        </implementation>
+        <implementation render="OGSRenderer" language="HLSL" lang_version="10.0">
+            <function_name val="standardShaderSpecular" />
+            <source>
+                <![CDATA[
+float SQR(float a)
+{
+    return a * a;
+}
+
+float3 standardShaderSpecular(
+        standardShaderLightingData lightingData,
+        float roughness)
+{
+    
+    float LdotN = saturate(dot(lightingData.SL, lightingData.N));
+    if (LdotN == 0.0f)
+        return float3(0.0f, 0.0f, 0.0f);
+    float VdotN = saturate(dot(lightingData.V, lightingData.N));
+    if (VdotN == 0.0f)
+        return float3(0.0f, 0.0f, 0.0f);
+
+    float3 iPlusO = lightingData.L + lightingData.V;
+    float3 microfacet = normalize(iPlusO);
+
+    float LdotM = saturate(dot(lightingData.SL, microfacet));
+    if (LdotM == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+    float VdotM = saturate(dot(lightingData.V, microfacet));
+    if (VdotM == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+    float MdotN = saturate(dot(microfacet, lightingData.N));
+    if (MdotN == 0.0f) return float3(0.0f, 0.0f, 0.0f);
+
+    float LdotN2 = SQR(LdotN);
+    float VdotN2 = SQR(VdotN);
+    float MdotN2 = SQR(MdotN);
+    float MdotN4 = SQR(MdotN2);
+
+    float rx = SQR(saturate(roughness));
+
+    float rx2 = SQR(rx);
+    float tanThetaL  = sqrt(1.0f - LdotN2) / LdotN;
+    float tanThetaV  = sqrt(1.0f - VdotN2) / VdotN;
+    float tan2ThetaM = (1.0f - MdotN2 ) / MdotN2;
+
+    float a_im = 1.0f / (rx * tanThetaL);
+    float a_im2 = SQR(a_im);
+    float g1im = (a_im < 1.6f) ? (3.535f * a_im + 2.181f * a_im2) / (1.0f + 2.276f * a_im + 2.577f * a_im2) : 1.0f;
+    float a_om = 1.0f / (rx * tanThetaV);
+    float a_om2 = SQR(a_om);
+    float g1om = (a_om < 1.6f) ? (3.535f * a_om + 2.181f * a_om2) / (1.0f + 2.276f * a_om + 2.577f * a_om2) : 1.0f;
+    float G = g1im * g1om;
+
+    float D = (rx2 > 0.0f) ? exp(-tan2ThetaM / rx2) / (3.14159f * rx2 * MdotN4) : 0.0f;
+
+    return max(float3(0.0f, 0.0f, 0.0f), ((G * D) / (4.f * LdotN * VdotN)) * lightingData.specular);
+}
+                ]]>
+            </source>
+        </implementation>
+    </implementation>
+</fragment>

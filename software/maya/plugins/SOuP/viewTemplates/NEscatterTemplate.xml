@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEscatter'>
+		<attribute name='outGeometry' type='maya.mesh'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='outPositionPP' type='maya.vectorArray'>
+			<label>Out Position PP</label>
+		</attribute>
+		<attribute name='outDistanceFromSurfacePP' type='maya.doubleArray'>
+			<label>Out Distance From Surface PP</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.mesh'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inPositionPP' type='maya.vectorArray'>
+			<label>In Position PP</label>
+		</attribute>
+		<attribute name='inWorldMatrix' type='maya.matrix'>
+			<label>In World Matrix</label>
+		</attribute>
+		<attribute name='inColor' type='maya.float3'>
+			<label>In Color</label>
+		</attribute>
+		<attribute name='visibility' type='maya.bool'>
+			<label>Visibility</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEscatter'>
+		<property name='outGeometry'/>
+		<property name='outPositionPP'/>
+		<property name='outDistanceFromSurfacePP'/>
+		<property name='inGeometry'/>
+		<property name='inPositionPP'/>
+		<property name='inWorldMatrix'/>
+		<property name='inColor'/>
+		<property name='visibility'/>
+	</view>
+</templates>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEresizeArray'>
+		<attribute name='outArray' type='maya.Int32Array'>
+			<label>Out Array</label>
+		</attribute>
+		<attribute name='inArray' type='maya.Int32Array'>
+			<label>In Array</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEresizeArray'>
+		<property name='outArray'/>
+		<property name='inArray'/>
+	</view>
+</templates>

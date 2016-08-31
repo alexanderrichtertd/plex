@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEshadingEngine'>
+		<attribute name='dagSetMembers' type='maya.Tdata'>
+			<label>Dag Set Members</label>
+		</attribute>
+		<attribute name='dnSetMembers' type='maya.Tdata'>
+			<label>Dn Set Members</label>
+		</attribute>
+		<attribute name='usedBy' type='maya.message'>
+			<label>Used By</label>
+		</attribute>
+		<attribute name='surfaceShader' type='maya.Tdata'>
+			<label>Surface Shader</label>
+		</attribute>
+		<attribute name='displacementShader' type='maya.Tdata'>
+			<label>Displacement Shader</label>
+		</attribute>
+		<attribute name='imageShader' type='maya.Tdata'>
+			<label>Image Shader</label>
+		</attribute>
+		<attribute name='volumeShader' type='maya.Tdata'>
+			<label>Volume Shader</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEshadingEngine'>
+		<property name='dagSetMembers'/>
+		<property name='dnSetMembers'/>
+		<property name='usedBy'/>
+		<property name='surfaceShader'/>
+		<property name='displacementShader'/>
+		<property name='imageShader'/>
+		<property name='volumeShader'/>
+	</view>
+</templates>

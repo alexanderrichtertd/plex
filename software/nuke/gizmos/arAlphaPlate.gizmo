@@ -1,0 +1,38 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Gizmo {
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -341
+  ypos 482
+ }
+ Crop {
+  box {0 0 1920 1080}
+  reformat true
+  crop false
+  name Crop1
+  selected true
+  xpos -341
+  ypos 522
+ }
+ Shuffle {
+  alpha white
+  name Shuffle5
+  xpos -341
+  ypos 564
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -341
+  ypos 599
+ }
+ Output {
+  name Output1
+  xpos -341
+  ypos 699
+ }
+end_group

@@ -1,0 +1,580 @@
+global proc shelf_arPipeline () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 0
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Save Asset/Shot" 
+        -enableBackground 0
+        -align "center" 
+        -label "Save" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_save35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_save35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from utilities import arSave\nreload(arSave)\narSave.start()" 
+        -sourceType "python" 
+        -commandRepeatable 0
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Load Shot/Asset" 
+        -enableBackground 0
+        -align "center" 
+        -label "Load" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_load35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_load35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from utilities import arSaveAs\nreload(arSaveAs)\narSaveAs.start(True)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 13
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "-------------------" 
+        -enableBackground 0
+        -align "center" 
+        -label "-------------------" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Outliner" 
+        -enableBackground 0
+        -align "center" 
+        -label "Outliner" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_outliner35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_outliner35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "OutlinerWindow" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Hypershade" 
+        -enableBackground 0
+        -align "center" 
+        -label "Hypershade" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_hypershade35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_hypershade35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "HypershadeWindow" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Node Editor" 
+        -enableBackground 0
+        -align "center" 
+        -label "Node Editor" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_nodeEditor35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_nodeEditor35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "NodeEditorWindow" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Edit animation curves" 
+        -enableBackground 0
+        -align "center" 
+        -label "Graph Editor" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "K:/_pipeline/PUBLISH/img/software/maya/shelf/shelf_graphEditor35.png" 
+        -image1 "K:/_pipeline/PUBLISH/img/software/maya/shelf/shelf_graphEditor35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GraphEditor" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 13
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "-------------------" 
+        -enableBackground 0
+        -align "center" 
+        -label "-------------------" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "RenderMan Controls" 
+        -enableBackground 0
+        -align "center" 
+        -label "RenderMan Controls" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "K:/_pipeline/WORK/img/software/renderman/rman_AdvancedRenderGlobals.png" 
+        -image1 "K:/_pipeline/WORK/img/software/renderman/rman_AdvancedRenderGlobals.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "python(\"import rfm.rmanPassEditor; rfm.rmanPassEditor.createPassEditor()\")" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Render Current Frame" 
+        -enableBackground 0
+        -align "center" 
+        -label "Render Current Frame" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "K:/_pipeline/WORK/img/software/renderman/rman_render.png" 
+        -image1 "K:/_pipeline/WORK/img/software/renderman/rman_render.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "rmanLoadPlugin; rmanChangeToRenderMan; rmanRenderPass(\"Final\", \"\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Start IPR" 
+        -enableBackground 0
+        -align "center" 
+        -label "Start IPR" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "K:/_pipeline/WORK/img/software/renderman/rman_rerender_controls.png" 
+        -image1 "K:/_pipeline/WORK/img/software/renderman/rman_rerender_controls.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "rmanRerenderStart(1);" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Stop IPR" 
+        -enableBackground 0
+        -align "center" 
+        -label "Stop IPR" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "K:/_pipeline/WORK/img/software/renderman/rman_batch_cancel.png" 
+        -image1 "K:/_pipeline/WORK/img/software/renderman/rman_batch_cancel.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "if(`rmanRerenderIsRunning`) {rmanRerenderStop;} else {CancelBatchRender;}" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 13
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "-------------------" 
+        -enableBackground 0
+        -align "center" 
+        -label "-------------------" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Alembic Export with Attributes" 
+        -enableBackground 0
+        -align "center" 
+        -label "Alembic Export" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_alembicExport35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_alembicExport35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from scripts.ANIM import alembicExport\nreload(alembicExport)\nalembicExport.start()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Import Shading Scene" 
+        -enableBackground 0
+        -align "center" 
+        -label "Import Shading Scene" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_shdScene35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_shdScene35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from scripts.SHD import referenceSCENE_SHD\nreferenceSCENE_SHD.start()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Alembic Export with Attributes" 
+        -enableBackground 0
+        -align "center" 
+        -label "from scripts.ANIM import combineSHD_MODEL\nreload(combineSHD_MODE..." 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_combineSHDandMODEL35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_combineSHDandMODEL35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from scripts.SHD import combineSHD_MODEL\nreload(combineSHD_MODEL)\ncombineSHD_MODEL.start()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 13
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "-------------------" 
+        -enableBackground 0
+        -align "center" 
+        -label "-------------------" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Low Render Settings" 
+        -enableBackground 0
+        -align "center" 
+        -label "Low Render Settings" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "K:/_pipeline/PUBLISH/img/software/maya/shelf/shelf_renderLow35.png" 
+        -image1 "K:/_pipeline/PUBLISH/img/software/maya/shelf/shelf_renderLow35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "setAttr \"defaultArnoldRenderOptions.AASamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseSamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossySamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GISssSamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeSamples\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.GITotalDepth\" 10;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossyDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIReflectionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeDepth\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.aovMode\" 0;\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "High Render Settings" 
+        -enableBackground 0
+        -align "center" 
+        -label "High  Render Settings" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_renderHigh35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_renderHigh35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "setAttr \"defaultArnoldRenderOptions.AASamples\" 4;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseSamples\" 3;\nsetAttr \"defaultArnoldRenderOptions.GIGlossySamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GISssSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeSamples\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.GITotalDepth\" 10;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossyDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIReflectionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeDepth\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.aovMode\" 0;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 13
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "-------------------" 
+        -enableBackground 0
+        -align "center" 
+        -label "-------------------" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/separatoricons/concrete.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Report Error and Suggestions" 
+        -enableBackground 0
+        -align "center" 
+        -label "Report" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_report35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_report35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from utilities import arReport\nreload(arReport)\narReport.start()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 38
+        -height 38
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Open Wiki in your browser" 
+        -enableBackground 0
+        -align "center" 
+        -label "Help" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_help35.png" 
+        -image1 "//bigfoot/revierkampf/_pipeline/PUBLISH/img/software/maya/shelf/shelf_help35.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "from lib import libFunction\nlibFunction.getHelp(os.environ[\"SOFTWARE\"])" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 

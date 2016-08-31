@@ -1,0 +1,405 @@
+#! /data/apps/cent5_x86_64/Nuke/7.0.6/nuke/Nuke7.0 -nx
+version 7.0 v6
+Gizmo {
+ inputs 2
+ help "METHOD Studios\n mask3d v0.1.3\nby Carl Schroter"
+ knobChanged "\n\ntn = nuke.thisNode()\nmaskInput = int(nuke.toNode('got_mask')\['disable'].value())\nmask = nuke.toNode('maskChannel').knob('from0')\n\nif tn.knob('from0').value() == 'none':\n    if maskInput:\n        tn.knob('from0').setValue('rgba.alpha')\nelse:\n    lastMask = tn.knob('from0').value()\n\nif maskInput:\n    mask.setEnabled(True)\n    tn.knobs()\['from0'].setVisible(True)\n    tn.knobs()\['premult_sep'].setVisible(True)    \n    if lastMask:\n        mask.setValue(lastMask)\n    else:\n        mask.setValue('rgba.alpha')\nelse:\n    lastMask = tn.knob('from0').value()\n    mask.setEnabled(False)\n    tn.knobs()\['from0'].setVisible(False)\n    tn.knobs()\['premult_sep'].setVisible(False)\n    mask.setValue('none')\n\n"
+ tile_color 0x4fb0c101
+ addUserKnob {20 mask3d}
+ addUserKnob {52 knobChangedCode T "nuke.thisNode().knob('knobChanged').setValue('''\n\ntn = nuke.thisNode()\nmaskInput = int(nuke.toNode('got_mask')\['disable'].value())\nmask = nuke.toNode('maskChannel').knob('from0')\n\nif tn.knob('from0').value() == 'none':\n    if maskInput:\n        tn.knob('from0').setValue('rgba.alpha')\nelse:\n    lastMask = tn.knob('from0').value()\n\nif maskInput:\n    mask.setEnabled(True)\n    tn.knobs()\['from0'].setVisible(True)\n    tn.knobs()\['premult_sep'].setVisible(True)    \n    if lastMask:\n        mask.setValue(lastMask)\n    else:\n        mask.setValue('rgba.alpha')\nelse:\n    lastMask = tn.knob('from0').value()\n    mask.setEnabled(False)\n    tn.knobs()\['from0'].setVisible(False)\n    tn.knobs()\['premult_sep'].setVisible(False)\n    mask.setValue('none')\n\n''')" +STARTLINE}
+ addUserKnob {52 GroupHelpIcon T "nuke.thisNode().knob('help').setValue(\"METHOD Studios\\n mask3d v0.1.2\\nby Carl Schroter\")" +STARTLINE}
+ addUserKnob {26 img2 l "@hivemind.png" T "<b><font size=\"4\" color=\"#4FB0C1\">MASK3D</font></b><font size=\"2\"> _ v0.1.3 <br>\ncreates a mask by pinning a shape to a point of a point-position-pass</front>"}
+ addUserKnob {26 ""}
+ addUserKnob {4 shape l select M {sphere cube "" "" "" "" ""}}
+ addUserKnob {6 showPos l "show position and mask side by side" +STARTLINE}
+ addUserKnob {18 pos l position t "Select the colour that corresponds to the position you want."}
+ pos {0 0 0}
+ addUserKnob {13 rot l rotation}
+ addUserKnob {13 scale}
+ scale {1 1 1}
+ addUserKnob {7 uniscale l "uniform scale" R 1 5}
+ uniscale 1
+ addUserKnob {26 ""}
+ addUserKnob {7 fall l "falloff exponent" R 1 10}
+ fall 1
+ addUserKnob {7 gain l hardness}
+ addUserKnob {26 premult_sep l "" +STARTLINE}
+ addUserKnob {41 from0 l premultiply T maskChannel.from0}
+ addUserKnob {26 ""}
+ addUserKnob {26 info l "<font size=\"2\" color=\"#555555\"></font>" +STARTLINE T "<font size=\"2\" color=\"#555555\">initially built at MethodStudios London in early 2014 by Carl Schroter</font>"}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -140
+  ypos 859
+  number 1
+ }
+ Shuffle {
+  in alpha
+  red black
+  out alpha
+  name got_mask
+  xpos -140
+  ypos 932
+  disable {{"\[exists parent.input1]"}}
+ }
+set N2d42d1b0 [stack 0]
+push $N2d42d1b0
+ Dot {
+  name Dot2
+  xpos -7
+  ypos 936
+ }
+ Dot {
+  name Dot3
+  xpos -7
+  ypos 1015
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name maskChannel
+  xpos -140
+  ypos 1005
+  disable {{from0>0?0:1}}
+ }
+ Dot {
+  name Dot1
+  xpos -106
+  ypos 1074
+ }
+ Input {
+  inputs 0
+  name position
+  xpos 95
+  ypos -415
+ }
+ Dot {
+  name Dot4
+  xpos 129
+  ypos -307
+ }
+set N39c0a520 [stack 0]
+ Expression {
+  expr0 "r - pos.r"
+  expr1 "g - pos.g"
+  expr2 "b - pos.b"
+  name Expression1
+  xpos 95
+  ypos -250
+ }
+ ColorMatrix {
+  matrix {
+      {1 0 0}
+      {0 {cos(rot.x*pi/180)} {-sin(rot.x*pi/180)}}
+      {0 {sin(rot.x*pi/180)} {cos(rot.x*pi/180)}}
+    }
+  name rotateX1
+  xpos 95
+  ypos -207
+ }
+ ColorMatrix {
+  matrix {
+      {{cos(rot.y*pi/180)} 0 {sin(rot.y*pi/180)}}
+      {0 1 0}
+      {{-sin(rot.y*pi/180)} 0 {cos(rot.y*pi/180)}}
+    }
+  name rotateY1
+  xpos 95
+  ypos -163
+  addUserKnob {20 User}
+  addUserKnob {1 a}
+  a cos(rotateY*pi/180)
+  addUserKnob {1 b}
+  b 0
+  addUserKnob {1 c}
+  c sin(rotateY*pi/180)
+  addUserKnob {1 d}
+  d 0
+  addUserKnob {1 e}
+  e 1
+  addUserKnob {1 f}
+  f 0
+  addUserKnob {1 g}
+  g -sin(rotateY*pi/180)
+  addUserKnob {1 h}
+  h 0
+  addUserKnob {1 i}
+  i cos(rotateY*pi/180)
+ }
+ ColorMatrix {
+  matrix {
+      {{cos(rot.z*pi/180)} {-sin(rot.z*pi/180)} 0}
+      {{sin(rot.z*pi/180)} {cos(rot.z*pi/180)} 0}
+      {0 0 1}
+    }
+  name rotateZ1
+  xpos 95
+  ypos -119
+ }
+ Expression {
+  expr0 "r + pos.r"
+  expr1 "g + pos.g"
+  expr2 "b + pos.b"
+  name Expression2
+  xpos 95
+  ypos -73
+ }
+ Dot {
+  name Dot6
+  xpos 129
+  ypos 16
+ }
+set N2f908c90 [stack 0]
+ Dot {
+  name Dot7
+  xpos 350
+  ypos 16
+ }
+ Dot {
+  name Dot9
+  label "  CUBE"
+  note_font "Bitstream Vera Sans Bold Bold"
+  note_font_size 30
+  xpos 350
+  ypos 81
+ }
+ Expression {
+  temp_name0 x
+  temp_expr0 r-parent.pos.r
+  temp_name1 y
+  temp_expr1 g-parent.pos.g
+  temp_name2 z
+  temp_expr2 b-parent.pos.b
+  expr0 x
+  expr1 y
+  expr2 z
+  name Expression6
+  xpos 316
+  ypos 167
+ }
+ Expression {
+  temp_name0 rad
+  temp_expr0 parent.rotate*(pi/180)
+  temp_name1 x
+  temp_expr1 "(r*sin( rad ))+(b*cos(rad))"
+  temp_name2 y
+  temp_expr2 (b*sin(-rad))+(r*cos(-rad))
+  expr0 x
+  expr2 y
+  name rotation
+  xpos 316
+  ypos 193
+ }
+ Expression {
+  temp_name0 rad
+  temp_expr0 parent.tilt*(pi/180)
+  temp_name1 x
+  temp_expr1 "(r*sin( rad ))+(g*cos(rad))"
+  temp_name2 y
+  temp_expr2 (g*sin(-rad))+(r*cos(-rad))
+  expr0 x
+  expr1 y
+  name Expression7
+  xpos 316
+  ypos 219
+ }
+ Expression {
+  temp_name0 x
+  temp_expr0 abs(r)
+  temp_name1 y
+  temp_expr1 abs(g)
+  temp_name2 z
+  temp_expr2 abs(b)
+  expr0 x
+  expr1 y
+  expr2 z
+  expr3 x
+  name Expression8
+  xpos 316
+  ypos 245
+ }
+ Grade {
+  white {{"(1-parent.scale.y) +1" i} {"(1-parent.scale.z) +1" i} {"(1-parent.scale.x) +1" i} {curve}}
+  black_clamp false
+  name Grade1
+  xpos 316
+  ypos 271
+ }
+ Grade {
+  white {{"(1-parent.uniscale) + 1"}}
+  name Grade2
+  xpos 316
+  ypos 297
+ }
+ Invert {
+  name Invert1
+  xpos 316
+  ypos 346
+ }
+set N2d593af0 [stack 0]
+ Shuffle {
+  alpha blue
+  name Shuffle3
+  xpos 405
+  ypos 432
+ }
+push 0
+push $N2d593af0
+ Shuffle {
+  alpha red
+  name Shuffle1
+  xpos 228
+  ypos 431
+ }
+push $N2d593af0
+ Shuffle {
+  alpha green
+  name Shuffle2
+  xpos 316
+  ypos 432
+ }
+ Merge2 {
+  inputs 3+1
+  operation multiply
+  name Merge2
+  xpos 316
+  ypos 513
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle4
+  xpos 316
+  ypos 552
+ }
+set N2d5dce30 [stack 0]
+push $N2d5dce30
+push $N2f908c90
+ Dot {
+  name Dot8
+  label " SPHERE"
+  note_font "Bitstream Vera Sans Bold Bold"
+  note_font_size 30
+  xpos 129
+  ypos 79
+ }
+ Expression {
+  temp_name0 distR
+  temp_expr0 "(r-parent.pos.r) / (scale.x * uniscale)"
+  temp_name1 distG
+  temp_expr1 "(g-parent.pos.g)/ (scale.y * uniscale)"
+  temp_name2 distB
+  temp_expr2 "(b-parent.pos.b)/ (scale.z * uniscale)"
+  temp_name3 len
+  temp_expr3 sqrt((distR*distR)+(distG*distG)+(distB*distB))
+  expr0 pow(1-len,fall)
+  expr1 pow(1-len,fall)
+  expr2 pow(1-len,fall)
+  expr3 pow(1-len,fall)
+  name __POSITION_KEY__
+  xpos 95
+  ypos 160
+ }
+ Switch {
+  inputs 3
+  which {{shape}}
+  name Switch1
+  xpos 95
+  ypos 552
+ }
+ Grade {
+  channels rgba
+  whitepoint {{1-gain}}
+  name Grade4
+  xpos 95
+  ypos 749
+ }
+ Clamp {
+  channels rgba
+  name Clamp2
+  xpos 95
+  ypos 787
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply1
+  xpos 95
+  ypos 1064
+  disable {{"!from0 != 0"}}
+ }
+set N1be18700 [stack 0]
+ Shuffle {
+  name Shuffle7
+  xpos 276
+  ypos 1070
+ }
+ Crop {
+  box {{format.x} {format.y} {format.w} {format.h}}
+  reformat true
+  name Crop4
+  xpos 276
+  ypos 1136
+ }
+ Transform {
+  center {914 778}
+  name Transform2
+  xpos 276
+  ypos 1162
+ }
+push $N39c0a520
+ Dot {
+  name Dot5
+  xpos 578
+  ypos -307
+ }
+ Dot {
+  name Dot11
+  xpos 578
+  ypos 1073
+ }
+ Shuffle {
+  name Shuffle8
+  xpos 392
+  ypos 1069
+ }
+ Crop {
+  box {{format.x} {format.y} {format.w} {format.h}}
+  reformat true
+  name Crop5
+  xpos 392
+  ypos 1135
+ }
+ Crop {
+  box {{format.x} {-format.h} {format.w} {format.h}}
+  reformat true
+  intersect true
+  name Crop6
+  xpos 392
+  ypos 1161
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos 337
+  ypos 1242
+ }
+push $N1be18700
+ Switch {
+  inputs 2
+  which {{showPos}}
+  name showPos
+  xpos 95
+  ypos 1242
+ }
+ Output {
+  name Output1
+  xpos 95
+  ypos 1387
+ }
+end_group

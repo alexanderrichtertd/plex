@@ -1,0 +1,73 @@
+[node alInputScalar]
+	desc STRING "Combining these vectors can be useful as building blocks for more complex effects."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alInputScalar"
+	maya.classification STRING "utility/color"
+	maya.id INT 0x0011641E
+	houdini.icon STRING "VOP_global"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alInputScalar.html"
+	houdini.parm.folder.ROOT STRING "Remap;15;"
+	houdini.parm.heading.h0 STRING "Contrast"
+	houdini.parm.heading.h1 STRING "Bias and gain"
+	houdini.parm.heading.h2 STRING "Clamp"
+	houdini.order STRING "input userName  ROOT"
+	houdini.order2 STRING " RMPinputMin RMPinputMax h0 RMPcontrast RMPcontrastPivot h1 RMPbias RMPgain RMPoutputMin RMPoutputMax h2 RMPclampEnable RMPthreshold RMPclampMin RMPclampMax"
+
+	[attr input]
+		houdini.label STRING "Input"
+		desc STRING "The scalar from from the shader globals to output. When User is selected, the user data float named in the User name parameter will be output."
+		linkable BOOL FALSE
+	[attr userName]
+		houdini.label STRING "User name"
+		desc STRING "Enter the name of a user data float to output."
+		linkable BOOL FALSE
+	[attr RMPinputMin]
+		houdini.label STRING "Input min"
+		desc STRING "Sets the minimum input value. Use this to pull values outside of 0-1 into a 0-1 range."
+		linkable BOOL TRUE
+	[attr RMPinputMax]
+		houdini.label STRING "Input max"
+		desc STRING "Sets the maximum input value. Use this to pull values outside of 0-1 into a 0-1 range."
+		linkable BOOL TRUE
+	[attr RMPcontrast]
+		houdini.label STRING "Contrast"
+		desc STRING "Scales the contrast of the input signal."
+		linkable BOOL TRUE
+	[attr RMPcontrastPivot]
+		houdini.label STRING "Pivot"
+		desc STRING "Sets the pivot point around which the input signal is contrasted."
+		linkable BOOL TRUE
+	[attr RMPbias]
+		houdini.label STRING "Bias"
+		desc STRING "Bias the signal higher or lower. Values less than 0.5 push the average lower, values higher than 0.5 push it higher."
+		linkable BOOL TRUE
+	[attr RMPgain]
+		houdini.label STRING "Gain"
+		desc STRING "Adds gain to the signal, in effect a different form of contrast. Values less than 0.5 increase the gain, values greater than 0.5 decrease it."
+		linkable BOOL TRUE
+	[attr RMPoutputMin]
+		houdini.label STRING "Output min"
+		desc STRING "Sets the minimum value of the output. Use this to scale a 0-1 signal to a new range."
+		linkable BOOL TRUE
+	[attr RMPoutputMax]
+		houdini.label STRING "Output max"
+		desc STRING "Sets the maximum value of the output. Use this to scale a 0-1 signal to a new range."
+		linkable BOOL TRUE
+	[attr RMPclampEnable]
+		houdini.label STRING "Enable"
+		desc STRING "When enabled, will clamp the output to Min-Max."
+		linkable BOOL FALSE
+	[attr RMPthreshold]
+		houdini.label STRING "Expand"
+		desc STRING "When enabled, will expand the clamped range to 0-1 after clamping."
+		linkable BOOL FALSE
+	[attr RMPclampMin]
+		houdini.label STRING "Min"
+		desc STRING "Minimum value to clamp to."
+		linkable BOOL TRUE
+	[attr RMPclampMax]
+		houdini.label STRING "Max"
+		desc STRING "Maximum value to clamp to."
+		linkable BOOL TRUE

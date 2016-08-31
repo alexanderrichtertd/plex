@@ -1,0 +1,52 @@
+<fragment_graph name="standardShader" ref="standardShader" class="FragmentGraph" version="1.0" feature_level="0">
+    <fragments>
+        <fragment_ref name="standardShaderLightingData" ref="standardShaderLightingData" />
+        <fragment_ref name="mayaSurfaceShaderOutput" ref="mayaSurfaceShaderOutput" />
+        <fragment_ref name="standardShaderCombiner" ref="standardShaderCombiner" />
+        <fragment_ref name="maya16LightAccum" ref="maya16LightAccum" />
+        <fragment_ref name="standardShaderDiffuse" ref="standardShaderDiffuse" />
+        <fragment_ref name="standardShaderSpecular" ref="standardShaderSpecular" />
+        <fragment_ref name="standardShaderEmission" ref="standardShaderEmission" />        
+        <fragment_ref name="standardShaderLightingCombiner" ref="standardShaderLightingCombiner" />
+    </fragments>
+    <connections>
+        <connect from="standardShaderCombiner.standardShaderCombiner" to="mayaSurfaceShaderOutput.mayaSurfaceShaderOutput" />
+        <connect from="maya16LightAccum.scaledDiffuse" to="standardShaderCombiner.diffuseInput" />
+        <connect from="maya16LightAccum.scaledSpecular" to="standardShaderCombiner.specularInput" />
+        <connect from="standardShaderDiffuse.outColor" to="maya16LightAccum.scaledDiffuse" />
+        <connect from="standardShaderSpecular.outColor" to="maya16LightAccum.scaledSpecular" />
+        <connect from="standardShaderEmission.outColor" to="standardShaderCombiner.emissionInput" />
+        <connect from="standardShaderLightingData.standardShaderLightingData" to="standardShaderDiffuse.lightingData" />
+        <connect from="standardShaderLightingData.standardShaderLightingData" to="standardShaderSpecular.lightingData" />
+        <connect from="standardShaderLightingData.standardShaderLightingData" to="standardShaderCombiner.lightingData" />
+        <connect from="standardShaderLightingCombiner.lightingData" to="standardShaderLightingData.standardShaderLightingData" />
+    </connections>
+    <properties>
+        <float3 name="color" ref="standardShaderCombiner.color" />
+        <float3 name="KsColor" ref="standardShaderCombiner.specularColor" />
+        <float name="Kd" ref="standardShaderDiffuse.Kd" />
+        <float name="Ks" ref="standardShaderCombiner.Ks" />
+        <float name="directDiffuse" ref="standardShaderCombiner.directDiffuse" />
+        <float name="directSpecular" ref="standardShaderCombiner.directSpecular" />
+        <float name="specularRoughness" ref="standardShaderSpecular.roughness" />
+        <float3 name="emissionColor" ref="standardShaderEmission.emissionColor" />
+        <float name="emission" ref="standardShaderEmission.emission" />
+        <bool name="specularFresnel" ref="standardShaderCombiner.specularFresnel" />
+        <bool name="FresnelAffectDiff" ref="standardShaderCombiner.FresnelAffectDiff" />
+        <bool name="FresnelUseIOR" ref="standardShaderCombiner.FresnelUseIOR" />
+        <float name="Ksn" ref="standardShaderCombiner.Ksn" />
+        <float name="IOR" ref="standardShaderCombiner.IOR" />
+        <float3 name="Nw" ref="standardShaderLightingCombiner.N" flags="varyingInputParam" />-
+        <float3 name="Vw" ref="standardShaderLightingCombiner.V" flags="varyingInputParam" />
+        <float3 name="Lw" ref="standardShaderLightingCombiner.L" flags="varyingInputParam" />
+        <float3 name="SLw" ref="standardShaderLightingCombiner.SL" flags="varyingInputParam" />
+        <float3 name="diffuseI" ref="standardShaderLightingCombiner.diffuse" />
+        <float3 name="specularI" ref="standardShaderLightingCombiner.specular" />
+        <string name="selector" ref="maya16LightAccum.selector" />
+    </properties>
+    <values>
+    </values>
+    <outputs>
+        <struct name="mayaSurfaceShaderOutput" ref="mayaSurfaceShaderOutput.mayaSurfaceShaderOutput" />
+    </outputs>
+</fragment_graph>

@@ -1,0 +1,1512 @@
+Gizmo {
+ inputs 3
+ help "Create distortion with great control and flexibility."
+ name X_Distort
+ tile_color 0xa97daeff
+ lock_connections true
+ addUserKnob {20 X_Distort}
+ addUserKnob {22 source_button l INVISIBLE +INVISIBLE T "a1 = nuke.thisNode()\n\na1.knob('color_balance').setVisible(True)\na1.knob('fractal_noise_size').setVisible(False)\na1.knob('velocity').setVisible(False)\na1.knob('source').setVisible(True)\na1.knob('distort_map').setVisible(False)\na1.knob('noise').setVisible(False)\na1.knob('distort_from').setValue('0')" +STARTLINE}
+ addUserKnob {22 distortion_map_button l INVISIBLE +INVISIBLE T "a1 = nuke.thisNode()\n\na1.knob('color_balance').setVisible(True)\na1.knob('fractal_noise_size').setVisible(False)\na1.knob('velocity').setVisible(False)\na1.knob('source').setVisible(False)\na1.knob('distort_map').setVisible(True)\na1.knob('noise').setVisible(False)\na1.knob('distort_from').setValue('1')" +STARTLINE}
+ addUserKnob {22 fractal_noise_button l INVISIBLE +INVISIBLE T "a1 = nuke.thisNode()\n\na1.knob('color_balance').setVisible(False)\na1.knob('fractal_noise_size').setVisible(True)\na1.knob('velocity').setVisible(True)\na1.knob('source').setVisible(False)\na1.knob('distort_map').setVisible(False)\na1.knob('noise').setVisible(True)\na1.knob('distort_from').setValue('2')" +STARTLINE}
+ addUserKnob {26 distortion l Distortion}
+ addUserKnob {41 channels t "Select which channels are going to be affected by the distortiom. <b>When using chromatic aberration rgba will be automatically selected.</b>" T ChannelPicker.channels}
+ addUserKnob {6 alphadetect l INVISIBLE -STARTLINE +INVISIBLE}
+ alphadetect {{"\[string first \".a\" \[channels \[input this 0]]]>-1"}}
+ addUserKnob {41 strength l distort T VB_Controls.strength}
+ addUserKnob {41 vblur l blur T VB_Controls.vblur}
+ addUserKnob {41 direction T VB_Controls.direction}
+ addUserKnob {41 revolutions T VB_Controls.revolutions}
+ addUserKnob {41 order l "" t "Indicates if the image is going to be distorted before or after applying the blur." +STARTLINE T VB_Controls.order}
+ addUserKnob {26 space l "" +STARTLINE T " "}
+ addUserKnob {26 distortion_map l "Distortion Map"}
+ addUserKnob {41 distort_from l INVISIBLE t "Indicates which input is going to be used as the distortion map. If \"Fractal Noise\" is selected, a random noise map will be generated." +INVISIBLE T VB_Controls.distort_from}
+ addUserKnob {26 distortfrom l "distort from" -STARTLINE T ""}
+ addUserKnob {35 source l "" t "Indicates which input is going to be used as the distortion map. If \"Noise\" is selected, a random noise map will be generated." -STARTLINE M {Source/Source "python nuke.thisNode().knob('source_button').execute()" "Distortion Map/Distortion Map" "python nuke.thisNode().knob('distortion_map_button').execute()" Noise/Noise "python nuke.thisNode().knob('fractal_noise_button').execute()" ""}}
+ source "Distortion Map/Distortion Map"
+ addUserKnob {35 distort_map l "" t "Indicates which input is going to be used as the distortion map. If \"Noise\" is selected, a random noise map will be generated." -STARTLINE +HIDDEN M {"Distort Map/Source" "python nuke.thisNode().knob('source_button').execute()" "Distortion Map/Distortion Map" "python nuke.thisNode().knob('distortion_map_button').execute()" Noise/Noise "python nuke.thisNode().knob('fractal_noise_button').execute()" ""}}
+ addUserKnob {35 noise l "" t "Indicates which input is going to be used as the distortion map. If \"Noise\" is selected, a random noise map will be generated." -STARTLINE +HIDDEN M {Noise/Source "python nuke.thisNode().knob('source_button').execute()" "Distortion Map/Distortion Map" "python nuke.thisNode().knob('distortion_map_button').execute()" Noise/Noise "python nuke.thisNode().knob('fractal_noise_button').execute()"}}
+ addUserKnob {41 fringe2 l fringe t "Use 4*(1-map)*map to distort." -STARTLINE T VB_Controls.fringe2}
+ addUserKnob {41 clamp -STARTLINE T VB_Controls.clamp}
+ addUserKnob {41 treat_as_UV l "vector map" -STARTLINE T VB_Controls.treat_as_UV}
+ addUserKnob {6 input_test l INVISIBLE t "Hey man! You shouldn't be seeing this! :'(" -STARTLINE +INVISIBLE}
+ input_test {{"\[python -execlocal n\\ =\\ nuke.thisNode()\\nif\\ n.input(0)\\ ==\\ None\\ :\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse\\ :\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+ addUserKnob {4 mask t "Mask the distortion using the \"mask\" input connexion." M {none luminance alpha "" "" "" ""}}
+ mask luminance
+ addUserKnob {6 invert_mask l invert t "Invert the selected mask." -STARTLINE}
+ addUserKnob {6 fringe t "Use 4*(1-mask)*mask to mix." -STARTLINE}
+ addUserKnob {6 input_test2 l INVISIBLE t "Hey man! You shouldn't be seeing this! :'(" -STARTLINE +INVISIBLE}
+ input_test2 {{"\[python -execlocal n\\ =\\ nuke.thisNode()\\nif\\ n.input(2)\\ ==\\ None\\ :\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse\\ :\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+ addUserKnob {6 alphadetect2 l INVISIBLE t "Hey man! You shouldn't be seeing this! :'(" -STARTLINE +INVISIBLE}
+ alphadetect2 {{"\[python \"len(\\\[n for n in nuke.channels(nuke.thisNode().input(2)) if n.find(\\\".a\\\") != -1])>0\"]"}}
+ addUserKnob {41 blur l "blur map" T VB_Controls.blur}
+ addUserKnob {41 quality l "" -STARTLINE T VB_Controls.quality}
+ addUserKnob {41 avoid_dispersion l smooth -STARTLINE T VB_Controls.avoid_dispersion}
+ addUserKnob {41 color l INVISIBLE +INVISIBLE T VB_Controls.color}
+ addUserKnob {18 color_balance l "rgb balance" t "Indicates how much will each colour affect to the distortion. This doesn't apply on B&W distorion maps or when \"Fractal Noise\" is selected as the distortion map."}
+ color_balance {1 1 1}
+ addUserKnob {6 color_balance_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 noise_size l INVISIBLE +INVISIBLE T VB_Controls.noise_size}
+ addUserKnob {7 fractal_noise_size l "noise size" t "When \"Noise\" is selected as the distortion map, this will indicate the size of the noise." +HIDDEN}
+ fractal_noise_size 0.5
+ addUserKnob {7 velocity l speed t "When using \"Noise\" as the distortion map, this will automatically animate the distortion." -STARTLINE +HIDDEN}
+ velocity 0.1
+ addUserKnob {41 noise_z l INVISIBLE -STARTLINE +INVISIBLE T VB_Controls.noise_z}
+ addUserKnob {26 space2 l "" +STARTLINE T " "}
+ addUserKnob {26 aberration l Aberration}
+ addUserKnob {41 levels l INVISIBLE t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." +INVISIBLE T VB_Controls.levels}
+ addUserKnob {35 aberration_off l " " t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." M {off/off "python nuke.thisNode().knob('aberration_strength').setVisible(False); knob levels 0; python nuke.thisNode().knob('aberration_off').setVisible(True); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(False); python nuke.thisNode().knob('space3').setVisible(False);" 3/3 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 1; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(True); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 5/5 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 2; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(True); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 9/9 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 9; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(True); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);"}}
+ addUserKnob {35 aberration_3 l "" t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." -STARTLINE +HIDDEN M {3/off "python nuke.thisNode().knob('aberration_strength').setVisible(False); knob levels 0; python nuke.thisNode().knob('aberration_off').setVisible(True); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(False); python nuke.thisNode().knob('space3').setVisible(False);" 3/3 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 1; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(True); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 5/5 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 2; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(True); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 9/9 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 9; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(True); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);"}}
+ addUserKnob {35 aberration_5 l "" t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." -STARTLINE +HIDDEN M {5/off "python nuke.thisNode().knob('aberration_strength').setVisible(False); knob levels 0; python nuke.thisNode().knob('aberration_off').setVisible(True); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(False); python nuke.thisNode().knob('space3').setVisible(False);" 3/3 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 1; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(True); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 5/5 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 2; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(True); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 9/9 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 9; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(True); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);"}}
+ addUserKnob {35 aberration_9 l "" t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." -STARTLINE +HIDDEN M {9/off "python nuke.thisNode().knob('aberration_strength').setVisible(False); knob levels 0; python nuke.thisNode().knob('aberration_off').setVisible(True); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(False); python nuke.thisNode().knob('space3').setVisible(False);" 3/3 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 1; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(True); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 5/5 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 2; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(True); python nuke.thisNode().knob('aberration_9').setVisible(False); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);" 9/9 "python nuke.thisNode().knob('aberration_strength').setVisible(True); knob levels 9; python nuke.thisNode().knob('aberration_off').setVisible(False); python nuke.thisNode().knob('aberration_3').setVisible(False); python nuke.thisNode().knob('aberration_5').setVisible(False); python nuke.thisNode().knob('aberration_9').setVisible(True); python nuke.thisNode().knob('itinerations').setVisible(True); python nuke.thisNode().knob('space3').setVisible(True);"}}
+ addUserKnob {26 itinerations l "" t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." -STARTLINE +HIDDEN T " chromatic aberration levels"}
+ addUserKnob {41 ca_strength l INVISIBLE +INVISIBLE T VB_Controls.ca_strength}
+ addUserKnob {18 aberration_strength l strength t "If chromatic aberration is being used, this will indicate how differently will rgb values be distorted." +HIDDEN}
+ aberration_strength {1.2 1 0.8}
+ addUserKnob {6 aberration_strength_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 space3 l "" +STARTLINE +HIDDEN T " "}
+ addUserKnob {26 ""}
+ addUserKnob {26 space4 l "" +STARTLINE T " "}
+ addUserKnob {41 output l INVISIBLE t "Select if you want to use the distoted source or the distortion map as the output." +INVISIBLE T VB_Controls.output}
+ addUserKnob {26 output_1 l output t "Select if you want to use the distoted source or the distortion map as the output." T ""}
+ addUserKnob {35 output_result l "" t "Select if you want to use the distoted source or the distortion map as the output." -STARTLINE M {Result/Result "knob output 0; python nuke.thisNode().knob('multiplyUV').setVisible(False); python nuke.thisNode().knob('normalizeUV').setVisible(False); python nuke.thisNode().knob('output_result').setVisible(True); python nuke.thisNode().knob('output_map').setVisible(False); python nuke.thisNode().knob('mix').setVisible(True);" "Distortion Map" "knob output 1; python nuke.thisNode().knob('multiplyUV').setVisible(True); python nuke.thisNode().knob('normalizeUV').setVisible(True); python nuke.thisNode().knob('output_map').setVisible(True); python nuke.thisNode().knob('output_result').setVisible(False); python nuke.thisNode().knob('mix').setVisible(False);"}}
+ addUserKnob {35 output_map l "" t "Select if you want to use the distoted source or the distortion map as the output." -STARTLINE +HIDDEN M {"Distortion Map/Result" "knob output 0; python nuke.thisNode().knob('multiplyUV').setVisible(False); python nuke.thisNode().knob('normalizeUV').setVisible(False); python nuke.thisNode().knob('output_map').setVisible(False); python nuke.thisNode().knob('output_result').setVisible(True); python nuke.thisNode().knob('mix').setVisible(True);" "Distortion Map" "knob output 1; python nuke.thisNode().knob('multiplyUV').setVisible(True); python nuke.thisNode().knob('normalizeUV').setVisible(True); python nuke.thisNode().knob('output_map').setVisible(True); python nuke.thisNode().knob('output_result').setVisible(False); python nuke.thisNode().knob('mix').setVisible(False);"}}
+ addUserKnob {41 multiply_UV l INVISIBLE -STARTLINE +INVISIBLE T VB_Controls.multiply_UV}
+ addUserKnob {7 mix t "Dissolve between the original image at 0 and the full effect at 1." -STARTLINE}
+ mix 1
+ addUserKnob {14 multiplyUV l "mult " t "If the distortion map is selected as the output, this will multiply the values to make them easier to see." -STARTLINE +HIDDEN R 0 100}
+ multiplyUV 20
+ addUserKnob {6 normalizeUV l normal t "This will standarize the UV map. Uncheck this only if you are going to use the output map for a different X_Distort node." -STARTLINE +HIDDEN}
+ normalizeUV true
+ addUserKnob {20 about l About}
+ addUserKnob {26 about_1 l "" t "A bunny:\n(\\(\\ \n( - -)\n((') (')" +STARTLINE T "<br>\n<b>Xavier Martín © 2014</b>"}
+ addUserKnob {26 ""}
+ addUserKnob {26 website l "" +STARTLINE T "<a href=\"http://www.xaviermartinvfx.com\"><span style=\"color:#C8C8C8;\">www.xaviermartinvfx.com</span></a>"}
+ addUserKnob {26 space4_1 l "" +STARTLINE T <br>}
+ addUserKnob {22 version l <center>version</center> T "nuke.message('X_Distort Gizmo <i>v2.0</i><br><b>Xavier Martín © 2014</b>')" +STARTLINE}
+ addUserKnob {22 help_documentation l <center>?</center> -STARTLINE T "nuke.message('You can find more documentation<br>on <a href=\"http://www.nukepedia.com/gizmos/transform/x_distort\"><span style=\"color:#BCBCBC;\">Nukepedia</span></a> or my <a href=\"http://www.xaviermartinvfx.com/creating-distortion/\"><span style=\"color:#BCBCBC;\">website</span></a>.')"}
+}
+ Input {
+  inputs 0
+  name Source
+  xpos 279
+  ypos 57
+  addUserKnob {20 User}
+ }
+set N417ead70 [stack 0]
+ Dot {
+  name Dot36
+  xpos 423
+  ypos 60
+ }
+ Noise {
+  output rgb
+  replace true
+  size {{parent.VB_Controls.noise_size*350}}
+  zoffset {{parent.velocity*frame*.05+parent.VB_Controls.noise_z}}
+  center {1024 778}
+  name X_Noise1
+  xpos 389
+  ypos 99
+ }
+set N41976610 [stack 0]
+ IDistort {
+  channels rgb
+  name ChannelPicker
+  xpos 389
+  ypos 123
+  disable true
+ }
+ NoOp {
+  inputs 0
+  name VB_Controls
+  xpos 169
+  ypos 51
+  hide_input true
+  addUserKnob {20 X_Distort}
+  addUserKnob {26 distortion l Distortion}
+  addUserKnob {14 strength l distort t "Indicates the amount of distortion that is applied. Values can also be negative." R 0 100}
+  strength 20
+  addUserKnob {14 vblur l blur t "Indicates the amount of blur that is applied. Values can also be negative." R 0 100}
+  vblur 5
+  addUserKnob {7 direction t "Inicates the direction of the distortion. 0 means it will distort from dark pixels to bright pixels. 0.25 means it will distort perpendicular to the distortion map vectors. 0.5 means it will distort from bright pixels to dark pixels (equivalent to using negative distortion values)."}
+  direction 0.25
+  addUserKnob {7 revolutions t "More revolutions will result in a more chaotic distortion." R 0 50}
+  revolutions 1
+  addUserKnob {4 order l "" t "Indicates if the image is going to be distorted before or after applying the blur." +STARTLINE M {"blur then distort" "distort then blur" "" "" ""}}
+  addUserKnob {26 space l "" +STARTLINE T " "}
+  addUserKnob {26 distortion_map l "Distortion Map"}
+  addUserKnob {4 distort_from l "distort from" t "Indicates which input is going to be used as the distortion map. If \"Fractal Noise\" is selected, a random noise map will be generated." M {Source "Distortion Map" "Fractal Noise" "" "" "" ""}}
+  addUserKnob {6 fringe2 l fringe t "Use 4*(1-map)*map to distort." -STARTLINE}
+  addUserKnob {6 clamp t "This will clamp all the values over 1 and under 0." -STARTLINE}
+  addUserKnob {6 treat_as_UV l "treat as UV" t "Select only if you are already using a UV or vector map. <b> All values on the UV map must be between -1 and 1 meaning 0 equals no distortion! </b>" -STARTLINE}
+  addUserKnob {14 blur l "blur map" t "This will blur the distortion map for smoother results." R 0 100}
+  blur 60
+  addUserKnob {3 quality l "" t "Lower numbers make it faster but not as smooth. The quality will not increase over 100. The image is scaled down so the blur filter is no larger than this number, and then scaled up with linear interpolation after filtering." -STARTLINE}
+  quality 100
+  addUserKnob {6 avoid_dispersion l "avoid dispersion" t "This will avoid extreme results when using a highly detailed distortion map." -STARTLINE}
+  avoid_dispersion true
+  addUserKnob {18 color l "rgb balance" t "Indicates how much will each colour affect to the distortion. This doesn't apply on B&W distorion maps or when \"Fractal Noise\" is selected as the distortion map."}
+  color {{parent.color_balance.r} {parent.color_balance.g} {parent.color_balance.b}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {16 noise_size l "noise size" t "When \"Fractal Noise\" is selected as the distortion map, this will indicate the size of the noise."}
+  noise_size {{parent.fractal_noise_size}}
+  addUserKnob {7 noise_z l z t "When \"Fractal Noise\" is selected as the distortion map, this will animate the distortion." -STARTLINE R 0 5}
+  addUserKnob {26 space2 l "" +STARTLINE T " "}
+  addUserKnob {26 chromatic_aberration l Aberration}
+  addUserKnob {68 levels l " " t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." -STARTLINE M {off 3 5 9 "" "" "" "" "" "" "" "" "" ""}}
+  addUserKnob {26 itinerations l "" t "Select how many levels of chromatic aberration do you want to use. More levels means more accurate but slow render times." -STARTLINE T " chromatic aberration levels"}
+  addUserKnob {18 ca_strength l strength t "If chromatic aberration is being used, this will indicate how differently will rgb values be distorted."}
+  ca_strength {{parent.aberration_strength.r} {parent.aberration_strength.g} {parent.aberration_strength.b}}
+  addUserKnob {6 ca_strength_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {26 space3 l "" +STARTLINE T " "}
+  addUserKnob {26 ""}
+  addUserKnob {26 space4 l "" +STARTLINE T " "}
+  addUserKnob {4 output t "Select if you want to use the distoted source or the distortion map as the output." M {Result "Distortion Map" "" ""}}
+  addUserKnob {14 multiply_UV l "Multiply UV" t "If the distortion map is selected as the output, this will multiply the values to make them easier to see." -STARTLINE R 0 100}
+  multiply_UV {{parent.multiplyUV.w} {parent.multiplyUV.h}}
+  addUserKnob {7 mix t "Dissolve between the original image at 0 and the full effect at 1." +HIDDEN}
+  mix 1
+  addUserKnob {20 about l About}
+  addUserKnob {26 about_1 l "" +STARTLINE T "Xavier Martín © 2014"}
+  addUserKnob {26 unnamed l "" +STARTLINE}
+  addUserKnob {26 website l "" +STARTLINE T "<a href=\"http://www.xaviermartinvfx.com\"><span style=\"color:C8C8C8;\">www.xaviermartinvfx.com</span></a>"}
+  addUserKnob {7 distortion_factor}
+  distortion_factor 6
+  addUserKnob {6 blur_if_statement +STARTLINE}
+  blur_if_statement {{"\[if \{\[numvalue parent.blur] > 50\} \{return \"1\"\} else \{return parent.blur\}] "}}
+ }
+push $N417ead70
+ Dot {
+  name Dot3
+  xpos 313
+  ypos 81
+ }
+set N419773d0 [stack 0]
+ Dot {
+  name Dot30
+  xpos -98
+  ypos 81
+ }
+ Dot {
+  name Dot16
+  xpos -98
+  ypos 579
+ }
+set N41977ab0 [stack 0]
+ Dot {
+  name Dot38
+  xpos -98
+  ypos 648
+ }
+set N41977e20 [stack 0]
+ Dot {
+  name Dot44
+  xpos -98
+  ypos 672
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -56
+  ypos 195
+  number 2
+ }
+set N41978500 [stack 0]
+ Expression {
+  channel0 {rgba.red rgba.green -rgba.blue none}
+  expr0 a
+  channel1 none
+  channel2 none
+  channel3 none
+  name BandW2
+  xpos 59
+  ypos 195
+ }
+push $N41978500
+ Saturation {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  saturation 0
+  name BandW3
+  xpos -56
+  ypos 219
+ }
+ Dot {
+  inputs 0
+  name Dot43
+  xpos 151
+  ypos 222
+  hide_input true
+ }
+ Switch {
+  inputs 3
+  which {{parent.mask}}
+  name X_Switch1
+  xpos 59
+  ypos 219
+ }
+ Expression {
+  channel0 {rgba.red rgba.green -rgba.blue none}
+  expr0 4*(1-r)*r
+  channel1 none
+  expr1 4*(1-r)*r
+  name X_Fringe
+  xpos 59
+  ypos 243
+  disable {{1-parent.fringe}}
+ }
+ Invert {
+  channels {rgba.red rgba.green -rgba.blue none}
+  name X_Invert1
+  xpos 169
+  ypos 243
+  disable {{1-parent.invert_mask}}
+ }
+push $N41976610
+ Input {
+  inputs 0
+  name DistMap
+  xpos 169
+  ypos 99
+  number 1
+ }
+push $N419773d0
+ Switch {
+  inputs 3
+  which {{parent.VB_Controls.distort_from}}
+  name SorD1
+  xpos 279
+  ypos 99
+ }
+ Expression {
+  expr0 4*(1-r)*r
+  expr1 4*(1-g)*g
+  expr2 4*(1-b)*b
+  name X_Fringe1
+  xpos 279
+  ypos 123
+  disable {{1-parent.VB_Controls.fringe2}}
+ }
+ Clamp {
+  channels rgb
+  name X_Clamp1
+  xpos 279
+  ypos 147
+  disable {{1-parent.VB_Controls.clamp}}
+ }
+ Expression {
+  temp_name0 R
+  temp_expr0 parent.VB_Controls.color.r
+  temp_name1 G
+  temp_expr1 parent.VB_Controls.color.g
+  temp_name2 B
+  temp_expr2 parent.VB_Controls.color.b
+  temp_name3 S
+  temp_expr3 (R+G+B)
+  expr0 (r*R+g*G+b*B)/S
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  name BandW1
+  xpos 279
+  ypos 171
+  disable {{parent.VB_Controls.treat_as_UV}}
+ }
+ Blur {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  size {{parent.VB_Controls.blur.w x104 100} {parent.VB_Controls.blur.h x104 100}}
+  quality {{ceil(parent.blur)/100*parent.quality}}
+  invert_mask true
+  name X_Blur1
+  xpos 279
+  ypos 195
+ }
+set N41971980 [stack 0]
+ Matrix {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  matrix {
+      {0 0 0}
+      {-20 0 20}
+      {0 0 0}
+    }
+  name X_Matrix1
+  xpos 169
+  ypos 195
+  disable {{parent.VB_Controls.treat_as_UV}}
+ }
+push $N41971980
+ Matrix {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  matrix {
+      {0 -20 0}
+      {0 0 0}
+      {0 20 0}
+    }
+  name X_Matrix2
+  xpos 389
+  ypos 195
+  disable {{parent.VB_Controls.treat_as_UV}}
+ }
+ MergeExpression {
+  inputs 2
+  temp_name0 S
+  temp_expr0 (parent.VB_Controls.direction)*2*pi
+  expr0 -cos(S)*Ar+sin(S)*Br
+  expr1 cos(S)*Br+sin(S)*Ar
+  channel2 none
+  name X_Merge1
+  xpos 279
+  ypos 219
+  disable {{0**abs(parent.VB_Controls.revolutions)}}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  name X_Multiply1
+  xpos 279
+  ypos 243
+  disable {{(parent.input_test2+(0**(2-parent.mask)*(1-parent.alphadetect2)*(1-parent.input_test2)))+(0**parent.mask)}}
+ }
+ Expression {
+  temp_name0 S
+  temp_expr0 "\[if \{\[numvalue parent.blur.h] > 50\} \{return \"50\"\} else \{return parent.blur.h\}] /50*(parent.VB_Controls.avoid_dispersion)+1*(1-parent.VB_Controls.avoid_dispersion)"
+  temp_name1 R
+  temp_expr1 (parent.VB_Controls.revolutions)*pi
+  temp_name2 T
+  temp_expr2 abs(parent.VB_Controls.revolutions)**0.5
+  temp_name3 U
+  temp_expr3 "\[if \{\[numvalue parent.blur.w] > 50\} \{return \"50\"\} else \{return parent.blur.w\}]/50*(parent.VB_Controls.avoid_dispersion)+1*(1-parent.VB_Controls.avoid_dispersion)"
+  expr0 (sin(r*R*S))/T/2
+  expr1 (sin(g*R*U))/T/2
+  channel2 none
+  enable_mix_luminance false
+  name X_Math2
+  xpos 279
+  ypos 267
+  disable {{0**abs(parent.VB_Controls.revolutions) x89 1}}
+ }
+ Expression {
+  expr0 0
+  expr1 0
+  channel2 none
+  name X_Error_Correct
+  xpos 279
+  ypos 291
+  disable {{1-0**parent.VB_Controls.revolutions}}
+ }
+set N41972e20 [stack 0]
+push $N419773d0
+ Dot {
+  name Dot1
+  xpos 484
+  ypos 79
+ }
+ Dot {
+  name Dot2
+  xpos 484
+  ypos 330
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name X_Copy1
+  xpos 279
+  ypos 315
+ }
+ Dot {
+  name Dot4
+  xpos 313
+  ypos 363
+ }
+set N418d74f0 [stack 0]
+ Dot {
+  name Dot7
+  xpos 423
+  ypos 363
+ }
+set N418d7860 [stack 0]
+ Dot {
+  name Dot8
+  xpos 533
+  ypos 363
+ }
+set N418d7bd0 [stack 0]
+ Dot {
+  name Dot9
+  xpos 643
+  ypos 363
+ }
+set N418d7f40 [stack 0]
+ Dot {
+  name Dot10
+  xpos 753
+  ypos 363
+ }
+set N418d82b0 [stack 0]
+ Dot {
+  name Dot6
+  xpos 863
+  ypos 363
+ }
+set N418d8620 [stack 0]
+ Dot {
+  name Dot17
+  xpos 973
+  ypos 363
+ }
+set N418d8990 [stack 0]
+ Expression {
+  expr0 r*2/5
+  expr1 0
+  expr2 0
+  name ca_expression6
+  xpos 939
+  ypos 381
+ }
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2}}
+  offset -1
+  name X_VectorBlur19
+  xpos 939
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r}}
+  name X_IDistort10
+  xpos 939
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2}}
+  offset -1
+  name X_VectorBlur20
+  xpos 939
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+push $N418d8990
+ Dot {
+  name Dot26
+  xpos 1083
+  ypos 363
+ }
+set N419b27d0 [stack 0]
+ Expression {
+  expr0 r*3/10
+  expr1 g*1/16
+  expr2 0
+  name ca_expression11
+  xpos 1049
+  ypos 381
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.r+parent.VB_Controls.ca_strength.g)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.r+parent.VB_Controls.ca_strength.g)/2}}
+  offset -1
+  name X_VectorBlur29
+  xpos 1049
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.r+parent.VB_Controls.ca_strength.g)/4} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.r+parent.VB_Controls.ca_strength.g)/4}}
+  name X_IDistort15
+  xpos 1049
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.r+parent.VB_Controls.ca_strength.g)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.r+parent.VB_Controls.ca_strength.g)/2}}
+  offset -1
+  name X_VectorBlur30
+  xpos 1049
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot19
+  xpos 1083
+  ypos 480
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus5
+  xpos 939
+  ypos 477
+ }
+push $N419b27d0
+ Dot {
+  name Dot18
+  xpos 1193
+  ypos 363
+ }
+set N41bf2670 [stack 0]
+ Expression {
+  expr0 r*1/5
+  expr1 g*1/8
+  expr2 0
+  name ca_expression7
+  xpos 1159
+  ypos 381
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)}}
+  offset -1
+  name X_VectorBlur21
+  xpos 1159
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)/2} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)/2}}
+  name X_IDistort11
+  xpos 1159
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)}}
+  offset -1
+  name X_VectorBlur22
+  xpos 1159
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot21
+  xpos 1193
+  ypos 504
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus6
+  xpos 939
+  ypos 501
+ }
+push $N41bf2670
+ Dot {
+  name Dot27
+  xpos 1303
+  ypos 363
+ }
+set N41bf3e80 [stack 0]
+ Expression {
+  expr0 r*1/10
+  expr1 g*3/16
+  expr2 0
+  name ca_expression12
+  xpos 1269
+  ypos 381
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)/2}}
+  offset -1
+  name X_VectorBlur31
+  xpos 1269
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.r)/4} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.r)/4}}
+  name X_IDistort16
+  xpos 1269
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.r)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.r)/2}}
+  offset -1
+  name X_VectorBlur32
+  xpos 1269
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot23
+  xpos 1303
+  ypos 528
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus7
+  xpos 939
+  ypos 525
+ }
+push $N41bf3e80
+ Dot {
+  name Dot20
+  xpos 1413
+  ypos 363
+ }
+set N41bf5690 [stack 0]
+ Expression {
+  expr0 0
+  expr1 g*1/4
+  expr2 0
+  name ca_expression8
+  xpos 1379
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2}}
+  offset -1
+  name X_VectorBlur23
+  xpos 1379
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g}}
+  name X_IDistort12
+  xpos 1379
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+set N41c92300 [stack 0]
+push $N41c92300
+ VectorBlur {
+  inputs 1+1
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2}}
+  offset -1
+  maskChannelMask -rgba.alpha
+  name X_VectorBlur24
+  xpos 1379
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot25
+  xpos 1413
+  ypos 552
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus8
+  xpos 939
+  ypos 549
+ }
+push $N41bf5690
+ Dot {
+  name Dot28
+  xpos 1523
+  ypos 363
+ }
+set N41c930c0 [stack 0]
+ Expression {
+  expr0 0
+  expr1 g*3/16
+  expr2 b*1/10
+  name ca_expression13
+  xpos 1489
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)/2}}
+  offset -1
+  name X_VectorBlur33
+  xpos 1489
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.b)/4} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.b)/4}}
+  name X_IDistort17
+  xpos 1489
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.b)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g*3+parent.VB_Controls.ca_strength.b)/2}}
+  offset -1
+  name X_VectorBlur34
+  xpos 1489
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot31
+  xpos 1523
+  ypos 576
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus9
+  xpos 939
+  ypos 573
+ }
+push $N41c930c0
+ Dot {
+  name Dot22
+  xpos 1633
+  ypos 363
+ }
+set N41c948d0 [stack 0]
+ Expression {
+  expr0 0
+  expr1 g*1/8
+  expr2 b*1/5
+  name ca_expression9
+  xpos 1599
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)}}
+  offset -1
+  name X_VectorBlur25
+  xpos 1599
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)/2} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)/2}}
+  name X_IDistort13
+  xpos 1599
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)}}
+  offset -1
+  name X_VectorBlur26
+  xpos 1599
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot32
+  xpos 1633
+  ypos 600
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus10
+  xpos 939
+  ypos 597
+ }
+push $N41c948d0
+ Dot {
+  name Dot29
+  xpos 1743
+  ypos 363
+ }
+set N41da2300 [stack 0]
+ Expression {
+  expr0 0
+  expr1 g*1/16
+  expr2 b*3/10
+  name ca_expression14
+  xpos 1709
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.b+parent.VB_Controls.ca_strength.g)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.b+parent.VB_Controls.ca_strength.g)/2}}
+  offset -1
+  name X_VectorBlur35
+  xpos 1709
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.b+parent.VB_Controls.ca_strength.g)/4} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.b+parent.VB_Controls.ca_strength.g)/4}}
+  name X_IDistort18
+  xpos 1709
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.b+parent.VB_Controls.ca_strength.g)/2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(3*parent.VB_Controls.ca_strength.b+parent.VB_Controls.ca_strength.g)/2}}
+  offset -1
+  name X_VectorBlur36
+  xpos 1709
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot33
+  xpos 1743
+  ypos 624
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus11
+  xpos 939
+  ypos 621
+ }
+push $N41da2300
+ Dot {
+  name Dot24
+  xpos 1853
+  ypos 363
+ }
+ Expression {
+  expr0 0
+  expr1 0
+  expr2 b*2/5
+  name ca_expression10
+  xpos 1819
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2}}
+  offset -1
+  name X_VectorBlur27
+  xpos 1819
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b}}
+  name X_IDistort14
+  xpos 1819
+  ypos 441
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2}}
+  offset -1
+  name X_VectorBlur28
+  xpos 1819
+  ypos 477
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot34
+  xpos 1853
+  ypos 648
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus12
+  xpos 939
+  ypos 645
+ }
+push $N418d7860
+ Expression {
+  expr0 r*2/3
+  expr1 0
+  expr2 0
+  name ca_expression1
+  xpos 389
+  ypos 381
+ }
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2}}
+  offset -1
+  name X_VectorBlur9
+  xpos 389
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r}}
+  name X_IDistort5
+  xpos 389
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2}}
+  offset -1
+  name X_VectorBlur10
+  xpos 389
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+push $N418d7bd0
+ Expression {
+  expr0 r*1/3
+  expr1 g*1/3
+  expr2 0
+  name ca_expression2
+  xpos 499
+  ypos 381
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)}}
+  offset -1
+  name X_VectorBlur11
+  xpos 499
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)/2} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)/2}}
+  name X_IDistort6
+  xpos 499
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.r)}}
+  offset -1
+  name X_VectorBlur12
+  xpos 499
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot11
+  xpos 533
+  ypos 480
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus1
+  xpos 389
+  ypos 477
+ }
+push $N418d7f40
+ Expression {
+  expr0 0
+  expr1 g*1/3
+  expr2 0
+  name ca_expression3
+  xpos 609
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2}}
+  offset -1
+  name X_VectorBlur13
+  xpos 609
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g}}
+  name X_IDistort7
+  xpos 609
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+set N41e87e80 [stack 0]
+push $N41e87e80
+ VectorBlur {
+  inputs 1+1
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2}}
+  offset -1
+  maskChannelMask -rgba.alpha
+  name X_VectorBlur14
+  xpos 609
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot12
+  xpos 643
+  ypos 504
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus2
+  xpos 389
+  ypos 501
+ }
+push $N418d82b0
+ Expression {
+  expr0 0
+  expr1 g*1/3
+  expr2 b*1/3
+  name ca_expression4
+  xpos 719
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)}}
+  offset -1
+  name X_VectorBlur15
+  xpos 719
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)/2} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)/2}}
+  name X_IDistort8
+  xpos 719
+  ypos 429
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*(parent.VB_Controls.ca_strength.g+parent.VB_Controls.ca_strength.b)}}
+  offset -1
+  name X_VectorBlur16
+  xpos 719
+  ypos 453
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot13
+  xpos 753
+  ypos 528
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus3
+  xpos 389
+  ypos 525
+ }
+push $N418d8620
+ Expression {
+  expr0 0
+  expr1 0
+  expr2 b*2/3
+  name ca_expression5
+  xpos 829
+  ypos 381
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2}}
+  offset -1
+  name X_VectorBlur17
+  xpos 829
+  ypos 405
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b}}
+  name X_IDistort9
+  xpos 829
+  ypos 441
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2}}
+  offset -1
+  name X_VectorBlur18
+  xpos 829
+  ypos 477
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Dot {
+  name Dot14
+  xpos 863
+  ypos 552
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name X_Plus4
+  xpos 389
+  ypos 549
+ }
+ Dot {
+  name Dot15
+  xpos 423
+  ypos 573
+ }
+push $N418d74f0
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2}}
+  offset -1
+  name X_VectorBlur3
+  xpos 279
+  ypos 381
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2}}
+  offset -1
+  name X_VectorBlur7
+  xpos 279
+  ypos 417
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2}}
+  offset -1
+  name X_VectorBlur5
+  xpos 279
+  ypos 441
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ IDistort {
+  channels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r}}
+  name X_IDistort2
+  xpos 279
+  ypos 465
+  disable {{"strength == 0"}}
+ }
+ IDistort {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g}}
+  name X_IDistort3
+  xpos 279
+  ypos 501
+  disable {{"strength == 0"}}
+ }
+ IDistort {
+  channels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b}}
+  name X_IDistort4
+  xpos 279
+  ypos 525
+  disable {{"strength == 0"}}
+ }
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.r*2}}
+  offset -1
+  name X_VectorBlur4
+  xpos 279
+  ypos 549
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ VectorBlur {
+  channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.g*2}}
+  offset -1
+  name X_VectorBlur6
+  xpos 279
+  ypos 585
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*parent.VB_Controls.ca_strength.b*2}}
+  offset -1
+  name X_VectorBlur8
+  xpos 279
+  ypos 609
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+push $N418d74f0
+ Dot {
+  name Dot5
+  xpos 203
+  ypos 363
+ }
+set N41f7da00 [stack 0]
+ Dot {
+  name Dot37
+  xpos 130
+  ypos 363
+ }
+ Dot {
+  name Dot40
+  xpos 130
+  ypos 420
+ }
+set N41f7e0e0 [stack 0]
+ Dot {
+  name Dot39
+  xpos 130
+  ypos 492
+ }
+push $N41f7e0e0
+push $N41f7da00
+ VectorBlur {
+  channels {{{parent.ChannelPicker.channels}}}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*2}}
+  offset -1
+  name X_VectorBlur1
+  xpos 169
+  ypos 381
+  disable {{"parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Copy {
+  inputs 2
+  from0 forward.u
+  to0 forward.u
+  from1 forward.v
+  to1 forward.v
+  name X_Copy3
+  xpos 169
+  ypos 405
+  disable {{parent.VB_Controls.order}}
+ }
+ IDistort {
+  channels {{{parent.ChannelPicker.channels}}}
+  uv forward
+  uv_scale {{parent.VB_Controls.strength*parent.VB_Controls.distortion_factor} {parent.VB_Controls.strength*parent.VB_Controls.distortion_factor}}
+  name X_IDistort1
+  xpos 169
+  ypos 453
+  disable {{"strength == 0"}}
+ }
+ Copy {
+  inputs 2
+  from0 forward.u
+  to0 forward.u
+  from1 forward.v
+  to1 forward.v
+  name X_Copy4
+  xpos 169
+  ypos 477
+  disable {{1-parent.VB_Controls.order}}
+ }
+ VectorBlur {
+  channels {{{parent.ChannelPicker.channels}}}
+  uv forward
+  scale {{parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*2} {parent.VB_Controls.vblur*parent.VB_Controls.distortion_factor*2}}
+  offset -1
+  name X_VectorBlur2
+  xpos 169
+  ypos 525
+  disable {{"1-parent.VB_Controls.order+(vblur == 0)"}}
+ }
+ Switch {
+  inputs 4
+  which {{parent.VB_Controls.levels}}
+  name X_Switch2
+  xpos 279
+  ypos 645
+ }
+set N41f5a6f0 [stack 0]
+push $N41f5a6f0
+push $N41977ab0
+ Dot {
+  name Dot42
+  xpos 93
+  ypos 579
+ }
+set N41f7f8f0 [stack 0]
+ Dot {
+  name Dot41
+  xpos 203
+  ypos 579
+ }
+ Switch {
+  inputs 2
+  which {{parent.alphadetect}}
+  name X_Switch4
+  xpos 169
+  ypos 603
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  name X_Copy5
+  xpos 169
+  ypos 627
+  disable {{parent.alphadetect}}
+ }
+set N41f7ffd0 [stack 0]
+push $N41f7f8f0
+push $N41f7ffd0
+ Switch {
+  inputs 2
+  which {{parent.alphadetect}}
+  name X_Switch5
+  xpos 59
+  ypos 597
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  from3 rgba.alpha
+  to3 rgba.alpha
+  name X_Copy2
+  xpos 59
+  ypos 621
+  disable {{1-parent.alphadetect}}
+ }
+push $N41977e20
+push $N41972e20
+ Expression {
+  temp_name0 U
+  temp_expr0 parent.VB_Controls.multiply_UV.w
+  temp_name1 V
+  temp_expr1 parent.VB_Controls.multiply_UV.h
+  temp_name2 N
+  temp_expr2 parent.normalizeUV
+  expr0 (2-N)*U*r/(100)+.5*N
+  expr1 (2-N)*U*g/(100)+.5*N
+  expr2 1*N
+  name Distortion_Map_Output
+  xpos 169
+  ypos 324
+ }
+ Clamp {
+  channels {rgba.red rgba.green -rgba.blue none}
+  name X_Clamp2
+  xpos 59
+  ypos 324
+  disable {{1-parent.normalizeUV x92 1}}
+ }
+ Dot {
+  name Dot35
+  xpos -17
+  ypos 327
+ }
+ Switch {
+  inputs 3
+  which {{(1-parent.VB_Controls.output)*2-parent.input_test}}
+  name X_Switch3
+  xpos -51
+  ypos 645
+ }
+ Dissolve {
+  inputs 2
+  channels rgba
+  which {{1-parent.mix x95 -0.015}}
+  name X_Dissolve1
+  xpos -51
+  ypos 669
+  disable {{parent.output}}
+ }
+ Output {
+  name Output1
+  xpos -51
+  ypos 693
+ }
+end_group

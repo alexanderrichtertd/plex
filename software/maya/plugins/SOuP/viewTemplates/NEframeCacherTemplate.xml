@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEframeCacher'>
+		<attribute name='isFrameCached' type='maya.bool'>
+			<label>Is Frame Cached</label>
+		</attribute>
+		<attribute name='outGeometry' type='maya.vectorArray'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.vectorArray'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inTime' type='maya.double'>
+			<label>In Time</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEframeCacher'>
+		<property name='isFrameCached'/>
+		<property name='outGeometry'/>
+		<property name='inGeometry'/>
+		<property name='inTime'/>
+	</view>
+</templates>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEpoint'>
+		<attribute name='outGeometry' type='maya.nurbsSurface'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='outIdForMapPP' type='maya.Int32Array'>
+			<label>Out Id For Map PP</label>
+		</attribute>
+		<attribute name='outIdPM' type='maya.Int32Array'>
+			<label>Out Id PM</label>
+		</attribute>
+		<attribute name='outIdPP' type='maya.Int32Array'>
+			<label>Out Id PP</label>
+		</attribute>
+		<attribute name='outMapPP' type='maya.doubleArray'>
+			<label>Out Map PP</label>
+		</attribute>
+		<attribute name='outMapPP2' type='maya.doubleArray'>
+			<label>Out Map PP2</label>
+		</attribute>
+		<attribute name='outNormalPP' type='maya.vectorArray'>
+			<label>Out Normal PP</label>
+		</attribute>
+		<attribute name='outNormalPP2' type='maya.vectorArray'>
+			<label>Out Normal PP2</label>
+		</attribute>
+		<attribute name='outPositionPP' type='maya.vectorArray'>
+			<label>Out Position PP</label>
+		</attribute>
+		<attribute name='outPositionPP2' type='maya.pointArray'>
+			<label>Out Position PP2</label>
+		</attribute>
+		<attribute name='outRadiusPP' type='maya.doubleArray'>
+			<label>Out Radius PP</label>
+		</attribute>
+		<attribute name='outRgbaPP' type='maya.doubleArray'>
+			<label>Out Rgba PP</label>
+		</attribute>
+		<attribute name='outRgbaPP2' type='maya.doubleArray'>
+			<label>Out Rgba PP2</label>
+		</attribute>
+		<attribute name='outSharedMapPP' type='maya.doubleArray'>
+			<label>Out Shared Map PP</label>
+		</attribute>
+		<attribute name='outSharedMapPP2' type='maya.doubleArray'>
+			<label>Out Shared Map PP2</label>
+		</attribute>
+		<attribute name='outWeightPP' type='maya.doubleArray'>
+			<label>Out Weight PP</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.nurbsSurface'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.componentList'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inNormalPP' type='maya.vectorArray'>
+			<label>In Normal PP</label>
+		</attribute>
+		<attribute name='inRadiusPP' type='maya.doubleArray'>
+			<label>In Radius PP</label>
+		</attribute>
+		<attribute name='inRgbaPP' type='maya.doubleArray'>
+			<label>In Rgba PP</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+		<attribute name='inGeometry2' type='maya.nurbsSurface'>
+			<label>In Geometry 2</label>
+		</attribute>
+		<attribute name='inNormalPP2' type='maya.vectorArray'>
+			<label>In Normal PP2</label>
+		</attribute>
+		<attribute name='inRadiusPP2' type='maya.doubleArray'>
+			<label>In Radius PP2</label>
+		</attribute>
+		<attribute name='inRgbaPP2' type='maya.doubleArray'>
+			<label>In Rgba PP2</label>
+		</attribute>
+		<attribute name='inWeightPP2' type='maya.doubleArray'>
+			<label>In Weight PP2</label>
+		</attribute>
+		<attribute name='inMessageList' type='maya.TdataCompound'>
+			<label>In Message List</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+		<attribute name='currentTime' type='maya.double'>
+			<label>Current Time</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEpoint'>
+		<property name='outGeometry'/>
+		<property name='outIdForMapPP'/>
+		<property name='outIdPM'/>
+		<property name='outIdPP'/>
+		<property name='outMapPP'/>
+		<property name='outMapPP2'/>
+		<property name='outNormalPP'/>
+		<property name='outNormalPP2'/>
+		<property name='outPositionPP'/>
+		<property name='outPositionPP2'/>
+		<property name='outRadiusPP'/>
+		<property name='outRgbaPP'/>
+		<property name='outRgbaPP2'/>
+		<property name='outSharedMapPP'/>
+		<property name='outSharedMapPP2'/>
+		<property name='outWeightPP'/>
+		<property name='inGeometry'/>
+		<property name='inComponents'/>
+		<property name='inNormalPP'/>
+		<property name='inRadiusPP'/>
+		<property name='inRgbaPP'/>
+		<property name='inWeightPP'/>
+		<property name='inGeometry2'/>
+		<property name='inNormalPP2'/>
+		<property name='inRadiusPP2'/>
+		<property name='inRgbaPP2'/>
+		<property name='inWeightPP2'/>
+		<property name='inMessageList'/>
+		<property name='groupId'/>
+		<property name='currentTime'/>
+	</view>
+</templates>

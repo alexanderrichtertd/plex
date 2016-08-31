@@ -1,0 +1,383 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Gizmo {
+ help "METHOD Studios\n mask3d v0.1.2\nby Carl Schroter"
+ onCreate writeNode.nodeCreate()
+ knobChanged "\n\ncurrentNode = nuke.thisNode()\n\n# EXR\nif currentNode\[\"chbExr\"].getValue():\n    currentNode\[\"exrPath\"].setEnabled(True)    \n    currentNode\[\"exrRv\"].setEnabled(True)    \n    currentNode\[\"exrFolder\"].setEnabled(True)\nelse:\n    currentNode\[\"exrPath\"].setEnabled(False)    \n    currentNode\[\"exrRv\"].setEnabled(False)    \n    currentNode\[\"exrFolder\"].setEnabled(False) \n\n# JPG\nif currentNode\[\"chbJpg\"].getValue():\n    currentNode\[\"jpgPath\"].setEnabled(True)    \n    currentNode\[\"jpgRv\"].setEnabled(True)    \n    currentNode\[\"jpgFolder\"].setEnabled(True)\nelse:\n    currentNode\[\"jpgPath\"].setEnabled(False)    \n    currentNode\[\"jpgRv\"].setEnabled(False)    \n    currentNode\[\"jpgFolder\"].setEnabled(False) \n\n# TIF\nif currentNode\[\"chbTif\"].getValue():\n    currentNode\[\"tifPath\"].setEnabled(True)    \n    currentNode\[\"tifRv\"].setEnabled(True)    \n    currentNode\[\"tifFolder\"].setEnabled(True)\nelse:\n    currentNode\[\"tifPath\"].setEnabled(False)    \n    currentNode\[\"tifRv\"].setEnabled(False)    \n    currentNode\[\"tifFolder\"].setEnabled(False) \n\n# META\nif currentNode\[\"meta\"].getValue():\n    #currentNode\[\"status\"].setEnabled(True)    \n    currentNode\[\"comment\"].setEnabled(True)    \nelse:\n    #currentNode\[\"status\"].setEnabled(False)    \n    currentNode\[\"comment\"].setEnabled(False)    \n\n# THREADS\nif currentNode\[\"submit\"].getValue() == 0.0:\n    currentNode\[\"threads\"].setVisible(True)\n    currentNode\[\"space01\"].setVisible(True)\nelse:\n    currentNode\[\"threads\"].setVisible(False)\n    currentNode\[\"space01\"].setVisible(False)\n\n"
+ tile_color 0xff5106ff
+ addUserKnob {20 arWrite}
+ addUserKnob {52 knobChangedCode T "nuke.thisNode().knob('knobChanged').setValue('''\n\ncurrentNode = nuke.thisNode()\n\n# EXR\nif currentNode\[\"chbExr\"].getValue():\n    currentNode\[\"exrPath\"].setEnabled(True)    \n    currentNode\[\"exrRv\"].setEnabled(True)    \n    currentNode\[\"exrFolder\"].setEnabled(True)\nelse:\n    currentNode\[\"exrPath\"].setEnabled(False)    \n    currentNode\[\"exrRv\"].setEnabled(False)    \n    currentNode\[\"exrFolder\"].setEnabled(False) \n\n# JPG\nif currentNode\[\"chbJpg\"].getValue():\n    currentNode\[\"jpgPath\"].setEnabled(True)    \n    currentNode\[\"jpgRv\"].setEnabled(True)    \n    currentNode\[\"jpgFolder\"].setEnabled(True)\nelse:\n    currentNode\[\"jpgPath\"].setEnabled(False)    \n    currentNode\[\"jpgRv\"].setEnabled(False)    \n    currentNode\[\"jpgFolder\"].setEnabled(False) \n\n# TIF\nif currentNode\[\"chbTif\"].getValue():\n    currentNode\[\"tifPath\"].setEnabled(True)    \n    currentNode\[\"tifRv\"].setEnabled(True)    \n    currentNode\[\"tifFolder\"].setEnabled(True)\nelse:\n    currentNode\[\"tifPath\"].setEnabled(False)    \n    currentNode\[\"tifRv\"].setEnabled(False)    \n    currentNode\[\"tifFolder\"].setEnabled(False) \n\n# META\nif currentNode\[\"meta\"].getValue():\n    #currentNode\[\"status\"].setEnabled(True)    \n    currentNode\[\"comment\"].setEnabled(True)    \nelse:\n    #currentNode\[\"status\"].setEnabled(False)    \n    currentNode\[\"comment\"].setEnabled(False)    \n\n# THREADS\nif currentNode\[\"submit\"].getValue() == 0.0:\n    currentNode\[\"threads\"].setVisible(True)\n    currentNode\[\"space01\"].setVisible(True)\nelse:\n    currentNode\[\"threads\"].setVisible(False)\n    currentNode\[\"space01\"].setVisible(False)\n\n''')" +STARTLINE}
+ addUserKnob {52 GroupHelpIcon T "nuke.thisNode().knob('help').setValue(\"METHOD Studios\\n mask3d v0.1.2\\nby Carl Schroter\")" +STARTLINE}
+ addUserKnob {26 banner l @writeBanner119.png t "<b><font size='4' color='#dc520f'> arWRITE</font></b><font size='2' align='right'><br> pipeline conform write node</font>" T "<b><font size='4' color='#dc520f'> arWRITE</font></b><font size='2' align='right'><br> pipeline conform write node</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {2 rootPath l INVISIBLE +INVISIBLE}
+ rootPath /images/Root/exr/Root.%04d.exr
+ addUserKnob {4 status l Status M {" " "plate " preViz postViz preComp postComp comp final "" "" ""}}
+ addUserKnob {26 space4 l "" -STARTLINE T " |  "}
+ addUserKnob {6 chbPublish l PUBLISH t "Publish for EDIT (overwrite old publish)" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 lblExr l "EXR  " T ""}
+ addUserKnob {6 chbExr l " " -STARTLINE}
+ chbExr true
+ addUserKnob {2 exrPath l "" -STARTLINE}
+ exrPath /images/Root/exr/Root.%04d.exr
+ addUserKnob {22 exrFolder l @btnFolder48.png t "open render folder" -STARTLINE T "reload(writeNode)\nwriteNode.openFolder(nuke.thisNode()\[\"exrPathComment\"].getValue())"}
+ addUserKnob {22 exrRv l @rv.png t "open rendering in rv player" -STARTLINE T "reload(writeNode)\nwriteNode.openRV(nuke.thisNode()\[\"exrPathComment\"].getValue())"}
+ addUserKnob {26 lblJpg l "JPG  " T ""}
+ addUserKnob {6 chbJpg l " " -STARTLINE}
+ chbJpg true
+ addUserKnob {2 jpgPath l "" -STARTLINE}
+ jpgPath /images/Root/jpg/Root.%04d.jpg
+ addUserKnob {22 jpgFolder l @btnFolder48.png t "open render folder" -STARTLINE T "reload(writeNode)\nwriteNode.openFolder(nuke.thisNode()\[\"jpgPathComment\"].getValue())"}
+ addUserKnob {22 jpgRv l @rv.png t "open rendering in rv player" -STARTLINE T "reload(writeNode)\nwriteNode.openRV(nuke.thisNode()\[\"jpgPathComment\"].getValue())"}
+ addUserKnob {26 lblTif l "TIF  " T ""}
+ addUserKnob {6 chbTif l " " -STARTLINE}
+ addUserKnob {2 tifPath l "" -STARTLINE +DISABLED}
+ addUserKnob {22 tifFolder l @btnFolder48.png t "open render folder" -STARTLINE +DISABLED T "reload(writeNode)\nwriteNode.openFolder(nuke.thisNode()\[\"tifPathComment\"].getValue())"}
+ addUserKnob {22 tifRv l @rv.png t "open rendering in rv player" -STARTLINE +DISABLED T "reload(writeNode)\nwriteNode.openRV(nuke.thisNode()\[\"tifPathComment\"].getValue())"}
+ addUserKnob {1 exrPathComment l INVISIBLE +INVISIBLE}
+ exrPathComment H:/MASTER/40_SHOTS/030_superTest/WORK/images/030_superTest_COMP_v011_ar/exr/030_superTest_COMP_v011_ar.%04d.exr
+ addUserKnob {1 jpgPathComment l INVISIBLE +INVISIBLE}
+ jpgPathComment H:/MASTER/40_SHOTS/030_superTest/WORK/images/030_superTest_COMP_v011_ar/tif/030_superTest_COMP_v011_ar.%04d.tif
+ addUserKnob {1 tifPathComment l INVISIBLE +INVISIBLE}
+ addUserKnob {26 ""}
+ addUserKnob {3 resolutionX l Resolution +DISABLED}
+ resolutionX 1920
+ addUserKnob {3 resolutionY l "x " -STARTLINE +DISABLED}
+ resolutionY 1080
+ addUserKnob {26 space7 l "" -STARTLINE T " |  "}
+ addUserKnob {4 letterbox l Letterbox -STARTLINE M {16:9 21:9 "" ""}}
+ addUserKnob {3 frameStart l "Frame Range"}
+ frameStart 1
+ addUserKnob {3 frameEnd l "- " -STARTLINE}
+ frameEnd 100
+ addUserKnob {26 ""}
+ addUserKnob {26 lblMeta l "Meta  " T ""}
+ addUserKnob {6 meta l "" t "with or without meta informations" -STARTLINE}
+ meta true
+ addUserKnob {26 space06 l "" -STARTLINE T " |  "}
+ addUserKnob {1 comment l "Comment " -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {4 submit l Submit M {renderthreads rrSubmit local}}
+ addUserKnob {26 space01 l "" -STARTLINE T " |  "}
+ addUserKnob {3 threads l Threads -STARTLINE}
+ threads 12
+ addUserKnob {26 ""}
+ addUserKnob {22 render l <b>RENDER<b> T "reload(writeNode)\nwriteNode.render()" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright l "" +STARTLINE T "<font size='2' color='#808080'>v0.5.0 | © Alexander Richter | 2016</font>"}
+ addUserKnob {20 metaTab l Meta}
+ addUserKnob {7 meta_opacity l "Opacity (Meta)"}
+ meta_opacity 0.2
+ addUserKnob {7 opacityLetterbox l "Opacity (Letterbox)" +DISABLED}
+ opacityLetterbox 1
+ addUserKnob {26 ""}
+ addUserKnob {6 meta_project l Project +STARTLINE}
+ meta_project true
+ addUserKnob {26 meta_space01 l "" -STARTLINE T " |  "}
+ addUserKnob {6 meta_file l File -STARTLINE}
+ meta_file true
+ addUserKnob {26 meta_space02 l "" -STARTLINE T "     |  "}
+ addUserKnob {6 meta_comment l Comment -STARTLINE}
+ meta_comment true
+ addUserKnob {26 meta_space03 l "" -STARTLINE T " |  "}
+ addUserKnob {6 meta_user l User -STARTLINE}
+ meta_user true
+ addUserKnob {6 meta_date l Date +STARTLINE}
+ meta_date true
+ addUserKnob {26 meta_space04 l "" -STARTLINE T "    |  "}
+ addUserKnob {6 meta_status l Status -STARTLINE}
+ meta_status true
+ addUserKnob {26 meta_space05 l "" -STARTLINE T " |  "}
+ addUserKnob {6 meta_frames l Frames -STARTLINE}
+ meta_frames true
+ addUserKnob {26 meta_space06 l "" -STARTLINE T "     |  "}
+ addUserKnob {6 meta_resolution l Resolution -STARTLINE}
+ meta_resolution true
+}
+ Text {
+  inputs 0
+  opacity {{text_master.opacity}}
+  message "\[python os.getenv('username')]"
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size}}
+  xjustify right
+  yjustify center
+  Transform 1
+  box {1574 {"\[value parent.resolutionY] - 56"} 1907 {"\[value parent.resolutionY] - 12"}}
+  center {1024 576}
+  name text_user
+  xpos -234
+  ypos 30
+  disable {{"!\[value parent.meta_frames]"}}
+ }
+ Text {
+  opacity {{text_master.opacity}}
+  message "\[file rootname \[file tail \[value root.name] ] ]"
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{"\[value parent.resolutionX] / 2 - 446" x1 515.3565236 x157 514} {"\[value parent.resolutionY] - 62"} {"\[value parent.resolutionX] / 2 + 441" x1 1400.356524} {"\[value parent.resolutionY] - 12" x1 1065.999998}}
+  center {1024 576}
+  name text_file
+  xpos -356
+  ypos 28
+  disable {{"!\[value parent.meta_file]"}}
+ }
+ Text {
+  opacity {{text_master.opacity}}
+  message "\[value parent.comment]\n"
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size-10}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{"\[value parent.resolutionX] / 2 - 446" x1 514.4816019} {"\[value parent.resolutionY] - 115"} {"\[value parent.resolutionX] / 2 + 441"} 1003}
+  center {1024 576}
+  name text_comment
+  xpos -356
+  ypos 73
+  disable {{"!\[value parent.meta_comment]"}}
+ }
+ Text {
+  opacity {{text_master.opacity}}
+  message "\[python \{s.PROJECT_NAME\}]"
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size}}
+  yjustify top
+  Transform 1
+  box {11 {"\[value parent.resolutionY] - 56"} 393 {"\[value parent.resolutionY] - 12"}}
+  center {1024 576}
+  name text_project
+  xpos -466
+  ypos 73
+  disable {{"!\[value parent.meta_project]"}}
+ }
+ Text2 {
+  font_size_toolbar {{text_master.size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{text_master.opacity}}
+  message "\[date %d.%m.%Y]  \[date %H:%M]"
+  old_message {{49 54 46 48 50 46 50 48 49 54 32 32 50 50 58 50 56}
+    }
+  old_expression_markers {{0 9 12 16}
+    }
+  box {14.5 19 350 54}
+  transforms {{0 2}
+    }
+  font_size_values {{0 40 1 40 2 40 3 40 4 40 5 40 6 40 7 40 8 40 9 40 10 40 11 40 12 40 13 40 14 40 15 40 16 40}
+    }
+  cursor_position 29
+  font {{ Impact : Regular : impact.ttf : 0 }}
+  font_size {{text_master.size}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{14.5 50.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 576 0 0 1 1 0 0 0 0}
+    }
+  name text_date
+  xpos -466
+  ypos 174
+  disable {{"!\[value parent.meta_date]"}}
+ }
+ Text {
+  opacity {{text_master.opacity}}
+  message "\[value parent.status]"
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{"\[value parent.resolutionX] / 2 - 160" x1 799.9935176} 70 1119.993518 105}
+  center {1024 576}
+  name text_status
+  xpos -349
+  ypos 174
+  disable {{"!\[value parent.meta_status]"}}
+ }
+ Text {
+  opacity {{text_master.opacity}}
+  message "\[value parent.frameStart] - \[value parent.frameEnd] | \n"
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size}}
+  xjustify right
+  yjustify top
+  Transform 1
+  box {{"\[value parent.resolutionX] / 2 - 250" x1 768.3573967} -69 973.3573967 -34}
+  scale {1 0.8600000143}
+  center {1024 576}
+  name text_frames
+  xpos -349
+  ypos 223
+  disable {{"!\[value parent.meta_frames]"}}
+ }
+ Text {
+  opacity {{text_master.opacity}}
+  message "\[value frame] "
+  font C:/Windows/Fonts/impact.ttf
+  size {{text_master.size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{"\[value parent.resolutionX] / 2 + 12" x1 972.7514487} -69 1124.751449 -34}
+  scale {1 0.8600000143}
+  center {1024 576}
+  name text_framesCount
+  xpos -349
+  ypos 265
+  disable {{"!\[value parent.meta_frames]"}}
+ }
+ Text2 {
+  font_size_toolbar 40
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{text_master.opacity}}
+  message "\[value parent.resolutionX] x \[value parent.resolutionY]"
+  old_message {{49 57 50 48 32 120 32 49 48 56 48}
+    }
+  old_expression_markers {{0 3 7 10}
+    }
+  box {{"\[value parent.resolutionX] - 265"} 19 1904.75 54}
+  xjustify right
+  transforms {{0 2}
+    }
+  font_size_values {{0 40 1 40 2 40 3 40 4 40 5 40 6 40 7 40 8 40 9 40 10 40}
+    }
+  cursor_position 55
+  font {{ Impact : Regular : impact.ttf : 0 }}
+  font_size 40
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{2036 43}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 576 0 0 1 1 0 0 0 0}
+    }
+  name text_resolution
+  xpos -235
+  ypos 178
+  disable {{"!\[value parent.meta_resolution]"}}
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{"\[value parent.meta]"}}
+  name Switch3
+  xpos -110
+  ypos 225
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+set N5cacc800 [stack 0]
+ Reformat {
+  type "to box"
+  box_width {{"\[value parent.resolutionX]"}}
+  box_height {{"\[value parent.resolutionY]"}}
+  box_fixed true
+  black_outside true
+  name Reformat3
+  xpos 0
+  ypos 65
+  disable {{curve x1091 0}}
+ }
+push $N5cacc800
+ Reformat {
+  type "to box"
+  format "1920 1080 0 0 1920 1080 1 arPipeline"
+  box_width {{"\[value parent.resolutionX]"}}
+  box_height {{"\[value parent.resolutionX]*9/21"}}
+  box_fixed true
+  name Reformat1
+  xpos 129
+  ypos 60
+ }
+ Switch {
+  inputs 2
+  which {{"\[if \{\[value parent.letterbox] == \"21:9\"\} \{return 0\} \{return 1\}]"}}
+  name Switch1
+  xpos 0
+  ypos 134
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 0
+  ypos 225
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 268
+ }
+set N2e834c00 [stack 0]
+ Output {
+  name Output1
+  xpos 2
+  ypos 390
+ }
+ Text {
+  inputs 0
+  opacity {{"\[value parent.meta_opacity]" x1 0.2}}
+  message "\[file rootname \[file tail \[value root.name] ] ]"
+  font C:/Windows/Fonts/impact.ttf
+  size {{curve x1 40}}
+  xjustify center
+  yjustify center
+  box {516 1091 1540 1137}
+  center {1024 576}
+  name text_master
+  tile_color 0x1fff00ff
+  xpos -236
+  ypos 119
+  disable {{curve x1 0}}
+ }
+push $N2e834c00
+ Write {
+  file "\[value parent.jpgPathComment]"
+  checkHashOnRead false
+  version 1
+  afterRender "writeNode.publishRender(\"jpg\")"
+  name Write_JPG
+  xpos -122
+  ypos 285
+  disable {{!parent.chbJpg}}
+  postage_stamp true
+ }
+push $N2e834c00
+ Write {
+  channels rgba
+  file "\[value parent.exrPathComment]"
+  version 1
+  afterRender "writeNode.publishRender(\"exr\")"
+  name Write_EXR
+  xpos 135
+  ypos 297
+  disable {{!parent.chbExr}}
+  postage_stamp true
+ }
+push $N2e834c00
+ Write {
+  channels rgba
+  file "\[value parent.tifPathComment]"
+  colorspace sRGB
+  checkHashOnRead false
+  version 1
+  afterRender "writeNode.publishRender(\"exr\")"
+  name Write_Tif
+  selected true
+  xpos 287
+  ypos 269
+  disable {{!parent.chbTif}}
+  postage_stamp true
+ }
+end_group

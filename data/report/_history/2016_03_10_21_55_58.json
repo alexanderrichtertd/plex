@@ -1,0 +1,1 @@
+{"comment": "Using Snapshot of Render breaks software:\nreturn False - seem to be the problem", "script": "Save", "error": "no error message", "reason": "Bug", "user": "arichter", "file": "//bigfoot/revierkampf/30_assets/testObject/30_SHD/WORK/testObject_SHD_v001_ar.mb", "time": "2016.03.10 21:55:58", "software": "maya"}

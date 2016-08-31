@@ -1,0 +1,369 @@
+[node alHair]
+	desc STRING "Create believable hair shading with a plausible direct lighting model and approximate multiple scattering. The scattering from a hair fibre is a complex interaction of multiple lobes, often referred to in the literature as R, TT and TRT. Those related to the Specular 1, Transmission and Specular 2 lobes, respectively. The Diffuse lobe represents multiple scattering between hair fibres."
+	c4d.classification STRING "surface"
+	c4d.menu STRING "surface"
+	c4d.command_id INT 1034646
+	maya.name STRING "alHair"
+	maya.classification STRING "shader/surface"
+	maya.id INT 0x00116403
+	houdini.icon STRING "SHELF_hair"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alHair.html"
+	houdini.parm.folder.ROOT STRING "Fibre properties;13;Diffuse;5;Specular 1;4;Specular 2;5;Transmission;4;IDs;8;AOVs;31;Advanced;7;"
+	houdini.parm.heading.h0 STRING "Randomize"
+	houdini.parm.heading.h1 STRING "Advanced"
+	houdini.order STRING " ROOT"
+	houdini.order2 STRING " melanin dyeColor specularWidth specularShift opacity h0 randomTangent randomMelanin randomHue randomSaturation h1 glintRolloff transmissionRolloff"
+	houdini.order3 STRING " diffuseStrength diffuseColor diffuseScatteringMode diffuseForward diffuseBack"
+	houdini.order4 STRING " specular1Strength specular1Color specular1WidthScale specular1Shift"
+	houdini.order5 STRING " specular2Strength specular2Color specular2WidthScale specular2Shift glintStrength"
+	houdini.order6 STRING " transmissionStrength transmissionColor transmissionWidthScale transmissionShift"
+	houdini.order7 STRING " id1 id2 id3 id4 id5 id6 id7 id8"
+	houdini.order8 STRING " aov_diffuse_color aov_direct_diffuse aov_indirect_diffuse aov_direct_local aov_indirect_local aov_direct_global aov_indirect_global aov_direct_specular aov_indirect_specular aov_direct_specular_2 aov_indirect_specular_2 aov_direct_glint aov_indirect_glint aov_direct_transmission aov_indirect_transmission aov_light_group_1 aov_light_group_2 aov_light_group_3 aov_light_group_4 aov_light_group_5 aov_light_group_6 aov_light_group_7 aov_light_group_8 aov_id_1 aov_id_2 aov_id_3 aov_id_4 aov_id_5 aov_id_6 aov_id_7 aov_id_8"
+	houdini.order9 STRING " dualDepth diffuseIndirectStrength extraSamplesDiffuse glossyIndirectStrength extraSamplesGlossy uparam vparam"
+
+	[attr melanin]
+		houdini.label STRING "Melanin"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "The melanin content of the hair fibre. Use this to generated natural colors for mammalian hair. 0 will give white hair, 0.2-04 blonde, 0.4-0.6 red, 0.6-0.8 brown and 0.8-1.0 black hair. If you want to set the color of the hair with a texture map, set this to 0 and use the Dye color parameter."
+		linkable BOOL TRUE
+	[attr dyeColor]
+		houdini.label STRING "Dye color"
+		desc STRING "Color tint to apply to the hair. You can also plug a MayaRamp in here to define the color along the lenght of the hair."
+		linkable BOOL TRUE
+	[attr specularWidth]
+		houdini.label STRING "Highlight width"
+		desc STRING "The width of the hair highlights, essentially how shiny the hair appears. Values in the range 1-7 are sensible for human hair."
+		linkable BOOL FALSE
+	[attr specularShift]
+		houdini.label STRING "Highlight shift"
+		desc STRING "How much the highlights are shifted along the hair by the cuticles on the hair fibre. Generally this wants to be 1 to 1.5 times the value of the Width parameter."
+		linkable BOOL FALSE
+	[attr opacity]
+		houdini.label STRING "Opacity"
+		desc STRING "Opacity of the hair fibre. Setting this to anything other than white can make the shader very slow. If you want to get a softer look and resolve fine hair better, it is often a better idea to raise your AA samples instead."
+		linkable BOOL TRUE
+	[attr randomTangent]
+		houdini.label STRING "Tangent"
+		desc STRING "Adds a random offset to the hair tangent which can be useful for breaking up uniform-looking grooms. Note that this value is dependent on your scene scale."
+		linkable BOOL TRUE
+	[attr randomMelanin]
+		houdini.label STRING "Melanin"
+		desc STRING "Adds a random offset to the melanin content of the hair. Values from 0.05 to 0.2 give a very natural color variation."
+		linkable BOOL TRUE
+	[attr randomHue]
+		houdini.label STRING "Dye hue"
+		desc STRING "Add a random offest to the hue of the Dye color."
+		linkable BOOL TRUE
+	[attr randomSaturation]
+		houdini.label STRING "Dye saturation"
+		desc STRING "Add a random offest to the saturation of the Dye color."
+		linkable BOOL TRUE
+	[attr glintRolloff]
+		houdini.label STRING "Glint rolloff"
+		desc STRING "Controls the rolloff of the caustic glints in the hair. Lower values make the glints more pingy, higher values make them softer and less apparent."
+		linkable BOOL FALSE
+	[attr transmissionRolloff]
+		houdini.label STRING "Transmission rolloff"
+		desc STRING "Controls the rolloff of the transmission highlight. Essentially, if you want the transmission highlight to only appear when the light is directly behind the hair, set this value to 10 or lower. If you want to increase the amount the highlight spreads as the light comes around from behind, set this value higher than 10."
+		linkable BOOL FALSE
+	[attr diffuseStrength]
+		houdini.label STRING "Strength"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "Multiplier on the strength of the diffuse illumination."
+		linkable BOOL TRUE
+	[attr diffuseColor]
+		houdini.label STRING "Tint"
+		desc STRING "Tint on the diffuse illumination. This is multiplied on top of the Fibre color specified above."
+		linkable BOOL TRUE
+	[attr diffuseScatteringMode]
+		houdini.label STRING "Scattering mode"
+		desc STRING "The algorithm to use for diffuse calculation. dual-scattering is a realistic approximation of multiple scattering in hair and is more appropriate for long, realistic hair. kajiya-kay is the class algorithm used in the standard hair shader and is more suitable for short, cartoony fur. It is also a little cheaper to compute than dual-scattering."
+		linkable BOOL FALSE
+	[attr diffuseForward]
+		houdini.label STRING "Forward scattering"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "Controls the amount of light bleeding through the hair in dual-scattering mode."
+		linkable BOOL TRUE
+	[attr diffuseBack]
+		houdini.label STRING "Back scattering"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "Controls the amount of light kicked back from the hair in dual-scattering mode."
+		linkable BOOL TRUE
+	[attr specular1Strength]
+		houdini.label STRING "Strength"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "Multiplier on the strength of this lobe"
+		linkable BOOL TRUE
+	[attr specular1Color]
+		houdini.label STRING "Tint"
+		desc STRING "Color tint on the color automatically generated for this lobe by the Fibre color settings."
+		linkable BOOL TRUE
+	[attr specular1WidthScale]
+		houdini.label STRING "Width scale"
+		desc STRING "Multiplier on the width of this lobe's highlight."
+		linkable BOOL TRUE
+	[attr specular1Shift]
+		houdini.label STRING "Shift offset"
+		desc STRING "Offset on the shift of this lobe's highlight."
+		linkable BOOL TRUE
+	[attr specular2Strength]
+		houdini.label STRING "Strength"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "Multiplier on the strength of this lobe"
+		linkable BOOL TRUE
+	[attr specular2Color]
+		houdini.label STRING "Tint"
+		desc STRING "Color tint on the color automatically generated for this lobe by the Fibre color settings."
+		linkable BOOL TRUE
+	[attr specular2WidthScale]
+		houdini.label STRING "Width scale"
+		desc STRING "Multiplier on the width of this lobe's highlight."
+		linkable BOOL TRUE
+	[attr specular2Shift]
+		houdini.label STRING "Shift offset"
+		desc STRING "Offset on the shift of this lobe's highlight."
+		linkable BOOL TRUE
+	[attr glintStrength]
+		houdini.label STRING "Glint strength"
+		desc STRING "Strength of the caustic glints. Sensible values are in the range 1-5."
+		linkable BOOL TRUE
+	[attr transmissionStrength]
+		houdini.label STRING "Strength"
+		min FLOAT 0
+		max FLOAT 1
+		desc STRING "Multiplier on the strength of this lobe"
+		linkable BOOL TRUE
+	[attr transmissionColor]
+		houdini.label STRING "Tint"
+		desc STRING "Color tint on the color automatically generated for this lobe by the Fibre color settings."
+		linkable BOOL TRUE
+	[attr transmissionWidthScale]
+		houdini.label STRING "Width scale"
+		desc STRING "Multiplier on the width of this lobe's highlight."
+		linkable BOOL TRUE
+	[attr transmissionShift]
+		houdini.label STRING "Shift offset"
+		desc STRING "Offset on the shift of this lobe's highlight."
+		linkable BOOL TRUE
+	[attr id1]
+		houdini.label STRING "id1"
+		desc STRING "Color to be output in id_1 AOV."
+		linkable BOOL TRUE
+	[attr id2]
+		houdini.label STRING "id2"
+		desc STRING "Color to be output in id_2 AOV."
+		linkable BOOL TRUE
+	[attr id3]
+		houdini.label STRING "id3"
+		desc STRING "Color to be output in id_3 AOV."
+		linkable BOOL TRUE
+	[attr id4]
+		houdini.label STRING "id4"
+		desc STRING "Color to be output in id_4 AOV."
+		linkable BOOL TRUE
+	[attr id5]
+		houdini.label STRING "id5"
+		desc STRING "Color to be output in id_5 AOV."
+		linkable BOOL TRUE
+	[attr id6]
+		houdini.label STRING "id6"
+		desc STRING "Color to be output in id_6 AOV."
+		linkable BOOL TRUE
+	[attr id7]
+		houdini.label STRING "id7"
+		desc STRING "Color to be output in id_7 AOV."
+		linkable BOOL TRUE
+	[attr id8]
+		houdini.label STRING "id8"
+		desc STRING "Color to be output in id_8 AOV."
+		linkable BOOL TRUE
+	[attr dualDepth]
+		houdini.label STRING "Brute force bounces"
+		desc STRING "Number of brute-force, inter-hair bounces to calculate before falling back to dual scattering. THIS PARAMETER IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE."
+		linkable BOOL FALSE
+	[attr diffuseIndirectStrength]
+		houdini.label STRING "Diffuse indirect strength"
+		desc STRING "Multiplier on the intensity of the indirect diffuse illumination. The default value of 0 disables indirect illumination on the hair since in most cases you don't need it and it can be quite expensive."
+		linkable BOOL TRUE
+	[attr extraSamplesDiffuse]
+		houdini.label STRING "Diffuse extra samples"
+		desc STRING "Number of extra samples to take when calculating indirect diffuse illumination."
+		linkable BOOL FALSE
+	[attr glossyIndirectStrength]
+		houdini.label STRING "Glossy indirect strength"
+		desc STRING "Multiplier on the intensity of the indirect glossy illumination. The default value of 0 disables indirect illumination on the hair since in most cases you don't need it and it can be quite expensive."
+		linkable BOOL TRUE
+	[attr extraSamplesGlossy]
+		houdini.label STRING "Glossy extra samples"
+		desc STRING "Number of extra samples to take when calculating indirect glossy illumination."
+		linkable BOOL FALSE
+	[attr uparam]
+		houdini.label STRING "U param"
+		desc STRING "Name of the user data that contains the U coordinate of the surface for texturing."
+		linkable BOOL FALSE
+	[attr vparam]
+		houdini.label STRING "V param"
+		desc STRING "Name of the user data that contains the V coordinate of the surface for texturing."
+		linkable BOOL FALSE
+	[attr aov_diffuse_color]
+		houdini.label STRING "Diffuse color"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "diffuse_color"
+	[attr aov_direct_diffuse]
+		houdini.label STRING "Direct diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_diffuse"
+	[attr aov_indirect_diffuse]
+		houdini.label STRING "Indirect diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_diffuse"
+	[attr aov_direct_local]
+		houdini.label STRING "Direct local"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_local"
+	[attr aov_indirect_local]
+		houdini.label STRING "Indirect local"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_local"
+	[attr aov_direct_global]
+		houdini.label STRING "Direct global"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_global"
+	[attr aov_indirect_global]
+		houdini.label STRING "Indirect global"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_global"
+	[attr aov_direct_specular]
+		houdini.label STRING "Direct specular"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_specular"
+	[attr aov_indirect_specular]
+		houdini.label STRING "Indirect specular"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_specular"
+	[attr aov_direct_specular_2]
+		houdini.label STRING "Direct specular 2"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_specular_2"
+	[attr aov_indirect_specular_2]
+		houdini.label STRING "Indirect specular 2"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_specular_2"
+	[attr aov_direct_glint]
+		houdini.label STRING "Direct glint"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_glint"
+	[attr aov_indirect_glint]
+		houdini.label STRING "Indirect glint"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_glint"
+	[attr aov_direct_transmission]
+		houdini.label STRING "Direct transmission"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_transmission"
+	[attr aov_indirect_transmission]
+		houdini.label STRING "Indirect transmission"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_transmission"
+	[attr aov_light_group_1]
+		houdini.label STRING "Light group [1]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_1"
+	[attr aov_light_group_2]
+		houdini.label STRING "Light group [2]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_2"
+	[attr aov_light_group_3]
+		houdini.label STRING "Light group [3]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_3"
+	[attr aov_light_group_4]
+		houdini.label STRING "Light group [4]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_4"
+	[attr aov_light_group_5]
+		houdini.label STRING "Light group [5]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_5"
+	[attr aov_light_group_6]
+		houdini.label STRING "Light group [6]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_6"
+	[attr aov_light_group_7]
+		houdini.label STRING "Light group [7]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_7"
+	[attr aov_light_group_8]
+		houdini.label STRING "Light group [8]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_8"
+	[attr aov_id_1]
+		houdini.label STRING "ID [1]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_1"
+	[attr aov_id_2]
+		houdini.label STRING "ID [2]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_2"
+	[attr aov_id_3]
+		houdini.label STRING "ID [3]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_3"
+	[attr aov_id_4]
+		houdini.label STRING "ID [4]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_4"
+	[attr aov_id_5]
+		houdini.label STRING "ID [5]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_5"
+	[attr aov_id_6]
+		houdini.label STRING "ID [6]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_6"
+	[attr aov_id_7]
+		houdini.label STRING "ID [7]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_7"
+	[attr aov_id_8]
+		houdini.label STRING "ID [8]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_8"

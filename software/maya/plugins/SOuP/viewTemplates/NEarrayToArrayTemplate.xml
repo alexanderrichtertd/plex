@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEarrayToArray'>
+		<attribute name='outArray' type='maya.pointArray'>
+			<label>Out Array</label>
+		</attribute>
+		<attribute name='inArray1' type='maya.pointArray'>
+			<label>In Array 1</label>
+		</attribute>
+		<attribute name='inArray2' type='maya.pointArray'>
+			<label>In Array 2</label>
+		</attribute>
+		<attribute name='inArray3' type='maya.pointArray'>
+			<label>In Array 3</label>
+		</attribute>
+		<attribute name='inArray4' type='maya.pointArray'>
+			<label>In Array 4</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEarrayToArray'>
+		<property name='outArray'/>
+		<property name='inArray1'/>
+		<property name='inArray2'/>
+		<property name='inArray3'/>
+		<property name='inArray4'/>
+	</view>
+</templates>

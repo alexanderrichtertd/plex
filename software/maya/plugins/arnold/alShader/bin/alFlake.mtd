@@ -1,0 +1,36 @@
+[node alFlake]
+	desc STRING "Useful for car paint shaders, granite and other polished minerals. To use, connect it as a tangent-space normal map to alSurface, making sure Gamma is set 1. Then connect a smooth normal (alInputVector set to Ns) to the Diffuse and Specular 1 Normal parameters. This will use the flake normal for Specular 2 only and the original smooth normal for Diffuse and Specular 1."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alFlake"
+	maya.classification STRING "texture/other"
+	maya.id INT 0x0011641F
+	houdini.icon STRING "VOP_global"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alFlake.html"
+	houdini.order STRING "space amount size divergence P "
+
+	[attr space]
+		houdini.label STRING "space"
+		desc STRING "Select the space for normal computation. When 'world' is selected you should plug the output of this node directly into the normal override parameter of your desired lobe on alSurface. When 'tangent' is selected you should use this as a tangent-space normal map with the regular Arnold bump shader."
+		linkable BOOL FALSE
+	[attr amount]
+		houdini.label STRING "Amount"
+		min FLOAT 0.0
+		max FLOAT 1.0
+		desc STRING "Proportion of the surface that is covered by flakes"
+		linkable BOOL TRUE
+	[attr size]
+		houdini.label STRING "Size"
+		desc STRING "Size of the flakes"
+		linkable BOOL TRUE
+	[attr divergence]
+		houdini.label STRING "Divergence"
+		min FLOAT 0.0
+		max FLOAT 1.0
+		desc STRING "How much the flake normals diverge from the surface normal."
+		linkable BOOL TRUE
+	[attr P]
+		houdini.label STRING "P"
+		desc STRING "Connect a point here to override the space used for flake calculation."
+		linkable BOOL TRUE

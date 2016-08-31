@@ -1,0 +1,38 @@
+<fragment_graph name="skinShader" ref="skinShader" class="FragmentGraph" version="1.0" feature_level="0">
+    <fragments>
+        <fragment_ref name="mayaSurfaceShaderOutput" ref="mayaSurfaceShaderOutput" />
+        <fragment_ref name="skinShaderCombiner" ref="skinShaderCombiner" />
+        <fragment_ref name="standardShaderDiffuse" ref="standardShaderDiffuse" />
+        <fragment_ref name="standardShaderLightingCombiner" ref="standardShaderLightingCombiner" />
+        <fragment_ref name="maya16LightAccum" ref="maya16LightAccum" />
+        <fragment_ref name="standardShaderLightingData" ref="standardShaderLightingData" />
+    </fragments>
+    <connections>
+        <connect from="skinShaderCombiner.skinShaderCombiner" to="mayaSurfaceShaderOutput.mayaSurfaceShaderOutput" />
+        <connect from="maya16LightAccum.scaledDiffuse" to="skinShaderCombiner.diffuseInput" />
+        <connect from="standardShaderDiffuse.outColor" to="maya16LightAccum.scaledDiffuse" />
+        <connect from="standardShaderLightingData.standardShaderLightingData" to="standardShaderDiffuse.lightingData" />
+        <connect from="standardShaderLightingCombiner.lightingData" to="standardShaderLightingData.standardShaderLightingData" />
+    </connections>
+    <properties>
+        <float name="sssWeight" ref="skinShaderCombiner.sssWeight" />
+        <float3 name="shallowScatterColor" ref="skinShaderCombiner.shallowScatterColor" />
+        <float name="shallowScatterWeight" ref="skinShaderCombiner.shallowScatterWeight" />
+        <float3 name="midScatterColor" ref="skinShaderCombiner.midScatterColor" />
+        <float name="midScatterWeight" ref="skinShaderCombiner.midScatterWeight" />
+        <float3 name="deepScatterColor" ref="skinShaderCombiner.deepScatterColor" />
+        <float name="deepScatterWeight" ref="skinShaderCombiner.deepScatterWeight" />
+        <float3 name="Nw" ref="standardShaderLightingCombiner.N" flags="varyingInputParam" />-
+        <float3 name="Vw" ref="standardShaderLightingCombiner.V" flags="varyingInputParam" />
+        <float3 name="Lw" ref="standardShaderLightingCombiner.L" flags="varyingInputParam" />
+        <float3 name="SLw" ref="standardShaderLightingCombiner.SL" flags="varyingInputParam" />
+        <float3 name="diffuseI" ref="standardShaderLightingCombiner.diffuse" />
+        <float3 name="specularI" ref="standardShaderLightingCombiner.specular" />
+        <string name="selector" ref="maya16LightAccum.selector" />
+    </properties>
+    <values>
+    </values>
+    <outputs>
+        <struct name="mayaSurfaceShaderOutput" ref="mayaSurfaceShaderOutput.mayaSurfaceShaderOutput" />
+    </outputs>
+</fragment_graph>

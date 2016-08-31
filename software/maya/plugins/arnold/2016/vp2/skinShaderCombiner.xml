@@ -1,0 +1,108 @@
+<fragment uiName="skinShaderCombiner" name="skinShaderCombiner" type="plumbing" class="ShadeFragment" version="1.0" feature_level="0">
+    <description><![CDATA[Combines inputs for the skin shader.]]></description>
+    <properties>
+        <float name="sssWeight" />
+        <float3 name="shallowScatterColor" />
+        <float name="shallowScatterWeight" />
+        <float3 name="midScatterColor" />
+        <float name="midScatterWeight" />
+        <float3 name="deepScatterColor" />
+        <float name="deepScatterWeight" />
+        <float3 name="diffuseInput" />
+    </properties>
+    <values>
+        <float name="sssWeight" value="1.0" />
+        <float3 name="shallowScatterColor" value="1.0 1.0 1.0" />
+        <float name="shallowScatterWeight" value="1.0" />
+        <float3 name="midScatterColor" value="1.0 1.0 1.0" />
+        <float name="midScatterWeight" value="1.0" />
+        <float3 name="deepScatterColor" value="1.0 1.0 1.0" />
+        <float name="deepScatterWeight" value="1.0" />
+    </values>
+    <outputs>
+        <struct name="skinShaderCombiner" struct_name="mayaSurfaceShaderOutput" />
+    </outputs>
+    <implementation>
+        <implementation render="OGSRenderer" language="Cg" lang_version="2.1">
+            <function_name val="skinShaderCombiner" />
+            <source>
+                <![CDATA[
+mayaSurfaceShaderOutput skinShaderCombiner(
+                float sssWeight,
+                float3 shallowScatterColor,
+                float shallowScatterWeight,
+                float3 midScatterColor,
+                float midScatterWeight,
+                float3 deepScatterColor,
+                float deepScatterWeight,
+                float3 diffuseInput)
+{
+    mayaSurfaceShaderOutput result;
+
+    float3 scatterColor = sssWeight * (shallowScatterColor * shallowScatterWeight + midScatterColor * midScatterWeight + deepScatterColor * deepScatterWeight);
+    result.outColor = scatterColor * diffuseInput;
+    result.outTransparency = float3(0.0f, 0.0f, 0.0f);
+    result.outGlowColor = float3(0.0f, 0.0f, 0.0f);
+    result.outMatteOpacity = float3(-1.0e+06f, -1.0e+06f, -1.0e+06f);
+    result.outSurfaceFinal = float4(result.outColor, 1.0f);
+    return result;
+}
+                ]]>
+            </source>
+        </implementation>
+        <implementation render="OGSRenderer" language="HLSL" lang_version="11.0">
+            <function_name val="skinShaderCombiner" />
+            <source>
+                 <![CDATA[
+mayaSurfaceShaderOutput skinShaderCombiner(
+                float sssWeight,
+                float3 shallowScatterColor,
+                float shallowScatterWeight,
+                float3 midScatterColor,
+                float midScatterWeight,
+                float3 deepScatterColor,
+                float deepScatterWeight,
+                float3 diffuseInput)
+{
+    mayaSurfaceShaderOutput result;
+
+    float3 scatterColor = sssWeight * (shallowScatterColor * shallowScatterWeight + midScatterColor * midScatterWeight + deepScatterColor * deepScatterWeight);
+    result.outColor = scatterColor * diffuseInput;
+    result.outTransparency = float3(0.0f, 0.0f, 0.0f);
+    result.outGlowColor = float3(0.0f, 0.0f, 0.0f);
+    result.outMatteOpacity = float3(-1.0e+06f, -1.0e+06f, -1.0e+06f);
+    result.outSurfaceFinal = float4(result.outColor, 1.0f);
+    return result;
+}
+                ]]>
+            </source>
+        </implementation>
+        <implementation render="OGSRenderer" language="HLSL" lang_version="10.0">
+            <function_name val="skinShaderCombiner" />
+            <source>
+                 <![CDATA[
+mayaSurfaceShaderOutput skinShaderCombiner(
+                float sssWeight,
+                float3 shallowScatterColor,
+                float shallowScatterWeight,
+                float3 midScatterColor,
+                float midScatterWeight,
+                float3 deepScatterColor,
+                float deepScatterWeight,
+                float3 diffuseInput)
+{
+    mayaSurfaceShaderOutput result;
+
+    float3 scatterColor = sssWeight * (shallowScatterColor * shallowScatterWeight + midScatterColor * midScatterWeight + deepScatterColor * deepScatterWeight);
+    result.outColor = scatterColor * diffuseInput;
+    result.outTransparency = float3(0.0f, 0.0f, 0.0f);
+    result.outGlowColor = float3(0.0f, 0.0f, 0.0f);
+    result.outMatteOpacity = float3(-1.0e+06f, -1.0e+06f, -1.0e+06f);
+    result.outSurfaceFinal = float4(result.outColor, 1.0f);
+    return result;
+}
+                ]]>
+            </source>
+        </implementation>
+    </implementation>
+</fragment>

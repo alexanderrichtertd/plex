@@ -1,0 +1,370 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Gizmo {
+ knobChanged "hive_write.HIVE_writerKnobChanged(nuke.thisNode(),nuke.thisKnob().name())"
+ tile_color 0xff5f00ff
+ addUserKnob {20 HIVE_WRITER}
+ addUserKnob {26 text l @hivemind.png T "<b><font size='4' color='#FF8000'>WRITER</font></b><font size='2'> _ v0.0.1<br>writes stuff pipeline conform</font>"}
+ addUserKnob {6 valid +INVISIBLE +STARTLINE}
+ addUserKnob {26 separator l "" +STARTLINE}
+ addUserKnob {26 jpg_label l "JPG  " T ""}
+ addUserKnob {6 jpg_write l " " -STARTLINE +DISABLED}
+ jpg_write true
+ addUserKnob {1 jpg_path l "" -STARTLINE +DISABLED}
+ jpg_path E:/060_Shots/DM_020/100_DM_020_COMP/DM_020_COMP_OUT/DM_020_comp_v002_cs/1920x1080_jpg/DM_020_comp_v002_cs.%04d.jpg
+ addUserKnob {22 jpg_btn1 l DIR -STARTLINE T "try:\n\tos.system('explorer \"%s\"' % (os.path.normpath(os.path.dirname(nuke.thisNode()\['jpg_path'].value()))))\nexcept:\n\tpass"}
+ addUserKnob {26 exr_label l "EXR  " T ""}
+ addUserKnob {6 exr_write l " " -STARTLINE}
+ addUserKnob {1 exr_path l "" -STARTLINE +DISABLED}
+ exr_path E:/060_Shots/DM_020/100_DM_020_COMP/DM_020_COMP_OUT/DM_020_comp_v002_cs/1920x1080_exr/DM_020_comp_v002_cs.%04d.exr
+ addUserKnob {22 exr_btn1 l DIR -STARTLINE T "try:\n\tos.system('explorer \"%s\"' % (os.path.normpath(os.path.dirname(nuke.thisNode()\['exr_path'].value()))))\nexcept:\n\tpass"}
+ addUserKnob {26 seperator l "" +STARTLINE}
+ addUserKnob {4 letterbox M {none 1:1 4:3 16:9 14:9 1.66:1 1.85:1 2.35:1 custom}}
+ addUserKnob {12 letterbox_ratio l " ratio " -STARTLINE +INVISIBLE}
+ letterbox_ratio {2.35 1}
+ addUserKnob {7 letterbox_opacity l "letterbox opacity" +DISABLED}
+ letterbox_opacity 1
+ addUserKnob {26 ""}
+ addUserKnob {26 burnin_label l "JPG burnin" T ""}
+ addUserKnob {6 burnin_frames l frames -STARTLINE}
+ addUserKnob {6 burnin_version l scriptname -STARTLINE}
+ addUserKnob {6 burnin_project l "project name" -STARTLINE}
+ addUserKnob {6 burnin_logo l "project logo" -STARTLINE}
+ addUserKnob {6 burnin_date l date -STARTLINE}
+ addUserKnob {6 burnin_time l time -STARTLINE}
+ burnin_time true
+ addUserKnob {6 burnin_watermark l watermark -STARTLINE}
+ addUserKnob {6 burnin_status l status +STARTLINE}
+ addUserKnob {4 status l "" -STARTLINE M {plate previz postviz "pre comp" "slap comp" "early comp" "late comp" finishing final test "" ""}}
+ addUserKnob {6 burnin_comment_check l comment -STARTLINE}
+ addUserKnob {1 burnin_comment_text l "" -STARTLINE}
+ burnin_comment_text "This is the awesome version! For real this time!"
+ addUserKnob {26 seperator_1 l "" +STARTLINE}
+ addUserKnob {4 render_via l "submit to" M {local vuRenderThreads RoyalRender}}
+ addUserKnob {3 render_threads l " threads " -STARTLINE +INVISIBLE}
+ render_threads 8
+ addUserKnob {26 seperator_2 l "" +STARTLINE}
+ addUserKnob {22 render_btn l "go go go!" T "n = nuke.thisNode()\nreload(hive_write)\nhive_write.HIVE_writerRender(n)" +STARTLINE}
+ addUserKnob {20 burnin_tab l "burnin options"}
+ addUserKnob {6 burnin_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 burnin_margin_ctrl l margin R 0 100}
+ burnin_margin_ctrl 20
+ addUserKnob {26 ""}
+ addUserKnob {18 burnin_color l color}
+ burnin_color {1 1 1}
+ addUserKnob {6 burnin_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {2 burnin_font l font}
+ burnin_font C:/Windows/Fonts/consola.ttf
+ addUserKnob {7 burnin_font_size l "font size" R 1 100}
+ burnin_font_size 27.5
+ addUserKnob {7 burnin_projectname_mult l "pr. name size x" R 1 2}
+ burnin_projectname_mult 2
+ addUserKnob {7 burnin_logo_size l "logo size" R 0.001 2}
+ burnin_logo_size 1
+ addUserKnob {26 ""}
+ addUserKnob {1 burnin_watermark_text l watermark}
+ burnin_watermark_text ©CARL
+ addUserKnob {7 burnin_watermark_size l "watermark size" R 1 1000}
+ burnin_watermark_size 600
+ addUserKnob {7 burnin_watermark_opacity l watermark_opacity}
+ burnin_watermark_opacity 0.07
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name Constant1
+  xpos 583
+  ypos 395
+ }
+ Read {
+  inputs 0
+  file "\[python hive_write.HIVE_getProjectLogo()]"
+  format "1006 500 0 0 1006 500 1 "
+  origset true
+  name logo_read
+  xpos 434
+  ypos 295
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  bbox B
+  name Copy1
+  xpos 434
+  ypos 399
+ }
+ Premult {
+  name Premult1
+  xpos 434
+  ypos 463
+ }
+ Reformat {
+  type scale
+  scale {{"\[python hive_write.HIVE_getProjectLogoSize()] * burnin_logo_size"}}
+  name logo_size
+  xpos 434
+  ypos 521
+ }
+ Transform {
+  translate {{parent.width-input.width-text1_master.burnin_margin} {parent.height-input.height-text1_master.burnin_margin}}
+  center {{input.width} {input.height}}
+  name logo_transform
+  xpos 434
+  ypos 588
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -64
+  ypos -153
+ }
+ Dot {
+  name Dot1
+  xpos -30
+  ypos -48
+ }
+set N8e2db800 [stack 0]
+ Crop {
+  preset square
+  box {{"(input.width/input.height) > (parent.letterbox_ratio.x/parent.letterbox_ratio.y) ? floor((input.width - (input.height * (parent.letterbox_ratio.x/parent.letterbox_ratio.y))) / 2) : 0" x4553 435} {"(input.width/input.height) > (parent.letterbox_ratio.x/parent.letterbox_ratio.y) ? 0 : ((input.width/input.height) == (parent.letterbox_ratio.x/parent.letterbox_ratio.y) ? 0 : rint(((input.height - (input.width / parent.letterbox_ratio.x)) /2)))" x4553 425} {"(input.width/input.height) > (parent.letterbox_ratio.x/parent.letterbox_ratio.y) ? ceil((input.height * (parent.letterbox_ratio.x/parent.letterbox_ratio.y)) + ((input.width - (input.height * (parent.letterbox_ratio.x/parent.letterbox_ratio.y))) / 2)) : input.width" x4553 1515} {"(input.width/input.height) > (parent.letterbox_ratio.x/parent.letterbox_ratio.y) ? input.height : ((input.width/input.height) == (parent.letterbox_ratio.x/parent.letterbox_ratio.y) ? input.height : rint(((input.height - (input.width / parent.letterbox_ratio.x)) /2) + (input.width / parent.letterbox_ratio.x) ))" x4553 1505}}
+  name letterbox
+  xpos -64
+  ypos 3
+  disable {{parent.letterbox==0?1:0}}
+  addUserKnob {20 User}
+  addUserKnob {7 test2}
+  test2 {{parent.letterbox_ratio.x}}
+  addUserKnob {7 test}
+  test {{"rint(input.height * (parent.letterbox_x/parent.letterbox_y))"}}
+ }
+push $N8e2db800
+ Dot {
+  name Dot2
+  xpos -177
+  ypos -48
+ }
+ Dot {
+  name Dot3
+  xpos -174
+  ypos 95
+ }
+set N8e2dac00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation copy
+  mix {{parent.letterbox_opacity}}
+  name letterbox_opacity
+  xpos -64
+  ypos 91
+ }
+set N8e2da800 [stack 0]
+ Dot {
+  name Dot5
+  xpos -30
+  ypos 329
+ }
+set N8e2da400 [stack 0]
+ Text {
+  opacity {{text1_master.opacity}}
+  message "\[string trim \[basename \[value root.name]] \".nk\"]"
+  font "\[value text1_master.font]"
+  size {{text1_master.size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  yjustify top
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name shotname
+  xpos 134
+  ypos 325
+  disable {{!burnin_version x4580 1}}
+ }
+ Text {
+  opacity {{text1_master.opacity}}
+  message "\nf \[format %04d \[frame]]"
+  font "\[value text1_master.font]"
+  size {{text1_master.size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  yjustify top
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name framecounter
+  xpos 134
+  ypos 351
+  disable {{!burnin_frames x4580 1}}
+ }
+ Text {
+  opacity {{text1_master.opacity}}
+  message "\[date %H]:\[date %M]:\[date %S]\n"
+  font "\[value text1_master.font]"
+  size {{text1_master.size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  yjustify bottom
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name time
+  xpos 134
+  ypos 377
+  disable {{!burnin_time x4580 1}}
+ }
+ Text {
+  opacity {{text1_master.opacity}}
+  message "\[date %d].\[date %m].\[date %y]"
+  font "\[value text1_master.font]"
+  size {{text1_master.size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  yjustify bottom
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name date
+  xpos 134
+  ypos 403
+  disable {{!burnin_date x4580 1}}
+ }
+ Text {
+  opacity {{text1_master.opacity}}
+  message "\[python hive_write.HIVE_getProjectName()]"
+  font "\[value text1_master.font]"
+  size {{"text1_master.size * burnin_projectname_mult"}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  xjustify center
+  yjustify top
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name projectname
+  xpos 134
+  ypos 429
+  disable {{!burnin_project x4580 1}}
+ }
+ Text {
+  opacity {{text1_master.opacity}}
+  message "\[value burnin_comment_text]"
+  font "\[value text1_master.font]"
+  size {{text1_master.size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  xjustify center
+  yjustify bottom
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name comment
+  xpos 134
+  ypos 455
+  disable {{!burnin_comment_check x4580 1}}
+ }
+ Text {
+  opacity {{text1_master.opacity}}
+  message "state: \[value status]"
+  font "\[value text1_master.font]"
+  size {{text1_master.size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  xjustify right
+  yjustify bottom
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color {{text1_master.color} {text1_master.color} {text1_master.color} {text1_master.color}}
+  name status
+  xpos 134
+  ypos 481
+  disable {{!burnin_status}}
+ }
+ Text {
+  opacity {{burnin_watermark_opacity}}
+  message "\[value burnin_watermark_text]"
+  font "\[value text1_master.font]"
+  size {{burnin_watermark_size}}
+  kerning {{text1_master.kerning}}
+  leading {{text1_master.leading}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{text1_master.burnin_margin} {text1_master.burnin_margin} {"input.width - text1_master.burnin_margin"} {"input.height - text1_master.burnin_margin"}}
+  center {1024 778}
+  color 0.9999999404
+  name watermark
+  xpos 134
+  ypos 537
+  disable {{!burnin_watermark}}
+ }
+ Merge2 {
+  inputs 2
+  mix {{burnin_logo}}
+  name Merge2
+  xpos 134
+  ypos 588
+ }
+push $N8e2da400
+ Merge2 {
+  inputs 2
+  operation copy
+  name Merge1
+  xpos -64
+  ypos 588
+ }
+ Write {
+  file "\[value jpg_path]"
+  checkHashOnRead false
+  beforeRender "try:\n  hive_functions.HIVE_beforeRender()\nexcept:\n  pass"
+  afterRender "try:\n  hive_functions.HIVE_afterRender()\nexcept:\n  pass"
+  name write_jpg
+  xpos -64
+  ypos 769
+ }
+ Output {
+  name Output1
+  xpos -64
+  ypos 883
+ }
+push $N8e2da800
+ Text {
+  opacity 0.71
+  font "\[value burnin_font]"
+  size {{"\[value burnin_font_size]"}}
+  yjustify center
+  Transform 1
+  box {512 389 1536 1167}
+  center {1024 778}
+  color {{burnin_color} {burnin_color} {burnin_color} 1}
+  name text1_master
+  xpos 556
+  ypos 91
+  addUserKnob {20 User}
+  addUserKnob {7 burnin_margin R 0 100}
+  burnin_margin {{burnin_margin_ctrl}}
+ }
+push $N8e2dac00
+ Write {
+  file "\[value exr_path]"
+  checkHashOnRead false
+  beforeRender "try:\n  hive_functions.HIVE_beforeRender()\nexcept:\n  pass"
+  afterRender "try:\n  hive_functions.HIVE_afterRender()\nexcept:\n  pass"
+  name write_exr
+  xpos -211
+  ypos 770
+  disable {{!exr_write}}
+ }
+end_group

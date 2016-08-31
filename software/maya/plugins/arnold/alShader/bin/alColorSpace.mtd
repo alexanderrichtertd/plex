@@ -1,0 +1,20 @@
+[node alColorSpace]
+	desc STRING "Converts a color to linear Rec.709 from a given color space."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alColorSpace"
+	maya.classification STRING "utility/other"
+	maya.id INT 0x00116411
+	houdini.icon STRING "COP2_lookup"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alColorSpace.html"
+	houdini.order STRING "input sourceSpace "
+
+	[attr input]
+		houdini.label STRING "input"
+		desc STRING "Color to be transformed."
+		linkable BOOL TRUE
+	[attr sourceSpace]
+		houdini.label STRING "Source space"
+		desc STRING "Source color space. The input will be transformed from this space to linear Rec.709."
+		linkable BOOL FALSE

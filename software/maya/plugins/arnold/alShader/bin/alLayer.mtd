@@ -1,0 +1,238 @@
+[node alLayer]
+	desc STRING "Simply blends two surface shaders, including all their AOVs while preserving light group information."
+	c4d.classification STRING "surface"
+	c4d.menu STRING "surface"
+	maya.name STRING "alLayer"
+	maya.classification STRING "shader/surface"
+	maya.id INT 0x00116407
+	houdini.icon STRING "SHOP_surface"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alLayer.html"
+	houdini.parm.folder.ROOT STRING "AOVs;42;"
+	houdini.order STRING "layer1 layer2 mix debug  ROOT"
+	houdini.order2 STRING " standardCompatibleAOVs aov_diffuse_color aov_direct_diffuse aov_direct_diffuse_raw aov_indirect_diffuse aov_indirect_diffuse_raw aov_direct_backlight aov_indirect_backlight aov_direct_specular aov_indirect_specular aov_direct_specular_2 aov_indirect_specular_2 aov_single_scatter aov_sss aov_refraction aov_emission aov_uv aov_depth aov_light_group_1 aov_light_group_2 aov_light_group_3 aov_light_group_4 aov_light_group_5 aov_light_group_6 aov_light_group_7 aov_light_group_8 aov_id_1 aov_id_2 aov_id_3 aov_id_4 aov_id_5 aov_id_6 aov_id_7 aov_id_8 aov_shadow_group_1 aov_shadow_group_2 aov_shadow_group_3 aov_shadow_group_4 aov_shadow_group_5 aov_shadow_group_6 aov_shadow_group_7 aov_shadow_group_8"
+
+	[attr layer1]
+		houdini.label STRING "Layer 1"
+		desc STRING "The bottom layer to blend."
+		linkable BOOL TRUE
+	[attr layer2]
+		houdini.label STRING "Layer 2"
+		desc STRING "The top layer to blend."
+		linkable BOOL TRUE
+	[attr mix]
+		houdini.label STRING "Mix"
+		desc STRING "The amount to blend from the bottom layer to the top."
+		linkable BOOL TRUE
+	[attr debug]
+		houdini.label STRING "Debug"
+		desc STRING "Allows you to quickly preview each layer and the mix value."
+		linkable BOOL FALSE
+	[attr standardCompatibleAOVs]
+		houdini.label STRING "Write standard AOVs only"
+		linkable BOOL FALSE
+	[attr aov_diffuse_color]
+		houdini.label STRING "Diffuse color"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "diffuse_color"
+	[attr aov_direct_diffuse]
+		houdini.label STRING "Direct diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_diffuse"
+	[attr aov_direct_diffuse_raw]
+		houdini.label STRING "Direct diffuse (raw)"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_diffuse_raw"
+	[attr aov_indirect_diffuse]
+		houdini.label STRING "Indirect diffuse"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_diffuse"
+	[attr aov_indirect_diffuse_raw]
+		houdini.label STRING "Indirect diffuse (raw)"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_diffuse_raw"
+	[attr aov_direct_backlight]
+		houdini.label STRING "Direct backlight"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_backlight"
+	[attr aov_indirect_backlight]
+		houdini.label STRING "Indirect backlight"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_backlight"
+	[attr aov_direct_specular]
+		houdini.label STRING "Direct specular"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_specular"
+	[attr aov_indirect_specular]
+		houdini.label STRING "Indirect specular"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_specular"
+	[attr aov_direct_specular_2]
+		houdini.label STRING "Direct specular 2"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "direct_specular_2"
+	[attr aov_indirect_specular_2]
+		houdini.label STRING "Indirect specular 2"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "indirect_specular_2"
+	[attr aov_single_scatter]
+		houdini.label STRING "Single scatter"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "single_scatter"
+	[attr aov_sss]
+		houdini.label STRING "SSS"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "sss"
+	[attr aov_refraction]
+		houdini.label STRING "Refraction"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "refraction"
+	[attr aov_emission]
+		houdini.label STRING "Emission"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "emission"
+	[attr aov_uv]
+		houdini.label STRING "UV"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "uv"
+	[attr aov_depth]
+		houdini.label STRING "Depth"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "depth"
+	[attr aov_light_group_1]
+		houdini.label STRING "Light group [1]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_1"
+	[attr aov_light_group_2]
+		houdini.label STRING "Light group [2]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_2"
+	[attr aov_light_group_3]
+		houdini.label STRING "Light group [3]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_3"
+	[attr aov_light_group_4]
+		houdini.label STRING "Light group [4]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_4"
+	[attr aov_light_group_5]
+		houdini.label STRING "Light group [5]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_5"
+	[attr aov_light_group_6]
+		houdini.label STRING "Light group [6]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_6"
+	[attr aov_light_group_7]
+		houdini.label STRING "Light group [7]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_7"
+	[attr aov_light_group_8]
+		houdini.label STRING "Light group [8]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "light_group_8"
+	[attr aov_id_1]
+		houdini.label STRING "ID [1]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_1"
+	[attr aov_id_2]
+		houdini.label STRING "ID [2]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_2"
+	[attr aov_id_3]
+		houdini.label STRING "ID [3]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_3"
+	[attr aov_id_4]
+		houdini.label STRING "ID [4]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_4"
+	[attr aov_id_5]
+		houdini.label STRING "ID [5]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_5"
+	[attr aov_id_6]
+		houdini.label STRING "ID [6]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_6"
+	[attr aov_id_7]
+		houdini.label STRING "ID [7]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_7"
+	[attr aov_id_8]
+		houdini.label STRING "ID [8]"
+		aov.type INT 0x05
+		aov.enable_composition BOOL TRUE
+		default STRING "id_8"
+	[attr aov_shadow_group_1]
+		houdini.label STRING "Shadow group [1]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_1"
+	[attr aov_shadow_group_2]
+		houdini.label STRING "Shadow group [2]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_2"
+	[attr aov_shadow_group_3]
+		houdini.label STRING "Shadow group [3]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_3"
+	[attr aov_shadow_group_4]
+		houdini.label STRING "Shadow group [4]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_4"
+	[attr aov_shadow_group_5]
+		houdini.label STRING "Shadow group [5]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_5"
+	[attr aov_shadow_group_6]
+		houdini.label STRING "Shadow group [6]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_6"
+	[attr aov_shadow_group_7]
+		houdini.label STRING "Shadow group [7]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_7"
+	[attr aov_shadow_group_8]
+		houdini.label STRING "Shadow group [8]"
+		aov.type INT 0x06
+		aov.enable_composition BOOL TRUE
+		default STRING "shadow_group_8"

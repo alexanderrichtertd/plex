@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEgpuCacher'>
+		<attribute name='isFrameCached' type='maya.bool'>
+			<label>Is Frame Cached</label>
+		</attribute>
+		<attribute name='inTime' type='maya.double'>
+			<label>In Time</label>
+		</attribute>
+		<attribute name='inBaseAttr' type='maya.float'>
+			<label>In Base Attr</label>
+		</attribute>
+		<attribute name='inData' type='maya.TdataCompound'>
+			<label>In Data</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEgpuCacher'>
+		<property name='isFrameCached'/>
+		<property name='inTime'/>
+		<property name='inBaseAttr'/>
+		<property name='inData'/>
+	</view>
+</templates>

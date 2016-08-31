@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEnurbsSurface'>
+		<attribute name='local' type='maya.nurbsSurface'>
+			<label>Local</label>
+		</attribute>
+		<attribute name='worldSpace' type='maya.nurbsSurface'>
+			<label>World Space</label>
+		</attribute>
+		<attribute name='create' type='maya.nurbsSurface'>
+			<label>Create</label>
+		</attribute>
+		<attribute name='matrix' type='maya.matrix'>
+			<label>Matrix</label>
+		</attribute>
+		<attribute name='inverseMatrix' type='maya.matrix'>
+			<label>Inverse Matrix</label>
+		</attribute>
+		<attribute name='worldMatrix' type='maya.matrix'>
+			<label>World Matrix</label>
+		</attribute>
+		<attribute name='worldInverseMatrix' type='maya.matrix'>
+			<label>World Inverse Matrix</label>
+		</attribute>
+		<attribute name='parentMatrix' type='maya.matrix'>
+			<label>Parent Matrix</label>
+		</attribute>
+		<attribute name='parentInverseMatrix' type='maya.matrix'>
+			<label>Parent Inverse Matrix</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEnurbsSurface'>
+		<property name='local'/>
+		<property name='worldSpace'/>
+		<property name='create'/>
+		<property name='matrix'/>
+		<property name='inverseMatrix'/>
+		<property name='worldMatrix'/>
+		<property name='worldInverseMatrix'/>
+		<property name='parentMatrix'/>
+		<property name='parentInverseMatrix'/>
+	</view>
+</templates>

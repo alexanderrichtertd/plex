@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEparticle'>
+		<attribute name='count' type='maya.long'>
+			<label>Count</label>
+		</attribute>
+		<attribute name='matrix' type='maya.matrix'>
+			<label>Matrix</label>
+		</attribute>
+		<attribute name='inverseMatrix' type='maya.matrix'>
+			<label>Inverse Matrix</label>
+		</attribute>
+		<attribute name='worldMatrix' type='maya.matrix'>
+			<label>World Matrix</label>
+		</attribute>
+		<attribute name='worldInverseMatrix' type='maya.matrix'>
+			<label>World Inverse Matrix</label>
+		</attribute>
+		<attribute name='parentMatrix' type='maya.matrix'>
+			<label>Parent Matrix</label>
+		</attribute>
+		<attribute name='parentInverseMatrix' type='maya.matrix'>
+			<label>Parent Inverse Matrix</label>
+		</attribute>
+		<attribute name='instanceData' type='maya.TdataCompound'>
+			<label>Instance Data</label>
+		</attribute>
+		<attribute name='startFrame' type='maya.double'>
+			<label>Start Frame</label>
+		</attribute>
+		<attribute name='currentTime' type='maya.time'>
+			<label>Current Time</label>
+		</attribute>
+		<attribute name='inputGeometry' type='maya.lattice'>
+			<label>Input Geometry</label>
+		</attribute>
+		<attribute name='deformedPosition' type='maya.vectorArray'>
+			<label>Deformed Position</label>
+		</attribute>
+		<attribute name='position' type='maya.vectorArray'>
+			<label>Position</label>
+		</attribute>
+		<attribute name='velocity' type='maya.vectorArray'>
+			<label>Velocity</label>
+		</attribute>
+		<attribute name='radiusPP' type='maya.doubleArray'>
+			<label>Radius PP</label>
+		</attribute>
+		<attribute name='rotationPP' type='maya.vectorArray'>
+			<label>Rotation PP</label>
+		</attribute>
+		<attribute name='rgbPP' type='maya.vectorArray'>
+			<label>Rgb PP</label>
+		</attribute>
+		<attribute name='opacityPP' type='maya.doubleArray'>
+			<label>Opacity PP</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEparticle'>
+		<property name='count'/>
+		<property name='matrix'/>
+		<property name='inverseMatrix'/>
+		<property name='worldMatrix'/>
+		<property name='worldInverseMatrix'/>
+		<property name='parentMatrix'/>
+		<property name='parentInverseMatrix'/>
+		<property name='instanceData'/>
+		<property name='startFrame'/>
+		<property name='currentTime'/>
+		<property name='inputGeometry'/>
+		<property name='deformedPosition'/>
+		<property name='position'/>
+		<property name='velocity'/>
+		<property name='radiusPP'/>
+		<property name='rotationPP'/>
+		<property name='rgbPP'/>
+		<property name='opacityPP'/>
+	</view>
+</templates>

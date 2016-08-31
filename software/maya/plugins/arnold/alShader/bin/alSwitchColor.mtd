@@ -1,0 +1,52 @@
+[node alSwitchColor]
+	desc STRING "Use this to select between multiple color values based on the value of a float input."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alSwitchColor"
+	maya.classification STRING "utility/color"
+	maya.id INT 0x00116414
+	houdini.icon STRING "VOP_switch"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alSwitchColor.html"
+	houdini.order STRING "inputA inputB inputC inputD inputE inputF inputG inputH mix threshold "
+
+	[attr inputA]
+		houdini.label STRING "Input 0"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputB]
+		houdini.label STRING "Input 1"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputC]
+		houdini.label STRING "Input 2"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputD]
+		houdini.label STRING "Input 3"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputE]
+		houdini.label STRING "Input 4"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputF]
+		houdini.label STRING "Input 5"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputG]
+		houdini.label STRING "Input 6"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr inputH]
+		houdini.label STRING "Input 7"
+		desc STRING "Connect a color here to have it selected by the mix value"
+		linkable BOOL TRUE
+	[attr mix]
+		houdini.label STRING "mix"
+		desc STRING "Signal that selects from one of the 8 inputs."
+		linkable BOOL TRUE
+	[attr threshold]
+		houdini.label STRING "threshold"
+		desc STRING "Partial threshold at which the signal transitions from one input to the next."
+		linkable BOOL TRUE

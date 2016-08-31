@@ -1,0 +1,1 @@
+{"comment": "revierkampf menu item does not work\nshelf button does work though", "script": "Load", "error": "# Error: TypeError: file <maya console> line 3: start() takes at most 1 argument (2 given) # ", "reason": "Bug", "user": "joberbeck", "file": "//bigfoot/revierkampf/30_assets/bull/40_RIG/WORK/bull_RIG_v004_jo.mb", "time": "2016.05.17 13:38:32", "software": "maya"}

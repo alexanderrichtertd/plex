@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEmultiRemapValue'>
+		<attribute name='outValue' type='maya.float'>
+			<label>Out Value</label>
+		</attribute>
+		<attribute name='inData' type='maya.TdataCompound'>
+			<label>In Data</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEmultiRemapValue'>
+		<property name='outValue'/>
+		<property name='inData'/>
+	</view>
+</templates>

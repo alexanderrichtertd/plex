@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEmeshToMap'>
+		<attribute name='outMesh' type='maya.mesh'>
+			<label>Out Mesh</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='inMesh2' type='maya.mesh'>
+			<label>In Mesh 2</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEmeshToMap'>
+		<property name='outMesh'/>
+		<property name='inMesh'/>
+		<property name='inMesh2'/>
+	</view>
+</templates>

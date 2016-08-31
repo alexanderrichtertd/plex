@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEattributeTransfer'>
+		<attribute name='outGeometry' type='maya.vectorArray'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='outNormalPP' type='maya.vectorArray'>
+			<label>Out Normal PP</label>
+		</attribute>
+		<attribute name='outPositionPP' type='maya.vectorArray'>
+			<label>Out Position PP</label>
+		</attribute>
+		<attribute name='outRadiusPP' type='maya.doubleArray'>
+			<label>Out Radius PP</label>
+		</attribute>
+		<attribute name='outRgbaPP' type='maya.doubleArray'>
+			<label>Out Rgba PP</label>
+		</attribute>
+		<attribute name='outWeightPP' type='maya.doubleArray'>
+			<label>Out Weight PP</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.vectorArray'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.Int32Array'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inNormalPP' type='maya.pointArray'>
+			<label>In Normal PP</label>
+		</attribute>
+		<attribute name='inRadiusPP' type='maya.doubleArray'>
+			<label>In Radius PP</label>
+		</attribute>
+		<attribute name='inRgbaPP' type='maya.pointArray'>
+			<label>In Rgba PP</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+		<attribute name='boundingObjects' type='maya.TdataCompound'>
+			<label>Bounding Objects</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEattributeTransfer'>
+		<property name='outGeometry'/>
+		<property name='outNormalPP'/>
+		<property name='outPositionPP'/>
+		<property name='outRadiusPP'/>
+		<property name='outRgbaPP'/>
+		<property name='outWeightPP'/>
+		<property name='inGeometry'/>
+		<property name='inComponents'/>
+		<property name='inNormalPP'/>
+		<property name='inRadiusPP'/>
+		<property name='inRgbaPP'/>
+		<property name='inWeightPP'/>
+		<property name='boundingObjects'/>
+		<property name='groupId'/>
+	</view>
+</templates>

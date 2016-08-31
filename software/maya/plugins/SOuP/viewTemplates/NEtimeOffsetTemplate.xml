@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEtimeOffset'>
+		<attribute name='outGeometry' type='maya.nurbsSurface'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.nurbsSurface'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+		<attribute name='time' type='maya.double'>
+			<label>Time</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEtimeOffset'>
+		<property name='outGeometry'/>
+		<property name='inGeometry'/>
+		<property name='inWeightPP'/>
+		<property name='time'/>
+	</view>
+</templates>

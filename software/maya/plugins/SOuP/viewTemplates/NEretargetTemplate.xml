@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEretarget'>
+		<attribute name='outGeometry' type='maya.nurbsCurve'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.componentList'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.nurbsCurve'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inReferenceMesh' type='maya.mesh'>
+			<label>In Reference Mesh</label>
+		</attribute>
+		<attribute name='inReferenceMesh2' type='maya.mesh'>
+			<label>In Reference Mesh 2</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEretarget'>
+		<property name='outGeometry'/>
+		<property name='inComponents'/>
+		<property name='inGeometry'/>
+		<property name='inReferenceMesh'/>
+		<property name='inReferenceMesh2'/>
+		<property name='inWeightPP'/>
+		<property name='groupId'/>
+	</view>
+</templates>

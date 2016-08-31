@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEuvsToPointsOnMesh'>
+		<attribute name='outGeometry' type='maya.vectorArray'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.vectorArray'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inReferenceMesh' type='maya.mesh'>
+			<label>In Reference Mesh</label>
+		</attribute>
+		<attribute name='inMapPP' type='maya.doubleArray'>
+			<label>In Map PP</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEuvsToPointsOnMesh'>
+		<property name='outGeometry'/>
+		<property name='inGeometry'/>
+		<property name='inReferenceMesh'/>
+		<property name='inMapPP'/>
+	</view>
+</templates>

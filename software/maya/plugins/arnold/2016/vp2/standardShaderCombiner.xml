@@ -1,0 +1,199 @@
+<fragment uiName="standardShaderCombiner" name="standardShaderCombiner" type="plumbing" class="ShadeFragment" version="1.0" feature_level="0">
+    <description><![CDATA[Combines inputs from standard shader fragments.]]></description>
+    <properties>
+        <struct name="lightingData" struct_name="standardShaderLightingData" />        
+        <float3 name="color" />
+        <float3 name="specularColor" />
+        <float3 name="diffuseInput" />
+        <float3 name="specularInput" />
+        <float name="directDiffuse" />
+        <float name="directSpecular" />
+        <float3 name="emissionInput" />
+        <bool name="specularFresnel" />
+        <bool name="FresnelAffectDiff" />
+        <bool name="FresnelUseIOR" />
+        <float name="Ksn" />
+        <float name="Ks" />
+        <float name="IOR" />
+    </properties>
+    <values>
+        <float3 name="color" value="1.0 1.0 1.0" />
+        <float3 name="specularColor" value="0.0 0.0 0.0" />
+        <float3 name="diffuseInput" value="1.0 1.0 1.0" />
+        <float3 name="specularInput" value="0.0 0.0 0.0" />
+        <float3 name="emissionInput" value="0.0 0.0 0.0" />
+    </values>
+    <outputs>
+        <struct name="standardShaderCombiner" struct_name="mayaSurfaceShaderOutput" />
+    </outputs>
+    <implementation>
+        <implementation render="OGSRenderer" language="Cg" lang_version="2.1">
+            <function_name val="standardShaderCombiner" />
+            <source>
+                <![CDATA[
+mayaSurfaceShaderOutput standardShaderCombiner(
+                standardShaderLightingData lightingData,
+                float3 color,
+                float3 specularColor,
+                float3 diffuseInput,
+                float3 specularInput,
+                float directDiffuse,
+                float directSpecular,
+                float3 emissionInput,
+                bool specularFresnel,
+                bool FresnelAffectDiffuse,
+                bool FresnelUseIOR,
+                float Ksn,
+                float Ks,
+                float IOR)
+{
+    mayaSurfaceShaderOutput result;
+    float3 diffuse = color * diffuseInput * directDiffuse;
+    float3 specular = specularColor * specularInput * directSpecular * Ks;
+    if (specularFresnel)
+    {
+        float fresnel = 1.0f;
+        float fresnelWeight = Ksn;
+        float NV = dot(lightingData.N, -lightingData.V);
+        if (NV < 0.0f)
+        {
+            if (FresnelUseIOR)
+            {
+                fresnelWeight = (IOR - 1) / (IOR + 1);
+                fresnelWeight *= fresnelWeight;
+            }
+            float temp = 1.0f + NV;
+            float fweight = temp * temp;
+            fweight *= fweight;
+            fweight *= temp;
+            fresnel = fresnelWeight + fweight * (1.0f - fresnelWeight);
+        }
+        specular *= fresnel;
+        if (FresnelAffectDiffuse)
+            diffuse *= 1.0f - fresnel * Ks;
+    }
+
+    result.outColor = diffuse + specular + emissionInput;
+    result.outTransparency = float3(0.0f, 0.0f, 0.0f);
+    result.outGlowColor = float3(0.0f, 0.0f, 0.0f);
+    result.outMatteOpacity = float3(-1.0e+06f, -1.0e+06f, -1.0e+06f);
+    result.outSurfaceFinal = float4(result.outColor, 1.0f);
+    return result;
+}
+                ]]>
+            </source>
+        </implementation>
+        <implementation render="OGSRenderer" language="HLSL" lang_version="11.0">
+            <function_name val="standardShaderCombiner" />
+            <source>
+                <![CDATA[
+mayaSurfaceShaderOutput standardShaderCombiner(
+                standardShaderLightingData lightingData,
+                float3 color,
+                float3 specularColor,
+                float3 diffuseInput,
+                float3 specularInput,
+                float directDiffuse,
+                float directSpecular,
+                float3 emissionInput,
+                bool specularFresnel,
+                bool FresnelAffectDiffuse,
+                bool FresnelUseIOR,
+                float Ksn,
+                float Ks,
+                float IOR)
+{
+    mayaSurfaceShaderOutput result;
+    float3 diffuse = color * diffuseInput * directDiffuse;
+    float3 specular = specularColor * specularInput * directSpecular * Ks;
+    if (specularFresnel)
+    {
+        float fresnel = 1.0f;
+        float fresnelWeight = Ksn;
+        float NV = dot(lightingData.N, -lightingData.V);
+        if (NV < 0.0f)
+        {
+            if (FresnelUseIOR)
+            {
+                fresnelWeight = (IOR - 1) / (IOR + 1);
+                fresnelWeight *= fresnelWeight;
+            }
+            float temp = 1.0f + NV;
+            float fweight = temp * temp;
+            fweight *= fweight;
+            fweight *= temp;
+            fresnel = fresnelWeight + fweight * (1.0f - fresnelWeight);
+        }
+        specular *= fresnel;
+        if (FresnelAffectDiffuse)
+            diffuse *= 1.0f - fresnel * Ks;
+    }
+
+    result.outColor = diffuse + specular + emissionInput;
+    result.outTransparency = float3(0.0f, 0.0f, 0.0f);
+    result.outGlowColor = float3(0.0f, 0.0f, 0.0f);
+    result.outMatteOpacity = float3(-1.0e+06f, -1.0e+06f, -1.0e+06f);
+    result.outSurfaceFinal = float4(result.outColor, 1.0f);
+    return result;
+}
+                ]]>
+            </source>
+        </implementation>
+        <implementation render="OGSRenderer" language="HLSL" lang_version="10.0">
+            <function_name val="standardShaderCombiner" />
+            <source>
+                <![CDATA[
+mayaSurfaceShaderOutput standardShaderCombiner(
+                standardShaderLightingData lightingData,
+                float3 color,
+                float3 specularColor,
+                float3 diffuseInput,
+                float3 specularInput,
+                float directDiffuse,
+                float directSpecular,
+                float3 emissionInput,
+                bool specularFresnel,
+                bool FresnelAffectDiffuse,
+                bool FresnelUseIOR,
+                float Ksn,
+                float Ks,
+                float IOR)
+{
+    mayaSurfaceShaderOutput result;
+    float3 diffuse = color * diffuseInput * directDiffuse;
+    float3 specular = specularColor * specularInput * directSpecular * Ks;
+    if (specularFresnel)
+    {
+        float fresnel = 1.0f;
+        float fresnelWeight = Ksn;
+        float NV = dot(lightingData.N, -lightingData.V);
+        if (NV < 0.0f)
+        {
+            if (FresnelUseIOR)
+            {
+                fresnelWeight = (IOR - 1) / (IOR + 1);
+                fresnelWeight *= fresnelWeight;
+            }
+            float temp = 1.0f + NV;
+            float fweight = temp * temp;
+            fweight *= fweight;
+            fweight *= temp;
+            fresnel = fresnelWeight + fweight * (1.0f - fresnelWeight);
+        }
+        specular *= fresnel;
+        if (FresnelAffectDiffuse)
+            diffuse *= 1.0f - fresnel * Ks;
+    }
+
+    result.outColor = diffuse + specular + emissionInput;
+    result.outTransparency = float3(0.0f, 0.0f, 0.0f);
+    result.outGlowColor = float3(0.0f, 0.0f, 0.0f);
+    result.outMatteOpacity = float3(-1.0e+06f, -1.0e+06f, -1.0e+06f);
+    result.outSurfaceFinal = float4(result.outColor, 1.0f);
+    return result;
+}
+                ]]>
+            </source>
+        </implementation>
+    </implementation>
+</fragment>

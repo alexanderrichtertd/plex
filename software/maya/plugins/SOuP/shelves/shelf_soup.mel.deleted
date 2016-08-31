@@ -1,0 +1,161 @@
+global proc shelf_soup () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 36
+        -height 36
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "nodes" 
+        -enableBackground 0
+        -align "center" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "SOuP.xpm" 
+        -image1 "SOuP.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as mc\ntry: mc.loadPlugin('SOuP', qt=True)\nexcept:pass\ntry: soup().updateShelfMenus()\nexcept: pass" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "arrayBlend" ( "soup().create('arrayBlend')" )
+        -mip 0
+        -mi "arrayDataContainer" ( "soup().create('arrayDataContainer')" )
+        -mip 1
+        -mi "arrayExpression" ( "soup().create('arrayExpression')" )
+        -mip 2
+        -mi "arrayToArray" ( "soup().create('arrayToArray')" )
+        -mip 3
+        -mi "arrayToDynArrays" ( "soup().create('arrayToDynArrays')" )
+        -mip 4
+        -mi "arrayToMulti" ( "soup().create('arrayToMulti')" )
+        -mip 5
+        -mi "arrayToPointColor" ( "soup().create('arrayToPointColor')" )
+        -mip 6
+        -mi "arrayToTexture2D" ( "soup().create('arrayToTexture2D')" )
+        -mip 7
+        -mi "attributeCachingSystem" ( "" )
+        -mip 8
+        -mi "attributeTransfer" ( "soup().create('attributeTransfer')" )
+        -mip 9
+        -mi "audioToArray" ( "soup().create('audioToArray')" )
+        -mip 10
+        -mi "blendCurves" ( "soup().create('blendCurves')" )
+        -mip 11
+        -mi "blurPointAttribute" ( "soup().create('blurPointAttribute')" )
+        -mip 12
+        -mi "bmesh" ( "soup().create('bmesh')" )
+        -mip 13
+        -mi "bound" ( "soup().create('bound')" )
+        -mip 14
+        -mi "boundingObject" ( "soup().create('boundingObject')" )
+        -mip 15
+        -mi "boundingObjectManip" ( "soup().create('boundingObjectManip')" )
+        -mip 16
+        -mi "cage" ( "soup().create('cage')" )
+        -mip 17
+        -mi "cocoon" ( "soup().create('cocoon')" )
+        -mip 18
+        -mi "colorAndAlphaToRgba" ( "soup().create('colorAndAlphaToRgba')" )
+        -mip 19
+        -mi "combineArrays" ( "soup().create('combineArrays')" )
+        -mip 20
+        -mi "compListToObjGrp" ( "soup().create('compListToObjGrp')" )
+        -mip 21
+        -mi "componentToComponent" ( "soup().create('componentToComponent')" )
+        -mip 22
+        -mi "computeVelocity" ( "soup().create('computeVelocity')" )
+        -mip 23
+        -mi "convexHull" ( "soup().create('convexHull')" )
+        -mip 24
+        -mi "copier" ( "soup().create('copier')" )
+        -mip 25
+        -mi "createArray" ( "soup().create('createArray')" )
+        -mip 26
+        -mi "curvesToPointCloud" ( "soup().create('curvesToPointCloud')" )
+        -mip 27
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 36
+        -height 36
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "tools" 
+        -enableBackground 0
+        -align "center" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "SOuP_tools.xpm" 
+        -image1 "SOuP_tools.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as mc\ntry: mc.loadPlugin('SOuP', qt=True)\nexcept:pass\ntry: soup().updateShelfMenus()\nexcept: pass" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "overburn" ( "mm.eval(\"overburn_SOuP()\")" )
+        -mip 0
+        -mi "nParticle cache manager" ( "" )
+        -mip 1
+        -mi "particles to curves" ( "" )
+        -mip 2
+        -mi "uninstancer" ( "" )
+        -mip 3
+        -mi "nucleus I/O" ( "" )
+        -mip 4
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 36
+        -height 36
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "connect" 
+        -enableBackground 0
+        -align "center" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "SOuP_connect.xpm" 
+        -image1 "SOuP_connect.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as mc\ntry: mc.loadPlugin('SOuP', qt=True)\nexcept:pass\ntry: soup().updateShelfMenus()\nexcept: pass" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEarrayToTexture2D'>
+		<attribute name='outColor' type='maya.float3'>
+			<label>Out Color</label>
+		</attribute>
+		<attribute name='inDataPP' type='maya.vectorArray'>
+			<label>In Data PP</label>
+		</attribute>
+		<attribute name='inMapPP' type='maya.doubleArray'>
+			<label>In Map PP</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEarrayToTexture2D'>
+		<property name='outColor'/>
+		<property name='inDataPP'/>
+		<property name='inMapPP'/>
+	</view>
+</templates>

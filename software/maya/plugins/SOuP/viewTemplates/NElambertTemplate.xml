@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NElambert'>
+		<attribute name='message' type='maya.message'>
+			<label>Message</label>
+		</attribute>
+		<attribute name='outColor' type='maya.float3'>
+			<label>Out Color</label>
+		</attribute>
+		<attribute name='outTransparency' type='maya.float3'>
+			<label>Out Transparency</label>
+		</attribute>
+		<attribute name='outGlowColor' type='maya.float3'>
+			<label>Out Glow Color</label>
+		</attribute>
+		<attribute name='outMatteOpacity' type='maya.float3'>
+			<label>Out Matte Opacity</label>
+		</attribute>
+		<attribute name='color' type='maya.float3'>
+			<label>Color</label>
+		</attribute>
+		<attribute name='transparency' type='maya.float3'>
+			<label>Transparency</label>
+		</attribute>
+		<attribute name='ambientColor' type='maya.float3'>
+			<label>Ambient Color</label>
+		</attribute>
+		<attribute name='incandescence' type='maya.float3'>
+			<label>Incandescence</label>
+		</attribute>
+		<attribute name='normalCamera' type='maya.float3'>
+			<label>Normal Camera</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NElambert'>
+		<property name='message'/>
+		<property name='outColor'/>
+		<property name='outTransparency'/>
+		<property name='outGlowColor'/>
+		<property name='outMatteOpacity'/>
+		<property name='color'/>
+		<property name='transparency'/>
+		<property name='ambientColor'/>
+		<property name='incandescence'/>
+		<property name='normalCamera'/>
+	</view>
+</templates>

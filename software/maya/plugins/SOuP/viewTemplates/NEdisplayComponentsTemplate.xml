@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEdisplayComponents'>
+		<attribute name='inGeometry' type='maya.vectorArray'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.Int32Array'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inDataPP' type='maya.vectorArray'>
+			<label>In Data PP</label>
+		</attribute>
+		<attribute name='visibility' type='maya.bool'>
+			<label>Visibility</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEdisplayComponents'>
+		<property name='inGeometry'/>
+		<property name='inComponents'/>
+		<property name='inDataPP'/>
+		<property name='visibility'/>
+	</view>
+</templates>

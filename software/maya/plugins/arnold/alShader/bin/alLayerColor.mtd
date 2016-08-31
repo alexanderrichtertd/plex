@@ -1,0 +1,108 @@
+[node alLayerColor]
+	desc STRING "Layer up to eight color channels together with a variety of Photoshop-styl blending modes."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alLayerColor"
+	maya.classification STRING "utility/color"
+	maya.id INT 0x0011641C
+	houdini.icon STRING "COP2_composite"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alLayerColor.html"
+	houdini.order STRING "layer1 layer1a layer1blend layer2 layer2a layer2blend layer3 layer3a layer3blend layer4 layer4a layer4blend layer5 layer5a layer5blend layer6 layer6a layer6blend layer7 layer7a layer7blend layer8 layer8a layer8blend "
+
+	[attr layer1]
+		houdini.label STRING "Layer 1"
+		desc STRING "The background layer (will be blended over black if its alpha is not 1."
+		linkable BOOL TRUE
+	[attr layer1a]
+		houdini.label STRING "Layer 1 Alpha"
+		desc STRING "The alpha of the background layer"
+		linkable BOOL TRUE
+	[attr layer1blend]
+		houdini.label STRING "Mode"
+		desc STRING "Blend mode for the background layer."
+		linkable BOOL FALSE
+	[attr layer2]
+		houdini.label STRING "Layer 2"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer2a]
+		houdini.label STRING "Layer 2 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer2blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE
+	[attr layer3]
+		houdini.label STRING "Layer 3"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer3a]
+		houdini.label STRING "Layer 3 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer3blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE
+	[attr layer4]
+		houdini.label STRING "Layer 4"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer4a]
+		houdini.label STRING "Layer 4 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer4blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE
+	[attr layer5]
+		houdini.label STRING "Layer 5"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer5a]
+		houdini.label STRING "Layer 5 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer5blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE
+	[attr layer6]
+		houdini.label STRING "Layer 6"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer6a]
+		houdini.label STRING "Layer 6 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer6blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE
+	[attr layer7]
+		houdini.label STRING "Layer 7"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer7a]
+		houdini.label STRING "Layer 7 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer7blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE
+	[attr layer8]
+		houdini.label STRING "Layer 8"
+		desc STRING "The color plugged in here will be blended over the layers below according to its alpha and blend mode."
+		linkable BOOL TRUE
+	[attr layer8a]
+		houdini.label STRING "Layer 8 Alpha"
+		desc STRING "The alpha used to blend this layer over the layers below."
+		linkable BOOL TRUE
+	[attr layer8blend]
+		houdini.label STRING "Mode"
+		desc STRING "The blend mode used to blend this layer over the layers below."
+		linkable BOOL FALSE

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEpolyCBoolOp'>
+		<attribute name='output' type='maya.mesh'>
+			<label>Output</label>
+		</attribute>
+		<attribute name='inputMat' type='maya.matrix'>
+			<label>Input Mat</label>
+		</attribute>
+		<attribute name='inputPoly' type='maya.mesh'>
+			<label>Input Poly</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEpolyCBoolOp'>
+		<property name='output'/>
+		<property name='inputMat'/>
+		<property name='inputPoly'/>
+	</view>
+</templates>

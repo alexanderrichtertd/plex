@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEmultiToArray'>
+		<attribute name='outArray' type='maya.doubleArray'>
+			<label>Out Array</label>
+		</attribute>
+		<attribute name='inWeightList' type='maya.TdataCompound'>
+			<label>In Weight List</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEmultiToArray'>
+		<property name='outArray'/>
+		<property name='inWeightList'/>
+	</view>
+</templates>

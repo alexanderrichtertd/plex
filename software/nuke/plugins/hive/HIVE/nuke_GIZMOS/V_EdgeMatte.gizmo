@@ -1,0 +1,496 @@
+#! /Applications/Nuke6.3v6/NukeX6.3v6.app/../Nuke6.3v6.app/Contents/MacOS/Nuke6.3v6 -nx
+version 6.3 v6
+add_layer {rgba rgba.beta}
+Gizmo {
+ inputs 2
+ help "V!ctor 1.5v3\nV_EdgeMatte\n©2012 Victor Perez. All rights reserved\nwww.victorperez.co.uk"
+ knobChanged "\ntk = nuke.thisKnob()\ntn = nuke.thisNode()\ng = nuke.thisNode().knob('gang').value()\neE = tn.knob('extEdge')\niE = tn.knob('intEdge')\nmC = nuke.toNode('maskCheckerInput').knob('inputChecker')\nmaskOn = nuke.toNode('maskChannel').knob('from0')\n\n#mask status on load\nif tn.knob('from0').value() == 'none':\n    pass\nelse:\n    lastMask = tn.knob('from0').value()\n\ntry:\n    dif\nexcept:\n    dif = 0\n\nif tk.name() == 'gang':\n    dif = eE.getValue()-iE.getValue()\n\nif g == True:\n    if tk.name() == 'extEdge':\n        iE.setValue(eE.getValue()-dif)\n    if tk.name() == 'intEdge':\n        eE.setValue(iE.getValue()+dif)\n\n# mask input on load default option\nif mC.getValue() == False:\n    try:\n        maskPresent\n    except:\n        maskPresent = 0\nif mC.getValue() == True:\n    try:\n        maskPresent\n    except:\n        lastMask = maskOn.value()\n        maskPresent = 1\n\n# mask auto set\nif mC.getValue() == True:\n    if maskPresent == 0:\n        try:\n            maskOn.setValue(lastMask)\n        except:\n            maskOn.setValue('rgba.alpha')\n        maskPresent = 1\n    else:\n        pass\nif mC.getValue() == False:\n    if maskPresent == 1:\n        lastMask = maskOn.value()\n        maskOn.setValue('none')\n        maskPresent = 0\n\n"
+ tile_color 0xcc804eff
+ addUserKnob {20 V_EdgeMatte}
+ addUserKnob {41 from0_1 l "source channel" t "matte channel to find the edge" T sourceMatte.from0}
+ addUserKnob {4 edgeMode l mode t "part of the edge you want to work with, external, internal or both" M {"both sides" inner outter ""}}
+ addUserKnob {6 gang t "blocks the relation between the external and internal edge" -STARTLINE}
+ gang true
+ addUserKnob {7 extEdge l "external edge" t "pixels of external edge" R 0 50}
+ extEdge 10
+ addUserKnob {7 intEdge l "internal edge" t "pixels of internal edge" R 0 50}
+ intEdge 10
+ addUserKnob {7 hardness t "hardness of the edge"}
+ addUserKnob {26 preProcess l "@b;PreProcess"}
+ addUserKnob {26 hardMatteText l "hard matte" t "this option will convert the source matte on black (0) and white (1) values with no gradients" T ""}
+ addUserKnob {6 hardMatte l "" t "this option will convert the source matte on black (0) and white (1) values with no gradients" -STARTLINE}
+ addUserKnob {7 hardMatteCore l threshold t "relation between black (0) and white (1) to define the hard core matte" -STARTLINE}
+ hardMatteCore 0.5
+ addUserKnob {7 preblur t "applies a blur before to find the edges" R 0 100}
+ addUserKnob {7 centerOffset l "center offset" t "move the edge towards the exterior or interior offsetting the center of the edge (pre-erode)" R -50 50}
+ addUserKnob {4 filter l "  filter" t "pre-erode filter" -STARTLINE M {box blur "" "" "" ""}}
+ filter blur
+ addUserKnob {26 PostProcess l "@b;PostProcess"}
+ addUserKnob {41 erodeSize l "erode size" t "erodes/dilates the edge" T postErode.size}
+ addUserKnob {41 erodeBlur l "blur size" t "blurs the edge inside the dilate/erode operation" T postErode.blur}
+ addUserKnob {41 extraSize l "extra blur size" t "blurs the edge after the dilate/erode operation" T extraBlur.size}
+ addUserKnob {41 blurQuality l "blur quality" t "extra blur quality" T postErode.quality}
+ addUserKnob {26 space_01 l "" +STARTLINE T " "}
+ addUserKnob {26 maskText l mask t "mask channel" T ""}
+ addUserKnob {41 from0 l "" t "mask channel" -STARTLINE T maskChannel.from0}
+ addUserKnob {6 inject t "injects the mask into the mask.a channel" -STARTLINE}
+ addUserKnob {6 invert t "inverts the mask channel" -STARTLINE}
+ addUserKnob {6 fringe t "use the mask fringe (solarization) of the mask channel" -STARTLINE}
+ addUserKnob {7 mix t "mix with the original"}
+ mix 1
+ addUserKnob {52 knobChangedIntructions l knobChangedInstructions T "nuke.thisNode().knob('knobChanged').setValue('''\ntk = nuke.thisKnob()\ntn = nuke.thisNode()\ng = nuke.thisNode().knob('gang').value()\neE = tn.knob('extEdge')\niE = tn.knob('intEdge')\nmC = nuke.toNode('maskCheckerInput').knob('inputChecker')\nmaskOn = nuke.toNode('maskChannel').knob('from0')\n\n#mask status on load\nif tn.knob('from0').value() == 'none':\n    pass\nelse:\n    lastMask = tn.knob('from0').value()\n\ntry:\n    dif\nexcept:\n    dif = 0\n\nif tk.name() == 'gang':\n    dif = eE.getValue()-iE.getValue()\n\nif g == True:\n    if tk.name() == 'extEdge':\n        iE.setValue(eE.getValue()-dif)\n    if tk.name() == 'intEdge':\n        eE.setValue(iE.getValue()+dif)\n\n# mask input on load default option\nif mC.getValue() == False:\n    try:\n        maskPresent\n    except:\n        maskPresent = 0\nif mC.getValue() == True:\n    try:\n        maskPresent\n    except:\n        lastMask = maskOn.value()\n        maskPresent = 1\n\n# mask auto set\nif mC.getValue() == True:\n    if maskPresent == 0:\n        try:\n            maskOn.setValue(lastMask)\n        except:\n            maskOn.setValue('rgba.alpha')\n        maskPresent = 1\n    else:\n        pass\nif mC.getValue() == False:\n    if maskPresent == 1:\n        lastMask = maskOn.value()\n        maskOn.setValue('none')\n        maskPresent = 0\n\n''')" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 1000
+  ypos -11
+  number 1
+ }
+set N149728e0 [stack 0]
+add_layer {shadow}
+ Shuffle {
+  in alpha
+  out alpha
+  name alphaCheck
+  xpos 1000
+  ypos 61
+  disable {{parent.maskChannel.from0>0?0:1 i}}
+ }
+push $N149728e0
+ Dot {
+  name Dot6
+  xpos 1166
+  ypos -6
+ }
+ Dot {
+  name Dot3
+  xpos 1166
+  ypos 114
+ }
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name maskChannel
+  xpos 1000
+  ypos 102
+  disable {{from0>0?0:1}}
+ }
+ Remove {
+  operation keep
+  channels alpha
+  name alphaOnly1
+  xpos 1000
+  ypos 174
+ }
+set N1498c9a0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 1166
+  ypos 186
+ }
+ Dot {
+  name Dot5
+  xpos 1166
+  ypos 1528
+ }
+push $N1498c9a0
+ ColorLookup {
+  channels alpha
+  lut {master {curve L 0 x0.5 1 0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name fringe
+  xpos 1000
+  ypos 1110
+  disable {{!parent.fringe i}}
+ }
+ Invert {
+  channels alpha
+  name invert
+  xpos 1000
+  ypos 1182
+  disable {{!parent.invert i}}
+ }
+ NoOp {
+  name maskCheckerInput
+  xpos 1000
+  ypos 1237
+  addUserKnob {20 User}
+  addUserKnob {6 inputChecker l "input checker" +STARTLINE}
+  inputChecker {{"\[exists parent.input1]" i}}
+  addUserKnob {3 inputCheckerInt}
+  inputCheckerInt {{"\[exists parent.input1]" i}}
+ }
+ Dot {
+  name Dot18
+  xpos 1034
+  ypos 1288
+ }
+ Input {
+  inputs 0
+  name source
+  xpos -96
+  ypos -142
+ }
+set N149ad7a0 [stack 0]
+ Shuffle {
+  in alpha
+  in2 none
+  out alpha
+  out2 none
+  name ACheck
+  xpos -96
+  ypos -59
+ }
+push $N149ad7a0
+ Dot {
+  name Dot9
+  xpos 104
+  ypos -137
+ }
+ Dot {
+  name Dot8
+  xpos 104
+  ypos 7
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name sourceMatte
+  xpos -96
+  ypos -5
+ }
+ Remove {
+  operation keep
+  channels alpha
+  name alphaOnly
+  xpos -96
+  ypos 54
+ }
+ Dot {
+  name Dot26
+  xpos -62
+  ypos 234
+ }
+set N149cc400 [stack 0]
+ Grade {
+  channels alpha
+  blackpoint {{parent.hardMatteCore i}}
+  whitepoint {{blackpoint i}}
+  white_clamp true
+  name hardEdge
+  xpos 48
+  ypos 222
+ }
+push $N149cc400
+ Dot {
+  name Dot28
+  xpos -62
+  ypos 301
+ }
+set N149d7ab0 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.hardMatte i}}
+  name hardEdgeSwitch
+  xpos 48
+  ypos 296
+ }
+ Blur {
+  channels alpha
+  size {{parent.preblur i}}
+  name preBlur
+  xpos 200
+  ypos 291
+ }
+ Dot {
+  name Dot21
+  xpos 369
+  ypos 301
+ }
+set N149e66a0 [stack 0]
+ Erode {
+  channels alpha
+  size {{-parent.centerOffset i}}
+  name centerOffsetGaussian
+  xpos 335
+  ypos 342
+ }
+push $N149e66a0
+ Dot {
+  name Dot20
+  xpos 527
+  ypos 301
+ }
+ FilterErode {
+  channels alpha
+  size {{-parent.centerOffset i}}
+  name FilterErodeBox
+  xpos 493
+  ypos 342
+ }
+ Dot {
+  name Dot22
+  xpos 527
+  ypos 421
+ }
+ Switch {
+  inputs 2
+  which {{parent.filter i}}
+  name centerFilter
+  xpos 335
+  ypos 416
+ }
+ Dot {
+  name Dot15
+  xpos 369
+  ypos 493
+ }
+set N14a05850 [stack 0]
+ FilterErode {
+  channels alpha
+  size {{parent.extEdge<0?parent.extEdge:-parent.extEdge i}}
+  name externalEdge
+  xpos 445
+  ypos 485
+ }
+ Clamp {
+  channels alpha
+  name Clamp5
+  xpos 445
+  ypos 544
+ }
+ Blur {
+  channels alpha
+  size {{parent.externalEdge.size i}}
+  name Blur8
+  xpos 554
+  ypos 544
+ }
+ Dot {
+  name Dot17
+  xpos 881
+  ypos 552
+ }
+push $N14a05850
+ Dot {
+  name Dot16
+  xpos 369
+  ypos 702
+ }
+ FilterErode {
+  channels alpha
+  size {{parent.intEdge<0?-parent.intEdge:parent.intEdge i}}
+  name internalEdge
+  xpos 449
+  ypos 694
+ }
+ Clamp {
+  channels alpha
+  name Clamp6
+  xpos 449
+  ypos 722
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  xpos 449
+  ypos 750
+ }
+ Blur {
+  channels alpha
+  size {{parent.internalEdge.size i}}
+  name Blur1
+  xpos 449
+  ypos 778
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name Merge11
+  xpos 847
+  ypos 778
+ }
+push $N149d7ab0
+ Dot {
+  name Dot10
+  xpos -62
+  ypos 840
+ }
+set N14a4b380 [stack 0]
+ Shuffle {
+  alpha black
+  name Blank
+  xpos 680
+  ypos 837
+ }
+ Dissolve {
+  inputs 2
+  channels alpha
+  which {{((parent.intEdge<(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1)?(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1):parent.intEdge)>1?1:(parent.intEdge<(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1)?(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1):parent.intEdge))<0?0:((parent.intEdge<(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1)?(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1):parent.intEdge)>1?1:(parent.intEdge<(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1)?(parent.extEdge<1?(parent.extEdge>0?parent.extEdge:0):1):parent.intEdge)) i}}
+  name Dissolve1
+  xpos 847
+  ypos 832
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.hardness>1?0.5:(parent.hardness<0?0:(parent.hardness>0?parent.hardness/2:0)) i}}
+  whitepoint {{parent.hardness<0?1:(parent.hardness<1?1-(parent.hardness/2):0.5) i}}
+  white_clamp true
+  name Grade1
+  xpos 847
+  ypos 868
+ }
+ Erode {
+  channels alpha
+  size 0
+  name postErode
+  xpos 847
+  ypos 906
+ }
+ Blur {
+  channels alpha
+  quality {{parent.postErode.quality}}
+  name extraBlur
+  xpos 847
+  ypos 954
+ }
+ Dot {
+  name Dot7
+  xpos 881
+  ypos 1002
+ }
+set N14a754f0 [stack 0]
+ Dot {
+  name Dot24
+  xpos 556
+  ypos 1002
+ }
+set N14a78310 [stack 0]
+ Dot {
+  name Dot23
+  xpos 302
+  ypos 1002
+ }
+push $N14a4b380
+ Dot {
+  name Dot19
+  xpos -62
+  ypos 1067
+ }
+ Dot {
+  name Dot25
+  xpos 154
+  ypos 1067
+ }
+set N14a80be0 [stack 0]
+ Invert {
+  name Invert1
+  xpos 120
+  ypos 1110
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name externalEdgeSolo
+  xpos 268
+  ypos 1110
+ }
+ Dot {
+  name Dot11
+  xpos 302
+  ypos 1216
+ }
+push $N14a78310
+push $N14a80be0
+ Dot {
+  name Dot27
+  xpos 412
+  ypos 1067
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name externalEdgeSolo1
+  xpos 522
+  ypos 1110
+ }
+push $N14a754f0
+ Switch {
+  inputs 3
+  which {{parent.edgeMode i}}
+  name SoloSwitch
+  xpos 847
+  ypos 1213
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name Merge12
+  xpos 847
+  ypos 1276
+  disable {{parent.maskChannel.from0>0?0:1 i}}
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name toRGBA
+  xpos 847
+  ypos 1341
+ }
+ Crop {
+  box {0 0 {input.format.w i} {input.format.h i}}
+  name Crop
+  xpos 847
+  ypos 1395
+ }
+push $N149ad7a0
+ Dot {
+  name Dot1
+  xpos -206
+  ypos -137
+ }
+ Dot {
+  name Dot2
+  xpos -206
+  ypos 1456
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.mix i}}
+  name mix
+  xpos 847
+  ypos 1444
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 mask.a
+  name inject
+  xpos 847
+  ypos 1516
+  disable {{parent.maskChannel.from0>0?!parent.inject:1 i}}
+ }
+ Output {
+  name Output
+  xpos 847
+  ypos 1597
+ }
+end_group

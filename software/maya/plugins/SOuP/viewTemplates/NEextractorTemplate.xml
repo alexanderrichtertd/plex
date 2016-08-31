@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEextractor'>
+		<attribute name='extracted' type='maya.double'>
+			<label>Extracted</label>
+		</attribute>
+		<attribute name='array' type='maya.doubleArray'>
+			<label>Array</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEextractor'>
+		<property name='extracted'/>
+		<property name='array'/>
+	</view>
+</templates>

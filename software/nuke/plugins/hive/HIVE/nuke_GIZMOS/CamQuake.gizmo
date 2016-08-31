@@ -1,0 +1,404 @@
+#! //Applications/applications/nuke/5.1/64Bit/5.1.2.0/Nuke5.1.exe -nx
+version 5.1200
+Gizmo {
+ tile_color 0x8ac160ff
+ label "v2.0 - dug\n"
+ addUserKnob {20 Controls}
+ addUserKnob {20 PreShakeTransform l "Pre-Shake Transform" n 1}
+ PreShakeTransform 0
+ addUserKnob {12 xformSizeOriginal_translate l Translate t "Use to translate image before you shake it"}
+ addUserKnob {14 xformSizeOriginal_scale l Scale t "Use to scale image before you shake it" R 0 100}
+ xformSizeOriginal_scale 1
+ addUserKnob {12 xformSizeOriginal_center l "XY Center" t "center of the pre-shake transform"}
+ xformSizeOriginal_center {{width/2} {height/2}}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {7 global_amt l "Global Shake Amt"}
+ global_amt 1
+ addUserKnob {26 ""}
+ addUserKnob {20 ShakeControls l "Shake Controls" n 1}
+ addUserKnob {6 motiontileEnable l "Enable Motion Tile" -STARTLINE}
+ motiontileEnable true
+ addUserKnob {6 shkenable l "Enable Shake" t "Use this for enabling or disabling the shake" -STARTLINE}
+ shkenable true
+ addUserKnob {26 ""}
+ addUserKnob {7 xformShake_RandomA l "Min Shake" t "Lower random seed" R 0 10}
+ xformShake_RandomA -2
+ addUserKnob {7 xformShake_RandomB l "Max Shake" t "Higher random seed" R 0 50}
+ xformShake_RandomB 2
+ addUserKnob {26 ""}
+ addUserKnob {14 xformShake_shkamount l "Shake Amplitude" t "Gimme some big (or little) shake." R 0 100}
+ xformShake_shkamount 20
+ addUserKnob {7 xformShake_ShakeSmoothness l "Shake Frequency" t "Amount of smoothness in the shake" R 0 10}
+ xformShake_ShakeSmoothness 3
+ addUserKnob {26 ""}
+ addUserKnob {7 scale_amt l "Z Scale Amount"}
+ scale_amt 0.2
+ addUserKnob {26 ""}
+ addUserKnob {7 rot_amt l "Rotation Amount" t "Additional z rotation shake can be added with this\nset to 0 for no rotation (disable)"}
+ rot_amt 1
+ addUserKnob {12 rot_center l "Rotation Center" t "This is the center of rotation"}
+ rot_center {{width/2} {height/2}}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 BlurControls l "Blur Controls" n 1}
+ BlurControls 0
+ addUserKnob {6 VectorBlur1_enable l "Blur Enable" -STARTLINE}
+ VectorBlur1_enable true
+ addUserKnob {7 VectorBlur1_BlurMult l "XY Blur Multiplier" t "Amount of blur to add to the shake" R 1 10}
+ VectorBlur1_BlurMult 1
+ addUserKnob {7 DirBlur_BlurMult l "Z Blur Multiplier" R 1 10}
+ DirBlur_BlurMult 1
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {0 ""}
+ addUserKnob {26 "" -STARTLINE T "\n\n(original CameraShake2D gizmo written by Throb)"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 379
+  ypos 12
+ }
+ Crop {
+  box {0 0 {width i} {height i}}
+  name Crop2
+  selected true
+  xpos 379
+  ypos 67
+ }
+ Dot {
+  name Dot12
+  xpos 411
+  ypos 125
+ }
+set N2864b4a0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 70
+  ypos 125
+ }
+ Dot {
+  name Dot2
+  xpos 70
+  ypos 362
+ }
+set N2864b940 [stack 0]
+ Dot {
+  name Dot9
+  xpos 70
+  ypos 426
+ }
+set N2864bb90 [stack 0]
+ Dot {
+  name Dot8
+  xpos 70
+  ypos 454
+ }
+set N2864bde0 [stack 0]
+ Dot {
+  name Dot7
+  xpos 70
+  ypos 482
+ }
+set N2864c030 [stack 0]
+ Dot {
+  name Dot6
+  xpos 70
+  ypos 562
+ }
+set N2864c280 [stack 0]
+ Dot {
+  name Dot5
+  xpos 70
+  ypos 590
+ }
+set N2864c4d0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 70
+  ypos 618
+ }
+set N2864c720 [stack 0]
+ Dot {
+  name Dot3
+  xpos 70
+  ypos 700
+ }
+set N2864c970 [stack 0]
+ Dot {
+  name Dot10
+  xpos 70
+  ypos 728
+ }
+set N2864cbc0 [stack 0]
+ Radial {
+  output alpha
+  area {0 0 {width i} {height i}}
+  name Radial1
+  xpos 38
+  ypos 990
+ }
+ Grade {
+  channels alpha
+  multiply 2.93878
+  gamma 0.947339
+  name Grade1
+  xpos 205
+  ypos 990
+ }
+push $N2864cbc0
+ Transform {
+  translate {{width+Transform1.translate.x i} {-height+Transform1.translate.y i}}
+  scale {-1 -1}
+  center {{width/2 i} {height/2 i}}
+  name Transform9
+  xpos 142
+  ypos 725
+ }
+push $N2864c970
+ Transform {
+  translate {{-width+Transform1.translate.x i} {height+Transform1.translate.y i}}
+  scale {-1 -1}
+  center {{width/2 i} {height/2 i}}
+  name Transform8
+  xpos 142
+  ypos 697
+ }
+push $N2864c720
+ Transform {
+  translate {{width+Transform1.translate.x i} {height+Transform1.translate.y i}}
+  scale {-1 -1}
+  center {{width/2 i} {height/2 i}}
+  name Transform5
+  xpos 142
+  ypos 615
+ }
+push $N2864c4d0
+ Transform {
+  translate {{Transform1.translate.x i} {height+Transform1.translate.y i}}
+  scale {1 -1}
+  center {{width/2 i} {height/2 i}}
+  name Transform6
+  xpos 142
+  ypos 587
+ }
+push $N2864c280
+ Transform {
+  translate {{width+Transform1.translate.x i} {Transform1.translate.y i}}
+  scale {-1 1}
+  center {{width/2 i} {height/2 i}}
+  name Transform7
+  xpos 142
+  ypos 559
+ }
+push $N2864c030
+ Transform {
+  translate {{-width+Transform1.translate.x i} {-height+Transform1.translate.y i}}
+  scale {-1 -1}
+  center {{width/2 i} {height/2 i}}
+  name Transform4
+  xpos 142
+  ypos 479
+ }
+push $N2864bde0
+ Transform {
+  translate {{Transform1.translate.x i} {-height+Transform1.translate.y i}}
+  scale {1 -1}
+  center {{width/2 i} {height/2 i}}
+  name Transform3
+  xpos 142
+  ypos 451
+ }
+push $N2864bb90
+ Transform {
+  translate {{-width+Transform1.translate.x i} {Transform1.translate.y i}}
+  scale {-1 1}
+  center {{width/2 i} {height/2 i}}
+  name Transform2
+  xpos 142
+  ypos 423
+ }
+push $N2864b940
+ Transform {
+  translate {{xformShake.translate.x i} {xformShake.translate.y i}}
+  center {{width/2 i} {height/2 i}}
+  name Transform1
+  xpos 252
+  ypos 359
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos 252
+  ypos 423
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 252
+  ypos 451
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 252
+  ypos 479
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos 252
+  ypos 559
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 252
+  ypos 587
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 252
+  ypos 615
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos 252
+  ypos 697
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos 252
+  ypos 725
+ }
+push $N2864b4a0
+ Transform {
+  translate {{xformSizeOriginal_translate.x i} {xformSizeOriginal_translate.y i}}
+  scale {{xformSizeOriginal_scale.w i}}
+  center {{xformSizeOriginal_center.x i} {xformSizeOriginal_center.y i}}
+  filter Rifman
+  name xformSizeOriginal
+  tile_color 0xffff00
+  label "Pre-Shake Translate"
+  xpos 379
+  ypos 173
+ }
+set N29252ad0 [stack 0]
+ Transform {
+  translate {{"(((((RandomA - 1) - RandomB + 1) * noise(frame*(1/ShakeSmoothness),0,5) + ShakeSmoothness) * shkamount)-(shkamount*ShakeSmoothness))*global_amt" i} {"(((((RandomA - 1) - RandomB + 1) * noise((frame+20)*(1/ShakeSmoothness),0,5) + ShakeSmoothness) * shkamount.h)-(shkamount.h*ShakeSmoothness))*global_amt" i}}
+  center {{rot_center.x i} {rot_center.y i}}
+  filter Rifman
+  name xformShake
+  tile_color 0xff000000
+  label ShakeXY
+  xpos 379
+  ypos 293
+  addUserKnob {20 "" l User}
+  addUserKnob {7 RandomA l "Low Random" R 0 10}
+  RandomA {{parent.xformShake_RandomA i}}
+  addUserKnob {7 RandomB l "High Random" R 0 50}
+  RandomB {{parent.xformShake_RandomB i}}
+  addUserKnob {7 ShakeAmount l "Shake Amount" t "adjust for shake multiplier" R 0 10}
+  ShakeAmount {{parent.xformShake_ShakeAmount i}}
+  addUserKnob {7 ShakeSmoothness l "Shake Smoothness" t "Smooth out shake curve.\nHigher values means a smoother shake." R 0 10}
+  ShakeSmoothness {{parent.xformShake_ShakeSmoothness i}}
+  addUserKnob {14 shkamount l "Shake Amount" t shkamount R 0 100}
+  shkamount {{parent.xformShake_shkamount.w i} {parent.xformShake_shkamount.h i}}
+ }
+set N29252d20 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge9
+  label MotionTile
+  xpos 379
+  ypos 718
+  disable {{!motiontileEnable}}
+ }
+ Transform {
+  rotate {{"((((rot_amt - 1) - rot_amt*-1 + 1) * noise(frame*(1/ShakeSmoothness),0,5)) * rot_amt)*global_amt" i}}
+  scale {{global_amt==1?1+(((scale_amt-1)-scale_amt*-1+.4)*noise(frame*(2/ShakeSmoothness),0,5)*scale_amt):1 i}}
+  center {{rot_center.x i} {rot_center.y i}}
+  filter Rifman
+  name xformShake1
+  tile_color 0xff000000
+  label ShakeRotate
+  xpos 379
+  ypos 794
+  addUserKnob {20 "" l User}
+  addUserKnob {7 RandomA l "Low Random" R 0 10}
+  RandomA {{parent.xformShake_RandomA i}}
+  addUserKnob {7 RandomB l "High Random" R 0 50}
+  RandomB {{parent.xformShake_RandomB i}}
+  addUserKnob {7 ShakeAmount l "Shake Amount" t "adjust for shake multiplier" R 0 10}
+  ShakeAmount {{parent.xformShake_ShakeAmount i}}
+  addUserKnob {7 ShakeSmoothness l "Shake Smoothness" t "Smooth out shake curve.\nHigher values means a smoother shake." R 0 10}
+  ShakeSmoothness {{parent.xformShake_ShakeSmoothness i}}
+  addUserKnob {14 shkamount l "Shake Amount" t shkamount R 0 100}
+  shkamount {{parent.xformShake_shkamount.w i} {parent.xformShake_shkamount.h i}}
+ }
+ VectorBlur {
+  constant {{xformShake.translate.x*BlurMult i} {xformShake.translate.y*BlurMult i}}
+  mix {{VectorBlur1_enable i 0.9064516129}}
+  name VectorBlur1
+  tile_color 0xcc804e00
+  label (all)
+  xpos 379
+  ypos 934
+  disable {{!VectorBlur1_enable}}
+  addUserKnob {20 "" l User}
+  addUserKnob {7 BlurMult l "Blur Multiplier" t "addition blur goes here" R 1 10}
+  BlurMult {{parent.VectorBlur1_BlurMult i}}
+ }
+ DirBlurWrapper {
+  inputs 1+1
+  BlurCenter {{width/2 i} {height/2 i}}
+  BlurLength {{xformShake1.scale==1?0:(xformShake1.scale)*10*DirBlur_BlurMult i}}
+  BlurAngle 90
+  target {{width/2 i} {height/2 i}}
+  invert_mask true
+  name DirBlurWrapper1
+  xpos 379
+  ypos 990
+  disable {{VectorBlur1_enable==1?0:1}}
+ }
+ Dot {
+  name Dot13
+  xpos 411
+  ypos 1105
+ }
+push $N29252ad0
+ Dot {
+  name Dot1
+  xpos 666
+  ypos 183
+ }
+ Switch {
+  inputs 2
+  which {{shkenable i}}
+  name Switch1
+  xpos 634
+  ypos 1102
+ }
+ Crop {
+  box {0 0 {width i} {input.height i}}
+  name Crop1
+  xpos 634
+  ypos 1268
+ }
+ Output {
+  name Output1
+  xpos 634
+  ypos 1342
+ }
+push $N29252d20
+ Viewer {
+  frame 28
+  name Viewer1
+  xpos 468
+  ypos 480
+ }
+end_group

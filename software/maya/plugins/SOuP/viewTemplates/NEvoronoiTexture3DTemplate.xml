@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEvoronoiTexture3D'>
+		<attribute name='outColor' type='maya.float3'>
+			<label>Out Color</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEvoronoiTexture3D'>
+		<property name='outColor'/>
+	</view>
+</templates>

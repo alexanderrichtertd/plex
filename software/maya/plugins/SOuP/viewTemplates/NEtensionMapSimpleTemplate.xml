@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEtensionMapSimple'>
+		<attribute name='outTensionData' type='maya.TdataCompound'>
+			<label>Out Tension Data</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='visibility' type='maya.bool'>
+			<label>Visibility</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEtensionMapSimple'>
+		<property name='outTensionData'/>
+		<property name='inMesh'/>
+		<property name='visibility'/>
+	</view>
+</templates>

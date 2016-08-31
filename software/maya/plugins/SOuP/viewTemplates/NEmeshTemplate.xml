@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEmesh'>
+		<attribute name='outMesh' type='maya.mesh'>
+			<label>Out Mesh</label>
+		</attribute>
+		<attribute name='worldMesh' type='maya.mesh'>
+			<label>World Mesh</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='matrix' type='maya.matrix'>
+			<label>Matrix</label>
+		</attribute>
+		<attribute name='inverseMatrix' type='maya.matrix'>
+			<label>Inverse Matrix</label>
+		</attribute>
+		<attribute name='worldMatrix' type='maya.matrix'>
+			<label>World Matrix</label>
+		</attribute>
+		<attribute name='worldInverseMatrix' type='maya.matrix'>
+			<label>World Inverse Matrix</label>
+		</attribute>
+		<attribute name='parentMatrix' type='maya.matrix'>
+			<label>Parent Matrix</label>
+		</attribute>
+		<attribute name='parentInverseMatrix' type='maya.matrix'>
+			<label>Parent Inverse Matrix</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEmesh'>
+		<property name='outMesh'/>
+		<property name='worldMesh'/>
+		<property name='inMesh'/>
+		<property name='matrix'/>
+		<property name='inverseMatrix'/>
+		<property name='worldMatrix'/>
+		<property name='worldInverseMatrix'/>
+		<property name='parentMatrix'/>
+		<property name='parentInverseMatrix'/>
+	</view>
+</templates>

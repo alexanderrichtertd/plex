@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEtweak'>
+		<attribute name='outputGeometry' type='maya.geometry'>
+			<label>Output Geometry</label>
+		</attribute>
+		<attribute name='input' type='maya.TdataCompound'>
+			<label>Input</label>
+		</attribute>
+		<attribute name='plist' type='maya.TdataCompound'>
+			<label>Plist</label>
+		</attribute>
+		<attribute name='vlist' type='maya.TdataCompound'>
+			<label>Vlist</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEtweak'>
+		<property name='outputGeometry'/>
+		<property name='input'/>
+		<property name='plist'/>
+		<property name='vlist'/>
+	</view>
+</templates>

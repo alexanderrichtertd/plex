@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEpolyTweak'>
+		<attribute name='output' type='maya.mesh'>
+			<label>Output</label>
+		</attribute>
+		<attribute name='inputPolymesh' type='maya.mesh'>
+			<label>Input Polymesh</label>
+		</attribute>
+		<attribute name='inputComponents' type='maya.componentList'>
+			<label>Input Components</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEpolyTweak'>
+		<property name='output'/>
+		<property name='inputPolymesh'/>
+		<property name='inputComponents'/>
+	</view>
+</templates>

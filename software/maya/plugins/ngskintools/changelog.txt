@@ -1,0 +1,303 @@
+1.0.960 (*2015-Oct-26*)
+
+* Fixed: weights transfer fails to import influences where source logical index
+  is not available in destination;  
+* Fixed: "assign weights by closest joint" works incorrectly with meshes
+  that were bound not at zero position;
+* Feature: UV based mirroring. Enable this by changing "vertex mapping mode" when
+  initializing mirror. Mirror axis is fixed U=0.5 (imagine vertical line dividing UV 
+  quadrant in half), so you might need UV layout created specifically for mirroring;
+* Feature: Copy/paste behavior changed when vertex selection is made:
+	* all weights for selected influence/mask still copied to memory;
+	* "Cut" now zeroes-out selected area only
+	* "Paste" only affects selected area (can be different than on copy/cut)
+	* Soft selection is supported
+* Minor UI rearrangement in "Transfer Weights" dialog;
+* Changed how initialization of first layer (reading weights from skinCluster) happens in
+  some corner cases, and this might have degraded performance of this operation slightly;  
+
+1.0.954 (*2015-Aug-20*)
+
+* Fixed: importing weights should be much faster now
+* Slight restructure of import/export menu items (no more submenu for a single option JSON)
+* Slight changes and fixes to "help" menu - link to issue tracker works again, added
+  contact, donate links.
+* Let's not call it "beta" anymore. It still might have bugs, though:)   
+
+
+1.0beta.951 (*2015-Aug-2*)
+
+* Fixed: mirror initialize sometimes could fail after removal of influences in skin cluster,
+  when using manual overrides;
+
+
+1.0beta.949 (*2015-Jul-21*)
+
+* Fixed: crash under certain circumstances during file save using 
+  ASCII file type + DQ blend weights present;
+* shift/ctrl paint modifiers should now work in non-Windows OSes as well, where PySide
+  is available in Maya (included by default since 2015).
+
+1.0beta.947 (*2015-Jun-06*)
+
+* Fixed: mirror should be more precise now in matching left-right vertices;
+* Fixed: undo should now be fast when painting once again;
+* Fixed: multi-influence selection sometimes could fail to work properly;
+* Middle-mouse drag of layers list allows re-arranging them; layer order is preserved in
+  multi-layer drag/drop as well;
+* Paint brush intensities can now be set above 1.0 or below 0.0, allowing you to do
+  "scale by 2.0" or "add -1";
+* Middle-mouse drag of influences don't allow messing up the list anymore;
+* New mirror mode added: "flip";
+* Added an "invert" action on an influence/mask;
+* Added a new weights paste mode, "substract";
+* updated layer blending algorithm slightly. If base layer has transparency,
+  and a layer on top fits that transparency, base layer is not scaled. Continued
+  through whole stack (if blend result of first two layers has transparency, and can fit
+  third layer, no scale happens, etc);
+
+
+1.0beta.936 (*2015-May-29*)
+
+* Fixed few incompatibility issues on Maya 2011, 2012, 2013. 
+
+
+1.0beta.935 (*2015-May-27*)
+
+* Fixed: When initializing skinning layers on the DQ-weight-blended skin cluster,
+  DQ weights will now be correctly loaded into initial layer. 
+* Fixed: another update for closest point matching in mirror or transfer, some glitches
+  were still occurring since the introduction of UV transfer mode;
+* Fixed: mirror direction ended up being inverse when using "seam width = 0"
+
+1.0beta.932 (*2015-May-27*)
+
+* Fixed: recent file storage changes broke ASCII (.ma) files;
+* Fixed: mirror/transfer could cause some spikes when copying skin weights;
+
+1.0beta.930 (*2015-May-26*)
+
+* Critical fix: major bug in previous build(925) corrupting Maya files in 
+  certain circumstances;
+* Fixed: UV based transfer should now produce much smoother results; 
+* Fixed: "closest vertex on surface" transfer should again operate normally,
+  introducing UV transfer broke it's closest point algorithm;
+* Fixed: skinCluster is now correctly updated after weights transfer;
+* Fixed: DQ weights channel now correctly respects layer on/off flag 
+  and layer opacity value. 
+
+1.0beta.925 (*2015-May-22*)
+
+* Added Dual Quaternion weights painting when skin cluster "Skinning Method"
+  is set to "Weight Blended". The new feature should be available across all tools,
+  including painting, mirroring, transfer, import/export, layer duplicate, weights
+  copy/paste;
+* Vertex match mode can now be specified when transferring weights;
+	* Closest point on surface (previous default implementation)
+	* UV space
+	* By vertex ID (old implementation where vertexes were matched by their IDs)
+* UV space will only work when transferring mesh to mesh (will default to "closest point" 
+  when importing weights from file)
+	
+ 
+* Some stability improvements;
+
+
+1.0beta.920 (*2015-Mar-04*)
+
+* Fixed: Issue smoothing imported layers (https://www.pivotaltracker.com/story/show/89588120)
+* Fixed: Importing/transfering weights does not work correctly on the mesh which does not have
+  it's translate reset to (0,0,0) before skin binding.
+
+
+1.0beta.918 (*2015-Feb-22*)
+
+* Fixed: Maya crash when merging layers;
+* Json export: output file is now formatted into multiple lines (was a single-line compact format before);
+  will help those people that are poking their noses inside exported files - e.g. for version-control 
+  purposes. I've done some dirty magic to make it more compact than plain `json.dumps` with `indent=2`,
+  so that all numeric arrays (e.g. influence weights) are still in one line.
+* Introduced OSX builds! Yay!
+  
+
+1.0beta.915 (*2015-Feb-14*)
+
+* New feature: "Prune Small Weights" now also available as a post-processing filter in 
+  the "Settings" tab. This does not modify layer weights; instead, when enabled, ngSkinTools 
+  will not write small weights into skin cluster. E.g. weights `joint1:0.99, joint2:0.01` will
+  become `joint1:1.0`.
+  
+* Fixed: Maya crash when `MllInterface.getCurrentInfluence()` is called without anything selected.
+  (Timothy, thanks for report).  
+
+
+1.0beta.912 (*2015-Feb-08*)
+
+* Renamed "Assign Weights" tab to "Edit Weights";
+* Added "Prune Small Weights" to "Edit Weights" tab. Works pretty much like standard Maya "Prune Small
+  Weights": set all weights lower than X to zero. Operates on selected layers only, and allows pruning
+  in layer mask as well.
+  
+
+
+1.0beta.910 (*2015-Feb-04*)
+
+* Feature: "Merge Layer Down" action. Select a layer other than the lowest, and it will be merged with
+  the layer below it. Will help reduce the amount of those small helper layers you might be creating.
+
+
+1.0beta.902 (*2015-Jan-14*)
+
+* Fixed: Maya 2015 crashes when scene with ngSkinTools data is being saved into .ma file;
+* A lot of changes around mirror, import, and transfer weights;
+  * ..Which might also mean a few things broke here and there - keep me updated;
+* Added a long outstanding and highly requested feature to transfer skin layers from one mesh to another;
+  * Possible to review and adjust influence mapping before transfer is done;
+  * Different source and destination mesh topologies are supported;
+* Import on a changed mesh is now also possible;
+* Revamped "Init Mirror" window, should make working with manual influence matching a bit easier; 
+* A big rework on influence matching algorithm, new matching engine is now used for import, transfer 
+  and mirror;
+  * Better prediction of left/right influences when matching by name or position;
+  * "Ignore suffix" support for left/right influences - previously only prefix was supported;
+  * An option to ignore namespaces when transfering/importing weights;
+
+* XML export option removed from UI for now, thinking to dump the feature in the long run;  XML only made
+  sense for older Mayas that did not have JSON support; JSON is just an overall more compact format for 
+  the type of data to be stored (especially numeric arrays);
+  
+
+  
+1.0beta.881 (*2014-Sep-24*)
+
+* Removed a silly debug message that was displaying at the end of maya session.
+
+1.0beta.880 (*2014-Sep-24*)
+
+* fixed the issue when UI window sometimes will not be brought to front when opening from shelf button;
+* ngSkinTools tool window position/dock state is permanently stored (each time the ngSkinTools window is 
+  closed, and/or object with layers is selected)
+
+
+1.0beta.878 (*2014-Jul-02*)
+
+* UI is now dockable;
+* Support for Maya 2010 and below is dropped, details for decision were posted here: http://ngskintools.com/node/36 
+
+1.0beta.877 (*2014-Jul-02*)
+
+* Layers/Influences list UI is now sizable with window; tab height can be adjusted via horizontal splitter.
+
+1.0beta.875 (*2013-Jul-31*)
+
+* Added new skinCluster-wide setting "maximum influences per vertex limit".  It is a post-processing filter 
+  that limits maximum number of influences used per vertex. Setting can be found in a new tab "Settings", 
+  "Selected Skin Settings" group.
+
+
+1.0beta.870 (*2013-Jan-16*)
+
+* "new layer" window will appear with empty layer name box, instead of having a "new layer" text in it.
+  You can still submit the dialog without typing anything in, in that case new layer will get default name.
+* Manually added mirror influence pairs now will be exported/imported to xml/json along 
+  with other layers data.
+* Improved load times for ASCII files, but due to different save format, files will no longer open with older
+  plugin versions.
+* "Delete custom nodes" action will inform when there are no custom ngSkinTools nodes to delete, instead
+  of displaying a deletion confirmation box.    
+  
+
+1.0beta.865
+
+* A fix to get Maya 2009 UI work again;
+* Bug fix: paste weights to mask should properly work now;
+* Bug fix: setting mask weights via API is properly undoable now;
+* Bug fix: changing current layer while painting now properly highlights it's current influence;
+* Bug fix: multi-layer selection now works for layer on/off action;
+* Bug fix: long mesh names will no longer resize main UI window;
+* Bug fix: update check window size should now be less awkward;
+* UI code will now verify that plugin version matches UI version (this mainly solves upgrade issues,
+  when old plugin sometimes gets loaded with newer ui) 
+* API changes:
+  * added MllInterface.setCurrentPaintTarget(): universal way to set current paint target (influence or mask)
+  * added MllInterface.getCurrentPaintTarget()
+	 
+
+1.0 beta build 860
+
+* Introduced weights clipboard:
+  * A simple and intuitive way to move weights from one influence on to another;
+  * Cut/copy weights for selected influence;
+  * Paste weights on to another influence, either adding new weights to existing ones, or replacing them.
+  * Cross-mesh copy/paste will only work if vertex counts are identical; this feature should mainly be used
+	on the same mesh.
+* Changed how influence names are displayed:
+  * Influences with unique names will display just short name, as previously
+  * Influences with duplicate names will display a unique name in the context of the list; that is, if
+    rig contains two joints named "joint1", then they will be displayed as "joint1 (joint2|joint1)",
+    but behaviour will only occur if the list is actually displaying two "joint1" items.
+  * The idea behind the change is to only show long names when short name is not unique in 
+    a skin cluster.
+* Influences can be filtered with wildcards now; for example, "finger*_1" will match "finger1_1", 
+  "finger2_1" or "L_finger66_1_joint".
+* Minor API fix: MllInterface.getLayersAvailable() will work correctly on context mesh of MllInterface.
+* Fix in import/export: internal layer transparency was being incorrectly calculated after importing
+  weights.
+* Stability improvements: setting vertex weights with sum above 1.0 could cause crashes
+* Performance improvements: "import weights", "duplicate layers" should now be much faster 
+  (and mirroring multiple layers - just a bit:)
+* API additions: 
+  * Batch update management added to speedup multiple update calls to internal layer data object
+
+1.0 beta build 849
+
+* Keyboard is now enabled in layer/influence lists, making it possible to go through influences
+  with up/down keys (in Maya 2011 and up)
+* Fixed: paint tool could crash maya in some occasions when skin layer data could not be determined from selection   
+
+1.0 beta build 847
+
+* Fixed: "Add manual association" in mirror initialization should be functional again.
+
+1.0 beta build 845
+
+* Maya 2012 crash on Linux resolved
+* Update checker window fixed to show itself when update is found.
+
+1.0 beta build 843
+
+* Critical bug fix: unable to open ngSkinTools UI due to preference value type mismatch. 
+
+1.0 beta build 842
+
+* Reviewed some Linux stability issues when initializing layers
+* Fixed: error message when opening ngSkinTools window for the first time
+
+1.0 beta build 840
+
+* Fixed: when exporting, influence names are now absolute;
+* Improved direction display in mirroring window: now it will properly say "left to right", or "top to bottom",
+  (depending on mirroring axis you chose when initializing mirror cache), instead of just "positive to negative";
+* Mirroring now works with multiple selected layers; 
+
+1.0 beta build 835
+
+* Added new tool "Import Influences" for synchronizing influences lists between different skin clusters;
+* "Delete current layer" became "Delete selected layer(s)" and now allows selecting multiple layers for deletion;
+* Added "Duplicate selected layer(s)" in menus;
+* Fixed documentation links here and there (apparently nobody cares as "View documentation online" menu item 
+  actually never worked before);
+
+1.0 beta build 830
+
+* Added layer on/off feature, available from layer right-click menu.
+* Added layer info import/export:
+  * XML format available for all supported Maya versions;
+  * JSON available from Maya 2011 and up;
+* First attepts at python API:
+  * ngSkinTools.mllInterface.MllInterface : low level access to internal plugin functions
+  * `ngSkinTools.importExport.*` : import/export capabilities 
+* Fixed a few Maya 2009 compatibility issues	
+* A lot of refactoring inside the code, so possible stability issues, but it's all for the brighter future;
+
+ 

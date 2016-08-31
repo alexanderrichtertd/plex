@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!DOCTYPE renderer SYSTEM "renderer.dtd">
+<!--
+  Top level tag, mandatory:
+    <renderer>: "desc" gives a one line description.
+
+  Header tags, not mandatory, must be specified only once.
+    <melheader>: "s" is a mel script executed just after the file is read
+    <meltrailer>: "s" is a mel script executed after all flags are converted
+        to mel. Should contain at least the rendering command.
+
+  Other tags:
+    <sep>: "desc" produces a line in the help. Blank if desc is missing.
+    <attr>: produces a setAttr line.
+        "n" is the flag name.
+        "s" the attribute name.
+        "t" the parameter type, used in help description.
+        "h" the help description.
+    <attrString>: produces a setAttr line for a string attribute.
+        Same parameters as <attr>, but for string attributes.
+    <mel>: Calls a mel script.
+        "n" is the flag name.
+        "p" the number of parameters.
+        "s" the string defining the action %1 ... %p are replaced with values
+                read after the flag.
+        "t" the parameter types, used in help description.
+        "h" the help description.
+-->
+<renderer desc="Arnold renderer">
+    <melheader s='string $opt=""; string $rl=""; string $rp=""; float $resize=-1.; loadPlugin -quiet mtoa;'/>
+    <meltrailer s='setMayaSoftwareLayers($rl, $rp); setImageSizePercent($resize);mayaBatchRenderProcedure(0, "", "", "arnold", $opt); '/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="General purpose flags:"/>
+    <mel n="rd" p="1" s='workspace -fr "depth" "%1";workspace -fr "images" "%1";' t="path" h="Directory in which to store image files"/>
+    <attrString n="im" s="defaultRenderGlobals.imageFilePrefix" t="filename" h="Image file output name"/>
+    <attr n="rt" s="defaultArnoldRenderOptions.renderType" t="int" h="Render type (0 = render, 1 = export ass, 2 = export and kick)"/>
+    <mel n="lic" p="1" s="setAttr defaultArnoldRenderOptions.skipLicenseCheck (!(int(%1)))" t="boolean" h="Turn licensing on or off"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Frame numbering options"/>
+    <mel n="s" p="1" t="float" s="removeRenderLayerAdjustmentAndUnlock defaultRenderGlobals.animation; setAttr defaultRenderGlobals.animation 1; removeRenderLayerAdjustmentAndUnlock defaultRenderGlobals.startFrame; setAttr defaultRenderGlobals.startFrame %1" h="Starting frame for an animation sequence"/>
+    <mel n="e" p="1" t="float" s="removeRenderLayerAdjustmentAndUnlock defaultRenderGlobals.animation; setAttr defaultRenderGlobals.animation 1; removeRenderLayerAdjustmentAndUnlock defaultRenderGlobals.endFrame; setAttr defaultRenderGlobals.endFrame %1" h="End frame for an animation sequence"/>
+    <attr n="b" s="defaultRenderGlobals.byFrameStep" t="float" h="By frame (or step) for an animation sequence"/>
+    <attr n="pad" s="defaultRenderGlobals.extensionPadding" t="int" h="Number of digits in the output image frame file name\n\t\t    extension"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Render Layers and Passes"/>
+    <mel n="rl" s='$rl="%1"' p="1" t="boolean|name(s)" h="Render each render layer separately"/>
+    <mel n="rp" s='$rp="%1"' p="1" t="boolean|name(s)" h="Render passes separately. 'all' will render all passes"/>
+    <mel n="sel" p="1" s="select -add %1; removeRenderLayerAdjustmentAndUnlock defaultRenderGlobals.renderAll; setAttr defaultRenderGlobals.renderAll 0" t="boolean|name(s)" h="Selects which objects, groups and/or sets to render"/>
+    <mel n="l" p="1" s="selectLayerMembers %1; removeRenderLayerAdjustmentAndUnlock defaultRenderGlobals.renderAll; setAttr defaultRenderGlobals.renderAll 0" t="boolean|name(s)" h="Selects which display and render layers to render"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Camera options"/>
+    <mel n="cam" s='makeCameraRenderable("%1")' p="1" t="name" h="Specify which camera to be rendered"/>
+    <mel n="rgb" s='applyOnCameras("image", "%1")' p="1" t="boolean" h="Turn RGB output on or off"/>
+    <mel n="alpha" s='applyOnCameras("mask", "%1")' p="1" t="boolean" h="Turn Alpha output on or off"/>
+    <mel n="depth" s='applyOnCameras("depth", "%1")' p="1" t="boolean" h="Turn Depth output on or off"/>
+    <mel n="iip" s="disableImagePlanes" p="0" t="" h="Ignore Image Planes. Turn off all image planes before\n\t\t    rendering"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Resolution options"/>
+    <attr n="x" s="defaultResolution.width" t="int" h="Set X resolution of the final image"/>
+    <attr n="y" s="defaultResolution.height" t="int" h="Set Y resolution of the final image"/>
+    <mel n="percentRes" s="$resize=%1" p="1" t="float" h="Renders the image using percent of the resolution"/>
+    <attr n="ard" s="defaultResolution.deviceAspectRatio" t="float" h="Device aspect ratio for the rendered image"/>
+    <mel n="reg" s="setAttr defaultArnoldRenderOptions.regionMinX %1;setAttr defaultArnoldRenderOptions.regionMaxX %2;setAttr defaultArnoldRenderOptions.regionMinY %3;setAttr defaultArnoldRenderOptions.regionMaxY %4;" p="4" t="int" h="Set render region"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Samples options"/>
+    <attr n="ai:as" s="defaultArnoldRenderOptions.AASamples" t="int" h="Set anti-aliasing samples"/>
+    <attr n="ai:hs" s="defaultArnoldRenderOptions.GIDiffuseSamples" t="int" h="Set indirect diffuse samples"/>
+    <attr n="ai:gs" s="defaultArnoldRenderOptions.GIGlossySamples" t="int" h="Set indirect specular samples"/>
+    <attr n="ai:rs" s="defaultArnoldRenderOptions.GIRefractionSamples" t="int" h="Set refraction samples"/>
+    <attr n="ai:bssrdfs" s="defaultArnoldRenderOptions.sssBssrdfSamples" t="int" h="Number of SSS Samples."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Sample Clamping"/>
+    <attr n="ai:cmpsv" s="defaultArnoldRenderOptions.use_sample_clamp" t="boolean" h="Enable sample clamping."/>
+    <attr n="ai:aovsc" s="defaultArnoldRenderOptions.use_sample_clamp_AOVs" t="boolean" h="Sample campling affects AOVs."/>
+    <attr n="ai:aasc" s="defaultArnoldRenderOptions.AASampleClamp" t="float" h="Sample max value."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Depth options"/>
+    <attr n="ai:td" s="defaultArnoldRenderOptions.GITotalDepth" t="int" h="Set total depth."/>
+    <attr n="ai:dif" s="defaultArnoldRenderOptions.GIDiffuseDepth" t="int" h="Set indirect diffuse depth."/>
+    <attr n="ai:glo" s="defaultArnoldRenderOptions.GIGlossyDepth" t="int" h="Set indirect specular depth."/>
+    <attr n="ai:rfl" s="defaultArnoldRenderOptions.GIReflectionDepth" t="int" h="Set reflection depth."/>
+    <attr n="ai:rfr" s="defaultArnoldRenderOptions.GIRefractionDepth" t="int" h="Set refraction depth."/>
+    <attr n="ai:vol" s="defaultArnoldRenderOptions.GIVolumeDepth" t="int" h="Set volume GI depth."/>
+    <attr n="ai:atd" s="defaultArnoldRenderOptions.autoTransparencyDepth" t="int" h="Set auto-transparency depth."/>
+    <attr n="ai:att" s="defaultArnoldRenderOptions.autoTransparencyThreshold" t="float" h="Set auto-transparency threshold."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Motion blur"/>
+    <attr n="ai:mben" s="defaultArnoldRenderOptions.motion_blur_enable" t="boolean" h="Enable motion blur."/>
+    <attr n="ai:mbdf" s="defaultArnoldRenderOptions.mb_object_deform_enable" t="boolean" h="Enable object deformation motion blur."/>
+    <attr n="ai:mbcen" s="defaultArnoldRenderOptions.mb_camera_enable" t="boolean" h="Enable camera motion blur."/>
+    <attr n="ai:mbrt" s="defaultArnoldRenderOptions.range_type" t="int" h="Position. (0 - Start On Frame, 1 - Center On Frame, 2 - End On Frame, 3 - Custom)"/>
+    <attr n="ai:mbfr" s="defaultArnoldRenderOptions.motion_frames" t="float" h="Shutter Length."/>
+    <attr n="ai:mbstart" s="defaultArnoldRenderOptions.motion_start" t="float" h="Motion Start."/>
+    <attr n="ai:mbend" s="defaultArnoldRenderOptions.motion_end" t="float" h="Motion End."/>
+    <attr n="ai:mbms" s="defaultArnoldRenderOptions.motion_steps" t="int" h="Number of motion steps."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Lights"/>
+    <attr n="ai:llth" s="defaultArnoldRenderOptions.lowLightThreshold" t="float" h="Low light threshold value."/>
+    <attr n="ai:ll" s="defaultArnoldRenderOptions.lightLinking" t="int" h="Light linking mode. (0 - None, 1 - Maya Light Links)"/>
+    <attr n="ai:sl" s="defaultArnoldRenderOptions.shadowLinking" t="int" h="Shadow linking mode. (0 - None, 1 - Follows Light Linking, 2 - Maya Shadow Links)"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Subdivision"/>
+    <attr n="ai:mxsb" s="defaultArnoldRenderOptions.maxSubdivisions" t="int" h="Maximum subdivision level."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Render Settings"/>
+    <mel n="ai:threads" p="1" s="setAttr defaultArnoldRenderOptions.threads_autodetect 0; setAttr defaultArnoldRenderOptions.threads %1" t="int" h="Set the number of threads."/>
+    <attr n="ai:bscn" s="defaultArnoldRenderOptions.bucketScanning" t="int" h="Bucket Scanning. (0 - Top, 1 - Bottom, 2 - Left, 3 - Right, 4 - Random, 5 - Woven, 6 - Spiral, 7 - Hilbert)"/>
+    <attr n="ai:bsz" s="defaultArnoldRenderOptions.bucketSize" t="int" h="Bucket Size."/>
+    <attr n="ai:bass" s="defaultArnoldRenderOptions.binaryAss" t="boolean" h="Binary Ass Export."/>
+    <attr n="ai:exbb" s="defaultArnoldRenderOptions.outputAssBoundingBox" t="boolean" h="Export Bounding box."/>
+    <attr n="ai:aerr" s="defaultArnoldRenderOptions.abortOnError" t="boolean" h="Abort on Error."/>
+    <attr n="ai:alf" s="defaultArnoldRenderOptions.abortOnLicenseFail" t="boolean" h="Abort on License Fail."/>
+    <attr n="ai:slc" s="defaultArnoldRenderOptions.skipLicenseCheck" t="boolean" h="Skip License Check."/>
+    <attrString n="ai:uopt" s="defaultArnoldRenderOptions.aiUserOptions" t="string" h="User Options."/>   
+    <mel n="ai:port" s="if (!`objExists defaultResolution.mtoaCommandPort`) {addAttr -longName mtoaCommandPort -shortName mtoa_com -at long defaultResolution;} setAttr defaultResolution.mtoaCommandPort %1;
+" p="1" t="int" h="Set the Command Port for the Batch Progress Driver"/>
+    <mel n="ai:ofn" p="1" s='if (!`objExists defaultArnoldRenderOptions.mtoaOrigFileName`) {addAttr -longName mtoaOrigFileName -shortName mtoa_ofn -dt "string" defaultArnoldRenderOptions;} setAttr -type "string" defaultArnoldRenderOptions.mtoaOrigFileName "%1";
+' t="string" h="Original file name."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Textures"/>
+    <attr n="ai:txamm" s="defaultArnoldRenderOptions.textureAutomp" t="boolean" h="Enable texture auto mipmap."/>
+    <attr n="ai:txaun" s="defaultArnoldRenderOptions.textureAcceptUntiled" t="boolean" h="Accept untiled textures."/>
+    <attr n="ai:txett" s="defaultArnoldRenderOptions.user_existing_tiled_textures" t="boolean" h="Use existing tiled textures."/>
+    <attr n="ai:txaum" s="defaultArnoldRenderOptions.textureAcceptUnmipped" t="boolean" h="Accept unmipped textures."/>
+    <attr n="ai:txat" s="defaultArnoldRenderOptions.textureAutotile" t="int" h="Auto tile size."/>
+    <attr n="ai:txmm" s="defaultArnoldRenderOptions.textureMaxMemoryMB" t="float" h="Maximum texture cache memory. (MB)"/>
+    <attr n="ai:txmof" s="defaultArnoldRenderOptions.textureMaxOpenFiles" t="int" h="Maximum number of opened textures."/>
+    <attr n="ai:txpfs" s="defaultArnoldRenderOptions.texturePerFileStats" t="boolean" h="Per file texture stats."/>
+    <attr n="ai:txdb" s="defaultArnoldRenderOptions.textureDiffuseBlur" t="float" h="Texture blur in diffuse rays."/>
+    <attr n="ai:txgb" s="defaultArnoldRenderOptioins.textureGlossyBlur" t="float" h="Texture blur in glossy rays."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Feature Overrides"/>
+    <attr n="ai:fotx" s="defaultArnoldRenderOptions.ignoreTextures" t="boolean" h="Ignore textures."/>
+    <attr n="ai:fosh" s="defaultArnoldRenderOptions.ignoreShaders" t="boolean" h="Ignore shaders."/>
+    <attr n="ai:foat" s="defaultArnoldRenderOptions.ignoreAtmosphere" t="boolean" h="Ignore atmosphere."/>
+    <attr n="ai:folt" s="defaultArnoldRenderOptions.ignoreLights" t="boolean" h="Ignore lights."/>
+    <attr n="ai:fosw" s="defaultArnoldRenderOptions.ignoreShadows" t="boolean" h="Ignore shadows."/>
+    <attr n="ai:fosd" s="defaultArnoldRenderOptions.ignoreSubdivision" t="boolean" h="Ignore subdivision."/>
+    <attr n="ai:fodp" s="defaultArnoldRenderOptions.ignoreDisplacement" t="boolean" h="Ignore displacement."/>
+    <attr n="ai:fobp" s="defaultArnoldRenderOptions.ignoreBump" t="boolean" h="Ignore bump."/>
+    <attr n="ai:fosm" s="defaultArnoldRenderOptions.ignoreSmoothing" t="boolean" h="Ignore smoothing."/>
+    <attr n="ai:fomb" s="defaultArnoldRenderOptions.ignoreMotionBlur" t="boolean" h="Ignore motion blur."/>
+    <attr n="ai:fosss" s="defaultArnoldRenderOptions.ignoreSss" t="boolean" h="Ignore SSS."/>
+    <attr n="ai:fodof" s="defaultArnoldRenderOptions.ignoreDof" t="boolean" h="Ignore DOF."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Search Path"/>
+    <attrString n="ai:sppg" s="defaultArnoldRenderOptions.plugins_path" t="string" h="Plugins search path."/>
+    <attrString n="ai:sppr" s="defaultArnoldRenderOptions.procedural_searchpath" t="string" h="Procedurals search path."/>
+    <attrString n="ai:spsh" s="defaultArnoldRenderOptions.shader_searchpath" t="string" h="Shaders search path."/>
+    <attrString n="ai:sptx" s="defaultArnoldRenderOptions.texture_searchpath" t="string" h="Textures search path."/>    
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Log"/>
+    <attrString n="ai:lfn" s="defaultArnoldRenderOptions.log_filename" t="string" h="Log filename."/>
+    <attr n="ai:ltc" s="defaultArnoldRenderOptions.log_to_console" t="boolean" h="Log to Console."/>    
+    <attr n="ai:ltf" s="defaultArnoldRenderOptions.log_to_file" t="boolean" h="Log to File."/>       
+    <attr n="ai:lve" s="defaultArnoldRenderOptions.log_verbosity" t="int" h="Verbosity level. (0 - Errors, 1 - Warnings + Info, 2 - Debug)"/>       
+    <attr n="ai:lmw" s="defaultArnoldRenderOptions.log_max_warnings" t="int" h="Maximum number of warnings."/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc="Mel callbacks"/>
+    <mel n="preRender"  p="1" s='string $pm=`getAttr defaultRenderGlobals.preMel`;             setAttr -type "string" defaultRenderGlobals.preMel             ($pm + ";%1");' t="string" h="add Mel code executed before rendering"/>
+    <mel n="postRender" p="1" s='string $pm=`getAttr defaultRenderGlobals.postMel`;            setAttr -type "string" defaultRenderGlobals.postMel            ($pm + ";%1");' t="string" h="add Mel code executed after rendering"/>
+    <mel n="preLayer"   p="1" s='string $pm=`getAttr defaultRenderGlobals.preRenderLayerMel`;  setAttr -type "string" defaultRenderGlobals.preRenderLayerMel  ($pm + ";%1");' t="string" h="add Mel code executed before each render layer"/>
+    <mel n="postLayer"  p="1" s='string $pm=`getAttr defaultRenderGlobals.postRenderLayerMel`; setAttr -type "string" defaultRenderGlobals.postRenderLayerMel ($pm + ";%1");' t="string" h="add Mel code executed after each render layer"/>
+    <mel n="preFrame"   p="1" s='string $pm=`getAttr defaultRenderGlobals.preRenderMel`;       setAttr -type "string" defaultRenderGlobals.preRenderMel       ($pm + ";%1");' t="string" h="add Mel code executed before each frame"/>
+    <mel n="postFrame"  p="1" s='string $pm=`getAttr defaultRenderGlobals.postRenderMel`;      setAttr -type "string" defaultRenderGlobals.postRenderMel      ($pm + ";%1");' t="string" h="add Mel code executed after each frame"/>
+
+    <mel n="insertPreRender"  p="1" s='string $pm=`getAttr defaultRenderGlobals.preMel`;             setAttr -type "string" defaultRenderGlobals.preMel             ("%1;" + $pm);' t="string" h="insert Mel code executed before rendering"/>
+    <mel n="insertPostRender" p="1" s='string $pm=`getAttr defaultRenderGlobals.postMel`;            setAttr -type "string" defaultRenderGlobals.postMel            ("%1;" + $pm);' t="string" h="insert Mel code executed after rendering"/>
+    <mel n="insertPreLayer"   p="1" s='string $pm=`getAttr defaultRenderGlobals.preRenderLayerMel`;  setAttr -type "string" defaultRenderGlobals.preRenderLayerMel  ("%1;" + $pm);' t="string" h="insert Mel code executed before each render layer"/>
+    <mel n="insertPostLayer"  p="1" s='string $pm=`getAttr defaultRenderGlobals.postRenderLayerMel`; setAttr -type "string" defaultRenderGlobals.postRenderLayerMel ("%1;" + $pm);' t="string" h="insert Mel code executed after each render layer"/>
+    <mel n="insertPreFrame"   p="1" s='string $pm=`getAttr defaultRenderGlobals.preRenderMel`;       setAttr -type "string" defaultRenderGlobals.preRenderMel       ("%1;" + $pm);' t="string" h="insert Mel code executed before each frame"/>
+    <mel n="insertPostFrame"  p="1" s='string $pm=`getAttr defaultRenderGlobals.postRenderMel`;      setAttr -type "string" defaultRenderGlobals.postRenderMel      ("%1;" + $pm);' t="string" h="insert Mel code executed after each frame"/>
+    <sep/>
+    <!-- ______________________________________________________________ -->
+    <sep desc=" *** Remember to place a space between option flags and their arguments. ***"/>
+    <sep desc="Any boolean flag will take the following values as TRUE: on, yes, true, or 1."/>
+    <sep desc="Any boolean flag will take the following values as FALSE: off, no, false, or 0."/>
+    <sep/>
+    <sep desc="    e.g. -s 1 -e 10 -x 512 -y 512 -cam persp -as 4 -hs 2 -dif 2 file."/>
+</renderer>

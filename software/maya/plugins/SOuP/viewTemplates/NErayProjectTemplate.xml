@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NErayProject'>
+		<attribute name='outGeometry' type='maya.vectorArray'>
+			<label>Out Geometry</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.vectorArray'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inCollisionMesh' type='maya.mesh'>
+			<label>In Collision Mesh</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.componentList'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inNormalPP' type='maya.vectorArray'>
+			<label>In Normal PP</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+		<attribute name='inWorldMatrix' type='maya.matrix'>
+			<label>In World Matrix</label>
+		</attribute>
+		<attribute name='rayDirection' type='maya.float3'>
+			<label>Ray Direction</label>
+		</attribute>
+		<attribute name='rayPosition' type='maya.double3'>
+			<label>Ray Position</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+		<attribute name='inTime' type='maya.double'>
+			<label>In Time</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NErayProject'>
+		<property name='outGeometry'/>
+		<property name='inGeometry'/>
+		<property name='inCollisionMesh'/>
+		<property name='inComponents'/>
+		<property name='inNormalPP'/>
+		<property name='inWeightPP'/>
+		<property name='inWorldMatrix'/>
+		<property name='rayDirection'/>
+		<property name='rayPosition'/>
+		<property name='groupId'/>
+		<property name='inTime'/>
+	</view>
+</templates>

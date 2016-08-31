@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEcopier'>
+		<attribute name='outputMesh' type='maya.mesh'>
+			<label>Output Mesh</label>
+		</attribute>
+		<attribute name='inputMesh' type='maya.mesh'>
+			<label>Input Mesh</label>
+		</attribute>
+		<attribute name='override' type='maya.message'>
+			<label>Override</label>
+		</attribute>
+		<attribute name='indexArray' type='maya.doubleArray'>
+			<label>Index Array</label>
+		</attribute>
+		<attribute name='posArray' type='maya.vectorArray'>
+			<label>Pos Array</label>
+		</attribute>
+		<attribute name='rotArray' type='maya.vectorArray'>
+			<label>Rot Array</label>
+		</attribute>
+		<attribute name='scaleArray' type='maya.vectorArray'>
+			<label>Scale Array</label>
+		</attribute>
+		<attribute name='uniformScaleArray' type='maya.doubleArray'>
+			<label>Uniform Scale Array</label>
+		</attribute>
+		<attribute name='upArray' type='maya.vectorArray'>
+			<label>Up Array</label>
+		</attribute>
+		<attribute name='rgbArray' type='maya.vectorArray'>
+			<label>Rgb Array</label>
+		</attribute>
+		<attribute name='timeShift' type='maya.doubleArray'>
+			<label>Time Shift</label>
+		</attribute>
+		<attribute name='time' type='maya.time'>
+			<label>Time</label>
+		</attribute>
+		<attribute name='aimArray' type='maya.vectorArray'>
+			<label>Aim Array</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEcopier'>
+		<property name='outputMesh'/>
+		<property name='inputMesh'/>
+		<property name='override'/>
+		<property name='indexArray'/>
+		<property name='posArray'/>
+		<property name='rotArray'/>
+		<property name='scaleArray'/>
+		<property name='uniformScaleArray'/>
+		<property name='upArray'/>
+		<property name='rgbArray'/>
+		<property name='timeShift'/>
+		<property name='time'/>
+		<property name='aimArray'/>
+	</view>
+</templates>

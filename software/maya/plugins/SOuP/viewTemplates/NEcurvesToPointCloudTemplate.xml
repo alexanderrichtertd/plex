@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEcurvesToPointCloud'>
+		<attribute name='outPositionPP' type='maya.vectorArray'>
+			<label>Out Position PP</label>
+		</attribute>
+		<attribute name='inCurves' type='maya.nurbsCurve'>
+			<label>In Curves</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEcurvesToPointCloud'>
+		<property name='outPositionPP'/>
+		<property name='inCurves'/>
+	</view>
+</templates>

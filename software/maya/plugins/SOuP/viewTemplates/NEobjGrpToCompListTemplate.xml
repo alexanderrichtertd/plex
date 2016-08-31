@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEobjGrpToCompList'>
+		<attribute name='outComponents' type='maya.componentList'>
+			<label>Out Components</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.nurbsSurface'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEobjGrpToCompList'>
+		<property name='outComponents'/>
+		<property name='inGeometry'/>
+		<property name='groupId'/>
+	</view>
+</templates>

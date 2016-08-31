@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEcomponentToComponent'>
+		<attribute name='outComponents' type='maya.componentList'>
+			<label>Out Components</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.componentList'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEcomponentToComponent'>
+		<property name='outComponents'/>
+		<property name='inMesh'/>
+		<property name='inComponents'/>
+		<property name='groupId'/>
+	</view>
+</templates>

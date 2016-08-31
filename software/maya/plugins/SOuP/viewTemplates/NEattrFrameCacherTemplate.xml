@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEattrFrameCacher'>
+		<attribute name='outAttr' type='maya.double'>
+			<label>Out Attr</label>
+		</attribute>
+		<attribute name='inAttr' type='maya.double'>
+			<label>In Attr</label>
+		</attribute>
+		<attribute name='inTime' type='maya.double'>
+			<label>In Time</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEattrFrameCacher'>
+		<property name='outAttr'/>
+		<property name='inAttr'/>
+		<property name='inTime'/>
+	</view>
+</templates>

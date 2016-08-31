@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEshell'>
+		<attribute name='outMesh' type='maya.mesh'>
+			<label>Out Mesh</label>
+		</attribute>
+		<attribute name='outShellData' type='maya.TdataCompound'>
+			<label>Out Shell Data</label>
+		</attribute>
+		<attribute name='outCenters' type='maya.vectorArray'>
+			<label>Out Centers</label>
+		</attribute>
+		<attribute name='outScales' type='maya.vectorArray'>
+			<label>Out Scales</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='inNormalPP' type='maya.vectorArray'>
+			<label>In Normal PP</label>
+		</attribute>
+		<attribute name='inPositionPP' type='maya.vectorArray'>
+			<label>In Position PP</label>
+		</attribute>
+		<attribute name='inRadiusPP' type='maya.doubleArray'>
+			<label>In Radius PP</label>
+		</attribute>
+		<attribute name='inRgbaPP' type='maya.doubleArray'>
+			<label>In Rgba PP</label>
+		</attribute>
+		<attribute name='inRotationPP' type='maya.vectorArray'>
+			<label>In Rotation PP</label>
+		</attribute>
+		<attribute name='inScalePP' type='maya.vectorArray'>
+			<label>In Scale PP</label>
+		</attribute>
+		<attribute name='inTangentPP' type='maya.vectorArray'>
+			<label>In Tangent PP</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEshell'>
+		<property name='outMesh'/>
+		<property name='outShellData'/>
+		<property name='outCenters'/>
+		<property name='outScales'/>
+		<property name='inMesh'/>
+		<property name='inNormalPP'/>
+		<property name='inPositionPP'/>
+		<property name='inRadiusPP'/>
+		<property name='inRgbaPP'/>
+		<property name='inRotationPP'/>
+		<property name='inScalePP'/>
+		<property name='inTangentPP'/>
+		<property name='inWeightPP'/>
+	</view>
+</templates>

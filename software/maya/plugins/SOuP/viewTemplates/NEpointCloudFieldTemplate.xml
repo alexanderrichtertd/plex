@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEpointCloudField'>
+		<attribute name='outputForce' type='maya.vectorArray'>
+			<label>Output Force</label>
+		</attribute>
+		<attribute name='inputData' type='maya.TdataCompound'>
+			<label>Input Data</label>
+		</attribute>
+		<attribute name='inputForce' type='maya.vectorArray'>
+			<label>Input Force</label>
+		</attribute>
+		<attribute name='inputPPData' type='maya.newParticles'>
+			<label>Input PPData</label>
+		</attribute>
+		<attribute name='inAttenuationPP' type='maya.doubleArray'>
+			<label>In Attenuation PP</label>
+		</attribute>
+		<attribute name='inDirectionPP' type='maya.doubleArray'>
+			<label>In Direction PP</label>
+		</attribute>
+		<attribute name='inMagnitudePP' type='maya.doubleArray'>
+			<label>In Magnitude PP</label>
+		</attribute>
+		<attribute name='inPositionPP' type='maya.vectorArray'>
+			<label>In Position PP</label>
+		</attribute>
+		<attribute name='inRadiusPP' type='maya.doubleArray'>
+			<label>In Radius PP</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEpointCloudField'>
+		<property name='outputForce'/>
+		<property name='inputData'/>
+		<property name='inputForce'/>
+		<property name='inputPPData'/>
+		<property name='inAttenuationPP'/>
+		<property name='inDirectionPP'/>
+		<property name='inMagnitudePP'/>
+		<property name='inPositionPP'/>
+		<property name='inRadiusPP'/>
+	</view>
+</templates>

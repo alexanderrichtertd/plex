@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEinstancer'>
+		<attribute name='inputHierarchy' type='maya.matrix'>
+			<label>Input Hierarchy</label>
+		</attribute>
+		<attribute name='inputPoints' type='maya.newParticles'>
+			<label>Input Points</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEinstancer'>
+		<property name='inputHierarchy'/>
+		<property name='inputPoints'/>
+	</view>
+</templates>

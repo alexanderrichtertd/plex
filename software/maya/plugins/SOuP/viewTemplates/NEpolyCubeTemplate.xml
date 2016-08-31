@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEpolyCube'>
+		<attribute name='output' type='maya.mesh'>
+			<label>Output</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEpolyCube'>
+		<property name='output'/>
+	</view>
+</templates>

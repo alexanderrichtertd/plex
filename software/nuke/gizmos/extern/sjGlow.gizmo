@@ -1,0 +1,286 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Gizmo {
+ addUserKnob {20 sjGlow}
+ addUserKnob {20 preGradeGrp l "pre grade" n 1}
+ addUserKnob {7 factor l Factor R 0 10}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Blur {
+  name Blur9
+  selected true
+  xpos 0
+  ypos 69
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 149
+ }
+set N391bc00 [stack 0]
+ Dot {
+  name Dot2
+  xpos 343
+  ypos 149
+ }
+set N391b800 [stack 0]
+ Blur {
+  size {{parent.factor}}
+  name Blur1
+  xpos 309
+  ypos 194
+ }
+ Dot {
+  name Dot3
+  xpos 343
+  ypos 275
+ }
+push $N391b800
+ Dot {
+  name Dot4
+  xpos 460
+  ypos 149
+ }
+set N395ac00 [stack 0]
+ Blur {
+  size {{"parent.factor ** 2"}}
+  name Blur2
+  xpos 426
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge2
+  xpos 426
+  ypos 271
+ }
+push $N395ac00
+ Dot {
+  name Dot5
+  xpos 594
+  ypos 149
+ }
+set N395a800 [stack 0]
+ Blur {
+  size {{"parent.factor ** 4"}}
+  name Blur3
+  xpos 560
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos 560
+  ypos 271
+ }
+push $N395a800
+ Dot {
+  name Dot6
+  xpos 714
+  ypos 149
+ }
+set N395a400 [stack 0]
+ Blur {
+  size {{"parent.factor ** 3"}}
+  name Blur4
+  xpos 680
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos 680
+  ypos 271
+ }
+push $N395a400
+ Dot {
+  name Dot7
+  xpos 828
+  ypos 149
+ }
+set N93d59400 [stack 0]
+ Blur {
+  size {{"parent.factor ** 5"}}
+  name Blur5
+  xpos 794
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge4
+  xpos 794
+  ypos 271
+ }
+push $N93d59400
+ Dot {
+  name Dot8
+  xpos 943
+  ypos 149
+ }
+set N93d58800 [stack 0]
+ Blur {
+  size {{"parent.factor ** 6"}}
+  name Blur6
+  xpos 909
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge5
+  xpos 909
+  ypos 271
+ }
+push $N93d58800
+ Dot {
+  name Dot9
+  xpos 1060
+  ypos 149
+ }
+set N93d87c00 [stack 0]
+ Blur {
+  size {{"parent.factor ** 7"}}
+  name Blur7
+  xpos 1026
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge6
+  xpos 1026
+  ypos 271
+ }
+push $N93d87c00
+ Dot {
+  name Dot10
+  xpos 1170
+  ypos 149
+ }
+ Blur {
+  size {{"parent.factor ** 8"}}
+  name Blur8
+  xpos 1136
+  ypos 195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge7
+  xpos 1136
+  ypos 271
+ }
+ Grade {
+  name Grade1
+  xpos 1136
+  ypos 341
+ }
+set N9786c400 [stack 0]
+push $N9786c400
+ Dot {
+  name Dot18
+  xpos 1055
+  ypos 345
+ }
+ Grade {
+  name Grade2
+  xpos 1021
+  ypos 408
+ }
+ Dissolve {
+  inputs 2
+  name Dissolve1
+  xpos 1136
+  ypos 402
+ }
+ Dot {
+  name Dot11
+  xpos 1170
+  ypos 477
+ }
+set N93d86000 [stack 0]
+ Dot {
+  name Dot12
+  xpos 1170
+  ypos 568
+ }
+push $N93d86000
+push $N391bc00
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge8
+  xpos 0
+  ypos 473
+ }
+ Switch {
+  inputs 2
+  name Switch1
+  xpos 0
+  ypos 564
+ }
+ Dot {
+  name Dot14
+  xpos 34
+  ypos 607
+ }
+set N9786d800 [stack 0]
+ Dot {
+  name Dot15
+  xpos 144
+  ypos 607
+ }
+ SoftClip {
+  name SoftClip1
+  xpos 110
+  ypos 652
+ }
+ Dot {
+  name Dot17
+  xpos 144
+  ypos 706
+ }
+push $N9786d800
+ Clamp {
+  name Clamp1
+  xpos 0
+  ypos 647
+ }
+push $N9786d800
+ Dot {
+  name Dot16
+  xpos -65
+  ypos 607
+ }
+ Dot {
+  name Dot13
+  xpos -65
+  ypos 706
+ }
+ Switch {
+  inputs 3
+  name Switch2
+  xpos 0
+  ypos 702
+ }
+ Crop {
+  box {0 0 1920 1080}
+  name Crop1
+  xpos 0
+  ypos 748
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 793
+ }
+end_group

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEboundingObject'>
+		<attribute name='outData' type='maya.TdataCompound'>
+			<label>Out Data</label>
+		</attribute>
+		<attribute name='inCurveData' type='maya.TdataCompound'>
+			<label>In Curve Data</label>
+		</attribute>
+		<attribute name='inMeshData' type='maya.TdataCompound'>
+			<label>In Mesh Data</label>
+		</attribute>
+		<attribute name='inParentMatrix' type='maya.matrix'>
+			<label>In Parent Matrix</label>
+		</attribute>
+		<attribute name='inParticleData' type='maya.TdataCompound'>
+			<label>In Particle Data</label>
+		</attribute>
+		<attribute name='inSurfaceData' type='maya.TdataCompound'>
+			<label>In Surface Data</label>
+		</attribute>
+		<attribute name='matrix' type='maya.matrix'>
+			<label>Matrix</label>
+		</attribute>
+		<attribute name='inverseMatrix' type='maya.matrix'>
+			<label>Inverse Matrix</label>
+		</attribute>
+		<attribute name='worldMatrix' type='maya.matrix'>
+			<label>World Matrix</label>
+		</attribute>
+		<attribute name='worldInverseMatrix' type='maya.matrix'>
+			<label>World Inverse Matrix</label>
+		</attribute>
+		<attribute name='parentMatrix' type='maya.matrix'>
+			<label>Parent Matrix</label>
+		</attribute>
+		<attribute name='parentInverseMatrix' type='maya.matrix'>
+			<label>Parent Inverse Matrix</label>
+		</attribute>
+		<attribute name='visibility' type='maya.bool'>
+			<label>Visibility</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEboundingObject'>
+		<property name='outData'/>
+		<property name='inCurveData'/>
+		<property name='inMeshData'/>
+		<property name='inParentMatrix'/>
+		<property name='inParticleData'/>
+		<property name='inSurfaceData'/>
+		<property name='matrix'/>
+		<property name='inverseMatrix'/>
+		<property name='worldMatrix'/>
+		<property name='worldInverseMatrix'/>
+		<property name='parentMatrix'/>
+		<property name='parentInverseMatrix'/>
+		<property name='visibility'/>
+	</view>
+</templates>

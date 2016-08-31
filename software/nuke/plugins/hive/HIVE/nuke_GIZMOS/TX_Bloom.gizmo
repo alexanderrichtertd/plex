@@ -1,0 +1,238 @@
+#! /Applications/Nuke8.0v2/Nuke8.0v2.app/Contents/MacOS/libnuke-8.0.v2.dylib -nx
+version 8.0 v2
+Group {
+ name TX_Bloom
+ inputs 2
+ knobChanged "\nthisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\n\nif thisKnob.name() == 'quality' :\n    \n    quality = int(thisNode\['quality'].value())\n    \n    thisNode.begin()\n    dotIN = nuke.toNode('Dot_IN')\n    dotOUT = nuke.toNode('Dot_OUT')\n    merge = nuke.toNode('Merge_master')\n    Xpos = nuke.toNode('Blur_master').xpos()\n    Ypos = nuke.toNode('Blur_master').ypos()\n    \n    for n in nuke.allNodes('Blur'):\n        if n.name() not in \['Blur_original', 'Blur_master']:\n            nuke.delete(n)\n    \n    nuke.delete(merge)\n    merge = nuke.nodes.Merge2(xpos = Xpos,\n                                                ypos = Ypos+250)\n    merge.setName('Merge_master')\n    merge\['operation'].setValue('plus')\n    merge.setInput(0, nuke.toNode('Blur_master'))\n    merge\['Achannels'].setExpression('parent.Blur_master.channels')\n    merge\['Bchannels'].setExpression('parent.Blur_master.channels')\n    merge\['output'].setExpression('parent.Blur_master.channels')\n    dotOUT.setInput(0,merge)\n    \n    \n    for n in range(quality):\n        blur=nuke.nodes.Blur(xpos = Xpos-(n+1)*100,\n                                        ypos= Ypos)\n        blur.setName('Blur_'+str(n+1))\n        blur\['channels'].setExpression('parent.Blur_master.channels')\n        blur\['size'].setValue(\[0,0])\n        blur\['size'].setExpression('parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) ')\n        blur\['crop'].setExpression('parent.crop')\n        blur.setInput(0,dotIN)\n        if n==0:\n            merge.setInput(n+1,blur)\n        else :\n            merge.setInput(n+2,blur)\n"
+ tile_color 0xcc804eff
+ addUserKnob {20 User l Settings}
+ addUserKnob {41 channels T Blur_master.channels}
+ addUserKnob {14 size R 0 100}
+ size 1
+ addUserKnob {7 scaling}
+ scaling 1
+ addUserKnob {4 type M {linear exponential}}
+ type exponential
+ addUserKnob {3 quality l "" -STARTLINE}
+ quality 5
+ addUserKnob {6 crop l "crop to format" -STARTLINE}
+ crop true
+ addUserKnob {7 softenOrig l "soften original" R 0 100}
+ addUserKnob {6 ontop l "add on top " -STARTLINE}
+ addUserKnob {26 dummy1 l "" +STARTLINE T " "}
+ addUserKnob {4 mask M {none alpha "RGB luminance" ""}}
+ addUserKnob {6 maskInvert l invert -STARTLINE}
+ addUserKnob {3 maskInputTest l INVISIBLE -STARTLINE +INVISIBLE}
+ maskInputTest {{"\[python -execlocal n\\ =\\ nuke.thisNode()\\nif\\ n.input(1)\\ ==\\ None\\ :\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse\\ :\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+ addUserKnob {26 dummy2 l "" +STARTLINE T " "}
+ addUserKnob {41 white l gain T Grade.white}
+ addUserKnob {41 gamma T Grade.gamma}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 credits l "" +STARTLINE T "TX_Bloom v1.0   -    Tomas Lefebvre (c)\n"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -250
+  ypos -444
+ }
+ Dot {
+  name Dot4
+  xpos -216
+  ypos -385
+ }
+set N1d639150 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle2
+  xpos -106
+  ypos -389
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos 113
+  ypos -419
+  number 1
+  addUserKnob {20 User}
+ }
+ Switch {
+  inputs 2
+  which {{parent.maskInputTest i}}
+  name Switch_test
+  xpos 113
+  ypos -389
+ }
+ Dot {
+  name Dot3
+  xpos 147
+  ypos -316
+ }
+set N17c501a0 [stack 0]
+ Colorspace {
+  colorspace_out CIE-Lab
+  name Colorspace1
+  xpos 113
+  ypos -272
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos 113
+  ypos -246
+ }
+push $N17c501a0
+ Clamp {
+  name Clamp1
+  xpos -13
+  ypos -326
+ }
+ Switch {
+  inputs 2
+  which {{"parent.mask == 2 ? 1 : 0" i}}
+  name Switch_mask
+  xpos -13
+  ypos -246
+ }
+push $N1d639150
+ Multiply {
+  inputs 1+1
+  channels {{{parent.Blur_master.channels}}}
+  value 0
+  invert_mask {{parent.maskInvert i}}
+  name Multiply_mask
+  xpos -250
+  ypos -246
+  disable {{parent.mask==0?1:0 i x1001 1}}
+ }
+ Dot {
+  name Dot_IN
+  xpos -216
+  ypos -182
+ }
+set N2db560 [stack 0]
+ Blur {
+  channels {{{parent.Blur_master.channels}}}
+  size {{"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "} {"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "}}
+  crop {{parent.crop}}
+  name Blur_5
+  xpos -750
+  ypos 44
+ }
+push $N2db560
+ Blur {
+  channels {{{parent.Blur_master.channels}}}
+  size {{"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "} {"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "}}
+  crop {{parent.crop}}
+  name Blur_4
+  xpos -650
+  ypos 44
+ }
+push $N2db560
+ Blur {
+  channels {{{parent.Blur_master.channels}}}
+  size {{"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "} {"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "}}
+  crop {{parent.crop}}
+  name Blur_3
+  xpos -550
+  ypos 44
+ }
+push $N2db560
+ Blur {
+  channels {{{parent.Blur_master.channels}}}
+  size {{"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "} {"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "}}
+  crop {{parent.crop}}
+  name Blur_2
+  xpos -450
+  ypos 44
+ }
+push 0
+push $N2db560
+ Blur {
+  channels {{{parent.Blur_master.channels}}}
+  size {{"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "} {"parent.type == 0 ? parent.size*scaling*2*int(\[string range \[value name] 5 end]) : parent.size*scaling*pow(2,int(\[string range \[value name] 5 end])) "}}
+  crop {{parent.crop}}
+  name Blur_1
+  xpos -350
+  ypos 44
+ }
+push $N2db560
+ Blur {
+  channels rgba
+  size {{parent.size i} {parent.size i}}
+  crop {{parent.crop i}}
+  name Blur_master
+  xpos -250
+  ypos 44
+ }
+ Merge2 {
+  inputs 6+1
+  operation plus
+  Achannels {{{parent.Blur_master.channels}}}
+  Bchannels {{{parent.Blur_master.channels}}}
+  output {{{parent.Blur_master.channels}}}
+  name Merge_master
+  xpos -250
+  ypos 294
+ }
+ Dot {
+  name Dot_OUT
+  xpos -216
+  ypos 389
+ }
+set N1d640bb0 [stack 0]
+push $N2db560
+ Dot {
+  name Dot2
+  xpos -30
+  ypos -182
+ }
+ Blur {
+  channels {{{parent.Blur_master.channels}}}
+  size {{parent.softenOrig i}}
+  crop {{parent.crop i}}
+  name Blur_original
+  xpos -57
+  ypos 307
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels {{{parent.Blur_master.channels}}}
+  Bchannels {{{parent.Blur_master.channels}}}
+  output {{{parent.Blur_master.channels}}}
+  name Merge2
+  xpos -57
+  ypos 379
+ }
+ Dot {
+  name Dot1
+  xpos -23
+  ypos 472
+ }
+push $N1d640bb0
+ Switch {
+  inputs 2
+  which {{parent.ontop i}}
+  name Switch1
+  xpos -250
+  ypos 468
+ }
+ Grade {
+  channels {{{parent.Blur_master.channels}}}
+  black_clamp false
+  name Grade
+  xpos -250
+  ypos 544
+ }
+ Output {
+  name Output1
+  xpos -250
+  ypos 620
+ }
+end_group

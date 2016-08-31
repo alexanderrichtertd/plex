@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEarrayExpression'>
+		<attribute name='outArray' type='maya.vectorArray'>
+			<label>Out Array</label>
+		</attribute>
+		<attribute name='inArray' type='maya.vectorArray'>
+			<label>In Array</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEarrayExpression'>
+		<property name='outArray'/>
+		<property name='inArray'/>
+	</view>
+</templates>

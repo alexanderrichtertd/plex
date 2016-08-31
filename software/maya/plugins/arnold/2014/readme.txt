@@ -1,0 +1,1 @@
+See the installation instructions at https://support.solidangle.com/display/AFMUG/Installation

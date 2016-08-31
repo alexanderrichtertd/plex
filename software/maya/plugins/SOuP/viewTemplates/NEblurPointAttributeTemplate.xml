@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEblurPointAttribute'>
+		<attribute name='outMesh' type='maya.mesh'>
+			<label>Out Mesh</label>
+		</attribute>
+		<attribute name='outArray' type='maya.vectorArray'>
+			<label>Out Array</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.componentList'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inWeightPP' type='maya.doubleArray'>
+			<label>In Weight PP</label>
+		</attribute>
+		<attribute name='inArray' type='maya.vectorArray'>
+			<label>In Array</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEblurPointAttribute'>
+		<property name='outMesh'/>
+		<property name='outArray'/>
+		<property name='inMesh'/>
+		<property name='inComponents'/>
+		<property name='inWeightPP'/>
+		<property name='inArray'/>
+	</view>
+</templates>

@@ -1,0 +1,50 @@
+[node alRemapColor]
+	desc STRING "Use controls such as gamma, saturation and contrast to tweak the color values in your network. Operations are applied in the order they appear in the shader."
+	c4d.classification STRING "texture"
+	c4d.menu STRING "texture"
+	maya.name STRING "alRemapColor"
+	maya.classification STRING "utility/color"
+	maya.id INT 0x0011640D
+	houdini.icon STRING "COP2_colorcorrect"
+	houdini.category STRING "alShaders"
+	houdini.help_url STRING "http://www.anderslanglands.com/alshaders/alRemapColor.html"
+	houdini.parm.folder.ROOT STRING "Contrast;2;"
+	houdini.order STRING "input gamma saturation hueOffset gain exposure mask  ROOT"
+	houdini.order2 STRING " contrast contrastPivot"
+
+	[attr input]
+		houdini.label STRING "Input"
+		desc STRING "Input color to remap."
+		linkable BOOL TRUE
+	[attr gamma]
+		houdini.label STRING "Gamma"
+		desc STRING "Gamma value to apply to input."
+		linkable BOOL TRUE
+	[attr saturation]
+		houdini.label STRING "Saturation"
+		desc STRING "Saturation to apply to the input."
+		linkable BOOL TRUE
+	[attr hueOffset]
+		houdini.label STRING "Hue offset"
+		desc STRING "Hue offset to apply to the input."
+		linkable BOOL TRUE
+	[attr contrast]
+		houdini.label STRING "Contrast"
+		desc STRING "Contrast value to apply."
+		linkable BOOL TRUE
+	[attr contrastPivot]
+		houdini.label STRING "Pivot"
+		desc STRING "Value around which to pivot the contrast adjustment."
+		linkable BOOL TRUE
+	[attr gain]
+		houdini.label STRING "Gain"
+		desc STRING "Gain multiplier to apply to the input."
+		linkable BOOL TRUE
+	[attr exposure]
+		houdini.label STRING "Exposure"
+		desc STRING "Exposure adjustment to apply to the input, i.e. input * 2^exposure."
+		linkable BOOL TRUE
+	[attr mask]
+		houdini.label STRING "Mask"
+		desc STRING "Use this to mask off the adjustment. This can be useful for only adjusting a certain region of a texture for instance."
+		linkable BOOL TRUE

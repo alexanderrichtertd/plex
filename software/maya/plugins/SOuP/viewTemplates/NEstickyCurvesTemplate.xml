@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEstickyCurves'>
+		<attribute name='outCurve1' type='maya.nurbsCurve'>
+			<label>Out Curve 1</label>
+		</attribute>
+		<attribute name='outCurve2' type='maya.nurbsCurve'>
+			<label>Out Curve 2</label>
+		</attribute>
+		<attribute name='outBaseCurve1' type='maya.nurbsCurve'>
+			<label>Out Base Curve 1</label>
+		</attribute>
+		<attribute name='outBaseCurve2' type='maya.nurbsCurve'>
+			<label>Out Base Curve 2</label>
+		</attribute>
+		<attribute name='inMesh' type='maya.mesh'>
+			<label>In Mesh</label>
+		</attribute>
+		<attribute name='zipEnd' type='maya.float'>
+			<label>Zip End</label>
+		</attribute>
+		<attribute name='zipEndSlope' type='maya.float'>
+			<label>Zip End Slope</label>
+		</attribute>
+		<attribute name='zipStart' type='maya.float'>
+			<label>Zip Start</label>
+		</attribute>
+		<attribute name='zipStartSlope' type='maya.float'>
+			<label>Zip Start Slope</label>
+		</attribute>
+		<attribute name='overshoot' type='maya.float'>
+			<label>Overshoot</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEstickyCurves'>
+		<property name='outCurve1'/>
+		<property name='outCurve2'/>
+		<property name='outBaseCurve1'/>
+		<property name='outBaseCurve2'/>
+		<property name='inMesh'/>
+		<property name='zipEnd'/>
+		<property name='zipEndSlope'/>
+		<property name='zipStart'/>
+		<property name='zipStartSlope'/>
+		<property name='overshoot'/>
+	</view>
+</templates>

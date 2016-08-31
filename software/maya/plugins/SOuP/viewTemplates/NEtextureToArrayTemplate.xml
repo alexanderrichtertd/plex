@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEtextureToArray'>
+		<attribute name='outRgbaPP' type='maya.doubleArray'>
+			<label>Out Rgba PP</label>
+		</attribute>
+		<attribute name='outUCoordPP' type='maya.doubleArray'>
+			<label>Out UCoord PP</label>
+		</attribute>
+		<attribute name='outVCoordPP' type='maya.doubleArray'>
+			<label>Out VCoord PP</label>
+		</attribute>
+		<attribute name='inGeometry' type='maya.nurbsSurface'>
+			<label>In Geometry</label>
+		</attribute>
+		<attribute name='inComponents' type='maya.Int32Array'>
+			<label>In Components</label>
+		</attribute>
+		<attribute name='inColor' type='maya.float3'>
+			<label>In Color</label>
+		</attribute>
+		<attribute name='inAlpha' type='maya.float'>
+			<label>In Alpha</label>
+		</attribute>
+		<attribute name='groupId' type='maya.long'>
+			<label>Group Id</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEtextureToArray'>
+		<property name='outRgbaPP'/>
+		<property name='outUCoordPP'/>
+		<property name='outVCoordPP'/>
+		<property name='inGeometry'/>
+		<property name='inComponents'/>
+		<property name='inColor'/>
+		<property name='inAlpha'/>
+		<property name='groupId'/>
+	</view>
+</templates>

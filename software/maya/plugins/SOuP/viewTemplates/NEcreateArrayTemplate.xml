@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<template name='NEcreateArray'>
+		<attribute name='outArray' type='maya.vectorArray'>
+			<label>Out Array</label>
+		</attribute>
+		<attribute name='length' type='maya.long'>
+			<label>Length</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEcreateArray'>
+		<property name='outArray'/>
+		<property name='length'/>
+	</view>
+</templates>

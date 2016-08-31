@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates>
+	<using package='maya'/>
+	<using package='std'/>
+	<template name='NEfollicle'>
+		<attribute name='outHair' type='maya.HairCurve'>
+			<label>Out Hair</label>
+		</attribute>
+		<attribute name='outNormal' type='maya.double3'>
+			<label>Out Normal</label>
+		</attribute>
+		<attribute name='outRotate' type='maya.double3'>
+			<label>Out Rotate</label>
+		</attribute>
+		<attribute name='outTangent' type='maya.double3'>
+			<label>Out Tangent</label>
+		</attribute>
+		<attribute name='outTranslate' type='maya.double3'>
+			<label>Out Translate</label>
+		</attribute>
+		<attribute name='matrix' type='maya.matrix'>
+			<label>Matrix</label>
+		</attribute>
+		<attribute name='inverseMatrix' type='maya.matrix'>
+			<label>Inverse Matrix</label>
+		</attribute>
+		<attribute name='worldMatrix' type='maya.matrix'>
+			<label>World Matrix</label>
+		</attribute>
+		<attribute name='worldInverseMatrix' type='maya.matrix'>
+			<label>World Inverse Matrix</label>
+		</attribute>
+		<attribute name='parentMatrix' type='maya.matrix'>
+			<label>Parent Matrix</label>
+		</attribute>
+		<attribute name='parentInverseMatrix' type='maya.matrix'>
+			<label>Parent Inverse Matrix</label>
+		</attribute>
+		<attribute name='inputMesh' type='maya.mesh'>
+			<label>Input Mesh</label>
+		</attribute>
+		<attribute name='inputWorldMatrix' type='maya.matrix'>
+			<label>Input World Matrix</label>
+		</attribute>
+		<attribute name='parameterU' type='maya.double'>
+			<label>Parameter U</label>
+		</attribute>
+		<attribute name='parameterV' type='maya.double'>
+			<label>Parameter V</label>
+		</attribute>
+		<attribute name='startCurveAttract' type='maya.double'>
+			<label>Start Curve Attract</label>
+		</attribute>
+		<attribute name='startDirection' type='maya.enum'>
+			<label>Start Direction</label>
+		</attribute>
+		<attribute name='startPosition' type='maya.nurbsCurve'>
+			<label>Start Position</label>
+		</attribute>
+		<attribute name='startPositionMatrix' type='maya.matrix'>
+			<label>Start Position Matrix</label>
+		</attribute>
+	</template>
+	<view name='NEDefault' template='NEfollicle'>
+		<property name='outHair'/>
+		<property name='outNormal'/>
+		<property name='outRotate'/>
+		<property name='outTangent'/>
+		<property name='outTranslate'/>
+		<property name='matrix'/>
+		<property name='inverseMatrix'/>
+		<property name='worldMatrix'/>
+		<property name='worldInverseMatrix'/>
+		<property name='parentMatrix'/>
+		<property name='parentInverseMatrix'/>
+		<property name='inputMesh'/>
+		<property name='inputWorldMatrix'/>
+		<property name='parameterU'/>
+		<property name='parameterV'/>
+		<property name='startCurveAttract'/>
+		<property name='startDirection'/>
+		<property name='startPosition'/>
+		<property name='startPositionMatrix'/>
+	</view>
+</templates>
