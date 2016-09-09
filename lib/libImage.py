@@ -1,13 +1,8 @@
-
 #*************************************************************
-# title         libImage
-#
-# content       common functions
-#
-# dependencies  settings.py
+# CONTENT       image functions
 # 
-# author        Alexander Richter 
-# email         contact@richteralexander.com
+# AUTHOR        Alexander Richter 
+# EMAIL         contact@richteralexander.com
 #*************************************************************
 
 import os 
@@ -23,7 +18,7 @@ import libFileService
 
 
 #************************
-# IMAGE
+# SET IMAGE
 #************************
 def setUserImg (userId = "", imgObj = ""):
     if (userId == ""):
@@ -48,6 +43,9 @@ def setPreviewImg (previewId = "", imgObj = ""):
         imgObj.setPixmap(QPixmap(QImage(s.PLACEHOLDER["image"])))
 
 
+#************************
+# GET IMAGE
+#************************
 def getShotImg(shot):
     tmpShot = libFileService.getFolderList(s.PATH['comp'], shot + "*")
     
@@ -78,15 +76,6 @@ def getShotImg(shot):
     return shotImgPath
 
 
-def getBannerImg(task = ""):
-    bannerImgPath = os.path.join(s.PATH['img'], 'banner', task + s.FILE_FORMAT["img"])
-    
-    if not os.path.isfile(bannerImgPath): 
-        bannerImgPath = s.PLACEHOLDER["banner"]
-
-    return bannerImgPath
-
-
 def getReportImg(reportImgPath, image = False):    
     if not os.path.isfile(reportImgPath): 
         if (image):
@@ -102,3 +91,16 @@ def getProgramImg(software):
     if not os.path.isfile(softwareImgPath): 
         softwareImgPath = s.PLACEHOLDER["program"]
     return softwareImgPath
+
+
+#************************
+# TEMP IMAGE
+#************************
+def rmTempImg():
+    tmpImgPath = s.PATH_EXTRA["img_tmp"]
+    if os.path.exists(tmpImgPath):
+        try:
+            os.remove(tmpImgPath)
+        except:
+            print('FAIL : cant delete tmpFile : ' + tmpImgPath) 
+    return tmpImgPath

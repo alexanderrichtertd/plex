@@ -23,8 +23,12 @@ from PySide import QtUiTools
 from PySide.QtGui import *
 from PySide.QtCore import *
 
+sys.path.append(r"D:\Dropbox\arPipeline\v002\WORK\settings")
+sys.path.append(r"D:\Dropbox\arPipeline\v002\WORK")
+#sys.path.append(r"D:\Dropbox\arPipeline\v002\WORK")
+
 import settings as s
-from img import img_rc
+#from img import img_rc
 
 from lib import libLog
 from lib import libFunction
@@ -82,7 +86,7 @@ PATH_UI     = s.PATH["utilities"] + "/ui/" + TITLE + ".ui"
 #**********************
 # RUN DOS RUN
 #**********************
-WIDGET   = QtUiTools.QUiLoader().load(PATH_UI)
+WIDGET = QtUiTools.QUiLoader().load(PATH_UI)
 
 
 #************************
@@ -243,23 +247,23 @@ def startReminder(addReminder = False):
     WIDGET.show()
 
 
-def sleeper():
-    while True:
+# def sleeper():
+#     while True:
         
-        if len(libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")) > 0:
-            print "START : " + libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
-            start()
+#         if len(libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")) > 0:
+#             print "START : " + libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
+#             start()
         
-            print "SLEEPY"
+#             print "SLEEPY"
             
-            while not READY:
-                time.sleep(10000)
+#             while not READY:
+#                 time.sleep(10000)
 
-def reminderLoop():
-    t = Thread(target=sleeper)
-    t.start()
+# def reminderLoop():
+#     t = Thread(target=sleeper)
+#     t.start()
 
-
+# startReminder()
 # from utilities import arReminder
 # reload(arReminder)
 # arReminder.reminderLoop()

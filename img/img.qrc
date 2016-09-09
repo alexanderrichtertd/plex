@@ -59,11 +59,9 @@
   </qresource>
   <qresource prefix="placeholder">
     <file>placeholder/shader.png</file>
-    <file>placeholder/banner.png</file>
     <file>placeholder/image.png</file>
     <file>placeholder/program.png</file>
     <file>placeholder/report.png</file>
-    <file>placeholder/shot - Copy.png</file>
     <file>placeholder/shot.png</file>
     <file>placeholder/splashscreen.png</file>
     <file>placeholder/user.png</file>
@@ -92,22 +90,6 @@
     <file>software/maya/shelf/shelf_sceneShd3_35.png</file>
     <file>software/maya/shelf/shelf_suggestion35.png</file>
     <file>software/maya/shelf/shelf_write35.png</file>
-  </qresource>
-  <qresource prefix="banner">
-    <file>banner/ANIM.png</file>
-    <file>banner/badge_pressed.png</file>
-    <file>banner/badge_slayer.png</file>
-    <file>banner/badge_thirsty.png</file>
-    <file>banner/COMP.png</file>
-    <file>banner/concept.png</file>
-    <file>banner/FX.png</file>
-    <file>banner/LIGHT.png</file>
-    <file>banner/matte.png</file>
-    <file>banner/MODEL.png</file>
-    <file>banner/RIG.png</file>
-    <file>banner/ROTO.png</file>
-    <file>banner/SHD.png</file>
-    <file>banner/TEX.png</file>
   </qresource>
   <qresource prefix="program">
     <file>program/3dCoat.png</file>

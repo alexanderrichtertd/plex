@@ -1,7 +1,7 @@
 #*************************************************************
 # TITLE         libImport
 #
-# CONTENT:      main functions
+# CONTENT       main functions
 #
 # AUTHOR        Alexander Richter 
 # EMAIL         contact@richteralexander.com

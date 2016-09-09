@@ -1,11 +1,11 @@
 #*************************************************************
-# title:        libRender
+# title         libRender
 #
-# content:      set low and high render settings
+# content       set low and high render settings
 #               create render or viewer snapshots
 #
-# author:       Alexander Richter 
-# email:        contact@richteralexander.com
+# author        Alexander Richter 
+# email         contact@richteralexander.com
 #*************************************************************
 
 import os

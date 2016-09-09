@@ -1,12 +1,8 @@
 #*************************************************************
-# title:        libLog
+# CONTENT       write logs in data/log
 #
-# content:      write logs in data/logging
-#
-# dependencies: "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
-#
-# author:       Alexander Richter 
-# email:        alexander.richter@filmakademie.de
+# AUTHOR        Alexander Richter 
+# EMAIL         contact@richteralexander.com
 #*************************************************************
 
 import os
@@ -43,12 +39,12 @@ class MyFilter(object):
 #************************
 # LOG
 #************************
-def initLog(software="maya", script="default", level=logging.INFO, logger=logging.getLogger()):
+def initLog(script="default", level=logging.INFO, logger=logging.getLogger()):
     
     if not logger.handlers == []:
         return logger
 
-    path = os.path.join(s.PATH["data_logging"], software)
+    path = os.path.join(s.PATH["data_log"], os.environ("SOFTWARE"))
 
     if level == logging.DEBUG:
         path = os.path.join(path, "DEBUG")
@@ -141,20 +137,20 @@ def initLog(software="maya", script="default", level=logging.INFO, logger=loggin
         console_handler.setLevel(logging.INFO)
         logger.addHandler(console_handler)
 
-    # info_handler  = logging.handlers.RotatingFileHandler(info_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
-    # formatter         = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simple"]["datefmt"])
+    # info_handler = logging.handlers.RotatingFileHandler(info_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
+    # formatter    = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simple"]["datefmt"])
     # info_handler.setFormatter(formatter)
     # info_handler.setLevel(logging.INFO)
     # logger.addHandler(info_handler)
 
-    debug_handler   = logging.handlers.RotatingFileHandler(debug_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
-    formatter       = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
+    debug_handler = logging.handlers.RotatingFileHandler(debug_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
+    formatter     = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
     debug_handler.setFormatter(formatter)
     debug_handler.setLevel(logging.DEBUG)
     logger.addHandler(debug_handler)
 
-    # error_handler     = logging.handlers.RotatingFileHandler(error_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
-    # formatter         = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
+    # error_handler = logging.handlers.RotatingFileHandler(error_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
+    # formatter     = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
     # error_handler.setFormatter(formatter)
     # error_handler.setLevel(logging.ERROR)
     # logger.addHandler(error_handler)

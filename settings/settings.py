@@ -2,8 +2,8 @@
 # title         settings
 #
 # content       paths & name conventions
-#				settings for task, type, software, path, user
-##
+#               settings for task, type, software, path, user
+#
 # author        Alexander Richter 
 # email         contact@richteralexander.com
 #*************************************************************
@@ -19,17 +19,17 @@ FPS             = "24"
 FPS_TYPE        = "film"
 
 RENDERER = {
-	"maya"     : "renderman",
-	"houdini"  : "mantra"
+    "maya"     : "renderman",
+    "houdini"  : "mantra"
 }
 
 
 #************************
 # VARIABLES
 #************************
-MAYA_VERSION    = "2015"
-NUKE_VERSION    = "v9.07"
-HOUDINI_VERSION = "14.0.361"
+# MAYA_VERSION    = "2015"
+# NUKE_VERSION    = "v9.07"
+# HOUDINI_VERSION = "14.0.361"
 
 PROGRAM_FILES   = os.environ["ProgramFiles"] # "C:/Program Files"
 
@@ -239,7 +239,7 @@ PATH = {
     "img_maya"          : PATH_SETTINGS + "/img/software/maya",
     "img_maya_shelf"    : PATH_SETTINGS + "/img/software/maya/shelf",
 
-    "img_nuke"     		: PATH_SETTINGS + "/img/software/nuke",
+    "img_nuke"          : PATH_SETTINGS + "/img/software/nuke",
     "img_nuke_menu"     : PATH_SETTINGS + "/img/software/nuke/menu",
     "img_nuke_banner"   : PATH_SETTINGS + "/img/software/nuke/banner",
 
@@ -253,7 +253,7 @@ PATH = {
     "data_report"       : PATH_SETTINGS + "/data/report",
     "data_report_img"   : PATH_SETTINGS + "/data/report/img",
     "data_report_history" : PATH_SETTINGS + "/data/report/" + STATUS["history"],
-    "data_logging"      : PATH_SETTINGS + "/data/logging",
+    "data_log"          : PATH_SETTINGS + "/data/log",
     "data_reminder"     : PATH_SETTINGS + "/data/reminder",
 
     "user"              : PATH_PROJECT + "/00_user",
@@ -358,13 +358,13 @@ BATCH = {
 #************************
 # NAMING CONVENTION
 #************************
-# shot 		: s000 - s + 3digits (first)
-# shotName 	: shotName - after shotNr (maybe)
-# assets 	: assetname (first)
-# taks 		: task in TASK_TYPE[kategory].keys()
-# version 	: v + 3 digits
-# user 		: 2 alphanumerics
-# comment 	: last (maybe)
+# shot      : s000 - s + 3digits (first)
+# shotName  : shotName - after shotNr (maybe)
+# assets    : assetname (first)
+# taks      : task in TASK_TYPE[kategory].keys()
+# version   : v + 3 digits
+# user      : 2 alphanumerics
+# comment   : last (maybe)
 
 
 CONVENTION = {

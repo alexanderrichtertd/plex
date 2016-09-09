@@ -1,11 +1,11 @@
 #*************************************************************
-# title:        libUser
+# title        libUser
 #
-# content:      create user & save all informations 
-#               of the person & his work
+# content      create user & save all informations 
+#              of the person & his work
 #
-# author:       Alexander Richter 
-# email:        alexander.richter@filmakademie.de
+# author       Alexander Richter 
+# email        contact@richteralexander.com
 #*************************************************************
 
 import os

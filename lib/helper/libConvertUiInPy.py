@@ -11,7 +11,7 @@
 
 import subprocess
 subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../software/maya/scripts/ui/img_rc.py ../../img/img.qrc", shell=True)
-subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../utilities/ui/img_rc.py ../../img/img.qrc", shell=True)
+subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../img/img_rc.py ../../img/img.qrc", shell=True)
 
 # subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../utilities/ui/arSave.py ../../utilities/ui/ui/arSave.ui", shell=True)
 # subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../utilities/ui/arSaveAs.py ../../utilities/ui/ui/arSaveAs.ui", shell=True)

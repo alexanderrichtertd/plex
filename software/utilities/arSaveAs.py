@@ -1,11 +1,9 @@
 #*************************************************************
-# TITLE         arSaveAs & arLoad
-#
-# SOFTWARE      Maya, Nuke, Houdini
-#
 # CONTENT       creates folder structure (assets & shots) 
 #               saves a new file
 #               loads pipeline files
+#
+# SOFTWARE      Maya, Nuke, Houdini
 #
 # DEPENDENCIES  "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
 #
@@ -57,16 +55,14 @@ PATH_UI     = s.PATH["utilities"] + "/ui/" + TITLE + ".ui"
 #**********************
 # RUN DOS RUN
 #**********************
-WIDGET   = QtUiTools.QUiLoader().load(PATH_UI)
+WIDGET = QtUiTools.QUiLoader().load(PATH_UI)
 
 
 #************************
 # LOG
 #************************
-def log():
-    global LOG
-    import logging
-    LOG = libLog.initLog(software=os.environ["SOFTWARE"], script=TITLE, level=logging.INFO, logger=logging.getLogger(TITLE))
+import logging
+LOG = libLog.initLog(script=TITLE, logger=logging.getLogger(TITLE))
 
 
 #**********************

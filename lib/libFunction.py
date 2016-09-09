@@ -1,13 +1,8 @@
-
 #*************************************************************
-# title         libFunction
-#
-# content       common functions
-#
-# dependencies  settings.py
+# CONTENT       common functions
 # 
-# author        Alexander Richter 
-# email         contact@richteralexander.com
+# AUTHOR        Alexander Richter 
+# EMAIL         contact@richteralexander.com
 #*************************************************************
 
 import os 
@@ -27,55 +22,59 @@ import libFileService
 
 
 #************************
-# FUNCTIONS
+# FOLDER & FILES
 #************************
-def rmTempImg():
-    tmpImgPath = s.PATH_EXTRA["img_tmp"]
-    if os.path.exists(tmpImgPath):
-        try:
-            os.remove(tmpImgPath)
-        except:
-            print('FAIL : cant delete tmpFile : ' + tmpImgPath) 
-
-    return tmpImgPath
-
-
-def openFolder(openPath):
-    openPath = openPath.replace("/", "\\")
-
-    if os.path.exists(openPath):
-        if len(openPath.split(".")) > 1:
-            openPath = os.path.dirname(openPath)
-        webbrowser.open(openPath)
-    else:
-        return ("FAIL : Path is not valid")
-
-    return openPath     
-
-
-def getHelp(title = ""):
-    if title == "": title = os.getenv('SOFTWARE')
-    webbrowser.open(s.LINK[title])
-
-
 def createFolder(path):
-    if len(path.split(".")) > 1:
-        path = os.path.dirname(path)
-
     if not os.path.exists(path):
+        if len(path.split(".")) > 1:
+            path = os.path.dirname(path)
         os.makedirs(path)
 
 
+def openFolder(path):
+    if os.path.exists(path):
+        if len(path.split(".")) > 1:
+            path = os.path.dirname(path)
+        webbrowser.open(path)
+    else:
+        log.debug("FAIL : Path is not valid:" + path)
+    return path     
+
+
+# fileType="*.py", exclude="__init__.py", extention [True:return "file.py"; False "file"]
+def getFileList(path, fileType='*', extension = False, exclude = "*"):
+    getFile = []
+
+    if(os.path.exists(path)):
+        os.chdir(path)
+        for fileName in glob.glob(fileType):
+            if exclude in fileName:
+                continue
+            if extension:
+                getFile.append(fileName)
+            else:
+                getFile.append((fileName.split('.')[0]))
+    return (getFile)
+
+
+# GET all subfolders in the path
+def getDeepFolderList(path):
+    getFile = []
+    os.chdir(path)
+
+    for fileName in os.walk(path):
+        getFile.append(os.path.basename(fileName[0]))
+
+    getFile.pop(0)
+    return getFile
+
+
 #************************
-# REPORT
+# HELP
 #************************
-def setMetaData(shot, metaObj): 
-    tmpShot = libShot.Shot()
-    tmpShot.__dict__ = libShot.getShot(shot)
-
-    # should check if one of the settings is empty then use the default (000)
-    metaObj.setPlainText(tmpShot.__call__())
-
-
-def setErrorCount(ui):
-    ui.lblErrorCount.setText(str(len(libFileService.getFolderList(s.PATH["data_report"], "*.json"))))
+def getHelp(title = ""):
+    if title == "": title = os.getenv('SOFTWARE')
+    if title in LINK:
+        webbrowser.open(s.LINK[title])
+    else:
+        webbrowser.open(s.LINK["pipeline"])

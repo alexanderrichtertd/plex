@@ -4,7 +4,7 @@
 # content     	standard message boxes
 #
 # author        Alexander Richter 
-# email         alexander.richter@filmakademie.de
+# email         contact@richteralexander.com
 #*************************************************************
 
 import os 

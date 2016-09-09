@@ -1,10 +1,10 @@
 #*************************************************************
-# title:        libShot
+# title        libShot
 #
-# content:      shot informations
+# content      shot informations
 #
-# author:       Alexander Richter 
-# email:        alexander.richter@filmakademie.de
+# author       Alexander Richter 
+# email        contact@richteralexander.com
 #*************************************************************
 
 import os
@@ -19,11 +19,12 @@ import libFileService
 # SHOT
 #************************
 class Shot:
-    def __init__(self, title = "000", resolution = "", fps = "", frames = [], comment = ""):        
+    def __init__(self, title = "s000_shotName", resolution = "", fps = "", frameIn = 1001, frameOut = 1011, comment = ""):        
         self.title      = title
         self.resolution = resolution
         self.fps        = fps
-        self.frames     = frames
+        self.frameIn    = frameIn
+        self.frameOut   = frameOut
         self.comment    = comment
 
     def __call__(self):
