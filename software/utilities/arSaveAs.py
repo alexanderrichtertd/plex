@@ -1,17 +1,14 @@
 #*************************************************************
-# CONTENT       creates folder structure (assets & shots) 
+# CONTENT       creates folder structure (assets & shots)
 #               saves a new file
 #               loads pipeline files
 #
 # SOFTWARE      Maya, Nuke, Houdini
 #
-# DEPENDENCIES  "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
-#
-# AUTHOR        Alexander Richter 
-# EMAIL         contact@richteralexander.com
+# AUTHOR        Alexander Richter
 #*************************************************************
 
-import os 
+import os
 import sys
 import datetime
 
@@ -34,7 +31,6 @@ from lib import libFileService
 
 from utilities import arReport
 
-
 #**********************
 # VARIABLE
 #**********************
@@ -49,13 +45,13 @@ MSG_SHOT    = "s010_shotName"
 MSG_ASSET   = "assetName"
 
 LOAD        = False
-PATH_UI     = s.PATH["utilities"] + "/ui/" + TITLE + ".ui"
- 
+
 
 #**********************
 # RUN DOS RUN
 #**********************
-WIDGET = QtUiTools.QUiLoader().load(PATH_UI)
+PATH_UI = s.PATH["software"] + "/_ui/" + TITLE + ".ui"
+WIDGET  = QtUiTools.QUiLoader().load(PATH_UI)
 
 
 #************************
@@ -72,19 +68,19 @@ def clicked_btnAccept(ref = False):
     global LOG, SAVE_DIR, LOAD
     LOG.info("END  : CREATE : ")
     updatePath(False)
-    
+
     if LOAD:
         if WIDGET.cbxShotChoice.currentText():
             loadFile(ref)
         else:
             LOG.warning("FAIL : LOAD : EMPTY - " + SAVE_DIR)
     else:
-        if checkInput():    
+        if checkInput():
             saveFile()
         else:
             if WIDGET.cbxShot.currentText() == s.TYPE["shots"]:
                 failMsg = MSG_SHOT
-            else:    
+            else:
                 failMsg = MSG_ASSET
 
             if QMessageBox.Cancel == libMessageBox.questionMsgBox("Fail : Pipeline Path", "File is not pipeline conform:", failMsg +"\n\nCreate file and path anyway?", QMessageBox.Warning):
@@ -137,8 +133,8 @@ def clicked_btnAddShotName():
     if WIDGET.cbxShot.currentText() in s.TYPE["shots"]:
         WIDGET.edtShotGroup.setPlaceholderText(MSG_SHOT)
     else:
-        WIDGET.edtShotGroup.setPlaceholderText(MSG_ASSET)      
-        
+        WIDGET.edtShotGroup.setPlaceholderText(MSG_ASSET)
+
     WIDGET.edtShotGroup.setFrame(True)
     WIDGET.edtShotGroup.setEnabled(True)
     WIDGET.edtShotGroup.setText("")
@@ -154,7 +150,7 @@ def clicked_btnPreviewImg():
     PATH_IMG = PATH_IMG.replace("/", "\\")
     if LOAD and os.path.exists(PATH_IMG):
         os.system(PATH_IMG)
-    elif not LOAD: 
+    elif not LOAD:
         PATH_IMG = libMessageBox.folderMsgBox(WIDGET, "Image Files (*.jpg *.png *.tif)", "Choose image file", os.environ['USERPROFILE'] + "/Desktop")
         WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG))))
 
@@ -190,15 +186,15 @@ def changed_cbxShot():
     WIDGET.cbxShotChoice.clear()
 
     taskList = []
-    
+
     if LOAD: addGroupWidth = 30
     else:    addGroupWidth = 0
-        
+
     if WIDGET.cbxShot.currentText() in s.TYPE_DIRECT:
         WIDGET.cbxShotName.hide()
         WIDGET.edtShotName.hide()
 
-        WIDGET.cbxShotGroup.setGeometry(270, 15, 151 + addGroupWidth, 22) 
+        WIDGET.cbxShotGroup.setGeometry(270, 15, 151 + addGroupWidth, 22)
         WIDGET.edtShotGroup.setGeometry(270, 47, 181, 22)
 
         if os.environ["SOFTWARE"] == "nuke":
@@ -211,14 +207,14 @@ def changed_cbxShot():
         WIDGET.cbxShotName.show()
         WIDGET.edtShotName.show()
 
-        WIDGET.cbxShotGroup.setGeometry(330, 15, 91 + addGroupWidth, 22) 
+        WIDGET.cbxShotGroup.setGeometry(330, 15, 91 + addGroupWidth, 22)
         WIDGET.edtShotGroup.setGeometry(330, 47, 121, 22)
-        
-        WIDGET.cbxShotName.addItems(sorted(libFileService.getFolderList(s.PATH[WIDGET.cbxShot.currentText().lower()])))   
+
+        WIDGET.cbxShotName.addItems(sorted(libFileService.getFolderList(s.PATH[WIDGET.cbxShot.currentText().lower()])))
 
 
     if WIDGET.cbxShot.currentText() in s.TYPE["shots"]:
-        taskList = s.TASK_SHOTS_FOLDER.itervalues()    
+        taskList = s.TASK_SHOTS_FOLDER.itervalues()
     elif WIDGET.cbxShot.currentText() in s.TYPE["assets"]:
         taskList = s.TASK_ASSETS_FOLDER.itervalues()
     else:
@@ -232,15 +228,15 @@ def changed_cbxShot():
                 itemList.append(item)
 
         WIDGET.cbxTask.addItems(sorted(itemList))
-    
-    WIDGET.edtShot.setText(WIDGET.cbxShot.currentText())  
+
+    WIDGET.edtShot.setText(WIDGET.cbxShot.currentText())
 
 
 def changed_cbxShotName():
     if not WIDGET.cbxShot.currentText() in s.TYPE_DIRECT:
         WIDGET.cbxShotGroup.clear()
         WIDGET.cbxShotChoice.clear()
-        WIDGET.cbxShotGroup.addItems(sorted(libFileService.getFolderList(s.PATH[WIDGET.cbxShot.currentText().lower()] + "/" + WIDGET.cbxShotName.currentText()))) 
+        WIDGET.cbxShotGroup.addItems(sorted(libFileService.getFolderList(s.PATH[WIDGET.cbxShot.currentText().lower()] + "/" + WIDGET.cbxShotName.currentText())))
         # WIDGET.edtShotGroup.setText(WIDGET.cbxShotGroup.currentText())
         WIDGET.edtShotName.setText(WIDGET.cbxShotName.currentText())
 
@@ -262,16 +258,16 @@ def changed_cbxShotGroup():
             pathPart = WIDGET.cbxShotName.currentText() + "/" + WIDGET.cbxShotGroup.currentText()
 
         tmpTaskList = sorted(libFileService.getFolderList(s.PATH[WIDGET.cbxShot.currentText().lower()] + "/" + pathPart))
-        
+
         if tmpTaskList:
             if os.environ["SOFTWARE"] == "nuke":
                 if s.TASK_FOLDER["compositing"] in tmpTaskList:
                     WIDGET.cbxTask.addItem(s.TASK_FOLDER["compositing"])
 
-            else:    
+            else:
                 if s.TASK_FOLDER["compositing"] in tmpTaskList:
                     tmpTaskList.remove(s.TASK_FOLDER["compositing"])
-                WIDGET.cbxTask.addItems(tmpTaskList) 
+                WIDGET.cbxTask.addItems(tmpTaskList)
 
 def changed_cbxTask():
     WIDGET.edtTask.setText(WIDGET.cbxTask.currentText())
@@ -281,7 +277,7 @@ def changed_cbxTask():
 
 def changed_cbxShotChoice ():
     global PATH_IMG
-    
+
     updatePath(False)
     WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG, True))))
 
@@ -293,11 +289,11 @@ def updatePath(reloadDrop = True):
     global LOAD, SAVE_DIR, SAVE_FILE, PATH_IMG
 
     if WIDGET.cbxShot.currentText() in s.TYPE_DIRECT:
-        if os.environ["SOFTWARE"] in ["maya", "houdini"]:    
+        if os.environ["SOFTWARE"] in ["maya", "houdini"]:
             shotPath = s.PATH[WIDGET.cbxShot.currentText().lower()] + "/" + WIDGET.edtShotGroup.text()
         elif os.environ["SOFTWARE"] == "nuke":
-            shotPath = s.PATH["comp"] + "/" + WIDGET.edtShotGroup.text()        
-        else: 
+            shotPath = s.PATH["comp"] + "/" + WIDGET.edtShotGroup.text()
+        else:
             shotPath = s.PATH[WIDGET.cbxShot.currentText().lower()] + "/" + WIDGET.edtShotGroup.text()
     else:
         shotPath = s.PATH[WIDGET.cbxShot.currentText().lower()] + "/" + WIDGET.edtShotName.text() + "/" + WIDGET.edtShotGroup.text()
@@ -310,13 +306,13 @@ def updatePath(reloadDrop = True):
     if LOAD:
         try:
             if reloadDrop:
-                excludePublish = "*"           
+                excludePublish = "*"
                 WIDGET.cbxShotChoice.clear()
 
                 # NEED : LOOP & LISTS
                 for file_format_item in s.FILE_FORMAT_LOAD[os.environ["SOFTWARE"]]:
                     WIDGET.cbxShotChoice.addItems(sorted(libFileService.getFolderList(workPath, "*" + file_format_item, True,  excludePublish), reverse=True))
-                
+
                 for file_format_item in s.FILE_FORMAT_LOAD["texture"]:
                     WIDGET.cbxShotChoice.addItems(sorted(libFileService.getFolderList(workPath, "*" + file_format_item, True,  excludePublish), reverse=True))
 
@@ -324,22 +320,22 @@ def updatePath(reloadDrop = True):
 
         except:
             SAVE_FILE = ""
-    else:      
+    else:
         taskFileName = WIDGET.cbxTask.currentText()
         if taskFileName.split("_") > 2:
             taskFileName = taskFileName.split("_")[-1]
         SAVE_FILE = WIDGET.edtShotGroup.text() + "_" + taskFileName + "_v001_" + libUser.getUserInitials() + s.FILE_FORMAT[os.environ["SOFTWARE"]]
-    
+
     SAVE_DIR = workPath + "/" + SAVE_FILE
     WIDGET.edtMsg.setText(SAVE_DIR.replace("/", "\\"))
 
     # set modification date & file size
     if LOAD:
         PATH_IMG = os.path.dirname(SAVE_DIR) + "/" + s.STATUS["thumbs"] + "/" + SAVE_FILE.split(".")[0] + s.FILE_FORMAT["thumbs"]
-        
+
         if WIDGET.btnShowPublish.isChecked():
             PATH_IMG = PATH_IMG.replace(s.STATUS["work"], s.STATUS["publish"])
-        
+
         if os.path.exists(SAVE_DIR):
             WIDGET.edtMsgDate.setText(str(datetime.datetime.fromtimestamp(os.path.getmtime(SAVE_DIR))).split(".")[0])
             WIDGET.edtMsgSize.setText(str("{0:.2f}".format(os.path.getsize(SAVE_DIR)/(1024*1024.0)) + " MB"))
@@ -355,38 +351,38 @@ def saveFile():
 
     if os.path.exists(SAVE_DIR):
         LOG.warning ("EXISTS : SAVE : Overwrite " + SAVE_DIR)
-        
+
         # NUKE asks by itself
         if not os.environ["SOFTWARE"] == "nuke":
             if QMessageBox.Cancel == libMessageBox.questionMsgBox("Overwrite", "File exists", "Overwrite the file?", QMessageBox.Warning):
                 LOG.info("CANCEL : SAVE : Overwrite " + SAVE_DIR)
                 return
- 
-    try:    
+
+    try:
         if os.environ["SOFTWARE"] == "maya":
             import maya.cmds as cmds
             cmds.file( rename = SAVE_DIR)
             cmds.file( save = True, type = s.FILE_FORMAT_CODE[s.FILE_FORMAT[os.environ["SOFTWARE"]]] )
-            
+
         elif os.environ["SOFTWARE"] == "nuke":
             import nuke
-            nuke.scriptSaveAs(SAVE_DIR) 
-                           
+            nuke.scriptSaveAs(SAVE_DIR)
+
         elif os.environ["SOFTWARE"] == "houdini":
             print "houdini"
 
         libRender.saveSnapshotImg(SAVE_DIR, PATH_IMG)
-        LOG.info('END  : SAVE : ' + SAVE_DIR)   
+        LOG.info('END  : SAVE : ' + SAVE_DIR)
     except:
-        LOG.error('FAIL : SAVE : ' + SAVE_DIR, exc_info=True)  
+        LOG.error('FAIL : SAVE : ' + SAVE_DIR, exc_info=True)
 
-    WIDGET.close() 
+    WIDGET.close()
 
 
 def loadFile(ref = False):
     global LOG, SAVE_DIR
 
-    try: 
+    try:
 
         if checkTexture():
             pass
@@ -394,7 +390,7 @@ def loadFile(ref = False):
         elif os.environ["SOFTWARE"] == "maya":
             import maya.mel as mel
 
-            # reference or open 
+            # reference or open
             if ref or ".abc" in SAVE_DIR or ".obj" in SAVE_DIR or ".fbx" in SAVE_DIR:
                 # file -r -type "mayaBinary"  -ignoreVersion -gl -mergeNamespacesOnClash false -namespace "bull_MODEL_v004_jo" -options "v=0;" "K:/30_assets/bull/10_MODEL/WORK/bull_MODEL_v004_jo.mb";
                 mel.eval('file -r -type "' + s.FILE_FORMAT_CODE["." + SAVE_DIR.split(".")[-1]] + '" -ignoreVersion -gl -mergeNamespacesOnClash false "' + SAVE_DIR.replace("\\", "/") + '"')
@@ -403,14 +399,14 @@ def loadFile(ref = False):
 
         elif os.environ["SOFTWARE"] == "nuke":
             import nuke
-            nuke.scriptOpen(SAVE_DIR)  
+            nuke.scriptOpen(SAVE_DIR)
 
         elif os.environ["SOFTWARE"] == "houdini":
             print "houdini open"
-        
-        LOG.info ('END  : LOAD : ' + SAVE_DIR)   
+
+        LOG.info ('END  : LOAD : ' + SAVE_DIR)
     except:
-        LOG.error('FAIL : LOAD : ' + SAVE_DIR, exc_info=True)  
+        LOG.error('FAIL : LOAD : ' + SAVE_DIR, exc_info=True)
 
     # SET USER SETTINGS
     arLoadSet = {
@@ -421,7 +417,7 @@ def loadFile(ref = False):
                 }
     libUser.setUserSettings(os.getenv('username'), arLoadSet)
 
-    WIDGET.close() 
+    WIDGET.close()
 
 
 def checkTexture():
@@ -434,7 +430,7 @@ def checkTexture():
             else:
                 os.system(SAVE_DIR)
 
-            LOG.info('OPEN : TEX  : ' + SAVE_DIR)   
+            LOG.info('OPEN : TEX  : ' + SAVE_DIR)
             return True
     return False
 
@@ -442,7 +438,7 @@ def checkTexture():
 def openPtxView():
     global SAVE_DIR
     print "openPtxView : " + "\"" + s.SOFTWARE["ptxview"].replace("/","\\") + "\" " + SAVE_DIR.replace("/","\\")
-    os.system("\"" + s.SOFTWARE["ptxview"].replace("/","\\") + "\" " + SAVE_DIR.replace("/","\\"))    
+    os.system("\"" + s.SOFTWARE["ptxview"].replace("/","\\") + "\" " + SAVE_DIR.replace("/","\\"))
 
 
 def checkInput():
@@ -452,18 +448,18 @@ def checkInput():
 
         if not WIDGET.edtShotGroup.text()[:3].isdigit():
             if not WIDGET.edtShotGroup.text()[0] == "s" or not WIDGET.edtShotGroup.text()[1:4].isdigit():
-                return False 
+                return False
         else:
             if len(WIDGET.edtShotGroup.text()) > 3:
                 if WIDGET.edtShotGroup.text()[3].isalpha():
-                    return False 
+                    return False
 
         if len(WIDGET.edtShotGroup.text().split("_")) > 2 : # or WIDGET.edtShotGroup.text()[3].isdigit():
             return False
-            
-    elif not WIDGET.edtShot.text() in s.TYPE_DIRECT:  
+
+    elif not WIDGET.edtShot.text() in s.TYPE_DIRECT:
         if "_" in WIDGET.edtShotGroup.text():
-            return False 
+            return False
 
     if " " in WIDGET.edtShotGroup.text() or "-" in WIDGET.edtShotGroup.text() or ":" in WIDGET.edtShotGroup.text():
         return False
@@ -486,14 +482,14 @@ def init():
 
     # set for (not) ADMIN
     if os.getenv('username') in s.TEAM["admin"]:
-        libFunction.setErrorCount(WIDGET) 
+        libFunction.setErrorCount(WIDGET)
     else:
         WIDGET.lblErrorCount.hide()
 
     # fill list
     if os.environ["SOFTWARE"] == "nuke":
         WIDGET.cbxShot.addItem(s.TYPE["shots"])
-        
+
         if not LOAD:
             WIDGET.cbxTask.addItem(s.TASK_SHOTS_FOLDER["compositing"])
 
@@ -504,14 +500,13 @@ def init():
     # GET USER SETTINGS & set on script
     userSettings = libUser.getUserSettings(os.getenv('username'), TITLE)
     if userSettings:
-        userSettings = userSettings[0]    
+        userSettings = userSettings[0]
         WIDGET.cbxShot.setCurrentIndex(WIDGET.cbxShot.findText(userSettings[0]))
         WIDGET.cbxShotName.setCurrentIndex(WIDGET.cbxShotName.findText(userSettings[1]))
         WIDGET.cbxShotGroup.setCurrentIndex(WIDGET.cbxShotGroup.findText(userSettings[2]))
         WIDGET.cbxTask.setCurrentIndex(WIDGET.cbxTask.findText(userSettings[3]))
-        
-    if LOAD:
 
+    if LOAD:
         updatePath()
 
 
@@ -521,9 +516,8 @@ def init():
 def start(loading = False):
     global LOG, LOAD, PATH_IMG, TITLE
 
-    log()
-    LOAD        = loading    
-    PATH_IMG    = libFunction.rmTempImg()
+    LOAD     = loading
+    PATH_IMG = libFunction.rmTempImg()
 
     WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG))))
 
@@ -544,7 +538,7 @@ def start(loading = False):
         WIDGET.setWindowTitle("arLoad")
         WIDGET.setWindowIcon(QPixmap(QImage(s.PATH["img_btn"] + "/" + "btnLoad.png")))
         WIDGET.btnAccept.resize(66, WIDGET.btnAccept.height())
-    
+
     else:
         LOG.info ("SAVEAS : START")
         WIDGET.cbxShotChoice.hide()

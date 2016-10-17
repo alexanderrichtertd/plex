@@ -1,11 +1,8 @@
 #*************************************************************
-# TITLE         arReport
-#
 # SOFTWARE      Maya, Nuke, Houdini
 #
 # CONTENT       send an error or suggestion report
 #
-# AUTHOR        Alexander Richter 
 # EMAIL         contact@richteralexander.com
 #*************************************************************
 
@@ -37,7 +34,7 @@ import libMessageBox
 # REPORT
 #************************
 class Report:
-    def __init__(self, software = "unknown", user = "John Doe", filePath = "", reason = "bug", script =  "other", comment = "", error = ""):        
+    def __init__(self, software = "unknown", user = "John Doe", filePath = "", reason = "bug", script =  "other", comment = "", error = ""):
         self.time       = datetime.now().strftime('%Y.%m.%d %H:%M:%S')
         self.software   = software  #maya
         self.user       = user      #arichter
@@ -75,7 +72,7 @@ SAVE_DIR        = ""
 
 PATH_IMG        = ""
 PATH_UI         = s.PATH["utilities"] + "/ui/" + TITLE + ".ui"
- 
+
 
 #**********************
 # RUN DOS RUN
@@ -98,7 +95,7 @@ def log():
 #**********************
 def clicked_btnAccept():
     saveReport()
-    WIDGET.close() 
+    WIDGET.close()
 
 
 def clicked_cancel():
@@ -115,23 +112,23 @@ def clicked_btnHelp():
 
 def clicked_showReport():
     global REPORTS
-    
+
     if (WIDGET.edtComment.isReadOnly()):
         WIDGET.edtComment.setReadOnly(False)
         WIDGET.edtScript.setReadOnly(False)
         WIDGET.edtErrorMsg.setReadOnly(False)
-        
+
         WIDGET.btnAccept.show()
-        WIDGET.btnCancel.show()     
-        WIDGET.btnScreenshot.show() 
-        WIDGET.btnSnapshotRender.show()  
-        WIDGET.btnSnapshotViewport.show()     
+        WIDGET.btnCancel.show()
+        WIDGET.btnScreenshot.show()
+        WIDGET.btnSnapshotRender.show()
+        WIDGET.btnSnapshotViewport.show()
 
         WIDGET.btnBefore.hide()
-        WIDGET.btnNext.hide()  
-        WIDGET.btnSaveToHistory.hide()  
-        WIDGET.btnFolder.hide()  
-        WIDGET.btnOpenFile.hide()  
+        WIDGET.btnNext.hide()
+        WIDGET.btnSaveToHistory.hide()
+        WIDGET.btnFolder.hide()
+        WIDGET.btnOpenFile.hide()
 
         WIDGET.cbxReport.clear()
         WIDGET.cbxScript.clear()
@@ -143,19 +140,19 @@ def clicked_showReport():
         WIDGET.edtComment.setReadOnly(True)
         WIDGET.edtScript.setReadOnly(True)
         WIDGET.edtErrorMsg.setReadOnly(True)
-        
+
         WIDGET.btnAccept.hide()
-        WIDGET.btnCancel.hide()    
-        WIDGET.btnScreenshot.hide()  
-        WIDGET.btnSnapshotRender.hide()  
-        WIDGET.btnSnapshotViewport.hide()  
-         
+        WIDGET.btnCancel.hide()
+        WIDGET.btnScreenshot.hide()
+        WIDGET.btnSnapshotRender.hide()
+        WIDGET.btnSnapshotViewport.hide()
+
         WIDGET.btnBefore.show()
-        WIDGET.btnNext.show() 
-        WIDGET.btnSaveToHistory.show() 
-        WIDGET.btnFolder.show() 
-        WIDGET.btnOpenFile.show()  
-       
+        WIDGET.btnNext.show()
+        WIDGET.btnSaveToHistory.show()
+        WIDGET.btnFolder.show()
+        WIDGET.btnOpenFile.show()
+
         REPORTS = libFileService.getFolderList(s.PATH["data_report"], "*.json")
 
         setReports(len(REPORTS) - 1)
@@ -171,14 +168,14 @@ def clicked_nextReport():
 
 def clicked_saveToHistory():
     global LOG, REPORTS, REPORT_INDEX, PATH_IMG
-    
+
     if(len(REPORTS) < 1):
         return
 
     src = s.PATH["data_report"] + "/" + REPORTS[REPORT_INDEX] + s.FILE_FORMAT["data"]
     dst = s.PATH["data_report_history"] + "/" + REPORTS[REPORT_INDEX] + s.FILE_FORMAT["data"]
     libFunction.createFolder(dst)
-    
+
     if os.path.exists(src):
         shutil.move(src, dst)
 
@@ -186,7 +183,7 @@ def clicked_saveToHistory():
     dst = s.PATH["data_report_img"] + "/" + s.STATUS["history"] + "/" + REPORTS[REPORT_INDEX] + s.FILE_FORMAT["thumbs"]
     libFunction.createFolder(dst)
 
-    if not (dst.endswith("000.png")): 
+    if not (dst.endswith("000.png")):
         if(os.path.exists(src)):
             shutil.move(src, dst)
 
@@ -223,10 +220,10 @@ def clicked_btnSnapshotViewport():
 def changed_report():
     global PATH_IMG
     currentImgPath = s.PATH['img_maya_shelf'] + "/" + "shelf_" + WIDGET.cbxReport.currentText() + "35.png"
-    
+
     if(WIDGET.cbxScript.currentText() == s.REPORT_LIST[os.environ["SOFTWARE"]][-1]):
         WIDGET.edtScript.show()
-        changeY = 30 
+        changeY = 30
     else:
         WIDGET.edtScript.hide()
         changeY = 0
@@ -258,16 +255,16 @@ def changed_report():
         WIDGET.btnReport.move(455, 135 + changeY)
         WIDGET.lblErrorCount.move(470, 130 + changeY)
         WIDGET.btnHelp.move(480, 135 + changeY)
-            
+
     else:
-        
+
         if not(WIDGET.edtComment.isReadOnly()):
             WIDGET.btnScreenshot.show()
-            
+
         WIDGET.edtErrorMsg.show()
         WIDGET.btnPreviewImg.show()
         WIDGET.lblPreviewImgBG.show()
-        
+
         WIDGET.resize(WIDGET.width(), 245 + changeY)
         WIDGET.edtComment.resize(486, 77)
 
@@ -339,21 +336,21 @@ def clicked_errorImg():
 def clicked_openFile():
     global SAVE_DIR
 
-    try:    
+    try:
         if os.environ["SOFTWARE"] == "maya":
             import maya.mel as mel
             mel.eval('file -f -options "v=0;"  -ignoreVersion  -typ "' + s.FILE_FORMAT_CODE[s.FILE_FORMAT[os.environ["SOFTWARE"]]] + '" -o "' + SAVE_DIR + '"')
-        
+
         elif os.environ["SOFTWARE"] == "nuke":
             import nuke
-            nuke.scriptOpen(SAVE_DIR)  
+            nuke.scriptOpen(SAVE_DIR)
 
         elif os.environ["SOFTWARE"] == "houdini":
             print "houdini open"
-        
-        LOG.info ('END  : LOAD : ' + SAVE_DIR)   
+
+        LOG.info ('END  : LOAD : ' + SAVE_DIR)
     except:
-        LOG.error('FAIL : LOAD : ' + SAVE_DIR, exc_info=True)  
+        LOG.error('FAIL : LOAD : ' + SAVE_DIR, exc_info=True)
 
 
 #**********************
@@ -361,18 +358,18 @@ def clicked_openFile():
 #**********************
 def saveReport():
     global LOG, PATH_IMG
-    
+
     fileName = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
     dataPath = s.PATH["data_report"] + '/' + fileName + s.FILE_FORMAT["data"]
     imgPath  = s.PATH["data_report_img"] + "/" + fileName + s.FILE_FORMAT["thumbs"]
-    
+
     if(WIDGET.cbxScript.currentText() == "other"):
         script = WIDGET.edtScript.text()
     else:
         script = WIDGET.cbxScript.currentText()
 
     if(WIDGET.edtComment.toPlainText() == MSG_COMMENT):
-        WIDGET.edtComment.setPlainText("")  
+        WIDGET.edtComment.setPlainText("")
 
     if(WIDGET.edtErrorMsg.toPlainText() == MSG_ERROR):
         WIDGET.edtErrorMsg.setPlainText("")
@@ -383,21 +380,21 @@ def saveReport():
             filePath = cmds.file(q=True,sn=True)
         elif(os.environ["SOFTWARE"] == "nuke"):
             import nuke
-            filePath = nuke.root()['name'].value()    
+            filePath = nuke.root()['name'].value()
         elif(os.environ["SOFTWARE"] == "houdini"):
             print "houdini save path"
-        else: 
+        else:
             filePath = ""
     except:
-        LOG.error('FAIL : GET PATH', exc_info=True)  
-    
+        LOG.error('FAIL : GET PATH', exc_info=True)
+
     report = Report(user = os.getenv('username'), filePath = filePath, reason = WIDGET.cbxReport.currentText(), script = script, comment = WIDGET.edtComment.toPlainText(), error = WIDGET.edtErrorMsg.toPlainText(), software = os.environ["SOFTWARE"])
 
     libFileService.setJsonFile(dataPath, report)
     libRender.saveSnapshotImg(imgPath, "", True)
     LOG.info("END : REPORT : " + fileName)
 
-   
+
 def setReports(index = len(REPORTS) - 1):
     global REPORTS, REPORT_INDEX, REPORT_DATA, PATH_IMG, SAVE_DIR
 
@@ -405,7 +402,7 @@ def setReports(index = len(REPORTS) - 1):
     WIDGET.cbxScript.clear()
 
     if len(REPORTS) < 1:
-        clicked_showReport() 
+        clicked_showReport()
         WIDGET.edtMsg.setText("No Reports at the time")
         WIDGET.edtComment.setPlainText(MSG_COMMENT)
         WIDGET.edtErrorMsg.setPlainText(MSG_ERROR)
@@ -423,15 +420,15 @@ def setReports(index = len(REPORTS) - 1):
     WIDGET.cbxReport.addItem(REPORT_DATA["reason"])
     WIDGET.cbxScript.addItem(REPORT_DATA["script"])
 
-    WIDGET.edtErrorMsg.setPlainText(REPORT_DATA["error"]) 
-    WIDGET.edtComment.setPlainText(REPORT_DATA["comment"]) 
+    WIDGET.edtErrorMsg.setPlainText(REPORT_DATA["error"])
+    WIDGET.edtComment.setPlainText(REPORT_DATA["comment"])
 
     WIDGET.edtMsg.setText(str(REPORT_INDEX) + ":" + str((len(REPORTS) - 1)) + " - " + REPORT_DATA["time"])
     libImage.setUserImg(REPORT_DATA["user"], WIDGET.lblUser)
-  
+
     # change errorImg
     PATH_IMG = s.PATH["data_report_img"] + "/" + REPORTS[REPORT_INDEX] + s.FILE_FORMAT["thumbs"]
-    
+
     WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG, True))))
     WIDGET.btnOpenFile.setIcon(QPixmap(QImage(libImage.getProgramImg(REPORT_DATA["software"]))))
 
@@ -453,19 +450,19 @@ def init(currentScript = "other"):
     libImage.setUserImg(os.getenv('username'), WIDGET.lblUser)
 
     if os.getenv('username') in s.TEAM["admin"]:
-        libFunction.setErrorCount(WIDGET) 
+        libFunction.setErrorCount(WIDGET)
     else:
         WIDGET.btnReport.hide()
         WIDGET.btnFolder.hide()
         WIDGET.lblErrorCount.hide()
 
     WIDGET.cbxReport.addItems(s.REPORT_LIST["report"])
-    
+
     try:
         WIDGET.cbxScript.addItems(s.REPORT_LIST[os.environ["SOFTWARE"]])
     except:
         WIDGET.cbxScript.addItems(s.REPORT_LIST["other"])
-        
+
     WIDGET.edtComment.setPlainText(MSG_COMMENT)
     WIDGET.edtErrorMsg.setPlainText(MSG_ERROR)
 
@@ -492,7 +489,7 @@ def start(currentScript = 'other'):
     WIDGET.connect(WIDGET.btnAccept, SIGNAL("clicked()"), clicked_btnAccept)
     WIDGET.connect(WIDGET.btnCancel, SIGNAL("clicked()"), clicked_cancel)
     WIDGET.connect(WIDGET.btnHelp, SIGNAL("clicked()"), clicked_btnHelp)
-    WIDGET.connect(WIDGET.btnReport, SIGNAL("clicked()"), clicked_showReport)    
+    WIDGET.connect(WIDGET.btnReport, SIGNAL("clicked()"), clicked_showReport)
 
     WIDGET.connect(WIDGET.btnBefore, SIGNAL("clicked()"), clicked_previousReport)
     WIDGET.connect(WIDGET.btnNext, SIGNAL("clicked()"), clicked_nextReport)
@@ -507,19 +504,19 @@ def start(currentScript = 'other'):
 
     WIDGET.connect(WIDGET.cbxReport, SIGNAL("currentIndexChanged(const QString&)"), changed_report)
     WIDGET.connect(WIDGET.cbxScript, SIGNAL("currentIndexChanged(const QString&)"), changed_report)
-    
+
     WIDGET.edtErrorMsg.focusInEvent     = errorMsg_In
-    WIDGET.edtErrorMsg.focusOutEvent    = errorMsg_Out    
+    WIDGET.edtErrorMsg.focusOutEvent    = errorMsg_Out
 
     WIDGET.edtComment.focusInEvent      = comment_In
     WIDGET.edtComment.focusOutEvent     = comment_Out
 
 
     WIDGET.btnBefore.hide()
-    WIDGET.btnNext.hide() 
-    WIDGET.btnSaveToHistory.hide() 
-    WIDGET.btnFolder.hide() 
-    WIDGET.btnOpenFile.hide() 
+    WIDGET.btnNext.hide()
+    WIDGET.btnSaveToHistory.hide()
+    WIDGET.btnFolder.hide()
+    WIDGET.btnOpenFile.hide()
 
     init(currentScript)
 

@@ -1,0 +1,237 @@
+30.12.2015 16:51:50 | arReport         - log                    | INFO     | arichter     | START
+30.12.2015 16:52:07 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.12.2015 17:13:12 | arReport         - log                    | INFO     | arichter     | START
+30.12.2015 17:13:26 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.12.2015 17:13:41 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2015_12_30_17_13_41
+30.12.2015 17:18:41 | arReport         - log                    | INFO     | arichter     | START
+30.12.2015 17:20:15 | arReport         - log                    | INFO     | arichter     | START
+30.12.2015 17:21:30 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2015_12_30_17_21_30
+30.12.2015 17:21:31 | arReport         - log                    | INFO     | arichter     | START
+30.12.2015 17:22:08 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2015_12_30_17_22_08
+30.12.2015 17:22:12 | arReport         - log                    | INFO     | arichter     | START
+06.01.2016 16:30:26 | arReport         - log                    | INFO     | arichter     | START
+06.01.2016 16:30:48 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2015_12_30_17_13_41
+08.01.2016 14:41:27 | arReport         - log                    | INFO     | arichter     | START
+08.01.2016 14:41:49 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_01_08_14_41_49
+08.01.2016 16:21:04 | arReport         - log                    | INFO     | arichter     | START
+08.01.2016 16:21:14 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_01_08_14_41_49
+09.01.2016 02:46:35 | arReport         - log                    | INFO     | arichter     | START
+09.01.2016 02:46:42 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+09.01.2016 02:47:29 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_01_09_02_47_29
+12.01.2016 15:03:06 | arReport         - log                    | INFO     | arichter     | START
+12.01.2016 15:03:10 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+12.01.2016 15:04:10 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_01_12_15_04_10
+12.01.2016 17:25:07 | arReport         - log                    | INFO     | arichter     | START
+13.01.2016 11:51:00 | arReport         - log                    | INFO     | arichter     | START
+13.01.2016 11:51:26 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_01_13_11_51_26
+13.01.2016 15:37:44 | arReport         - log                    | INFO     | arichter     | START
+13.01.2016 15:37:52 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2015_12_30_17_21_30
+29.01.2016 10:54:41 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:10:10 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:20:43 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:31:25 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:31:49 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:34:11 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:35:06 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:35:09 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+29.01.2016 14:35:36 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_01_29_14_35_36
+29.01.2016 14:35:38 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:39:02 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:43:41 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:43:50 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+29.01.2016 14:44:13 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:48:13 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:49:36 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:50:26 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:51:25 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:54:08 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:56:04 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:56:12 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 14:56:20 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:00:36 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:00:56 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:01:18 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:01:38 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:02:04 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:02:37 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:02:53 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:03:15 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:03:33 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:05:51 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:07:23 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:07:31 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:12:57 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:25:49 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:28:54 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:32:37 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:34:10 | arReport         - log                    | INFO     | arichter     | START
+29.01.2016 15:53:55 | arReport         - log                    | INFO     | arichter     | START
+10.02.2016 16:33:38 | arReport         - log                    | INFO     | arichter     | START
+17.02.2016 17:34:04 | arReport         - log                    | INFO     | arichter     | START
+17.02.2016 17:34:24 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+17.02.2016 17:34:40 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+17.02.2016 17:34:53 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_02_17_17_34_53
+17.02.2016 17:34:54 | arReport         - log                    | INFO     | arichter     | START
+18.02.2016 12:27:04 | arReport         - log                    | INFO     | arichter     | START
+18.02.2016 15:23:13 | arReport         - log                    | INFO     | arichter     | START
+18.02.2016 15:23:30 | arReport         - log                    | INFO     | arichter     | START
+18.02.2016 15:24:23 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_02_18_15_24_23
+18.02.2016 15:24:25 | arReport         - log                    | INFO     | arichter     | START
+18.02.2016 15:24:32 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_01_29_14_35_36
+18.02.2016 15:24:53 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_02_17_17_34_53
+18.02.2016 15:25:01 | arReport         - log                    | INFO     | arichter     | START
+10.03.2016 20:47:19 | arReport         - log                    | INFO     | arichter     | START
+10.03.2016 20:47:35 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_01_13_11_51_26
+10.03.2016 21:29:31 | arReport         - log                    | INFO     | arichter     | START
+10.03.2016 21:29:53 | arReport         - log                    | INFO     | arichter     | START
+10.03.2016 21:54:42 | arReport         - log                    | INFO     | arichter     | START
+10.03.2016 21:54:45 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+10.03.2016 21:54:51 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+10.03.2016 21:54:59 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+10.03.2016 21:55:58 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_03_10_21_55_58
+10.03.2016 21:56:00 | arReport         - log                    | INFO     | arichter     | START
+10.03.2016 21:56:10 | arReport         - log                    | INFO     | arichter     | START
+11.03.2016 12:04:11 | arReport         - log                    | INFO     | arichter     | START
+05.04.2016 11:29:47 | arReport         - log                    | INFO     | arichter     | START
+06.04.2016 14:26:29 | arReport         - log                    | INFO     | nmaderthoner | START
+06.04.2016 14:26:47 | arReport         - saveFile               | INFO     | nmaderthoner | END : REPORT : 2016_04_06_14_26_47
+06.04.2016 14:27:00 | arReport         - log                    | INFO     | nmaderthoner | START
+06.04.2016 14:27:03 | libRender        - createScreenshot       | INFO     | nmaderthoner | Screenshot
+06.04.2016 14:27:07 | arReport         - log                    | INFO     | nmaderthoner | START
+06.04.2016 14:28:09 | arReport         - clicked_cancel         | INFO     | nmaderthoner | END : CANCEL
+06.04.2016 14:34:18 | arReport         - log                    | INFO     | arichter     | START
+06.04.2016 14:39:10 | arReport         - log                    | INFO     | arichter     | START
+06.04.2016 14:39:36 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_04_06_14_26_47
+06.04.2016 14:40:41 | arReport         - log                    | INFO     | arichter     | START
+04.05.2016 15:34:28 | arReport         - log                    | INFO     | arichter     | START
+12.05.2016 14:24:32 | arReport         - log                    | INFO     | arichter     | START
+17.05.2016 13:37:41 | arReport         - log                    | INFO     | joberbeck    | START
+17.05.2016 13:38:32 | arReport         - saveFile               | INFO     | joberbeck    | END : REPORT : 2016_05_17_13_38_32
+17.05.2016 15:39:40 | arReport         - log                    | INFO     | arichter     | START
+17.05.2016 15:39:55 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_17_13_38_32
+17.05.2016 17:52:32 | arReport         - log                    | INFO     | arichter     | START
+17.05.2016 18:39:56 | arReport         - log                    | INFO     | arichter     | START
+17.05.2016 18:40:01 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+17.05.2016 18:40:13 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+17.05.2016 18:41:22 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_05_17_18_41_22
+17.05.2016 18:41:25 | arReport         - log                    | INFO     | arichter     | START
+17.05.2016 18:41:36 | arReport         - log                    | INFO     | arichter     | START
+17.05.2016 19:18:19 | arReport         - log                    | INFO     | arichter     | START
+19.05.2016 12:58:05 | arReport         - log                    | INFO     | arichter     | START
+19.05.2016 12:58:49 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2015_12_30_17_22_08
+19.05.2016 14:17:14 | arReport         - log                    | INFO     | arichter     | START
+20.05.2016 11:43:04 | arReport         - log                    | INFO     | joberbeck    | START
+20.05.2016 11:43:27 | arReport         - saveFile               | INFO     | joberbeck    | END : REPORT : 2016_05_20_11_43_27
+20.05.2016 13:29:03 | arReport         - log                    | INFO     | arichter     | START
+20.05.2016 13:48:53 | arReport         - log                    | INFO     | arichter     | START
+20.05.2016 14:00:27 | arReport         - log                    | INFO     | arichter     | START
+20.05.2016 14:00:36 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_20_11_43_27
+23.05.2016 16:39:11 | arReport         - log                    | INFO     | arichter     | START
+23.05.2016 16:39:14 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+23.05.2016 16:39:40 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_05_23_16_39_40
+24.05.2016 16:14:48 | arReport         - log                    | INFO     | jtegethoff   | START
+24.05.2016 16:15:43 | libRender        - createScreenshot       | INFO     | jtegethoff   | Screenshot
+24.05.2016 16:15:49 | arReport         - saveFile               | INFO     | jtegethoff   | END : REPORT : 2016_05_24_16_15_49
+24.05.2016 16:42:02 | arReport         - log                    | INFO     | arichter     | START
+24.05.2016 16:42:23 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_24_16_15_49
+28.05.2016 11:19:22 | arReport         - log                    | INFO     | arichter     | START
+28.05.2016 11:19:26 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+28.05.2016 11:19:34 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+28.05.2016 11:19:58 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_05_28_11_19_58
+28.05.2016 12:45:48 | arReport         - log                    | INFO     | arichter     | START
+28.05.2016 12:46:11 | arReport         - log                    | INFO     | arichter     | START
+28.05.2016 15:22:58 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 11:07:39 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 17:08:41 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 17:08:47 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_28_11_19_58
+30.05.2016 17:09:32 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 17:09:38 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 17:09:56 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_01_12_15_04_10
+30.05.2016 17:09:56 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_17_18_41_22
+30.05.2016 17:09:56 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_01_09_02_47_29
+30.05.2016 17:11:05 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_23_16_39_40
+30.05.2016 17:11:05 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_02_18_15_24_23
+30.05.2016 17:11:05 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_03_10_21_55_58
+30.05.2016 18:52:17 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 18:52:27 | arReport         - log                    | INFO     | arichter     | START
+30.05.2016 18:52:30 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.05.2016 18:52:40 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.05.2016 18:52:44 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.05.2016 18:52:53 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.05.2016 18:53:02 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.05.2016 19:01:21 | arReport         - saveFile               | INFO     | arichter     | END : REPORT : 2016_05_30_19_01_21
+31.05.2016 11:18:27 | arReport         - log                    | INFO     | mlange       | START
+31.05.2016 11:18:41 | libRender        - createScreenshot       | INFO     | mlange       | Screenshot
+31.05.2016 11:19:17 | arReport         - clicked_btnHelp        | INFO     | mlange       | HELP
+31.05.2016 17:41:35 | arReport         - log                    | INFO     | mlange       | START
+31.05.2016 17:42:34 | arReport         - saveFile               | INFO     | mlange       | END : REPORT : 2016_05_31_17_42_34
+08.06.2016 22:40:00 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 18:47:35 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 18:52:20 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 18:53:19 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 21:53:41 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 21:54:48 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 21:55:20 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 21:55:51 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:00:44 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:00:48 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+11.06.2016 22:02:34 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:05:04 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:05:34 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:06:55 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:08:40 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:10:48 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:13:56 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:15:13 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:15:36 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:16:17 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:16:46 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:19:28 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:21:01 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:21:07 | arReport         - clicked_openFile       | ERROR    | arichter     | FAIL : LOAD : //bigfoot/revierkampf/40_shots/s900_animaticML/20_ANIM/WORK/s900_animaticML_ANIM_v001_ar.mb
+Traceback (most recent call last):
+  File "\\bigfoot\revierkampf\_pipeline\WORK\utilities\arReport.py", line 342, in clicked_openFile
+    mel.eval('file -f -options "v=0;"  -ignoreVersion  -typ "' + FILE_FORMAT_CODE[s.FILE_FORMAT[os.environ["SOFTWARE"]]] + '" -o "' + SAVE_DIR + '"')
+NameError: global name 'FILE_FORMAT_CODE' is not defined
+11.06.2016 22:21:31 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:21:38 | arReport         - clicked_openFile       | INFO     | arichter     | END  : LOAD : //bigfoot/revierkampf/40_shots/s900_animaticML/20_ANIM/WORK/s900_animaticML_ANIM_v001_ar.mb
+11.06.2016 22:23:36 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:29:21 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:34:31 | arReport         - log                    | INFO     | arichter     | START
+11.06.2016 22:35:00 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:08:32 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:09:24 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:10:35 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:11:29 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:11:54 | arReport         - clicked_openFile       | INFO     | arichter     | END  : LOAD : //bigfoot/revierkampf/40_shots/s900_animaticML/20_ANIM/WORK/s900_animaticML_ANIM_v001_ar.mb
+12.06.2016 15:15:29 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:15:37 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:16:03 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:16:29 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:42:04 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:43:03 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:44:00 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:45:44 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 15:45:46 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+12.06.2016 15:49:20 | arReport         - log                    | INFO     | arichter     | START
+12.06.2016 17:19:01 | arReport         - log                    | INFO     | arichter     | START
+21.06.2016 17:21:53 | arReport         - log                    | INFO     | arichter     | START
+21.06.2016 19:16:24 | arReport         - log                    | INFO     | arichter     | START
+21.06.2016 19:16:31 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+21.06.2016 19:16:40 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+21.06.2016 19:17:00 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+21.06.2016 19:17:08 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+21.06.2016 19:17:13 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+21.06.2016 19:17:39 | arReport         - saveReport             | INFO     | arichter     | END : REPORT : 2016_06_21_19_17_39
+30.06.2016 20:15:11 | arReport         - log                    | INFO     | arichter     | START
+30.06.2016 20:15:14 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.06.2016 20:15:17 | arReport         - log                    | INFO     | arichter     | START
+30.06.2016 20:36:58 | arReport         - log                    | INFO     | arichter     | START
+30.06.2016 20:37:29 | libRender        - createScreenshot       | INFO     | arichter     | Screenshot
+30.06.2016 20:37:34 | arReport         - saveReport             | INFO     | arichter     | END : REPORT : 2016_06_30_20_37_34
+30.06.2016 20:37:37 | arReport         - log                    | INFO     | arichter     | START
+30.06.2016 20:37:59 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_30_19_01_21
+30.06.2016 20:38:13 | arReport         - log                    | INFO     | arichter     | START
+30.06.2016 20:38:21 | arReport         - saveReport             | INFO     | arichter     | END : REPORT : 2016_06_30_20_38_21
+30.06.2016 20:38:22 | arReport         - log                    | INFO     | arichter     | START
+30.06.2016 20:38:30 | arReport         - clicked_saveToHistory  | INFO     | arichter     | ReportToHistory : 2016_05_30_19_01_21

@@ -40,7 +40,7 @@
    <string>arReminder</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../img/img.qrc">
+   <iconset resource="../../img/img.qrc">
     <normaloff>:/btn/btn/btnWrite48.png</normaloff>:/btn/btn/btnWrite48.png</iconset>
   </property>
   <property name="styleSheet">
@@ -137,7 +137,7 @@ else</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../../img/img.qrc">:/placeholder/placeholder/user.png</pixmap>
+    <pixmap resource="../../img/img.qrc">:/placeholder/placeholder/user.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -162,7 +162,7 @@ else</string>
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="../../../img/img.qrc">
+    <iconset resource="../../img/img.qrc">
      <normaloff>:/btn/btn/btnDenial91.png</normaloff>:/btn/btn/btnDenial91.png</iconset>
    </property>
    <property name="iconSize">
@@ -300,7 +300,7 @@ background-color: 'transparent';</string>
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="../../../img/img.qrc">
+    <iconset resource="../../img/img.qrc">
      <normaloff>:/btn/btn/btnAdd48.png</normaloff>:/btn/btn/btnAdd48.png</iconset>
    </property>
    <property name="iconSize">
@@ -406,7 +406,7 @@ background-color: 'transparent';</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../../img/img.qrc">:/placeholder/placeholder/user.png</pixmap>
+    <pixmap resource="../../img/img.qrc">:/placeholder/placeholder/user.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -477,7 +477,7 @@ background-color: 'transparent';</string>
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="../../../img/img.qrc">
+    <iconset resource="../../img/img.qrc">
      <normaloff>:/placeholder/placeholder/image.png</normaloff>:/placeholder/placeholder/image.png</iconset>
    </property>
    <property name="iconSize">
@@ -511,6 +511,7 @@ background-color: 'transparent';</string>
   <zorder>lblUserTo</zorder>
  </widget>
  <resources>
+  <include location="../../img/img.qrc"/>
   <include location="../../../img/img.qrc"/>
  </resources>
  <connections/>

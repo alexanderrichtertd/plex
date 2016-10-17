@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="btn">
+    <file>btn/btnUser48.png</file>
     <file>btn/btnSave91Wide.png</file>
     <file>btn/btnLoad66.png</file>
     <file>btn/btnAcceptRef21.png</file>
@@ -17,8 +18,8 @@
     <file>btn/btnAlembicFx46.png</file>
     <file>btn/btnArrowLeft48.png</file>
     <file>btn/btnArrowRight48.png</file>
-    <file>btn/btnBug48.png</file>
     <file>btn/btnCamera48.png</file>
+    <file>btn/btnHelp48.png</file>
     <file>btn/btnDenial48.png</file>
     <file>btn/btnDenial91.png</file>
     <file>btn/btnDenial210.png</file>

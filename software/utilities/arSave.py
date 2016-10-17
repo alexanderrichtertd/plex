@@ -1,15 +1,10 @@
 #*************************************************************
-# TITLE         arSave
-#
-# SOFTWARE      Maya, Nuke, Houdini
-#
 # CONTENT:      saves work and publish files
 #               executes other scripts on PUBLISH
 #               (on task in file name)
 #
 # DEPENDENCIES  "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
 #
-# AUTHOR        Alexander Richter 
 # EMAIL         contact@richteralexander.com
 #*************************************************************
 
@@ -17,9 +12,9 @@ import os
 import sys
 import shutil
 
-from PySide import QtUiTools
 from PySide.QtGui import *
 from PySide.QtCore import *
+from PySide import QtUiTools
 
 import settings as s
 from img import img_rc
@@ -46,7 +41,7 @@ SAVE_FILE   = ""
 MSG_COMMENT = "Comment"
 
 PATH_UI     = s.PATH["utilities"] + "/ui/" + TITLE + ".ui"
-PATH_IMG    = "" 
+PATH_IMG    = ""
 
 #**********************
 # RUN DOS RUN
@@ -68,8 +63,8 @@ def log():
 #**********************
 def clicked_btnAccept():
     saveFile()
-    WIDGET.close() 
-   
+    WIDGET.close()
+
 
 def clicked_btnCancel():
     global LOG
@@ -118,7 +113,7 @@ def clicked_btnPreviewImg(event):
     if LOAD:
         if os.path.exists(PATH_IMG):
             os.system(PATH_IMG)
-    else: 
+    else:
         PATH_IMG = libMessageBox.folderMsgBox(WIDGET, "Image Files (*.jpg *.png *.tif)", "Choose image file", os.environ['USERPROFILE'] + "/Desktop")
         WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libFunction.getReportImg(PATH_IMG))))
 
@@ -159,28 +154,28 @@ def changed_publish():
         WIDGET.edtComment.setPlainText('')
     else:
         WIDGET.edtComment.setEnabled(True)
-       
+
 
 def changed_edtComment():
     global SAVE_FILE
 
-    if not (WIDGET.edtComment.text() == MSG_COMMENT):    
+    if not (WIDGET.edtComment.text() == MSG_COMMENT):
         if (WIDGET.edtComment.text().isalnum() == False and WIDGET.edtComment.text() != ""):
             WIDGET.edtComment.textCursor().deletePreviousChar()
             # WIDGET.edtMsg.setText("FAIL: Comment uses alphanumeric character. Please use lower camelCase!")
             print ("FAIL: Comment uses alphanumeric character. Please use lower camelCase!")
         elif (len(WIDGET.edtComment.text()) < 20):
             if not (WIDGET.edtComment.text() == ''):
-                WIDGET.edtSaveFile.setText(SAVE_FILE + '_' + WIDGET.edtComment.text() + s.FILE_FORMAT[os.environ["SOFTWARE"]])   
+                WIDGET.edtSaveFile.setText(SAVE_FILE + '_' + WIDGET.edtComment.text() + s.FILE_FORMAT[os.environ["SOFTWARE"]])
             else:
-                WIDGET.edtSaveFile.setText(SAVE_FILE + s.FILE_FORMAT[os.environ["SOFTWARE"]])   
+                WIDGET.edtSaveFile.setText(SAVE_FILE + s.FILE_FORMAT[os.environ["SOFTWARE"]])
         else:
             WIDGET.edtComment.textCursor().deletePreviousChar()
             WIDGET.edtMsg.setText("FAIL : Comment is to long")
-       
+
 
 def changed_edtSaveFile():
-    # global SAVE_DIR, SOFTWARE, SAVE_FILE 
+    # global SAVE_DIR, SOFTWARE, SAVE_FILE
     # currentFile = WIDGET.edtMsg.text()
 
     # if(len(currentFile.split('.')) > 1):
@@ -207,13 +202,13 @@ def initPath(filePath = ''):
             import maya.cmds as cmds
             filePath = cmds.file(q = True , sn = True)
 
-        elif os.environ["SOFTWARE"] == "nuke": 
+        elif os.environ["SOFTWARE"] == "nuke":
             import nuke
             filePath = nuke.toNode("root").name()
 
-        elif os.environ["SOFTWARE"] == "houdini": 
+        elif os.environ["SOFTWARE"] == "houdini":
             print "file->houdini"
-                    
+
         if not filePath or filePath == "Root":
             return False
 
@@ -253,7 +248,7 @@ def checkCurrentFile():
 
 def updateVersion(fileName, add = True, publish = False):
     global SAVE_FILE
-    
+
     tmpFileName   = []
     for part in fileName.split("_"):
         # check for version
@@ -262,7 +257,7 @@ def updateVersion(fileName, add = True, publish = False):
                 break
 
             version = part.replace('v', '')
-            
+
             if add:
                 part    = 'v' + str('{0:03d}'.format(int(version) + 1))
             elif not add and int(version) > 0:
@@ -288,13 +283,13 @@ def saveFile():
         import maya.mel as mel
         import maya.cmds as cmds
     elif os.environ["SOFTWARE"] == "nuke":
-        import nuke    
+        import nuke
     elif os.environ["SOFTWARE"] == "houdini":
         print "import houdini"
 
     msg = "File was saved!\n\n"
     sceneReference  = []
-    
+
     # USE ADDITIONAL PUBLISH SCRIPTS
     if WIDGET.cbxPublish.isChecked():
         msg = "File was published!\n\n"
@@ -310,15 +305,15 @@ def saveFile():
                 print ("PUBLISH: " + s.TASK["shading"])
 
             if s.TASK["rigging"] in SAVE_FILE:
-                print ("PUBLISH: " + s.TASK["rigging"])    
+                print ("PUBLISH: " + s.TASK["rigging"])
 
             if s.TASK["lighting"] in SAVE_FILE:
                 print ("PUBLISH: " + s.TASK["lighting"])
-                
+
         except:
             msgFailed = "SORRY : SAVE : A helping script failed"
             msg += msgFailed
-            LOG.error(msgFailed, exc_info=True) 
+            LOG.error(msgFailed, exc_info=True)
 
     tmpSavePath = SAVE_DIR + "/" + WIDGET.edtSaveFile.text()
 
@@ -334,23 +329,23 @@ def saveFile():
 
     libRender.saveSnapshotImg(tmpSavePath)
 
-    try:    
+    try:
         if os.environ["SOFTWARE"] == "maya":
             cmds.file( rename = tmpSavePath)
             cmds.file( save = True, type = s.FILE_FORMAT_CODE[s.FILE_FORMAT[os.environ["SOFTWARE"]]] )
 
-        elif os.environ["SOFTWARE"] == "nuke": 
+        elif os.environ["SOFTWARE"] == "nuke":
             nuke.scriptSaveAs(tmpSavePath)
 
-        elif os.environ["SOFTWARE"] == "houdini": 
+        elif os.environ["SOFTWARE"] == "houdini":
             print "houdini save"
 
         msg = tmpSavePath
-        LOG.info('END  : SAVE : ' + tmpSavePath)  
+        LOG.info('END  : SAVE : ' + tmpSavePath)
 
     except:
         msg = "FAIL : SAVE : Couldnt save file"
-        LOG.error('FAIL : SAVE : Couldnt save file - ' + tmpSavePath, exc_info=True)      
+        LOG.error('FAIL : SAVE : Couldnt save file - ' + tmpSavePath, exc_info=True)
 
 
     if WIDGET.cbxPublish.isChecked():
@@ -371,7 +366,7 @@ def saveFile():
         #     print ("ANIM PUBLISH")
         #     # from scripts.ANIM import alembicExport
         #     # msg = "File was saved!\n\n" + alembicExport.exportAlembic()
-        #     # LOG.info("PUBLISH : ALEMBIC") 
+        #     # LOG.info("PUBLISH : ALEMBIC")
         # else:
             # NEW
 
@@ -381,7 +376,7 @@ def saveFile():
         LOG.info("PUBLISH : " + tmpPath)
         libRender.saveSnapshotImg(tmpPath)
 
-    QMessageBox.information(WIDGET, "Save", msg.replace("/","\\")) 
+    QMessageBox.information(WIDGET, "Save", msg.replace("/","\\"))
 
     LOG.info("END  : SAVE : " + tmpSavePath)
 
@@ -390,11 +385,11 @@ def saveFile():
 # START PROZESS
 #**********************
 def init():
-    userData = libUser.getUser(os.getenv('username'))  
+    userData = libUser.getUser(os.getenv('username'))
     libImage.setUserImg(os.getenv('username'), WIDGET.lblUser)
 
     if os.getenv('username') in s.TEAM["admin"]:
-        libFunction.setErrorCount(WIDGET) 
+        libFunction.setErrorCount(WIDGET)
     else:
         WIDGET.lblErrorCount.hide()
 
@@ -406,7 +401,7 @@ def init():
 #**********************
 def start():
     global LOG, PATH_IMG, TITLE
-    
+
     PATH_IMG = libFunction.rmTempImg()
 
     WIDGET.connect(WIDGET.btnAccept, SIGNAL("clicked()"), clicked_btnAccept)
@@ -423,8 +418,8 @@ def start():
     WIDGET.connect(WIDGET.btnSnapshotViewport, SIGNAL("clicked()"), clicked_btnSnapshotViewport)
 
     WIDGET.connect(WIDGET.btnSwitchToSaveAs, SIGNAL("clicked()"), clicked_btnSwitchToSaveAs)
-    
-    WIDGET.cbxPublish.toggled.connect(changed_publish)  
+
+    WIDGET.cbxPublish.toggled.connect(changed_publish)
     WIDGET.edtSaveFile.textChanged.connect(changed_edtSaveFile)
 
     WIDGET.edtComment.textChanged.connect(changed_edtComment)
@@ -436,7 +431,7 @@ def start():
         log()
         if os.environ["SOFTWARE"] == "nuke":
             saveFile()
-        else:    
+        else:
             WIDGET.show()
     else:
         import arSaveAs

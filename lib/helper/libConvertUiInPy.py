@@ -5,12 +5,11 @@
 #
 # dependencies: Python
 #
-# author:       Alexander Richter 
+# author:       Alexander Richter
 # email:        contact@richteralexander.com
 #*************************************************************
 
 import subprocess
-subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../software/maya/scripts/ui/img_rc.py ../../img/img.qrc", shell=True)
 subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../img/img_rc.py ../../img/img.qrc", shell=True)
 
 # subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../utilities/ui/arSave.py ../../utilities/ui/ui/arSave.ui", shell=True)

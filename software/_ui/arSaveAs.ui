@@ -38,8 +38,8 @@
     <normaloff>:/btn/btn/btnSave.png</normaloff>:/btn/btn/btnSave.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(31, 31, 31);</string>
+   <string notr="true">color: rgb(225, 225, 225);
+background-color: rgb(35, 35, 35);</string>
   </property>
   <widget class="QLineEdit" name="edtShotName">
    <property name="enabled">
@@ -155,11 +155,20 @@ background-color: rgb(31, 31, 31);</string>
      <bold>false</bold>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
-    <string>SaveCreate: Create Shot | Asset</string>
+    <string/>
    </property>
    <property name="frame">
     <bool>false</bool>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Normal</enum>
+   </property>
+   <property name="cursorPosition">
+    <number>0</number>
    </property>
    <property name="readOnly">
     <bool>true</bool>

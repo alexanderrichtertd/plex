@@ -1,0 +1,16 @@
+PIPELINE
+
+SetUp
+1. change settings/getProject.py to your project needs
+1a change settings/getDefault.py if you need special settings
+
+2. customize setMaya/Nuke etc data to your needs
+2a setRenderer.py defines environment variables for the different renderer
+
+3. create a shortcut of the (maya/nuke...).bat file
+3a add a icon to the shortcut
+
+
+Logging
+LOG   - in data/log you can find all the log data (above INFO)
+DEBUG - change logging level to logging.DEBUG to create a local logging output ($user/pipeline_debug.log)
