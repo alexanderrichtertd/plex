@@ -1,0 +1,6 @@
+lib/libGit.py
+*.pyc
+*.log
+
+*.json
+*.yml

@@ -13,8 +13,11 @@ import sys
 sys.path.append(r"..\settings")
 #********************************
 import getProject
-data = getProject.GetProject()
+DATA = getProject.GetProject()
 
+# @BRIEF  creates or add enviroment variable
+#
+# @PARAM  STRING var, STRING content
 def addEnvnVar(var, content):
     if os.environ.__contains__(var):
         os.environ[var] += ("").join([content, ";"])
@@ -24,18 +27,21 @@ def addEnvnVar(var, content):
 
 #************************
 # HELP
+# @BRIEF  gets the help link
+#
+# @PARAM  STRING title.
 def getHelp(title=""):
     if title == "":
         title = os.getenv('SOFTWARE')
-    if title in data.LINK:
-        webbrowser.open(data.LINK[title])
+    if title in DATA.LINK:
+        webbrowser.open(DATA.LINK[title])
     else:
-        webbrowser.open(data.LINK.itervalues().next())
+        webbrowser.open(DATA.LINK.itervalues().next())
 
 
 #************************
 # TIME
-# @BRIEF  gives back the time difference of processes
+# @BRIEF  gives back the time iterations of processes
 #
 # @PARAM  func func. tested function
 #         iter int. iterations

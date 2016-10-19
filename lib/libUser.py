@@ -8,7 +8,6 @@
 import os
 import sys
 import json
-import logging
 
 # DELETE ******************
 import sys
@@ -21,7 +20,7 @@ DATA = getProject.GetProject()
 
 # DEFAULT
 import libLog
-LOG = libLog.initLog(script="lib", level=logging.INFO)
+LOG = libLog.initLog(script="lib")
 
 #************************
 # USER

@@ -1,17 +1,15 @@
 #*************************************************************
-# CONTENT       startup
+# CONTENT       startup app
 #
 # EMAIL         contact@richteralexander.com
 #*************************************************************
 
 import os
 import sys
-import logging
 import webbrowser
 
 from PySide import QtGui
 from PySide import QtCore
-from PySide import QtUiTools
 
 # DELETE ******************
 sys.path.append("../../settings")
@@ -33,8 +31,9 @@ import setMaya
 #**********************
 # DEFAULT
 TITLE    = os.path.splitext(os.path.basename(__file__))[0]
-LOG      = libLog.initLog(script=TITLE, level=logging.DEBUG)
-ICON_IMG = "btn/btnShowPublish48"
+LOG      = libLog.initLog(script=TITLE)
+
+ICON_IMG = "program/arpipeline"
 
 
 #**********************
@@ -48,6 +47,8 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
         self.parent = parent
         menu = QtGui.QMenu()
+
+        menu.setStyleSheet("color: rgb(225, 225, 225);\nbackground-color: rgb(35, 35, 35);\nselection-background-color: rgb(60, 110, 190);")
 
         menuItem = menu.addAction(QtGui.QIcon(libImg.getImg("user/%s"%libUser.getCurrentUser())), libUser.getCurrentUser())
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.showUserData)
@@ -69,6 +70,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
             menuItem = menu.addAction(QtGui.QIcon(libImg.getImg("btn/btnFolder48")), "project paths")
             QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.showProjectPaths)
 
+        menu.addSeparator()
         menuItem = menu.addAction(QtGui.QIcon(libImg.getImg("btn/btnDenial48")), "Quit")
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.closeStartup)
         self.setContextMenu(menu)
@@ -97,6 +99,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         webbrowser.open(DATA.PATH["data_local"])
 
     def showProjectPaths(self):
+        # show as a arReminder
         print DATA.PROJECT_PATH
         print "showProjectPaths"
 
@@ -109,9 +112,12 @@ def main():
     app = QtGui.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
 
+    LOG.info("START")
+
+
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
-    trayIcon.setToolTip('arPipeline')
+    trayIcon.setToolTip('arPipeline [right click]')
     trayIcon.showMessage('arPipeline', 'Rick Click on Icon for options', QtGui.QSystemTrayIcon.Information , 20000)
 
     app.exec_()

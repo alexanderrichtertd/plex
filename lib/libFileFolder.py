@@ -10,6 +10,8 @@ import webbrowser
 
 #************************
 # FOLDER
+# @BRIEF  creates a folder, checks if it already exists,
+#         creates the folder above if the path is a file
 def createFolder(path):
     if len(path.split(".")) > 1:
         path = os.path.dirname(path)
@@ -19,6 +21,7 @@ def createFolder(path):
         except:
             print("WARNING : Can not create folder : %s"% path)
 
+# @BRIEF  opens folder even if file is given
 def openFolder(path):
     if os.path.exists(path):
         if len(path.split(".")) > 1:

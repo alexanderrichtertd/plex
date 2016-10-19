@@ -6,7 +6,6 @@
 
 import os
 import sys
-import logging
 
 from PySide import QtGui
 from PySide import QtCore
@@ -26,7 +25,7 @@ DATA = getProject.GetProject()
 import libLog
 
 TITLE   = os.path.splitext(os.path.basename(__file__))[0]
-LOG     = libLog.initLog(script=TITLE, level=logging.INFO)
+LOG     = libLog.initLog(script=TITLE)
 PATH_UI = DATA.PATH["ui"] + TITLE + ".ui"
 # PATH_UI = r"D:\Dropbox\arPipeline\v002\WORK\software\_ui\arReport.ui"
 

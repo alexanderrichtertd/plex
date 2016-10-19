@@ -7,7 +7,6 @@
 import os
 import sys
 import glob
-import logging
 
 from PySide import QtGui
 from PySide import QtCore
@@ -25,7 +24,7 @@ import libFileFolder
 
 # DEFAULT
 import libLog
-LOG = libLog.initLog(script="lib", level=logging.INFO)
+LOG = libLog.initLog(script="lib")
 
 ##
 # @BRIEF  get the img/icon for your btn/lbl of the project or master pipeline
@@ -33,7 +32,7 @@ LOG = libLog.initLog(script="lib", level=logging.INFO)
 # @PARAM  name string. folder and name of the image
 #
 # @RETURN string. image path
-def getImg(name = "btn/btnHelp48"):
+def getImgPath(name = "btn/btnHelp48"):
     path = ""
     for env in DATA.ENVIRON_PATH:
         env = "IMG" + env
@@ -54,6 +53,9 @@ def getReportImg(reportImgPath, image = False):
 
 #************************
 # SET IMAGE
+# @BRIEF  sets user image to label
+#
+# @PARAM  QLabel imgObj, STRING userId
 def setUserImg (imgObj, userId = ""):
     if (userId == ""):
         userId = os.getenv('username')

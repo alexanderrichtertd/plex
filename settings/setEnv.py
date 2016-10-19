@@ -8,7 +8,6 @@
 
 import os
 import sys
-import logging
 
 # ABSOLUTE PATH
 MASTER_PATH = r"D:/Dropbox/arPipeline/v002/PUBLISH"
