@@ -1,4 +1,4 @@
-![arPipeline](https://cloud.githubusercontent.com/assets/9514022/18143905/6eac6d6a-6fc4-11e6-900c-200482c5970a.jpg)
+![arPipeline](https://cloud.githubusercontent.com/assets/9514022/19410922/9ad89656-92f7-11e6-870b-96b7bb237e3c.png)
 
 ## **What is arPipeline?**
 **arPipeline** is an advanced **Animation and VFX pipeline** which manages important workflows during production.
@@ -7,24 +7,24 @@ The basic idea is to handle the file and folder **structure** work, **setup** ba
 
 The main idea is to have an overall system which lays the **foundation for the modular scripts** that are plugged into arPipeline and add to its functionality and overall awesomeness.    
 
+![arPipeline - Structure](https://cloud.githubusercontent.com/assets/9514022/19417137/4d8f46d4-93a5-11e6-8aac-4d84ff17943c.png)
+
+
 ## Features
-* vfx, animation (& game) production management system
-* file and folder management (create | save | load)
-* flexible, portable, multi functional project environment
-* additional libraries (api | img | user | shot)
-* workflow tracking & reporting
+- [x] vfx, animation (& game) production management system
+- [x] file and folder management (create | save | load)
+- [x] flexible, portable, multi functional project environment
+- [x] additional libraries (api | img | user | shot)
+- [x] workflow tracking & reporting
 
-## **How to use arPipeline?**
-arPipeline connects a variety of software packages working symbiotically together.
-  
-[Maya](https://github.com/alexanderrichter/arPipeline/wiki/Maya-%5BarPipeline%5D)
 
-[Nuke](https://github.com/alexanderrichter/arPipeline/wiki/Nuke-%5BarPipeline%5D)
-
-[Houdini](https://github.com/alexanderrichter/arPipeline/wiki/Houdini-%5BarPipeline%5D)
+## **Projects**
+- [Breaking Point] (https://vimeo.com/178452618)   
+VFX short film 2016
+- Elemental (Nuke Pipeline)   
+VFX short film 2016 ([FMX](http://fmx.de/) Trailer 2017)
 
 
 ## **Quick Start**
-1. Define the settings for your pipeline (settings.py)
 1. Copy project_pipeline into your project folder
-1. Customize projects_settings.py
+1. Define the settings for your pipeline (getProject.py)
