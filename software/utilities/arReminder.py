@@ -1,49 +1,51 @@
-#*************************************************************
-# CONTENT       informs project members about changes
+#*********************************************************************
+# content   = informs project members about changes
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# EMAIL         contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
 import time
 import shutil
 import logging
+import schedule
 
 from threading import Thread
 from datetime import datetime
 
 from PySide import QtUiTools
-from PySide.QtGui import *
-from PySide.QtCore import *
+from PySide import QtGui
+from PySide import QtCore
 
-# DELETE ******************
-sys.path.append("../../settings")
-import setEnv
-setEnv.SetEnv()
-import getProject
-s = getProject.GetProject()
-from lib import libLog
-#**************************
-
-from lib import libImg
-from lib import libFunc
-from lib import libFileFolder
+import libLog
+import libFunc
+import libFileFolder
 
 
 #************************
 # REPORT
-class Reminder:
+class Reminder():
+
+    to = ["arpipeline", "project", "pipeline"]
+
     def __init__(self,
-                 title = "arReminder Test",
-                 msg = "This is just a Reminder Test - Dont do it again!",
+                 title  = "arReminder Test",
+                 msg    = "This is just a Reminder Test - Dont do it again!",
                  userTo = "arichter",
-                 topic = "info",
-                 link = " ",
-                 timer = " "):
+                 topic  = "info",
+                 link   = " ",
+                 timer  = " "):
 
         self.time       = datetime.now().strftime('%Y.%m.%d %H:%M:%S')
-        self.active     = True    #message need to be send
         self.title      = str(title)   #Pipeline Update
         self.msg        = str(msg)     #New Features for Pipeline
         self.userfrom   = os.getenv('username') #user from
@@ -68,11 +70,9 @@ class Reminder:
 #**********************
 # DEFAULT
 TITLE   = os.path.splitext(os.path.basename(__file__))[0]
-LOG     = libLog.initLog(script=TITLE, level=logging.INFO)
-PATH_UI = s.PATH["ui"] + TITLE + ".ui"
+LOG     = libLog.initLog(script=TITLE)
+PATH_UI = DATA.PATH["ui"] + TITLE + ".ui"
 
-#**********************
-# VARIABLE
 TIME        = ""
 LINK        = ""
 READY       = False
@@ -84,168 +84,171 @@ PATH_IMG    = ""
 PATH_FILE   = ""
 REMINDER    = ""
 
-#**********************
-# PRESS_TRIGGER
-def press_btnAccept():
-    global LOG
-    saveReminder()
-    LOG.info("END : CREATE")
-    WIDGET.close()
+
+class ArRenubder():
+
+    def __init__(self, ui, addReminder):
+
+        self.ui = ui
+
+        if addReminder:
+            self.uiedtMsg.clear()
+            self.uicbxTopic.clear()
+            self.uiedtTitle.clear()
+
+            self.uicbxTopic.addItems(TOPICS)
+            self.uicbxTo.addItems(USER)
+            self.uicbxTo.addItems(s.TEAM["core"])
+            self.uiedtTitle.setEnabled(True)
+            self.uiedtMsg.setEnabled(True)
+            libFunc.setUserImg(os.getenv('username'), self.uilblUserFrom)
+
+            self.uiedtDate.setDateTime(TIME)
+
+            PATH_FILE = libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
+            REMINDER  = libFileService.loadJsonFile(s.PATH["data_reminder"] + "/" + os.getenv('username') + "/" + PATH_FILE + DATA.FILE_FORMAT["data"])
+
+            self.uiconnect(self.ui.btnAccept, SIGNAL("clicked()"), press_btnAccept)
+            self.uiconnect(self.ui.btnCancel, SIGNAL("clicked()"), press_btnCancel)
+            self.uiconnect(self.ui.btnPreviewImg, SIGNAL("clicked()"), press_btnCancel)
+
+            self.uiconnect(self.ui.cbxTo, SIGNAL("currentIndexChanged(const QString&)"), change_cbxTo)
+            self.uiconnect(self.ui.cbxTopic, SIGNAL("currentIndexChanged(const QString&)"), change_cbxTopic)
+
+        else:
+            self.uicbxTo.hide()
+            self.uiedtDate.hide()
+            self.uicbxTopic.hide()
+            self.uibtnAccept.hide()
+            self.uiedtImgLink.hide()
+            self.uilblUserTo.hide()
+
+            self.uiedtTitle.setEnabled(False)
+            self.uiedtMsg.setEnabled(False)
+            self.uilblPreviewImg.mousePressEvent = press_lblPreviewImg
+
+        self.uiconnect(self.ui.btnPreviewImg, SIGNAL("clicked()"), press_btnPreviewImg)
+
+        # WIDGET : delete border & always on top
+        self.ui.setWindowFlags(QtGui.Qt.CustomizeWindowHint | QtGui.Qt.WindowStaysOnTopHint | QtGui.Qt.FramelessWindowHint)# | QtGui.Qt.Tool)
+
+        # WIDGET : move to right low corner
+        resolution = QtGui.QDesktopWidget().screenGeometry()
+        self.uimove(resolution.width() - self.uiwidth() - 5, resolution.height() - self.uiheight() - 5)
 
 
-def press_btnCancel():
-    global LOG, READY
-    READY = True
-    LOG.info("END : CANCEL")
-    WIDGET.close()
+        self.ui.edtTitle.setText(REMINDER["title"])
+        self.ui.edtMsg.setPlainText(REMINDER["msg"])
+        self.ui.edtTime.setText(REMINDER["time"])
+
+        libFunc.setUserImg(REMINDER["userfrom"], self.ui.lblUserFrom)
+        libFunc.setPreviewImg(REMINDER["topic"], self.ui.lblPreviewImg)
+
+        self.ui.lblPreviewImg.setToolTip(REMINDER["link"])
+
+        # PATH_FILE
+        src = ("/").join([DATA.PATH["data_reminder"], os.getenv('username'), PATH_FILE +  DATA.FILE_FORMAT["data"]])
+        dst = ("/").join([DATA.PATH["data_reminder"], os.getenv('username'), DATA.STATUS["history"], PATH_FILE + DATA.FILE_FORMAT["data"]])
+        # put into history
+        libFunc.createFolder(dst)
+
+        if(os.path.exists(src)):
+            shutil.move(src, dst)
+
+        # SCHEDULE
+        schedule.every(1).minutes.do(job)
+
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 
 
-def press_btnPreviewImg():
-    global PATH_IMG
-    PATH_IMG = PATH_IMG.replace("/", "\\")
-    os.system(PATH_IMG)
+    #**********************
+    # PRESS_TRIGGER
+    def press_btnAccept(self):
+        saveUiReminder()
+        LOG.info("END : CREATE")
+        self.ui.close()
 
-#**********************
-# CHANGE_TRIGGER
-def change_cbxTo():
-    libFunc.setUserImg(WIDGET.cbxTo.currentText().lower(), WIDGET.lblUserTo)
+    def press_btnCancel(self):
+        READY = True
+        LOG.info("END : CANCEL")
+        self.ui.close()
 
-
-def change_cbxTopic():
-    libFunc.setPreviewImg(WIDGET.cbxTopic.currentText().lower(), WIDGET.lblPreviewImg)
-
-
-#**********************
-# FUNCTION
-def saveReminder():
-    global TIME
-
-    fileName = WIDGET.cbxTo.currentText().lower()
-
-    if fileName == "core" or fileName == "all" or fileName == "anim":
-        fileName = s.TEAM[fileName]
-
-    setTimer = WIDGET.edtDate.dateTime().toString("yyyy.MM.dd hh:mm:ss")
-
-    if WIDGET.edtDate.dateTime() == TIME:
-        setTimer = ""
-
-    fileName = (fileName,) if not isinstance(fileName, (tuple, list)) else fileName
-
-    for member in fileName:
-        reminder = Reminder(title = WIDGET.edtTitle.text(), msg = WIDGET.edtMsg.toPlainText(), userTo = member, topic = WIDGET.cbxTopic.currentText().lower(), link = WIDGET.edtImgLink.text(), timer =  setTimer)
-        dataPath = s.PATH["data_reminder"] + '/' + member + '/' + TIME.toString("yyyy_MM_dd_hh_mm_ss") + s.FILE_FORMAT["data"]
-
-        libFunc.createFolder(dataPath)
-        libFileService.saveJsonFile(dataPath, reminder)
-
-    LOG.info("CREATE : REMINDER : " + WIDGET.edtTitle.text() + " + " + WIDGET.edtMsg.toPlainText())
+    def press_btnPreviewImg(self):
+        PATH_IMG = PATH_IMG.replace("/", "\\")
+        os.system(PATH_IMG)
 
 
-#**********************
-# INIT
-def init():
-    global REMINDER, PATH_FILE
+    #**********************
+    # CHANGE_TRIGGER
+    def change_cbxTo(self):
+        libFunc.setUserImg(self.ui.cbxTo.currentText().lower(), self.ui.lblUserTo)
 
-    WIDGET.edtTitle.setText(REMINDER["title"])
-    WIDGET.edtMsg.setPlainText(REMINDER["msg"])
-    WIDGET.edtTime.setText(REMINDER["time"])
-
-    libFunc.setUserImg(REMINDER["userfrom"], WIDGET.lblUserFrom)
-    libFunc.setPreviewImg(REMINDER["topic"], WIDGET.lblPreviewImg)
-
-    WIDGET.lblPreviewImg.setToolTip(REMINDER["link"])
-
-    # PATH_FILE
-    src = s.PATH["data_reminder"] + "/" + os.getenv('username') + "/" + PATH_FILE +  s.FILE_FORMAT["data"]
-    dst = s.PATH["data_reminder"] + "/" + os.getenv('username') + "/" + s.STATUS["history"] + "/" + PATH_FILE + s.FILE_FORMAT["data"]
-    # put into history
-    libFunc.createFolder(dst)
-
-    if(os.path.exists(src)):
-        shutil.move(src, dst)
+    def change_cbxTopic(self):
+        libFunc.setPreviewImg(self.ui.cbxTopic.currentText().lower(), self.ui.lblPreviewImg)
 
 
-#**********************
-# START PROZESS
-def start(addReminder = False):
-    global TITLE, TIME, REMINDER, PATH_FILE
+    #**********************
+    # FUNCTION
+    def saveUiReminder(self):
+        fileName = self.ui.cbxTo.currentText().lower()
 
-    TIME     = QDateTime.currentDateTime()
-    PATH_IMG = libImg.rmTempImg()
+        if fileName == "core" or fileName == "all" or fileName == "anim":
+            fileName = DATA.TEAM[fileName]
 
-    app      = QApplication(sys.argv)
-    WIDGET   = QtUiTools.QUiLoader().load(PATH_UI)
+        setTimer = self.ui.edtDate.dateTime().toString("yyyy.MM.dd hh:mm:ss")
 
-    if addReminder:
-        WIDGET.edtMsg.clear()
-        WIDGET.cbxTopic.clear()
-        WIDGET.edtTitle.clear()
+        if self.ui.edtDate.dateTime() == TIME:
+            setTimer = ""
 
-        WIDGET.cbxTopic.addItems(TOPICS)
-        WIDGET.cbxTo.addItems(USER)
-        WIDGET.cbxTo.addItems(s.TEAM["core"])
-        WIDGET.edtTitle.setEnabled(True)
-        WIDGET.edtMsg.setEnabled(True)
-        libFunc.setUserImg(os.getenv('username'), WIDGET.lblUserFrom)
+        fileName = (fileName,) if not isinstance(fileName, (tuple, list)) else fileName
 
-        WIDGET.edtDate.setDateTime(TIME)
+        for member in fileName:
+            reminder = Reminder(title = self.ui.edtTitle.text(), msg = self.ui.edtMsg.toPlainText(), userTo = member, topic = self.ui.cbxTopic.currentText().lower(), link = self.ui.edtImgLink.text(), timer =  setTimer)
+            dataPath = DATA.PATH["data_reminder"] + '/' + member + '/' + TIME.toString("yyyy_MM_dd_hh_mm_ss") + DATA.FILE_FORMAT["data"]
 
-        PATH_FILE = libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
-        REMINDER  = libFileService.loadJsonFile(s.PATH["data_reminder"] + "/" + os.getenv('username') + "/" + PATH_FILE + s.FILE_FORMAT["data"])
+            libFunc.createFolder(dataPath)
+            libFileService.saveJsonFile(dataPath, reminder)
 
-        WIDGET.connect(WIDGET.btnAccept, SIGNAL("clicked()"), press_btnAccept)
-        WIDGET.connect(WIDGET.btnCancel, SIGNAL("clicked()"), press_btnCancel)
-        WIDGET.connect(WIDGET.btnPreviewImg, SIGNAL("clicked()"), press_btnCancel)
+        LOG.info("CREATE : REMINDER : " + self.ui.edtTitle.text() + " + " + self.ui.edtMsg.toPlainText())
 
-        WIDGET.connect(WIDGET.cbxTo, SIGNAL("currentIndexChanged(const QString&)"), change_cbxTo)
-        WIDGET.connect(WIDGET.cbxTopic, SIGNAL("currentIndexChanged(const QString&)"), change_cbxTopic)
+    def saveReminder(reminder):
+        print "saveReminder"
 
-    else:
-        WIDGET.cbxTo.hide()
-        WIDGET.edtDate.hide()
-        WIDGET.cbxTopic.hide()
-        WIDGET.btnAccept.hide()
-        WIDGET.edtImgLink.hide()
-        WIDGET.lblUserTo.hide()
-
-        WIDGET.edtTitle.setEnabled(False)
-        WIDGET.edtMsg.setEnabled(False)
-        WIDGET.lblPreviewImg.mousePressEvent = press_lblPreviewImg
-        init()
-
-    WIDGET.connect(WIDGET.btnPreviewImg, SIGNAL("clicked()"), press_btnPreviewImg)
-
-    # WIDGET : delete border & always on top
-    WIDGET.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)# | Qt.Tool)
-
-    # WIDGET : move to right low corner
-    resolution = QDesktopWidget().screenGeometry()
-    WIDGET.move(resolution.width() - WIDGET.width() - 5, resolution.height() - WIDGET.height() - 5)
-
-    WIDGET.show()
-    app.exec_()
-
-# def sleeper():
-#     while True:
-
-#         if len(libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")) > 0:
-#             print "START : " + libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
-#             start()
-
-#             print "SLEEPY"
-
-#             while not READY:
-#                 time.sleep(10000)
-
-# def reminderLoop():
-#     t = Thread(target=sleeper)
-#     t.start()
-
-# startReminder()
-# from utilities import arReminder
-# reload(arReminder)
-# arReminder.reminderLoop()
+        def job(self):
+            print "job"
+            self.ui.show()
 
 
-start()
+    #**********************
+    # START PROZESS
+def main(addReminder = False):
+    # app      = QtGui.QApplication(sys.argv)
+    arReminder(QtUiTools.QUiLoader().load(PATH_UI), addReminder)
+    # app.exec_()
+
+
+
+
+    # def sleeper():
+    #     while True:
+
+    #         if len(libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")) > 0:
+    #             print "START : " + libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
+    #             start()
+
+    #             print "SLEEPY"
+
+    #             while not READY:
+    #                 time.sleep(10000)
+
+    # def reminderLoop():
+    #     t = Thread(target=sleeper)
+    #     t.start()
+
+    # startReminder()
+    # from utilities import arReminder
+    # reload(arReminder)
+    # arReminder.reminderLoop()
+

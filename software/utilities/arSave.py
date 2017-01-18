@@ -1,12 +1,17 @@
-#*************************************************************
-# CONTENT:      saves work and publish files
-#               executes other scripts on PUBLISH
-#               (on task in file name)
+#*********************************************************************
+# content   = saves work and publish files
+#             executes other scripts on PUBLISH (on task in file name)
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# DEPENDENCIES  "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
-#
-# EMAIL         contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
@@ -19,13 +24,13 @@ from PySide import QtUiTools
 import settings as s
 from img import img_rc
 
-from lib import libLog
-from lib import libUser
-from lib import libImage
-from lib import libRender
-from lib import libFunction
-from lib import libMessageBox
-from lib import libFileService
+import libLog
+import libUser
+import libImage
+import libRender
+import libFunction
+import libMessageBox
+import libFileService
 
 from utilities import arReport
 

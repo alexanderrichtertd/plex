@@ -1,9 +1,20 @@
 #*************************************************************
 # CONTENT       set low and high render settings
 #               create render or viewer snapshots
+#*********************************************************************
+# content   = set low and high render settings
+#             create render or viewer snapshots
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# EMIAL         contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import time
@@ -11,15 +22,12 @@ import time
 from PySide import QtGui
 from PySide import QtCore
 
-import getProject
-data = getProject.GetProject()
-
-import libImg
+import libData
 import libFunc
 
 # DEFAULT
 import libLog
-LOG = libLog.initLog(script="lib", level=logging.INFO)
+LOG = libLog.initLog(script="lib")
 
 #************************
 # RENDER SETTINGS
@@ -154,7 +162,7 @@ def createSnapshotRender(WIDGET, ui, LOG):
         LOG.error('FAIL', exc_info=True)
         return False
 
-    ui.setIcon(QtGui.QPixmap(QtGui.QImage(libImg.getReportImg(imgPath))))
+    ui.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getReportImg(imgPath))))
     WIDGET.show()
     WIDGET.setFocus()
 
@@ -177,7 +185,7 @@ def createSnapshotViewport(WIDGET, ui, LOG):
         LOG.error('FAIL', exc_info=True)
         return False
 
-    ui.setIcon(QtGui.QPixmap(QtGui.QImage(libImg.getReportImg(imgPath))))
+    ui.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getReportImg(imgPath))))
 
     WIDGET.show()
     return True

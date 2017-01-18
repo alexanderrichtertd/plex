@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="btn">
-    <file>btn/btnUser48.png</file>
+    <file>btn/btnLog48.png</file>
+    <file>btn/btnProject48.png</file>
     <file>btn/btnSave91Wide.png</file>
     <file>btn/btnLoad66.png</file>
     <file>btn/btnAcceptRef21.png</file>
@@ -33,11 +34,8 @@
     <file>btn/btnHoneypot48.png</file>
     <file>btn/btnInboxE48.png</file>
     <file>btn/btnInboxF48.png</file>
-    <file>btn/btnPerson48.png</file>
-    <file>btn/btnPerson62.png</file>
     <file>btn/btnPlay48.png</file>
     <file>btn/btnProjectEdit48.png</file>
-    <file>btn/btnProjectEdit248.png</file>
     <file>btn/btnProjectGroup48.png</file>
     <file>btn/btnPublish48.png</file>
     <file>btn/btnPublish81.png</file>
@@ -52,11 +50,22 @@
     <file>btn/btnSubstract48.png</file>
     <file>btn/btnSwitchLeft48.png</file>
     <file>btn/btnSwitchRight48.png</file>
-    <file>btn/btnUserGroup48.png</file>
-    <file>btn/btnUserGroup62.png</file>
     <file>btn/btnWarning48.png</file>
     <file>btn/btnWarning91.png</file>
     <file>btn/btnWrite48.png</file>
+  </qresource>
+  <qresource prefix="lbl">
+    <file>lbl/lblScriptSearch.png</file>
+    <file>lbl/lblArrowD18.png</file>
+    <file>lbl/lblArrowR18.png</file>
+    <file>lbl/lblArrowU18.png</file>
+    <file>lbl/lblFlagD25.png</file>
+    <file>lbl/lblFavouriteS24.png</file>
+    <file>lbl/lblFavouriteU24.png</file>
+  </qresource>
+  <qresource prefix="user">
+    <file>user/default.png</file>
+    <file>user/defaultC.png</file>
   </qresource>
   <qresource prefix="placeholder">
     <file>placeholder/shader.png</file>

@@ -1,0 +1,39 @@
+
+
+
+
+
+
+asset_task: &ASSET_TASK
+  - GEO
+  - TEX
+  - SHD
+  - RIG
+
+shot_task: &SHOT_TASK
+  - LGT
+  - FX
+  - RENDER
+
+# task:
+#   - !join [*ASSET_TASK, *SHOT_TASK]
+
+task:
+  - *ASSET_TASK
+  - *SHOT_TASK
+
+
+shots:
+  - !join [*ASSET_TASK, hallo]
+
+
+sitelist: &sites
+  ? www.foo.com  # "www.foo.com" is the key, the value is null
+  ? www.bar.com
+
+anotherlist:
+  MERGE:
+    - *sites    # merge *sites into this mapping
+    - www.baz.com  # add extra stuff
+
+

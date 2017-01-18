@@ -1,4 +1,5 @@
 lib/libGit.py
+img/_src
 *.pyc
 *.log
 

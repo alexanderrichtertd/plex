@@ -1,26 +1,25 @@
-#*************************************************************
-# content      create user & save all informations
-#              of the person & his work
+#*********************************************************************
+# content   = set und get user data
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# email        contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
 import json
 
-# DELETE ******************
-import sys
-sys.path.append("..\settings")
-import setEnv
-setEnv.SetEnv()
-#**************************
-import getProject
-DATA = getProject.GetProject()
-
-# DEFAULT
 import libLog
-LOG = libLog.initLog(script="lib")
+
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.initLog(script=TITLE)
 
 #************************
 # USER
@@ -76,9 +75,9 @@ def getUserSettings(userId, scriptName):
     return getUser(userId).settings.values()
 
 def getCurrentUser():
-    user = getUser(os.getenv('username'))
-    if user.name:
-        return user.name
+    #user = getUser(os.getenv('username'))
+    # if user.name:
+    #     return user.name
     return os.getenv('username')
 
 def getUserInitials(user = os.getenv('username')):
@@ -104,3 +103,6 @@ def setTeam():
     setUser(User(userId = 'mlange',       name = 'Michael Lange', task = {}, position = 'Director', settings = {}))
     setUser(User(userId = 'nmaderthoner', name = 'Nikolai Maderthoner', task = {}, position = 'Muscle', settings = {}))
     setUser(User(userId = 'joberbeck',    name = 'Julian Oberbeck', task = {"RIG" : [010, 020]}, position = 'Rigging', settings = {}))
+
+def getRights():
+    return "user"

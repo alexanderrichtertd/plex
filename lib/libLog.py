@@ -1,24 +1,22 @@
-#*************************************************************
-# CONTENT       write logs in data/log or local
+#*********************************************************************
+# content   = write loggings into console and files
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# EMAIL         contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
 import logging
 import logging.config
 
-import libFileFolder
-
-# TEMP***************************
-sys.path.append(r"..\settings")
-import setEnv
-setEnv.SetEnv()
-#********************************
-#os.environ["SOFTWARE"] = "default"
-import getProject
-DATA = getProject.GetProject()
 
 #************************
 # CLASS
@@ -39,48 +37,59 @@ class MyFilter(object):
                 return True
         return False
 
+def createFolder(path):
+    if len(path.split(".")) > 1:
+        path = os.path.dirname(path)
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except:
+            print("WARNING : Can not create folder : %s"% path)
+
+THIS_DIR = ("/").join([os.path.dirname(__file__)])
+
+def getEnv(var):
+    if os.environ.__contains__(var):
+        return os.environ[var].split(';')[0]
+    LOG.warning('ENV doesnt exist: {}'.format(var))
+    return ""
+
 
 #************************
 # LOGGING
-def initLog(software="default", script="default", level=logging.INFO, path="", *args, **kwargs):
+def initLog(software="default", script="default", level=logging.DEBUG, path="", *args, **kwargs):
     logger = logging.getLogger(script)
 
     # CHECK path param
     if not path:
-        # CHECK software param
-        if software == "default":
-            try:
-                software = os.environ["SOFTWARE"]
-            except KeyError:
-                print ("WARNING : os.environ['SOFTWARE'] is not existing")
+        path = ("/").join([getEnv('DATA_PATH'), 'user', os.getenv('username'), os.getenv('username') + ".log"])
 
-        path = ("/").join([os.environ["DATA_PATH"], "log", software, script + ".log"])
-        print path
     # CREATE path folder
-    libFileFolder.createFolder(path)
+    createFolder(path)
 
     info_path  = path # ("/").join([path, script + "_info.log"])
     error_path = path # ("/").join([path, script + "_error.log"])
-    debug_path = DATA.PATH["data_local"]
+    debug_path = path # DATA.PATH["data_local"]
 
     logging_config = dict(
         version= 1,
         disable_existing_loggers= False,
         formatters= {
             "simple": {
-                "format": "%(asctime)s | %(user)-10s | %(module)-10s | %(levelname)-8s - %(lineno)-5d | %(message)s",
+                "format": "%(asctime)s | %(user)-10s | %(module)-10s | %(levelname)-8s - %(lineno)-4d | %(message)s",
                 "datefmt":"%d.%m.%Y %H:%M:%S"
             },
             "simpleInfo": {
-                "format": "%(asctime)s | %(user)-10s | %(module)-10s - %(funcName)-18s | %(lineno)-5d | %(levelname)-8s | %(message)s",
+                "format": "%(asctime)s | %(user)-10s | %(module)-10s - %(funcName)-18s | %(lineno)-4d | %(levelname)-8s | %(message)s",
                 "datefmt":"%d.%m.%Y %H:%M:%S"
             },
             "simpleDebug": {
-                "format": "%(asctime)s | %(module)-10s - %(funcName)-18s | %(lineno)-5d | %(levelname)-8s | %(message)s",
+                "format": "%(asctime)s | %(module)-10s - %(funcName)-18s | %(lineno)-4d | %(levelname)-8s | %(message)s",
                 "datefmt":"%d.%m.%Y %H:%M:%S"
             },
             "simpleConsole": {
-                "format": "%(module)-10s - %(funcName)-18s | %(lineno)-5d | %(levelname)-8s | %(message)s"
+                "format": "%(asctime)s | %(module)-10s - %(funcName)-16s | %(lineno)-4d | %(levelname)-8s | %(message)s",
+                "datefmt":"%H:%M:%S"
             }
         },
 
@@ -141,11 +150,11 @@ def initLog(software="default", script="default", level=logging.INFO, path="", *
     console_handler = logging.StreamHandler(stream=sys.stdout)
     formatter       = logging.Formatter(logging_config["formatters"]["simpleConsole"]["format"])
     console_handler.setFormatter(formatter)
-    console_handler.setLevel(level)
+    console_handler.setLevel(logging.INFO)
     logger.addHandler(console_handler)
 
     if level == logging.DEBUG:
-        print("PATH to DEBUG is %s"% debug_path)
+        # print("PATH to DEBUG is %s"% debug_path)
         debug_handler = logging.handlers.RotatingFileHandler(debug_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
         formatter     = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
         debug_handler.setFormatter(formatter)
