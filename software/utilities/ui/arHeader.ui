@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>653</width>
-    <height>383</height>
+    <width>661</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -58,7 +58,7 @@ QToolTip {
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="wgTop" native="true">
+    <widget class="QWidget" name="wgHeader" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -72,7 +72,7 @@ QToolTip {
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(52, 52, 52);</string>
+      <string notr="true">background-color: rgb(42,42, 42);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_7">
       <property name="spacing">
@@ -330,401 +330,27 @@ QPushButton#pushButton {
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(139, 139, 139);
-color: rgb(132, 132, 132);</string>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,1,0">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
      <property name="spacing">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
       <number>0</number>
      </property>
      <property name="rightMargin">
       <number>0</number>
      </property>
      <item>
-      <widget class="QWidget" name="wgMenu" native="true">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0">
+      <widget class="QWidget" name="wgMain" native="true">
+       <layout class="QHBoxLayout" name="layMain">
         <property name="spacing">
-         <number>10</number>
-        </property>
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-        <property name="leftMargin">
          <number>0</number>
         </property>
-        <property name="rightMargin">
+        <property name="margin">
          <number>0</number>
         </property>
-        <item>
-         <layout class="QVBoxLayout" name="layMenu01">
-          <property name="spacing">
-           <number>8</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="btnMenu01_item01">
-            <property name="minimumSize">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>settings</string>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(51, 140, 188);</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../img/img.qrc">
-              <normaloff>:/btn/btn/btnWrite48.png</normaloff>:/btn/btn/btnWrite48.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnMenu01_item02">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>path</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../img/img.qrc">
-              <normaloff>:/btn/btn/btnArrowRight48.png</normaloff>:/btn/btn/btnArrowRight48.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnMenu01_item03">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>pipeline</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../img/img.qrc">
-              <normaloff>:/btn/btn/btnFile48.png</normaloff>:/btn/btn/btnFile48.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="btnMenu01_line01">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnMenu01_item04">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>log</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../img/img.qrc">
-              <normaloff>:/btn/btn/btnLog48.png</normaloff>:/btn/btn/btnLog48.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnMenu01_item05">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>report</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../img/img.qrc">
-              <normaloff>:/btn/btn/btnInboxE48.png</normaloff>:/btn/btn/btnInboxE48.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnMenu01_item06">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>user</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../img/img.qrc">
-              <normaloff>:/user/user/default.png</normaloff>:/user/user/default.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QWidget" name="wgMenu02" native="true">
-          <property name="maximumSize">
-           <size>
-            <width>16555</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <property name="spacing">
-            <number>10</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>3</number>
-           </property>
-           <property name="rightMargin">
-            <number>10</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QPushButton" name="pushButton">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>style</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_2">
-             <property name="text">
-              <string>project</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_4">
-             <property name="text">
-              <string>pipeline</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-        </item>
        </layout>
       </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line_3">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(139, 139, 139);
-color: rgb(132, 132, 132);</string>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="lineWidth">
-        <number>1</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,0">
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="wgMain" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <layout class="QVBoxLayout" name="layMain">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>8</number>
-          </property>
-          <property name="rightMargin">
-           <number>8</number>
-          </property>
-          <property name="bottomMargin">
-           <number>8</number>
-          </property>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="rightMargin">
-          <number>44</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lblArrowUp">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../../../img/img.qrc">:/lbl/lbl/lblArrowU18.png</pixmap>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
      </item>
     </layout>
    </item>
@@ -743,6 +369,38 @@ color: rgb(132, 132, 132);</string>
       <property name="margin">
        <number>0</number>
       </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="rightMargin">
+         <number>44</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblArrowUp">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="../../../img/img.qrc">:/lbl/lbl/lblArrowU18.png</pixmap>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item>
        <widget class="QProgressBar" name="prbStatus">
         <property name="maximumSize">
@@ -763,7 +421,7 @@ color: rgb(132, 132, 132);</string>
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wgFooterButtons" native="true">
+       <widget class="QWidget" name="wgFooter_2" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -862,7 +520,30 @@ color: rgb(255, 255, 255);</string>
             </spacer>
            </item>
            <item>
+            <widget class="QCheckBox" name="cbxAdd">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string>PUBLISH</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="btnCancel">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>10000</width>
@@ -894,22 +575,6 @@ color: rgb(255, 255, 255);</string>
               <bool>true</bool>
              </property>
             </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_11">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>15</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item>
             <widget class="QPushButton" name="btnAccept">
@@ -976,7 +641,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_3" native="true">
+    <widget class="QWidget" name="wgHelp" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -986,12 +651,8 @@ color: rgb(255, 255, 255);</string>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>162323</height>
+       <height>20</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(52, 52, 52);
-color: rgb(180, 180, 180);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <property name="spacing">
@@ -1001,7 +662,7 @@ color: rgb(180, 180, 180);</string>
        <number>14</number>
       </property>
       <property name="topMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>14</number>
@@ -1010,58 +671,69 @@ color: rgb(180, 180, 180);</string>
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="rightMargin">
-         <number>0</number>
+       <widget class="QLineEdit" name="edtPath">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <item>
-         <widget class="QLineEdit" name="edtSearch">
-          <property name="font">
-           <font>
-            <pointsize>7</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="placeholderText">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnOpenFolder">
-          <property name="minimumSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../img/img.qrc">
-            <normaloff>:/btn/btn/btnFolder48.png</normaloff>:/btn/btn/btnFolder48.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>14</width>
-            <height>14</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
+        <property name="font">
+         <font>
+          <pointsize>7</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOpenFolder">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Open Folder</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../img/img.qrc">
+          <normaloff>:/btn/btn/btnFolder48.png</normaloff>:/btn/btn/btnFolder48.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>12</width>
+          <height>12</height>
+         </size>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="Line" name="line_4">
@@ -1078,6 +750,15 @@ color: rgb(180, 180, 180);</string>
       </item>
       <item>
        <widget class="QPushButton" name="btnUser">
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -1087,8 +768,8 @@ color: rgb(180, 180, 180);</string>
         </property>
         <property name="iconSize">
          <size>
-          <width>14</width>
-          <height>14</height>
+          <width>12</width>
+          <height>12</height>
          </size>
         </property>
        </widget>
@@ -1097,8 +778,8 @@ color: rgb(180, 180, 180);</string>
        <widget class="QPushButton" name="btnReport">
         <property name="maximumSize">
          <size>
-          <width>14</width>
-          <height>18</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="toolTip">
@@ -1113,8 +794,8 @@ color: rgb(180, 180, 180);</string>
         </property>
         <property name="iconSize">
          <size>
-          <width>15</width>
-          <height>15</height>
+          <width>12</width>
+          <height>12</height>
          </size>
         </property>
         <property name="flat">
@@ -1126,8 +807,8 @@ color: rgb(180, 180, 180);</string>
        <widget class="QPushButton" name="btnHelp">
         <property name="maximumSize">
          <size>
-          <width>14</width>
-          <height>18</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="toolTip">
@@ -1138,12 +819,12 @@ color: rgb(180, 180, 180);</string>
         </property>
         <property name="icon">
          <iconset resource="../../../img/img.qrc">
-          <normaloff>:/btn/btn/btnHelp48.png</normaloff>:/btn/btn/btnHelp48.png</iconset>
+          <normaloff>:/btn/btn/default.png</normaloff>:/btn/btn/default.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>15</width>
-          <height>15</height>
+          <width>12</width>
+          <height>12</height>
          </size>
         </property>
         <property name="flat">
@@ -1157,7 +838,6 @@ color: rgb(180, 180, 180);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../../../img/img.qrc"/>
   <include location="../../../img/img.qrc"/>
  </resources>
  <connections/>

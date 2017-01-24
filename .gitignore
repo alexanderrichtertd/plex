@@ -1,7 +1,12 @@
 lib/libGit.py
+lib/extern
+lib/helper
+lib/default
+
 img/_src
+
+_history
+plugins
+
 *.pyc
 *.log
-
-*.json
-*.yml

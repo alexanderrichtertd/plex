@@ -18,6 +18,7 @@ import time
 import shutil
 import logging
 import schedule
+import webbrowser
 
 from threading import Thread
 from datetime import datetime
@@ -26,7 +27,14 @@ from PySide import QtUiTools
 from PySide import QtGui
 from PySide import QtCore
 
+# DELETE *************************
+sys.path.append('D:/Dropbox/arPipeline/2000/data')
+import setEnv
+setEnv.SetEnv()
+# ********************************
+
 import libLog
+import libData
 import libFunc
 import libFileFolder
 
@@ -35,220 +43,163 @@ import libFileFolder
 # REPORT
 class Reminder():
 
-    to = ["arpipeline", "project", "pipeline"]
+    to = ['arpipeline', 'project', 'pipeline']
 
     def __init__(self,
-                 title  = "arReminder Test",
-                 msg    = "This is just a Reminder Test - Dont do it again!",
-                 userTo = "arichter",
-                 topic  = "info",
-                 link   = " ",
-                 timer  = " "):
+                 title  = 'arReminder Test',
+                 msg    = 'This is just a Reminder Test - Dont do it again!',
+                 userTo = 'arichter',
+                 img    = 'lbl/lblPreview131',
+                 link   = 'www.richteralexander.com',
+                 timer  = ''):
 
-        self.time       = datetime.now().strftime('%Y.%m.%d %H:%M:%S')
         self.title      = str(title)   #Pipeline Update
         self.msg        = str(msg)     #New Features for Pipeline
-        self.userfrom   = os.getenv('username') #user from
-        self.userto     = userto  #user to
-        self.topic      = topic   #PDF
+        self.userFrom   = os.getenv('username') #user from
+        self.userTo     = userTo  #user to
+        self.img        = img     # D:/img.png
         self.link       = link    #path
         self.timer      = timer   #time when reminder is triggert
+        self.time       = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
 
     def __call__(self):
         return (\
-        "time:     " + self.time + "\n" +\
-        "active:   " + str(self.active) + "\n" + "\n" +\
-        "userFrom: " + self.userfrom + "\n" +\
-        "userTo:   " + self.userto + "\n" + "\n" +\
-        "title:    " + self.title + "\n" +\
-        "msg:      " + self.msg + "\n" + "\n" +\
-        "topic:    " + self.topic + "\n" +\
-        "link:     " + self.link + "\n" +\
-        "timer:    " + self.timer + "\n")
+        'time:     ' + self.time + '\n' +\
+        'active:   ' + str(self.active) + '\n' + '\n' +\
+        'userFrom: ' + self.userfrom + '\n' +\
+        'userTo:   ' + self.userto + '\n' + '\n' +\
+        'title:    ' + self.title + '\n' +\
+        'msg:      ' + self.msg + '\n' + '\n' +\
+        'img:      ' + self.img + '\n' +\
+        'link:     ' + self.link + '\n' +\
+        'timer:    ' + self.timer + '\n')
 
 
 #**********************
 # DEFAULT
 TITLE   = os.path.splitext(os.path.basename(__file__))[0]
 LOG     = libLog.initLog(script=TITLE)
-PATH_UI = DATA.PATH["ui"] + TITLE + ".ui"
+PATH_UI = ('/').join([os.path.dirname(__file__), 'ui', TITLE + '.ui'])
 
-TIME        = ""
-LINK        = ""
-READY       = False
+TIME        = ''
+LINK        = ''
 
-TOPICS      = ["preview", "pdf", "report", "info", "pipeline", "publish"]
-USER        = ["all", "core", "anim"]
+TOPICS      = ['preview', 'pdf', 'report', 'info', 'pipeline', 'publish']
+USER        = ['all', 'core', 'anim']
 
-PATH_IMG    = ""
-PATH_FILE   = ""
-REMINDER    = ""
+PATH_IMG    = ''
+PATH_FILE   = ''
+REMINDER    = ''
 
 
-class ArRenubder():
+class ArReminder():
 
-    def __init__(self, ui, addReminder):
+    def __init__(self, new_reminder):
 
-        self.ui = ui
+        self.reminder = QtUiTools.QUiLoader().load(PATH_UI)
+        self.new_reminder = new_reminder
 
-        if addReminder:
-            self.uiedtMsg.clear()
-            self.uicbxTopic.clear()
-            self.uiedtTitle.clear()
-
-            self.uicbxTopic.addItems(TOPICS)
-            self.uicbxTo.addItems(USER)
-            self.uicbxTo.addItems(s.TEAM["core"])
-            self.uiedtTitle.setEnabled(True)
-            self.uiedtMsg.setEnabled(True)
-            libFunc.setUserImg(os.getenv('username'), self.uilblUserFrom)
-
-            self.uiedtDate.setDateTime(TIME)
-
-            PATH_FILE = libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
-            REMINDER  = libFileService.loadJsonFile(s.PATH["data_reminder"] + "/" + os.getenv('username') + "/" + PATH_FILE + DATA.FILE_FORMAT["data"])
-
-            self.uiconnect(self.ui.btnAccept, SIGNAL("clicked()"), press_btnAccept)
-            self.uiconnect(self.ui.btnCancel, SIGNAL("clicked()"), press_btnCancel)
-            self.uiconnect(self.ui.btnPreviewImg, SIGNAL("clicked()"), press_btnCancel)
-
-            self.uiconnect(self.ui.cbxTo, SIGNAL("currentIndexChanged(const QString&)"), change_cbxTo)
-            self.uiconnect(self.ui.cbxTopic, SIGNAL("currentIndexChanged(const QString&)"), change_cbxTopic)
-
+        if self.new_reminder:
+            self.set_reminder()
         else:
-            self.uicbxTo.hide()
-            self.uiedtDate.hide()
-            self.uicbxTopic.hide()
-            self.uibtnAccept.hide()
-            self.uiedtImgLink.hide()
-            self.uilblUserTo.hide()
+            self.reminder.edtMsg.clear()
+            self.reminder.cbxTopic.clear()
+            self.reminder.edtTitle.clear()
 
-            self.uiedtTitle.setEnabled(False)
-            self.uiedtMsg.setEnabled(False)
-            self.uilblPreviewImg.mousePressEvent = press_lblPreviewImg
+            self.reminder.edtTitle.setEnabled(True)
+            self.reminder.edtMsg.setEnabled(True)
 
-        self.uiconnect(self.ui.btnPreviewImg, SIGNAL("clicked()"), press_btnPreviewImg)
+            self.reminder.cbxTopic.addItems(TOPICS)
+
+        self.reminder.btnCancel.clicked.connect(self.press_btnCancel)
+        self.reminder.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
 
         # WIDGET : delete border & always on top
-        self.ui.setWindowFlags(QtGui.Qt.CustomizeWindowHint | QtGui.Qt.WindowStaysOnTopHint | QtGui.Qt.FramelessWindowHint)# | QtGui.Qt.Tool)
+        self.reminder.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
 
         # WIDGET : move to right low corner
         resolution = QtGui.QDesktopWidget().screenGeometry()
-        self.uimove(resolution.width() - self.uiwidth() - 5, resolution.height() - self.uiheight() - 5)
+        self.reminder.move(resolution.width() - self.reminder.width() - 5, resolution.height() - self.reminder.height() - 5)
 
+        self.reminder.setWindowOpacity(0.99)
 
-        self.ui.edtTitle.setText(REMINDER["title"])
-        self.ui.edtMsg.setPlainText(REMINDER["msg"])
-        self.ui.edtTime.setText(REMINDER["time"])
+        # round edges
+        path = QtGui.QPainterPath()
+        path.addRoundedRect(QtCore.QRectF(self.reminder.rect()), 3.0, 3.0)
+        self.reminder.setMask(QtGui.QRegion(path.toFillPolygon().toPolygon()))
 
-        libFunc.setUserImg(REMINDER["userfrom"], self.ui.lblUserFrom)
-        libFunc.setPreviewImg(REMINDER["topic"], self.ui.lblPreviewImg)
+        self.reminder.show()
 
-        self.ui.lblPreviewImg.setToolTip(REMINDER["link"])
+    def set_reminder(self):
+        self.reminder.edtTitle.setEnabled(False)
+        self.reminder.edtMsg.setEnabled(False)
 
-        # PATH_FILE
-        src = ("/").join([DATA.PATH["data_reminder"], os.getenv('username'), PATH_FILE +  DATA.FILE_FORMAT["data"]])
-        dst = ("/").join([DATA.PATH["data_reminder"], os.getenv('username'), DATA.STATUS["history"], PATH_FILE + DATA.FILE_FORMAT["data"]])
-        # put into history
-        libFunc.createFolder(dst)
+        self.reminder.edtTitle.setText(self.new_reminder.title)
+        self.reminder.edtMsg.setPlainText(self.new_reminder.msg)
 
-        if(os.path.exists(src)):
-            shutil.move(src, dst)
+        self.reminder.lblUserFrom.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.getImgPath('user/' + self.new_reminder.userFrom))))
+        self.reminder.lblUserFrom.setToolTip(('').join([self.new_reminder.userFrom, '\n', self.new_reminder.time]))
 
-        # SCHEDULE
-        schedule.every(1).minutes.do(job)
+        self.reminder.edtTitle.setText(self.new_reminder.title)
 
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
+        self.open_link = self.new_reminder.link
+        self.reminder.btnPreviewImg.setToolTip(self.open_link)
+
+        if not os.path.exists(self.new_reminder.img):
+          self.new_reminder.img = libData.getImgPath(self.new_reminder.img)
+        self.reminder.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.new_reminder.img)))
 
 
     #**********************
     # PRESS_TRIGGER
     def press_btnAccept(self):
         saveUiReminder()
-        LOG.info("END : CREATE")
-        self.ui.close()
+        LOG.info('CREATE')
+        self.reminder.close()
 
     def press_btnCancel(self):
-        READY = True
-        LOG.info("END : CANCEL")
-        self.ui.close()
+        self.reminder.close()
 
     def press_btnPreviewImg(self):
-        PATH_IMG = PATH_IMG.replace("/", "\\")
-        os.system(PATH_IMG)
-
-
-    #**********************
-    # CHANGE_TRIGGER
-    def change_cbxTo(self):
-        libFunc.setUserImg(self.ui.cbxTo.currentText().lower(), self.ui.lblUserTo)
-
-    def change_cbxTopic(self):
-        libFunc.setPreviewImg(self.ui.cbxTopic.currentText().lower(), self.ui.lblPreviewImg)
-
+        if self.open_link:
+            # ACHIEVEMENT Curious one
+            webbrowser.open(self.open_link)
 
     #**********************
     # FUNCTION
     def saveUiReminder(self):
-        fileName = self.ui.cbxTo.currentText().lower()
+        fileName = self.reminder.cbxTo.currentText().lower()
 
-        if fileName == "core" or fileName == "all" or fileName == "anim":
-            fileName = DATA.TEAM[fileName]
+        setTimer = self.reminder.edtDate.dateTime().toString('yyyy.MM.dd hh:mm:ss')
 
-        setTimer = self.ui.edtDate.dateTime().toString("yyyy.MM.dd hh:mm:ss")
-
-        if self.ui.edtDate.dateTime() == TIME:
-            setTimer = ""
+        if self.reminder.edtDate.dateTime() == TIME:
+            setTimer = ''
 
         fileName = (fileName,) if not isinstance(fileName, (tuple, list)) else fileName
 
         for member in fileName:
-            reminder = Reminder(title = self.ui.edtTitle.text(), msg = self.ui.edtMsg.toPlainText(), userTo = member, topic = self.ui.cbxTopic.currentText().lower(), link = self.ui.edtImgLink.text(), timer =  setTimer)
-            dataPath = DATA.PATH["data_reminder"] + '/' + member + '/' + TIME.toString("yyyy_MM_dd_hh_mm_ss") + DATA.FILE_FORMAT["data"]
+            reminder = Reminder(title = self.reminder.edtTitle.text(), msg = self.reminder.edtMsg.toPlainText(), userTo = member, topic = self.reminder.cbxTopic.currentText().lower(), link = self.reminder.edtImgLink.text(), timer =  setTimer)
+            dataPath = DATA.PATH['data_reminder'] + '/' + member + '/' + TIME.toString('yyyy_MM_dd_hh_mm_ss') + DATA.FILE_FORMAT['data']
 
             libFunc.createFolder(dataPath)
             libFileService.saveJsonFile(dataPath, reminder)
 
-        LOG.info("CREATE : REMINDER : " + self.ui.edtTitle.text() + " + " + self.ui.edtMsg.toPlainText())
+        LOG.info('CREATE : REMINDER : ' + self.reminder.edtTitle.text() + ' + ' + self.reminder.edtMsg.toPlainText())
 
     def saveReminder(reminder):
-        print "saveReminder"
+        print 'saveReminder'
 
         def job(self):
-            print "job"
-            self.ui.show()
+            print 'job'
+            self.reminder.show()
 
 
-    #**********************
-    # START PROZESS
-def main(addReminder = False):
-    # app      = QtGui.QApplication(sys.argv)
-    arReminder(QtUiTools.QUiLoader().load(PATH_UI), addReminder)
-    # app.exec_()
+#**********************
+# START UI
+def start(add_reminder = ''):
+    app = QtGui.QApplication(sys.argv)
+    classVar = ArReminder(add_reminder)
 
+    app.exec_()
 
-
-
-    # def sleeper():
-    #     while True:
-
-    #         if len(libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")) > 0:
-    #             print "START : " + libFileService.getFolderList(s.PATH["data_reminder"] + "/" + os.getenv('username'), "*.json")[0]
-    #             start()
-
-    #             print "SLEEPY"
-
-    #             while not READY:
-    #                 time.sleep(10000)
-
-    # def reminderLoop():
-    #     t = Thread(target=sleeper)
-    #     t.start()
-
-    # startReminder()
-    # from utilities import arReminder
-    # reload(arReminder)
-    # arReminder.reminderLoop()
-
+start(Reminder())

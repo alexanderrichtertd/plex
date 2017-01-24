@@ -45,12 +45,12 @@ class SetEnv(object):
                     print("STOP PROCESS\nThe DATA file is corrupted.\n\n{}".format(exc))
                     return
         else:
-            print ("STOP PROCESS\nCANT load DATA file: {}".format(data_project_path ))
+            print("STOP PROCESS\nCANT load DATA file: {}".format(data_project_path ))
             return
 
         for eachPath in self.data_project['PATH']:
             if not os.path.exists(eachPath):
-                print('PROJECT PATH doesnt exists: {}\nSOURCE[PATH]: {}'.format(eachPath, data_project_path))
+                print('PIPELINE PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(eachPath, data_project_path))
                 continue
 
             self.pipeline_env.add("IMG_PATH",          eachPath + "/img")
@@ -78,10 +78,17 @@ class SetEnv(object):
         addEnvVar("DATA_USER_PATH", (";").join(self.pipeline_env["DATA_USER_PATH"]))
 
         import libData
+        import libLog
+
+        LOG = libLog.initLog(script=TITLE)
         config_project = libData.getData('project')
 
         os.environ["PROJECT_NAME"] = config_project["PROJECT"]["name"]
-        os.environ["PROJECT_PATH"] = config_project["PROJECT"]["path"]
+
+        if os.path.exists(config_project["PROJECT"]["path"]):
+            os.environ["PROJECT_PATH"] = config_project["PROJECT"]["path"]
+        else:
+            LOG.warning('PROJECT PATH doesnt exist: {}'.format(config_project["PROJECT"]["path"]))
 
         self.__call__()
 
@@ -127,16 +134,5 @@ def addEnvVar(var, content):
 
 
 # DELETE
-a = SetEnv()
+# a = SetEnv()
 
-# print os.environ["DATA_USER_PATH"]
-# # import libData
-# # config_project = libData.getData()
-# # print "DATA: {}".format(config_project)
-
-# import libData
-# # # print libData.getEnv("DATA_PROJECT_PATH")
-
-# print libData.getData()
-
-# a.__call__()

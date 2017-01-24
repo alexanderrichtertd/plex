@@ -1,0 +1,50 @@
+#*************************************************************
+# content   = SET project paths
+# version   = 0.0.1
+# date      = 2017-01-01
+#
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
+
+
+PROJECT_PATH:
+  user              : 00_user
+
+  footage           : 10_footage
+  footage_hdri      : 10_footage/hdri
+  footage_shader    : 10_footage/shader
+  footage_scene     : 10_footage/scene
+  footage_textures  : 10_footage/textures
+
+  preproduction     : 20_pre
+  rnd               : 25_rnd
+
+  assets            : 30_assets
+  assets_char       : 30_assets/ + TYPE_ASSETS[char]
+  assets_prop       : 30_assets/ + TYPE_ASSETS[prop]
+  assets_set        : 30_assets/ + TYPE_ASSETS[set]
+  assets_fx         : 30_assets/ + TYPE_ASSETS[fx]
+
+  shots             : 40_shots
+
+  post              : 40_shots
+  shots_alembic     : 40_shots/s000_ALEMBIC/40_ANIM/WORK
+
+  comp              : 40_shots
+  comp_render       : 40_shots/render
+
+  render            : 45_render
+
+  edit              : 50_edit
+  edit_cut          : 50_edit/_cut
+  edit_music        : 50_edit/_music
+  edit_sound        : 50_edit/_sound
+  edit_final        : 50_edit/FINAL
+
+

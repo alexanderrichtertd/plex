@@ -81,3 +81,14 @@ def getDeepFolderList(path):
     getFile.pop(0)
     return getFile
 
+
+#************************
+# TEMP IMAGE
+def rmTmpImg():
+    tmpImgPath = DATA.PATH_EXTRA['img_tmp']  #temp user place (os independent)
+    if os.path.exists(tmpImgPath):
+        try:
+            os.remove(tmpImgPath)
+        except:
+            LOG.error('FAIL : cant delete tmpFile : ' + tmpImgPath)
+    return tmpImgPath

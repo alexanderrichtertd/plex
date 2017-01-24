@@ -14,9 +14,9 @@
 
 import os
 import sys
-import json
 
 import libLog
+import libData
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.initLog(script=TITLE)
@@ -43,36 +43,12 @@ class User:
 #************************
 # USER FUNCTIONS
 def setUser(user):
-    path = DATA.PATH["data_user"] + "/" + user.userId + DATA.FILE_FORMAT["data"]
-    with open(path, 'w') as outfile:
-        json.dump(user.__dict__, outfile)
-    return user.__dict__
-
-def getUser(userId):
-    tmpDict  = {}
-    userPath = DATA.PATH["data_user"] + "/" + userId + DATA.FILE_FORMAT["data"]
-
-    if not os.path.exists(userPath):
-        setUser(User(userId = userId))
-
-    try:
-        with open(userPath, 'r') as outfile:
-            tmpDict = json.load(outfile)
-    except:
-        LOG.info("User was not found")
-
-    tempUser =  User(userId = userId)
-    tempUser.__dict__ = tmpDict
-    return tempUser
-    # return User(userId = tmpDict["userId"],   name = tmpDict["name"], task = tmpDict["task"], position = tmpDict["position"], settings = tmpDict["settings"])
+    libData.setData()
 
 def setUserSettings(userId, scriptSettings):
     currentChange = getUser(userId)
     currentChange.__dict__["settings"].update(scriptSettings)
     setUser(currentChange)
-
-def getUserSettings(userId, scriptName):
-    return getUser(userId).settings.values()
 
 def getCurrentUser():
     #user = getUser(os.getenv('username'))
@@ -83,12 +59,12 @@ def getCurrentUser():
 def getUserInitials(user = os.getenv('username')):
     return user[0:2]
 
-def getUserList():
-    with open(DATA.PATH["data_user"] + DATA.FILE_FORMAT["data"], 'r') as outfile:
-        return json.load(outfile).keys()
-
+# DO
 def isUserAdmin():
-    return getCurrentUser() in DATA.TEAM["admin"]
+    return True # getCurrentUser() in DATA.TEAM["admin"]
+
+def getRights():
+    return "user"
 
 def deleteUser(userId):
     deletePath = os.path.join(DATA.PATH['data_user'], userId)
@@ -98,11 +74,3 @@ def deleteUser(userId):
     else:
         LOG.info("FAIL : " + userId + " - user doesnt exists")
 
-def setTeam():
-    setUser(User(userId = 'arichter',     name = 'Alexander Richter', task = {}, position = 'Pipeline', settings = {}))
-    setUser(User(userId = 'mlange',       name = 'Michael Lange', task = {}, position = 'Director', settings = {}))
-    setUser(User(userId = 'nmaderthoner', name = 'Nikolai Maderthoner', task = {}, position = 'Muscle', settings = {}))
-    setUser(User(userId = 'joberbeck',    name = 'Julian Oberbeck', task = {"RIG" : [010, 020]}, position = 'Rigging', settings = {}))
-
-def getRights():
-    return "user"

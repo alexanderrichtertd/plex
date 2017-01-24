@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = common functions (e.g.help)
+# content   = project data
 # version   = 0.0.1
 # date      = 2017-01-01
 #
@@ -12,18 +12,34 @@
 # http://td.animationsinstitut.de
 #*********************************************************************
 
-import time
+PROJECT:
+  name: arPipeline
+  id:   arpipeline
 
-#************************
-# TIME
-# @BRIEF  count time of functions for optimazation
-def getDuration(method):
-    def timed(*args, **kw):
-        startTime  = time.time()
-        resultTime = method(*args, **kw)
-        endTime    = time.time()
+  path: D:\Dropbox\arPipeline
 
-        printResult = '%r (%r, %r) %2.2f sec' % (method.__name__, args, kw, endTime-startTime)
-        LOG.debug(printResult)
-        return resultTime
-    return timed
+  resolution:
+    - 2048
+    - 872
+
+  fps: 24
+
+
+
+SOFTWARE:
+  maya:
+    version: 2015
+
+  nuke:
+    version: 9.07
+
+  houdini:
+    version: 15.56
+
+
+
+LINK:
+  default: https://github.com/alexanderrichter/arProject/wiki
+  arHeader: https://github.com/alexanderrichter/arProject/wiki/arHeader
+
+

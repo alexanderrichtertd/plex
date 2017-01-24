@@ -24,9 +24,7 @@
     <normaloff>:/btn/btn/btnProject48.png</normaloff>:/btn/btn/btnProject48.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(130, 130, 130);
-color: rgb(250, 250, 250);
-selection-color: rgb(85, 255, 255);</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="margin">

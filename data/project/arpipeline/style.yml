@@ -1,0 +1,52 @@
+#*************************************************************
+# content   = SET pipeline style
+# version   = 0.0.1
+# date      = 2017-01-01
+#
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
+
+
+
+
+RIGHTS:
+  admin: pink
+  pipeline: green
+  production: blue
+  user: grey
+
+
+arStartup:
+  menu: "color: rgb(225, 225, 225);background-color: rgb(35, 35, 35);selection-background-color: rgb(60, 110, 190);"
+
+arHeader:
+  # popup images for msg
+  msg_type:
+    - btn/default
+    - btn/btnAccept48
+    - btn/btnWarning48
+    - btn/btnDenial48
+
+  progress_color:
+    # 0-neutral
+    - lightblue
+    # 1-done
+    - lightgreen
+    # 2-warning
+    - orange
+    # 3-failed
+    - red
+
+  progress_img:
+    - btn/btnWrite48
+    - btn/btnAccept48
+    - btn/btnWarning48
+    - btn/btnDenial48
+
+

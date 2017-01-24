@@ -17,6 +17,7 @@ import sys
 import logging
 import logging.config
 
+THIS_DIR = ("/").join([os.path.dirname(__file__)])
 
 #************************
 # CLASS
@@ -37,23 +38,6 @@ class MyFilter(object):
                 return True
         return False
 
-def createFolder(path):
-    if len(path.split(".")) > 1:
-        path = os.path.dirname(path)
-    if not os.path.exists(path):
-        try:
-            os.makedirs(path)
-        except:
-            print("WARNING : Can not create folder : %s"% path)
-
-THIS_DIR = ("/").join([os.path.dirname(__file__)])
-
-def getEnv(var):
-    if os.environ.__contains__(var):
-        return os.environ[var].split(';')[0]
-    LOG.warning('ENV doesnt exist: {}'.format(var))
-    return ""
-
 
 #************************
 # LOGGING
@@ -64,12 +48,9 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
     if not path:
         path = ("/").join([getEnv('DATA_PATH'), 'user', os.getenv('username'), os.getenv('username') + ".log"])
 
-    # CREATE path folder
     createFolder(path)
 
-    info_path  = path # ("/").join([path, script + "_info.log"])
-    error_path = path # ("/").join([path, script + "_error.log"])
-    debug_path = path # DATA.PATH["data_local"]
+    info_path, error_path, debug_path = path, path, path
 
     logging_config = dict(
         version= 1,
@@ -146,7 +127,6 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
         }
     )
 
-    # logging.config.dictConfig(logging_config)
     console_handler = logging.StreamHandler(stream=sys.stdout)
     formatter       = logging.Formatter(logging_config["formatters"]["simpleConsole"]["format"])
     console_handler.setFormatter(formatter)
@@ -154,7 +134,6 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
     logger.addHandler(console_handler)
 
     if level == logging.DEBUG:
-        # print("PATH to DEBUG is %s"% debug_path)
         debug_handler = logging.handlers.RotatingFileHandler(debug_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
         formatter     = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
         debug_handler.setFormatter(formatter)
@@ -170,11 +149,26 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
 
     logger.setLevel(level)
     logger.addFilter(ContextFilter())
-    # logger.handlers[1].addFilter(MyFilter([logging.INFO]))
-    # logger.handlers[2].addFilter(MyFilter([logging.DEBUG, logging.CRITICAL,logging.ERROR]))
 
     return logger
 
+#************************
+# FUNC
+def createFolder(path):
+    if len(path.split(".")) > 1:
+        path = os.path.dirname(path)
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except:
+            print("WARNING : Can not create folder : %s"% path)
+
+
+def getEnv(var):
+    if os.environ.__contains__(var):
+        return os.environ[var].split(';')[0]
+    LOG.warning('ENV doesnt exist: {}'.format(var))
+    return ""
 
 #************************
 # TEST
