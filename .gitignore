@@ -5,8 +5,11 @@ lib/default
 
 img/_src
 
-_history
-plugins
+data/user
+data/project
+
+_history/
+plugins/
 
 *.pyc
 *.log
