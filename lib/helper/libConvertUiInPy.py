@@ -10,9 +10,9 @@
 #*************************************************************
 
 import subprocess
-subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../img/img_rc.py ../../img/img.qrc", shell=True)
+# subprocess.Popen("C:/Python27/lib/site-packages/pyside/pyside-rcc -o ../../img/img_rc.py ../../img/img.qrc", shell=True)
 
-# subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../utilities/ui/arSave.py ../../utilities/ui/ui/arSave.ui", shell=True)
+subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../software/utilities/ui/arHeader_menu.py ../../software/utilities/ui/arHeader_menu.ui", shell=True)
 # subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../utilities/ui/arSaveAs.py ../../utilities/ui/ui/arSaveAs.ui", shell=True)
 # subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../software/maya/scripts/ui/alembicExport.py ../../software/maya/scripts/ui/qt/alembicExport.ui", shell=True)
 # subprocess.Popen("C:/Python27/scripts/pyside-uic -o ../../utilities/ui/arReport.py ../../utilities/ui/ui/arReport.ui", shell=True)

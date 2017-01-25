@@ -116,6 +116,9 @@ QToolTip {
         </item>
         <item>
          <widget class="QLabel" name="lblScriptName">
+          <property name="toolTip">
+           <string>Script Name</string>
+          </property>
           <property name="text">
            <string>arHeader</string>
           </property>
@@ -146,6 +149,9 @@ QToolTip {
           <weight>75</weight>
           <bold>true</bold>
          </font>
+        </property>
+        <property name="toolTip">
+         <string>Project Name</string>
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(180, 180, 180);</string>
@@ -745,6 +751,32 @@ color: rgb(255, 255, 255);</string>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnProject">
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Project</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../img/img.qrc">
+          <normaloff>:/program/program/arpipeline.png</normaloff>:/program/program/arpipeline.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>10</width>
+          <height>12</height>
+         </size>
         </property>
        </widget>
       </item>

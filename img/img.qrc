@@ -68,15 +68,6 @@
     <file>user/default.png</file>
     <file>user/defaultC.png</file>
   </qresource>
-  <qresource prefix="placeholder">
-    <file>placeholder/shader.png</file>
-    <file>placeholder/image.png</file>
-    <file>placeholder/program.png</file>
-    <file>placeholder/report.png</file>
-    <file>placeholder/shot.png</file>
-    <file>placeholder/splashscreen.png</file>
-    <file>placeholder/user.png</file>
-  </qresource>
   <qresource prefix="shelf">
     <file>software/maya/shelf/shelf_renderHigh35.png</file>
     <file>software/maya/shelf/shelf_renderLow35.png</file>
@@ -103,6 +94,7 @@
     <file>software/maya/shelf/shelf_write35.png</file>
   </qresource>
   <qresource prefix="program">
+    <file>program/arpipeline.png</file>
     <file>program/3dCoat.png</file>
     <file>program/3dsMax.png</file>
     <file>program/afterEffects.png</file>

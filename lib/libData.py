@@ -80,7 +80,7 @@ def getPipelinePath(end_path):
     LOG.warning('PATH doesnt exists: {}'.format(path))
     return ''
 
-def getProjectPath(end_path):
+def getProjectPath(end_path = ''):
     project_path = os.environ.get('PROJECT_PATH', '')
     project_path = os.path.normpath(('/').join([project_path, end_path]))
 
@@ -89,6 +89,10 @@ def getProjectPath(end_path):
 
     LOG.critical('PATH doesnt exists: {}'.format(project_path))
     return ''
+
+def getProjectUserPath(user = libUser.getCurrentUser()):
+    project_user_path = getData('Path')['PROJECT_PATH']['user']
+    return getProjectPath(('/').join([project_user_path, user]))
 
 def getImgPath(end_path = 'btn/default'):
     path = getPipelinePath('img/' + end_path + IMG_FORMAT)

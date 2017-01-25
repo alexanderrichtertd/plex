@@ -30,7 +30,6 @@ setEnv.SetEnv()
 
 import libLog
 import libUser
-import libFunc
 import libData
 
 TITLE   = os.path.splitext(os.path.basename(__file__))[0]
@@ -69,7 +68,12 @@ class ArHeader(object):
         self.wgHeader.lblArrowUp.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("lbl/lblArrowU18"))))
 
         self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("user/Alex")))) # current user
-        self.wgHeader.btnUser.setToolTip(("").join([libUser.getCurrentUser(), "\n", libUser.getRights()]))
+        self.wgHeader.btnUser.setToolTip(("").join(['<html><head/><body><p><span style=" font-weight:600;">',
+                                                    libUser.getCurrentUser(), '</span><br>',
+                                                    libUser.getRights(), '</p></body></html>']))
+
+        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath('program/arPipeline')))) # current user
+        self.wgHeader.btnProject.setToolTip(os.environ['PROJECT_NAME'])
 
         # SIGNAL
         clickable(self.wgHeader.wgHeader).connect(self.press_lblTitleBar)
@@ -85,9 +89,11 @@ class ArHeader(object):
 
         self.wgHeader.btnOpenFolder.clicked.connect(self.press_btnOpenFolder)
         self.wgHeader.btnUser.clicked.connect(self.press_btnUser)
+        self.wgHeader.btnProject.clicked.connect(self.press_btnProject)
         self.wgHeader.btnReport.clicked.connect(self.press_btnReport)
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
+        self.setStatus()
         self.setOpenFolder()
         self.addPreview()
         self.addMenu()
@@ -113,19 +119,8 @@ class ArHeader(object):
         menu01_items = [self.wgMenu.btnMenu01_item01, self.wgMenu.btnMenu01_item02, self.wgMenu.btnMenu01_item03,
                         self.wgMenu.btnMenu01_item04, self.wgMenu.btnMenu01_item05, self.wgMenu.btnMenu01_item06]
 
-        for index, each_item in enumerate(menu01_items):
-            each_item.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath(menu01_img[index]))))
-            # each_item.clicked.connect(lambda: self.press_btnMenu("settings"))
-
-        self.wgMenu.btnMenu01_item01.clicked.connect(lambda: self.press_btnMenu("settings"))
-        self.wgMenu.btnMenu01_item02.clicked.connect(lambda: self.press_btnMenu("path"))
-        self.wgMenu.btnMenu01_item03.clicked.connect(lambda: self.press_btnMenu("advanced"))
-        self.wgMenu.btnMenu01_item04.clicked.connect(lambda: self.press_btnMenu("log"))
-        self.wgMenu.btnMenu01_item05.clicked.connect(lambda: self.press_btnMenu("report"))
-        self.wgMenu.btnMenu01_item06.clicked.connect(lambda: self.press_btnMenu("user"))
-
         self.select_menu = {
-            "settings" : self.wgMenu.btnMenu01_item01,
+            "data"     : self.wgMenu.btnMenu01_item01,
             "path"     : self.wgMenu.btnMenu01_item02,
             "advanced" : self.wgMenu.btnMenu01_item03,
             "log"      : self.wgMenu.btnMenu01_item04,
@@ -133,13 +128,19 @@ class ArHeader(object):
             "user"     : self.wgMenu.btnMenu01_item06
         }
 
-        # for each_key in self.config_data.keys():
-        #     print each_key
-            # create menu02_items
-            # connect
-            #
+        for index, each_item in enumerate(menu01_items):
+            print each_item.objectName()
+            each_item.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath(menu01_img[index]))))
+            # each_item.clicked.connect(lambda: self.press_btnMenu("settings"))
 
-        #settings_files = libFileFolder.getFileList(libData.getPipelinePath('settings'), fileType='*.yml', extension=True, exclude="*"):
+        self.wgMenu.btnMenu01_item01.clicked.connect(lambda: self.press_btnMenu("data"))
+        self.wgMenu.btnMenu01_item02.clicked.connect(lambda: self.press_btnMenu("path"))
+        self.wgMenu.btnMenu01_item03.clicked.connect(lambda: self.press_btnMenu("advanced"))
+        self.wgMenu.btnMenu01_item04.clicked.connect(lambda: self.press_btnMenu("log"))
+        self.wgMenu.btnMenu01_item05.clicked.connect(lambda: self.press_btnMenu("report"))
+        self.wgMenu.btnMenu01_item06.clicked.connect(lambda: self.press_btnMenu("user"))
+
+        menu01_items[0].click()
 
 
     #**********************
@@ -157,7 +158,14 @@ class ArHeader(object):
         webbrowser.open(self.open_path)
 
     def press_btnUser(self):
-        print("user")
+        project_user_path = libData.getProjectUserPath()
+        if project_user_path:
+            webbrowser.open(project_user_path)
+
+    def press_btnProject(self):
+        project_path = libData.getProjectPath()
+        if project_path:
+            webbrowser.open(project_path)
 
     def press_btnReport(self):
         print("report")
@@ -176,28 +184,37 @@ class ArHeader(object):
         tmp_menu = self.select_menu[menu_tag]
 
         for eachMenu in self.select_menu.values():
-            eachMenu.setStyleSheet("")
+            eachMenu.setStyleSheet('')
+
+        for i in range(self.wgMenu.layMenu02.count()):
+            self.wgMenu.layMenu02.itemAt(0).widget().close()
+            self.wgMenu.layMenu02.takeAt(0)
+
         tmp_menu.setStyleSheet("background-color: rgb(51, 140, 188);")
-        # tmp_menu[2].setPixmap(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("lbl/lblArrowR18"))))
 
-    def press_btnMenuSettings(self):
-        print('settings')
+        if menu_tag == 'data':
+            self.config_data = libData.getData()
+            for eachKey in self.config_data.keys():
+                print eachKey
+                addButton = QtGui.QPushButton(eachKey)
+                addButton.clicked.connect(lambda: self.press_btnSubMenu(eachKey))
+                self.wgMenu.layMenu02.addWidget(addButton)
+                print addButton.text()
+        try:
+            self.wgMenu.layMenu02.itemAt(0).widget().click()
+        except:
+            pass
 
-    def press_btnMenuPath(self):
-        print('path')
-
-    def press_btnMenuAdvanced(self):
-        print('advanced')
-
-    def press_btnMenuLog(self):
-        print('log')
-
-    def press_btnMenuReport(self):
-        print('report')
-
-    def press_btnMenuUser(self):
-        print('user')
-
+    def press_btnSubMenu(self, key):
+        print key
+        for button_index in range(self.wgMenu.layMenu02.count()):
+            btn_tmp  = self.wgMenu.layMenu02.itemAt(button_index).widget()
+            btn_font = btn_tmp.font()
+            if btn_tmp.text() == key:
+                btn_font.setBold(True)
+            else:
+                btn_font.setBold(False)
+            btn_tmp.setFont(btn_font)
 
     # TOP
     def press_lblTitleBar(self):
@@ -223,20 +240,14 @@ class ArHeader(object):
         self.wgHeader.resize(self.monitor_res.width() / 2, (self.monitor_res.height()))
         self.wgHeader.move(self.monitor_res.width() / 2, 0)
 
-
     def press_btnClose(self):
         print("close")
         self.wgHeader.close()
 
-    #**********************
-    # CHANGE
-    def change_menuSelection():
-        print "change"
-
 
     #**********************
     # FUNCTION
-    def setStatus(self, msg = "", msg_type = 0):
+    def setStatus(self, msg = '', msg_type = 0):
         # 0 - neutral - blue
         # 1 - done    - green
         # 2 - warning - yellow
@@ -245,10 +256,11 @@ class ArHeader(object):
         self.wgHeader.edtComment.setText(msg)
         self.wgHeader.lblCommentImg.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.getImgPath(self.config_data['style']['arHeader']['progress_img'][msg_type]))))
 
-        template_css = """QProgressBar::chunk { background: %s; }"""
-        css = template_css % self.config_data['style']['arHeader']['progress_color'][msg_type]
-        self.wgHeader.prbStatus.setStyleSheet(css)
-        self.setProgress(100)
+        if not msg_type:
+            template_css = """QProgressBar::chunk { background: %s; }"""
+            css = template_css % self.config_data['style']['arHeader']['progress_color'][msg_type]
+            self.wgHeader.prbStatus.setStyleSheet(css)
+            self.setProgress(100)
 
     def setProgress(self, count = 0):
         self.wgHeader.prbStatus.setValue(count)

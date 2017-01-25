@@ -5,11 +5,10 @@ lib/default
 
 img/_src
 
-data/user
-data/project
-
-_history/
-plugins/
+software/utilities/ui/_history
+software/maya/plugins/*
+software/nuke/plugins/*
+software/houdini/plugins/*
 
 *.pyc
 *.log

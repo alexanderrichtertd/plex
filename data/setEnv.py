@@ -134,5 +134,7 @@ def addEnvVar(var, content):
 
 
 # DELETE
-# a = SetEnv()
+a = SetEnv()
+import libData
+print libData.getProjectUserPath()
 
