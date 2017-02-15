@@ -31,6 +31,7 @@ setEnv.SetEnv()
 import libLog
 import libUser
 import libData
+import libFileFolder
 
 TITLE   = os.path.splitext(os.path.basename(__file__))[0]
 LOG     = libLog.initLog(script=TITLE)
@@ -51,9 +52,8 @@ class ArHeader(object):
         self.monitor_size = QtCore.QSize(self.monitor_res.width(), self.monitor_res.height())
 
         self.open_path    = ""
-        self.config_data  = libData.getData()
 
-        #********************
+        #*********************************************************************
         # UI
         self.wgHeader.lblProjectName.setText(TITLE)
         self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/btnProject48"))))
@@ -61,7 +61,7 @@ class ArHeader(object):
         # BUTTONS ICONS
         # + toolTips
         self.wgHeader.btnReport.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/btnReport48"))))
-        self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/btnHelp48"))))
+        self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/default"))))
         self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/btnFolder48"))))
 
         self.wgHeader.lblScriptImg.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/btnProject48"))))
@@ -85,6 +85,7 @@ class ArHeader(object):
         self.wgHeader.btnClose.clicked.connect(self.press_btnClose)
 
         self.wgHeader.btnAccept.clicked.connect(self.press_btnAccept)
+        self.wgHeader.btnAccept.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.wgHeader.btnCancel.clicked.connect(self.press_btnCancel)
 
         self.wgHeader.btnOpenFolder.clicked.connect(self.press_btnOpenFolder)
@@ -93,10 +94,20 @@ class ArHeader(object):
         self.wgHeader.btnReport.clicked.connect(self.press_btnReport)
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
+        # CURSOR STYLE
+        self.wgHeader.setCursor(QtGui.QCursor(QtCore.Qt.SizeFDiagCursor))
+        self.wgHeader.wg.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.wgHeader.wgHeader.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
+        self.wgHeader.wgHeaderBtn.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+
+        # self.wgHeader.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        # SETUP
+        self.refreshData()
         self.setStatus()
         self.setOpenFolder()
-        self.addPreview()
-        self.addMenu()
+        #self.addPreview()
+        #self.addMenu()
 
         # rounded edges
         # path = QtGui.QPainterPath()
@@ -143,7 +154,7 @@ class ArHeader(object):
         menu01_items[0].click()
 
 
-    #**********************
+    #*********************************************************************
     # PRESS
     def press_btnAccept(self):
         print("Accept")
@@ -158,14 +169,10 @@ class ArHeader(object):
         webbrowser.open(self.open_path)
 
     def press_btnUser(self):
-        project_user_path = libData.getProjectUserPath()
-        if project_user_path:
-            webbrowser.open(project_user_path)
+        libFileFolder.openFolder(libData.getProjectUserPath())
 
     def press_btnProject(self):
-        project_path = libData.getProjectPath()
-        if project_path:
-            webbrowser.open(project_path)
+        libFileFolder.openFolder(libData.getProjectPath())
 
     def press_btnReport(self):
         print("report")
@@ -245,7 +252,7 @@ class ArHeader(object):
         self.wgHeader.close()
 
 
-    #**********************
+    #*********************************************************************
     # FUNCTION
     def setStatus(self, msg = '', msg_type = 0):
         # 0 - neutral - blue
@@ -267,15 +274,17 @@ class ArHeader(object):
 
     def setOpenFolder(self, path = ""):
         if os.path.exists(path):
-            # add a path button
+            # active btnOpenFolder
             self.wgHeader.btnOpenFolder.setEnabled(True)
             self.open_path = os.path.normpath(path)
             self.wgHeader.edtPath.setText(self.open_path)
         else:
-            # delete path button
+            # deactive btnOpenFolder
             self.wgHeader.btnOpenFolder.setEnabled(False)
-            LOG.info("PATH doesnt exists: {}".format(path))
+            LOG.info("PATH doesnt exist: {}".format(path))
 
+    def refreshData(self):
+        self.config_data = libData.getData()
 
 def clickable(widget):
     class Filter(QtCore.QObject):

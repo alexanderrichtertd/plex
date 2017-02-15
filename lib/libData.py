@@ -87,7 +87,7 @@ def getProjectPath(end_path = ''):
     if os.path.exists(project_path):
         return project_path
 
-    LOG.critical('PATH doesnt exists: {}'.format(project_path))
+    LOG.critical('PATH doesnt exist: {}'.format(project_path))
     return ''
 
 def getProjectUserPath(user = libUser.getCurrentUser()):

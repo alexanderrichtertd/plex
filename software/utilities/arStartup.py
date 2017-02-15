@@ -44,12 +44,12 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         menu = QtGui.QMenu()
 
         self.config_data = libData.getData()
-        menu.setStyleSheet(self.config_data['style']['SCRIPTS']['arStartup']['menu'])
+        menu.setStyleSheet(self.config_data['style']['arStartup']['menu'])
 
         # ADMIN UI
         if libUser.isUserAdmin():
             adminMenu = QtGui.QMenu("Admin")
-            adminMenu.setStyleSheet(self.config_data['style']['SCRIPTS']['arStartup']['menu'])
+            adminMenu.setStyleSheet(self.config_data['style']['arStartup']['menu'])
             menu.addMenu(adminMenu)
 
             menuItem = adminMenu.addAction(QtGui.QIcon(libData.getImgPath("btn/btnLogProjekt48")), "Project Data")
@@ -78,7 +78,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         menu.addSeparator()
 
         subMenu = QtGui.QMenu("Software")
-        subMenu.setStyleSheet(self.config_data['style']['SCRIPTS']['arStartup']['menu'])
+        subMenu.setStyleSheet(self.config_data['style']['arStartup']['menu'])
         menu.addMenu(subMenu)
 
         menuItem = subMenu.addAction(QtGui.QIcon(libData.getImgPath("program/maya")), "Maya")
@@ -147,6 +147,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
     def press_btnWriteReminder(self):
         LOG.debug("writeReminder")
+        from utilities import arReminder
         arReminder.main(True)
     #------------------------------
     def press_btnReport(self):

@@ -48,3 +48,21 @@ PROJECT_PATH:
   edit_final        : 50_edit/FINAL
 
 
+SOFTWARE_PATH:
+  maya:
+    plugins:
+    scripts:
+
+    env:
+      ALSHADERS_INSTALL: SOFTWARE_PATH/alShaders-win-1.0.0rc19-ai4.2.12.2
+      ARNOLD_PLUGIN_PATH: SOFTWARE_PATH/alShaders-win-1.0.0rc19-ai4.2.12.2/bin
+      MTOA_TEMPLATES_PATH: SOFTWARE_PATH/alShaders-win-1.0.0rc19-ai4.2.12.2/ae
+      MAYA_CUSTOM_TEMPLATE_PATH: SOFTWARE_PATH/alShaders-win-1.0.0rc19-ai4.2.12.2/aexml;%MAYA_CUSTOM_TEMPLATE_PATH%
+
+  nuke:
+    plugins:
+    scripts:
+
+  houdini:
+    plugins:
+    scripts:

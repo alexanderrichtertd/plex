@@ -26,31 +26,38 @@ class SetEnv(object):
         this_pipeline_path = os.path.normpath(os.path.dirname(this_path))
         data_project_path  = os.path.normpath(("/").join([this_path, "pipeline.yml"]))
 
+        # OS & PYTHON_VERSION
+        os.environ['OS'] = sys.platform
+        os.environ['PYTHON_VERSION'] = sys.version[:3]
+
+        # LOAD project data
         if os.path.exists(data_project_path):
             with open(data_project_path , 'r') as stream:
                 try:
                     self.data_project = yaml.load(stream)
-
                     if this_pipeline_path in self.data_project['PATH']:
                         for index in range(0, self.data_project["PATH"].index(this_pipeline_path)):
                             self.data_project['PATH'].pop(0)
                         self.pipeline_env["PIPELINE_PATH"] = self.data_project['PATH']
                     else:
                         print('STOP PROCESS\n\
-                               Missing this PATH in {}\n\
+                               Missing current PATH in {}\n\
                                GET:  {}\n\
                                NEED: {}'.format(data_project_path, self.data_project["PATH"], this_pipeline_path))
                         return
                 except yaml.YAMLError as exc:
-                    print("STOP PROCESS\nThe DATA file is corrupted.\n\n{}".format(exc))
+                    print('STOP PROCESS\n'\
+                          'The DATA file is corrupted.\n\n{}'.format(exc))
                     return
         else:
             print("STOP PROCESS\nCANT load DATA file: {}".format(data_project_path ))
             return
 
+        # CREATE all pipeline env
         for eachPath in self.data_project['PATH']:
             if not os.path.exists(eachPath):
-                print('PIPELINE PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(eachPath, data_project_path))
+                print('PIPELINE_PATH doesnt exist: {}\n'\
+                      'SOURCE[PATH]: {}'.format(eachPath, data_project_path))
                 continue
 
             self.pipeline_env.add("IMG_PATH",          eachPath + "/img")
@@ -64,6 +71,7 @@ class SetEnv(object):
             sys.path.append(self.pipeline_env['SOFTWARE_PATH'][-1])
             sys.path.append(self.pipeline_env['LIB_PATH'][-1])
 
+        # ADD all pipeline env
         addEnvVar("PIPELINE_PATH",     (";").join(self.pipeline_env["PIPELINE_PATH"]))
         addEnvVar("IMG_PATH",          (";").join(self.pipeline_env["IMG_PATH"]))
         addEnvVar("LIB_PATH",          (";").join(self.pipeline_env["LIB_PATH"]))
@@ -77,8 +85,8 @@ class SetEnv(object):
 
         addEnvVar("DATA_USER_PATH", (";").join(self.pipeline_env["DATA_USER_PATH"]))
 
-        import libData
         import libLog
+        import libData
 
         LOG = libLog.initLog(script=TITLE)
         config_project = libData.getData('project')

@@ -121,7 +121,7 @@ class ArReminder():
         resolution = QtGui.QDesktopWidget().screenGeometry()
         self.reminder.move(resolution.width() - self.reminder.width() - 5, resolution.height() - self.reminder.height() - 5)
 
-        self.reminder.setWindowOpacity(0.99)
+        self.reminder.setWindowOpacity(0.9)
 
         # round edges
         path = QtGui.QPainterPath()

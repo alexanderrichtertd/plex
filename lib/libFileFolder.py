@@ -29,22 +29,22 @@ LOG   = libLog.initLog(script=TITLE)
 # @BRIEF  creates a folder, checks if it already exists,
 #         creates the folder above if the path is a file
 def createFolder(path):
-    if len(path.split(".")) > 1:
+    if len(path.split('.')) > 1:
         path = os.path.dirname(path)
     if not os.path.exists(path):
         try:
             os.makedirs(path)
         except:
-            print("WARNING : Can not create folder : %s"% path)
+            LOG.info('CANT create folder: {}'.format(path))
 
 # @BRIEF  opens folder even if file is given
 def openFolder(path):
     if os.path.exists(path):
-        if len(path.split(".")) > 1:
+        if len(path.split('.')) > 1:
             path = os.path.dirname(path)
         webbrowser.open(path)
     else:
-        print("WARNING : Not valid path : %s"% path)
+        LOG.info('UNVALID path: {}'.format(path))
     return path
 
 
@@ -53,12 +53,12 @@ def openFolder(path):
 # @BRIEF  get a file/folder list with specifics
 #
 # @PARAM  path string.
-#         file_type string/string[]. "*.py"
+#         file_type string/string[]. '*.py'
 #         extension bool. True:[name.py] False:[name]
-#         exclude string /string[]. "__init__.py" | "__init__" | ["btnReport48", "btnHelp48"]
+#         exclude string /string[]. '__init__.py' | '__init__' | ['btnReport48', 'btnHelp48']
 #
 # @RETURN strint[].
-def getFileList(path, file_type='*', extension=False, exclude="*", path_add = False):
+def getFileList(path, file_type='*', extension=False, exclude='*', path_add = False):
     getFile = []
 
     if(os.path.exists(path)):
