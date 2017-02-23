@@ -34,6 +34,7 @@ set "PYTHONPATH=%PLUGINS_PATH%/ngskintools/scripts;%PYTHONPATH%"
  rem --- Plugin ---
 set "MAYA_PLUG_IN_PATH=%PLUGINS_PATH%;%MAYA_PLUG_IN_PATH%;"
 set "MAYA_PLUG_IN_PATH=%PLUGINS_PATH%/ngskintools/plug-ins;%MAYA_PLUG_IN_PATH%;"
+set "MAYA_PLUG_IN_PATH=C:/Users/arichter/Downloads;%MAYA_PLUG_IN_PATH%;"
  rem set "MAYA_PLUG_IN_PATH=%PLUGINS_PATH%/SOuP/plug-ins/win_maya2015;%MAYA_PLUG_IN_PATH%"
 
 
