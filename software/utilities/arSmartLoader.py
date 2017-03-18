@@ -112,7 +112,7 @@ class ScriptSelection(object):
         # EXE script
 
         if True:
-
+            pass
         else:
             self.set_comment("Sorry! This ITEM is not executable ... error was reported")
 

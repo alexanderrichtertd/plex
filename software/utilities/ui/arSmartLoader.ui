@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>402</width>
-    <height>51</height>
+    <height>47</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,7 +34,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <property name="spacing">
-    <number>6</number>
+    <number>4</number>
    </property>
    <property name="margin">
     <number>0</number>
@@ -107,7 +107,7 @@ QToolTip {
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../img.qrc">
+         <iconset>
           <normaloff>:/btn/scriptSelection/python/ui/btnArrowDown20.png</normaloff>:/btn/scriptSelection/python/ui/btnArrowDown20.png</iconset>
         </property>
         <property name="iconSize">
@@ -155,7 +155,7 @@ QToolTip {
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
