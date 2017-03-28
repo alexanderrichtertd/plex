@@ -1,0 +1,53 @@
+# Software
+
+# UPPERCASE: for dics
+# lowercase: for list or ones
+
+#************************
+# MAYA
+MAYA:
+  path:
+  version: 2015
+
+  renderer:
+  renderer_path:
+
+  ENV:
+    PYTHONPATH:
+      - pipeline_path/scripts
+      - pipeline_path/plugins
+      - pipeline_path/shelf
+      - pipeline_path/extern
+
+    MAYA_SCRIPT_PATH:
+      - plugin_path/ANIM
+
+    MAYA_PLUG_IN_PATH:
+      - plugin_path
+
+    MAYA_SHELF_PATH:
+      - shelf_path/shelf
+
+    MAYA_DISABLE_CIP: 1
+    MAYA_DISABLE_CER: 1
+    #XBMLANGPATH: IMG_PATH
+
+
+#************************
+# NUKE
+NUKE:
+  path:
+  version: 9.07
+
+  renderer:
+  renderer_path:
+
+
+#************************
+# HOUDINI
+HOUDINI:
+  path:
+  version: 15.56
+
+  renderer:
+  renderer_path:

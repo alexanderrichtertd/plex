@@ -45,3 +45,30 @@ def setRenderer():
         libFunc.addEnvnVar("MAYA_MODULE_PATH", os.environ["RM"] + "/etc")
         os.environ["RMSTREE"] = os.environ["RM"]
         sys.path.append(os.environ["RM"] + "/bin;")
+
+
+#************************
+# RENDER SETTINGS
+def setRenderSettings(renderStatus):
+    LOG.info("setRenderSettings")
+
+    # LOG.info(s.MAYA_RENDERER
+    # if os.environ["SOFTWARE"] == "maya":
+    #     if renderStatus:
+    #         LOG.info("Render Settings : " + SOFTWARE + " : Low")
+    #     else:
+    #         LOG.info("Render Settings : " + SOFTWARE + " : High")
+
+
+    # if os.environ["SOFTWARE"] == "nuke":
+    #     if renderStatus:
+    #         LOG.info("Render Settings : " + SOFTWARE + " : Low")
+    #     else:
+    #         LOG.info("Render Settings : " + SOFTWARE + " : High")
+
+
+    # if os.environ["SOFTWARE"] == "houdini":
+    #     if renderStatus:
+    #         LOG.info("Render Settings : " + SOFTWARE + " : Low")
+    #     else:
+    #         LOG.info("Render Settings : " + SOFTWARE + " : High")

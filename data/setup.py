@@ -17,11 +17,14 @@ import sys
 import yaml
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG = ''
 
-class SetEnv(object):
+class Setup(object):
 
     def __init__(self):
-        self.pipeline_env  = newDict()
+        global LOG
+
+        self.pipeline_env  = NewDict()
         this_path          = os.path.normpath(os.path.dirname(__file__))
         this_pipeline_path = os.path.normpath(os.path.dirname(this_path))
         data_project_path  = os.path.normpath(("/").join([this_path, "pipeline.yml"]))
@@ -34,27 +37,27 @@ class SetEnv(object):
         if os.path.exists(data_project_path):
             with open(data_project_path , 'r') as stream:
                 try:
-                    self.data_project = yaml.load(stream)
-                    if this_pipeline_path in self.data_project['PATH']:
-                        for index in range(0, self.data_project["PATH"].index(this_pipeline_path)):
-                            self.data_project['PATH'].pop(0)
-                        self.pipeline_env["PIPELINE_PATH"] = self.data_project['PATH']
+                    self.pipeline_data = yaml.load(stream)
+                    if this_pipeline_path in self.pipeline_data['PATH']:
+                        for index in range(0, self.pipeline_data["PATH"].index(this_pipeline_path)):
+                            self.pipeline_data['PATH'].pop(0)
+                        self.pipeline_env["PIPELINE_PATH"] = self.pipeline_data['PATH']
                     else:
                         print('STOP PROCESS\n\
                                Missing current PATH in {}\n\
                                GET:  {}\n\
-                               NEED: {}'.format(data_project_path, self.data_project["PATH"], this_pipeline_path))
+                               NEED: {}'.format(pipeline_data_path, self.pipeline_data["PATH"], this_pipeline_path))
                         return
                 except yaml.YAMLError as exc:
                     print('STOP PROCESS\n'\
                           'The DATA file is corrupted.\n\n{}'.format(exc))
                     return
         else:
-            print("STOP PROCESS\nCANT load DATA file: {}".format(data_project_path ))
+            print("STOP PROCESS\nCANT load DATA file: {}".format(pipeline_data_path ))
             return
 
         # CREATE all pipeline env
-        for eachPath in self.data_project['PATH']:
+        for eachPath in self.pipeline_data['PATH']:
             if not os.path.exists(eachPath):
                 print('PIPELINE_PATH doesnt exist: {}\n'\
                       'SOURCE[PATH]: {}'.format(eachPath, data_project_path))
@@ -65,60 +68,69 @@ class SetEnv(object):
             self.pipeline_env.add("SOFTWARE_PATH",     eachPath + "/software")
             self.pipeline_env.add("DATA_PATH",         eachPath + "/data")
             self.pipeline_env.add("DATA_USER_PATH",    eachPath + "/data/user/"    + os.getenv('username'))
-            self.pipeline_env.add("DATA_PROJECT_PATH", eachPath + "/data/project/" + self.data_project['project'])
+            self.pipeline_env.add("DATA_PROJECT_PATH", eachPath + "/data/project/" + self.pipeline_data['project'])
 
             sys.path.append(eachPath)
             sys.path.append(self.pipeline_env['SOFTWARE_PATH'][-1])
             sys.path.append(self.pipeline_env['LIB_PATH'][-1])
 
         # ADD all pipeline env
-        addEnvVar("PIPELINE_PATH",     (";").join(self.pipeline_env["PIPELINE_PATH"]))
-        addEnvVar("IMG_PATH",          (";").join(self.pipeline_env["IMG_PATH"]))
-        addEnvVar("LIB_PATH",          (";").join(self.pipeline_env["LIB_PATH"]))
-        addEnvVar("SOFTWARE_PATH",     (";").join(self.pipeline_env["SOFTWARE_PATH"]))
-        addEnvVar("DATA_PATH",         (";").join(self.pipeline_env["DATA_PATH"]))
-        addEnvVar("DATA_PROJECT_PATH", (";").join(self.pipeline_env["DATA_PROJECT_PATH"]))
+        self.add_env_var("PIPELINE_PATH",     (";").join(self.pipeline_env["PIPELINE_PATH"]))
+        self.add_env_var("IMG_PATH",          (";").join(self.pipeline_env["IMG_PATH"]))
+        self.add_env_var("LIB_PATH",          (";").join(self.pipeline_env["LIB_PATH"]))
+        self.add_env_var("SOFTWARE_PATH",     (";").join(self.pipeline_env["SOFTWARE_PATH"]))
+        self.add_env_var("DATA_PATH",         (";").join(self.pipeline_env["DATA_PATH"]))
+        self.add_env_var("DATA_PROJECT_PATH", (";").join(self.pipeline_env["DATA_PROJECT_PATH"]))
 
-        if not self.data_project['user_data']:
-            self.pipeline_env["DATA_USER_PATH"] = ''
-            print('USER DATA will be ignored.')
-
-        addEnvVar("DATA_USER_PATH", (";").join(self.pipeline_env["DATA_USER_PATH"]))
-
+        # LOG
         import libLog
+        LOG = libLog.init(script=TITLE)
+        LOG.debug('')
+        LOG.debug('______________________________SETUP______________________________')
+
+        # CHECK if user overwrite is possible
+        if not self.pipeline_data['user_data']:
+            self.pipeline_env["DATA_USER_PATH"] = ''
+            LOG.warning('USER DATA will be ignored.')
+
+        self.add_env_var("DATA_USER_PATH", (";").join(self.pipeline_env["DATA_USER_PATH"]))
+
         import libData
 
-        LOG = libLog.initLog(script=TITLE)
-        config_project = libData.getData('project')
+        project_data = libData.get_data('project')["PROJECT"]
+        os.environ["PROJECT_NAME"] = project_data["name"]
 
-        os.environ["PROJECT_NAME"] = config_project["PROJECT"]["name"]
-
-        if os.path.exists(config_project["PROJECT"]["path"]):
-            os.environ["PROJECT_PATH"] = config_project["PROJECT"]["path"]
+        if os.path.exists(project_data["path"]):
+            os.environ["PROJECT_PATH"] = project_data["path"]
         else:
-            LOG.warning('PROJECT PATH doesnt exist: {}'.format(config_project["PROJECT"]["path"]))
+            LOG.warning('PROJECT PATH doesnt exist: {}'.format(project_data["path"]))
 
         self.__call__()
 
 
     def __call__(self):
-        import libLog
+        global LOG
 
-        LOG = libLog.initLog(script=TITLE)
-        LOG.debug("PATH:\n{}".format('[%s]' % ', '.join(map(str, sys.path))))
+        LOG.debug("PATH:{}".format('[%s]' % ', '.join(map(str, sys.path))))
+        LOG.debug('ENV: {}'.format(self.pipeline_env))
 
-        text = ''
-        tmp  = self.pipeline_env
-        while tmp:
-            key, value = tmp.popitem()
-            text += '{:17} - {}\n'.format(key,value[0])
 
-        LOG.debug('ENV:\n{}'.format(text))
+    #************************
+    # FUNCTIONS
+    def add_env_var(self, var, content):
+        content = os.path.normpath(content)
+        if os.environ.__contains__(var):
+            os.environ[var] += ("").join([";", content])
+        else:
+            os.environ[var] = content
+        return os.environ[var]
 
 
 #************************
 # CLASS
-class newDict(dict):
+
+# add or overwrite dict + normpath
+class NewDict(dict):
     def __init__(self):
         super(dict)
         self = dict()
@@ -130,19 +142,11 @@ class newDict(dict):
         else:
             self[key] = [value]
 
-#************************
-# FUNCTIONS
-def addEnvVar(var, content):
-    content = os.path.normpath(content)
-    if os.environ.__contains__(var):
-        os.environ[var] += ("").join([";", content])
-    else:
-        os.environ[var] = content
-    return os.environ[var]
-
 
 # DELETE
-a = SetEnv()
-import libData
-print libData.getProjectUserPath()
+# a = Setup()
+# import libData
+# print libData.getProjectUserPath()
+# import libRepo
+# libRepo.make_github_issue(title='Login Test', body='Body text', milestone=None, labels=['bug'])
 

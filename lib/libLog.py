@@ -17,38 +17,29 @@ import sys
 import logging
 import logging.config
 
-THIS_DIR = ("/").join([os.path.dirname(__file__)])
+
+USER = os.getenv('username')
 
 #************************
 # CLASS
 class ContextFilter(logging.Filter):
-    USERS = os.getenv('username')
+    USERS = USER
 
     def filter(self, record):
         record.user = ContextFilter.USERS
         return True
 
-class MyFilter(object):
-    def __init__(self, level):
-        self.__level = level
-
-    def filter(self, logRecord):
-        for level in self.__level:
-            if logRecord.levelno == level:
-                return True
-        return False
-
 
 #************************
 # LOGGING
-def initLog(software="default", script="default", level=logging.DEBUG, path="", *args, **kwargs):
+def init(software="default", script="default", level=logging.DEBUG, path="", *args, **kwargs):
     logger = logging.getLogger(script)
 
     # CHECK path param
     if not path:
-        path = ("/").join([getEnv('DATA_PATH'), 'user', os.getenv('username'), os.getenv('username') + ".log"])
+        path = ("/").join([get_env('DATA_PATH'), 'user', USER, USER + ".log"])
 
-    createFolder(path)
+    create_folder(path)
 
     info_path, error_path, debug_path = path, path, path
 
@@ -57,82 +48,84 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
         disable_existing_loggers= False,
         formatters= {
             "simple": {
-                "format": "%(asctime)s | %(user)-10s | %(module)-10s | %(levelname)-8s - %(lineno)-4d | %(message)s",
+                "format": "%(asctime)s | %(user)-10s | %(module)-10s | %(levelname)-7s - %(lineno)-4d | %(message)s",
                 "datefmt":"%d.%m.%Y %H:%M:%S"
             },
             "simpleInfo": {
-                "format": "%(asctime)s | %(user)-10s | %(module)-10s - %(funcName)-18s | %(lineno)-4d | %(levelname)-8s | %(message)s",
+                "format": "%(asctime)s | %(levelname)-7s | %(user)-10s | %(module)-10s - %(funcName)-18s | %(lineno)-4d | %(message)s",
                 "datefmt":"%d.%m.%Y %H:%M:%S"
             },
             "simpleDebug": {
-                "format": "%(asctime)s | %(module)-10s - %(funcName)-18s | %(lineno)-4d | %(levelname)-8s | %(message)s",
+                "format": "%(asctime)s | %(levelname)-7s | %(module)-10s - %(funcName)-18s | %(lineno)-4d | %(message)s",
                 "datefmt":"%d.%m.%Y %H:%M:%S"
             },
             "simpleConsole": {
-                "format": "%(asctime)s | %(module)-10s - %(funcName)-16s | %(lineno)-4d | %(levelname)-8s | %(message)s",
+                "format": "%(asctime)s | %(levelname)-7s | %(module)-10s - %(funcName)-16s | %(lineno)-4d | %(message)s",
                 "datefmt":"%H:%M:%S"
             }
-        },
+        }#,
 
-        handlers= {
-            "console": {
-                "class": "logging.StreamHandler",
-                "level": "DEBUG",
-                "formatter": "simpleConsole",
-                "stream": "ext://sys.stdout"
-            },
+        # handlers= {
+        #     "console": {
+        #         "class": "logging.StreamHandler",
+        #         "level": "DEBUG",
+        #         "formatter": "simpleConsole",
+        #         "stream": "ext://sys.stdout"
+        #     },
 
-            "info_file_handler": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "level": "INFO",
-                "formatter": "simpleInfo",
-                "filename": info_path,
-                "maxBytes": 10485760,
-                "backupCount": 20,
-                "encoding": "utf8"
-            },
+        #     "info_file_handler": {
+        #         "class": "logging.handlers.RotatingFileHandler",
+        #         "level": "INFO",
+        #         "formatter": "simpleInfo",
+        #         "filename": info_path,
+        #         "maxBytes": 10485760,
+        #         "backupCount": 20,
+        #         "encoding": "utf8"
+        #     },
 
-            "debug_file_handler": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "level": "DEBUG",
-                "formatter": "simpleInfo",
-                "filename": debug_path,
-                "maxBytes": 10485760,
-                "backupCount": 20,
-                "encoding": "utf8"
-            },
+        #     "debug_file_handler": {
+        #         "class": "logging.handlers.RotatingFileHandler",
+        #         "level": "DEBUG",
+        #         "formatter": "simpleInfo",
+        #         "filename": debug_path,
+        #         "maxBytes": 10485760,
+        #         "backupCount": 20,
+        #         "encoding": "utf8"
+        #     },
 
-            "error_file_handler": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "level": "ERROR",
-                "formatter": "simpleDebug",
-                "filename": error_path,
-                "maxBytes": 10485760,
-                "backupCount": 20,
-                "encoding": "utf8"
-             }
-        },
+        #     "error_file_handler": {
+        #         "class": "logging.handlers.RotatingFileHandler",
+        #         "level": "ERROR",
+        #         "formatter": "simpleDebug",
+        #         "filename": error_path,
+        #         "maxBytes": 10485760,
+        #         "backupCount": 20,
+        #         "encoding": "utf8"
+        #      }
+        # },
 
-        logger= {
-            "my_module": {
-                "level": level,
-                "handlers": ["console"],
-                "propagate": "no"
-            }
-        },
+        # logger= {
+        #     "my_module": {
+        #         "level": level,
+        #         "handlers": ["console"],
+        #         "propagate": "no"
+        #     }
+        # },
 
-        root= {
-            "level": level,
-            #"handlers": ["console", "info_file_handler", "debug_file_handler", "error_file_handler"]
-        }
+        # root= {
+        #     "level": level,
+        #     #"handlers": ["console", "info_file_handler", "debug_file_handler", "error_file_handler"]
+        # }
     )
 
+    # CONSOLE
     console_handler = logging.StreamHandler(stream=sys.stdout)
-    formatter       = logging.Formatter(logging_config["formatters"]["simpleConsole"]["format"])
+    formatter       = logging.Formatter(logging_config["formatters"]["simpleConsole"]["format"], logging_config["formatters"]["simpleConsole"]["datefmt"])
     console_handler.setFormatter(formatter)
     console_handler.setLevel(logging.INFO)
     logger.addHandler(console_handler)
 
+    # DEBUG
     if level == logging.DEBUG:
         debug_handler = logging.handlers.RotatingFileHandler(debug_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
         formatter     = logging.Formatter(logging_config["formatters"]["simpleDebug"]["format"], logging_config["formatters"]["simpleDebug"]["datefmt"])
@@ -140,6 +133,7 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
         debug_handler.setLevel(level)
         logger.addHandler(debug_handler)
 
+    # INFO, WARNING, ERROR
     else: #level == logging.INFO:
         info_handler = logging.handlers.RotatingFileHandler(info_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
         formatter    = logging.Formatter(logging_config["formatters"]["simpleInfo"]["format"], logging_config["formatters"]["simple"]["datefmt"])
@@ -153,8 +147,8 @@ def initLog(software="default", script="default", level=logging.DEBUG, path="", 
     return logger
 
 #************************
-# FUNC
-def createFolder(path):
+# FUNCTION
+def create_folder(path):
     if len(path.split(".")) > 1:
         path = os.path.dirname(path)
     if not os.path.exists(path):
@@ -163,25 +157,25 @@ def createFolder(path):
         except:
             print("WARNING : Can not create folder : %s"% path)
 
-
-def getEnv(var):
+def get_env(var):
     if os.environ.__contains__(var):
         return os.environ[var].split(';')[0]
-    LOG.warning('ENV doesnt exist: {}'.format(var))
+    print('ENV doesnt exist: {}'.format(var))
     return ""
+
 
 #************************
 # TEST
 def test():
     title = "default"
-    LOG1  = initLog(script=title, logger=logging.getLogger(title))
+    LOG1  = init(script=title, logger=logging.getLogger(title))
     LOG1.info("START1")
     print LOG1
     LOG1.debug('Failed')
     LOG1.error('Failed to open file', exc_info=True)
 
     title = "default_new"
-    LOG2  = initLog(script=title, level=logging.DEBUG, logger=logging.getLogger(title))
+    LOG2  = init(script=title, level=logging.DEBUG, logger=logging.getLogger(title))
     LOG2.info("START2")
     LOG2.debug('Failed')
 
@@ -189,8 +183,7 @@ def test():
     except: LOG2.error('Failed to open file', exc_info=True)
 
     LOG1.info('START1_2')
-    LOG2.debug(os.getenv('username'))
-    print LOG2.warning("START2_SECONDFUCKINGTIME")
+    print LOG2.warning("START2_SECONDTIME")
 
     try:
         1/0

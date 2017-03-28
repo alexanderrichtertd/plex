@@ -1,20 +1,16 @@
-#*************************************************************
-# CONTENT       set low and high render settings
-#               create render or viewer snapshots
-#*********************************************************************
-# content   = set low and high render settings
-#             create render or viewer snapshots
-# version   = 0.0.1
-# date      = 2017-01-01
-#
-# license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
-#*********************************************************************
-# This source file has been developed within the scope of the
-# Technical Director course at Filmakademie Baden-Wuerttemberg.
-# http://td.animationsinstitut.de
-#*********************************************************************
+"""*************************************************************
+content   = create render or viewer snapshots
+version   = 0.0.1
+date      = 2017-01-01
+
+license   = MIT
+copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+author    = Alexander Richter <contact@richteralexander.com>
+*********************************************************************
+This source file has been developed within the scope of the
+Technical Director course at Filmakademie Baden-Wuerttemberg.
+http://td.animationsinstitut.de
+*********************************************************************"""
 
 import os
 import time
@@ -26,34 +22,9 @@ import libData
 import libFunc
 
 # DEFAULT
-import libLog
-LOG = libLog.initLog(script="lib")
+import log
+LOG = log.initLog(script="lib")
 
-#************************
-# RENDER SETTINGS
-def setRenderSettings(renderStatus):
-    LOG.info("setRenderSettings")
-
-    # LOG.info(s.MAYA_RENDERER
-    # if os.environ["SOFTWARE"] == "maya":
-    #     if renderStatus:
-    #         LOG.info("Render Settings : " + SOFTWARE + " : Low")
-    #     else:
-    #         LOG.info("Render Settings : " + SOFTWARE + " : High")
-
-
-    # if os.environ["SOFTWARE"] == "nuke":
-    #     if renderStatus:
-    #         LOG.info("Render Settings : " + SOFTWARE + " : Low")
-    #     else:
-    #         LOG.info("Render Settings : " + SOFTWARE + " : High")
-
-
-    # if os.environ["SOFTWARE"] == "houdini":
-    #     if renderStatus:
-    #         LOG.info("Render Settings : " + SOFTWARE + " : Low")
-    #     else:
-    #         LOG.info("Render Settings : " + SOFTWARE + " : High")
 
 
 #************************

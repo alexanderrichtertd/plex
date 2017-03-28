@@ -24,8 +24,8 @@ from PySide.QtGui import QLabel
 
 # DELETE *************************
 sys.path.append("D:/Dropbox/arPipeline/2000/data")
-import setEnv
-setEnv.SetEnv()
+import setup
+setup.Setup()
 # ********************************
 
 import libLog
@@ -34,7 +34,7 @@ import libData
 import libFileFolder
 
 TITLE   = os.path.splitext(os.path.basename(__file__))[0]
-LOG     = libLog.initLog(script=TITLE)
+LOG     = libLog.init(script=TITLE)
 PATH_UI = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
 
 PATH_MENU_UI    = ("/").join([os.path.dirname(__file__), "ui", TITLE + "_menu.ui"])
@@ -53,8 +53,11 @@ class ArHeader(object):
 
         self.open_path    = ""
 
+        self.ui()
+
         #*********************************************************************
         # UI
+    def ui(self):
         self.wgHeader.lblProjectName.setText(TITLE)
         self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(libData.getImgPath("btn/btnProject48"))))
 
@@ -109,12 +112,8 @@ class ArHeader(object):
         #self.addPreview()
         #self.addMenu()
 
-        # rounded edges
-        # path = QtGui.QPainterPath()
-        # path.addRoundedRect(QtCore.QRectF(self.wgHeader.rect()), 5.0, 5.0)
-        # self.wgHeader.setMask(QtGui.QRegion(path.toFillPolygon().toPolygon()))
-
-        self.wgHeader.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint) # | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint |
+        self.wgHeader.wgHeader.hide()
+        # self.wgHeader.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint) # | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
         self.wgHeader.show()
 
     def addPreview(self):

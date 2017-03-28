@@ -13,8 +13,8 @@
 #*********************************************************************
 
 PROJECT:
-  name: arPipeline
-  id:   arpipeline
+  name: Default
+  # id:   default
 
   path: D:\Dropbox\arPipeline
 
@@ -25,20 +25,14 @@ PROJECT:
   fps: 24
 
 
+REPOSITORY:
+  username: richteralexander
+  password:
 
-SOFTWARE:
-  maya:
-    version: 2015
+  owner: richteralexander
+  repository: pathfinder
 
-  nuke:
-    version: 9.07
-
-  houdini:
-    version: 15.56
-
-
-
-LINK:
+HELP:
   default:  https://github.com/alexanderrichter/arProject/wiki
   arHeader: https://github.com/alexanderrichter/arProject/wiki/arHeader
 

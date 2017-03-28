@@ -18,8 +18,8 @@ script_last   = "scripts"
 
 # DELETE
 SHOTS    = ['s010_halo', 's020_what']
-SCRIPTS  = ['Load', 'Save']
 ASSETS   = ['Max', 'Table']
+SCRIPTS  = ['Load', 'Save']
 SOFTWARE = ['Maya', 'Nuke']
 
 class ScriptSelection(object):

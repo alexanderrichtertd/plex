@@ -41,7 +41,7 @@ import libFileFolder
 
 #************************
 # REPORT
-class Reminder():
+class Notificator():
 
     to = ['arpipeline', 'project', 'pipeline']
 
@@ -198,7 +198,7 @@ class ArReminder():
 # START UI
 def start(add_reminder = ''):
     app = QtGui.QApplication(sys.argv)
-    classVar = ArReminder(add_reminder)
+    classVar = Notificator(add_reminder)
 
     app.exec_()
 

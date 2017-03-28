@@ -1,5 +1,5 @@
 # *************************************************************
-# content   = SET current project
+# content   = notification
 # version   = 0.0.1
 # date      = 2017-01-01
 
@@ -12,33 +12,4 @@
 # http://td.animationsinstitut.de
 # *********************************************************************
 
-# USE this project settings
-# project/$project
-project: default
 
-# IMPORTANT: order
-# DEFAULT:   local, project, global
-status: pipeline
-
-PATH:
-    # 1-local (dev & debug)
-    - C:\sandbox
-    # 2-project (production)
-    - P:\project
-    # 3-pipeline (master)
-    - D:\Dropbox\arPipeline\2000
-
-
-# USER customize
-user_data: True
-# [empty]  - use just project data
-# [filled] - use user data before project
-
-
-# NEEDED DATA
-data_must:
-  - project
-  - path
-  - script
-  - constant
-  - rules

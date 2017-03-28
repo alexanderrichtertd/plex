@@ -1,0 +1,77 @@
+
+
+
+rights:
+  - admin
+  - pipeline
+  - production
+  - user
+
+
+task:
+
+# var:
+#   - sequence
+#   - type
+
+#   - shot
+#   - asset
+#   - status
+#   - task
+#   - version
+#   - author
+#   - comment
+#   - fileformat
+
+#   - passes
+#   - frame
+
+# sequence:
+#   - [sqnr]_[sqname]  # shots
+
+# type:
+#   - char
+#   - prop
+#   - set
+
+# shot  : &SHOT [shotnr]_[shotname]
+# asset : &ASSET [assetname]
+
+# status :
+#   - WORK
+#   - PUBLISH
+
+# frame  : 1001
+
+# asset_task: &ASSET_TASK
+#   - GEO
+#   - TEX
+#   - SHD
+#   - RIG
+
+# shot_task: &SHOT_TASK
+#   - LGT
+#   - FX
+#   - RENDER
+
+# task:
+#   - &ASSET_TASK
+#   - &SHOT_TASK
+
+# version : v000
+# author  : 2
+# comment : [:30]
+
+# rights :
+#   - Superadmin
+#   - Pipeline
+#   - Production
+#   - User
+
+
+# shots  : [PATH:shot]/$[*SHOT]/[shot_task]/[status]/$[VAR:shot]_[shot_task]_[version]_[author]_[comment].[fileformat]
+
+# assets : [PATH:assets]/$[VAR:asset]/[asset_task]/[status]/$[VAR:asset]_[asset_task]_[version]_[author]_[comment].[fileformat]
+
+# render : [PATH:render]/$[VAR:shot]/[task]/[status]/$[VAR:shot]_[task]_[version]_[author].[frame].[fileformat]
+

@@ -22,7 +22,7 @@ import webbrowser
 import libLog
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.initLog(script=TITLE)
+LOG   = libLog.init(script=TITLE)
 
 #************************
 # FOLDER

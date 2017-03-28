@@ -17,55 +17,54 @@ import json
 import yaml
 
 import libLog
-import libUser
 import libFileFolder
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.initLog(script=TITLE)
+LOG   = libLog.init(script=TITLE)
 
 DATA_FORMAT = '.yml'
 IMG_FORMAT  = '.png'
 
+# TODO: user_id with user class - see also below
+def get_data(file_name = '', user_id = os.getenv('username')):
 
-def getData(file_name = '', user_id = libUser.getCurrentUser()):
-
-    def getAllData():
+    def get_all_data():
         config_data        = {}
-        data_user_files    = libFileFolder.getFileList(path = getEnv('DATA_USER_PATH'),    file_type = '*' + DATA_FORMAT)
-        data_project_files = libFileFolder.getFileList(path = getEnv('DATA_PROJECT_PATH'), file_type = '*' + DATA_FORMAT)
+        data_user_files    = libFileFolder.getFileList(path = get_env('DATA_USER_PATH'),    file_type = '*' + DATA_FORMAT)
+        data_project_files = libFileFolder.getFileList(path = get_env('DATA_PROJECT_PATH'), file_type = '*' + DATA_FORMAT)
 
         data_project_files = list(set(data_user_files)|set(data_project_files))
-        for each_file in data_project_files: config_data.update({each_file : getData(each_file, user_id)})
+        for each_file in data_project_files: config_data.update({each_file : get_data(each_file, user_id)})
         return config_data
 
     if not file_name:
-        return getAllData()
+        return get_all_data()
 
     file_name = file_name.split('.')[0]
     file_path = ''
 
     if user_id:
-        file_path = os.path.normpath(('/').join([getEnv('DATA_USER_PATH'), file_name + DATA_FORMAT]))
+        file_path = os.path.normpath(('/').join([get_env('DATA_USER_PATH'), file_name + DATA_FORMAT]))
 
     if not os.path.exists(file_path):
-        file_path = os.path.normpath(('/').join([getEnv('DATA_PROJECT_PATH'), file_name + DATA_FORMAT]))
+        file_path = os.path.normpath(('/').join([get_env('DATA_PROJECT_PATH'), file_name + DATA_FORMAT]))
 
     # OPEN data path
     if os.path.exists(file_path):
-        LOG.debug(file_path)
-        return getYmlFile(file_path)
+        # LOG.debug(file_path)
+        return get_yml_file(file_path)
     else:
         LOG.warning('CANT find file: {}'.format(file_path))
     return ''
 
-def setData(file_name, var, data):
-    print('setData')
-    # setYmlFile
+def set_data(file_name, var, data):
+    print('set_data')
+    # set_yml_file
 
 
 #************************
 # GET PATH
-def getPipelinePath(end_path):
+def get_pipeline_path(end_path):
     pipeline_path = os.environ.get('PIPELINE_PATH', '')
     if pipeline_path:
         pipeline_path = pipeline_path.split(';')
@@ -80,7 +79,7 @@ def getPipelinePath(end_path):
     LOG.warning('PATH doesnt exists: {}'.format(path))
     return ''
 
-def getProjectPath(end_path = ''):
+def get_project_path(end_path = ''):
     project_path = os.environ.get('PROJECT_PATH', '')
     project_path = os.path.normpath(('/').join([project_path, end_path]))
 
@@ -90,24 +89,24 @@ def getProjectPath(end_path = ''):
     LOG.critical('PATH doesnt exist: {}'.format(project_path))
     return ''
 
-def getProjectUserPath(user = libUser.getCurrentUser()):
-    project_user_path = getData('Path')['PROJECT_PATH']['user']
-    return getProjectPath(('/').join([project_user_path, user]))
+def get_project_user_path(user = os.getenv('username')):
+    project_user_path = get_data('Path')['PROJECT_PATH']['user']
+    return get_project_path(('/').join([project_user_path, user]))
 
-def getImgPath(end_path = 'btn/default'):
-    path = getPipelinePath('img/' + end_path + IMG_FORMAT)
+def get_img_path(end_path = 'btn/default'):
+    path = get_pipeline_path('img/' + end_path + IMG_FORMAT)
     if not path:
-        path = getImgPath(('/').join([os.path.dirname(end_path), 'default']))
+        path = get_img_path(('/').join([os.path.dirname(end_path), 'default']))
     return path
 
 
 #************************
 # YAML
-def setYmlFile(path, content):
+def set_yml_file(path, content):
     print 'set YAML file'
 
 
-def getYmlFile(path):
+def get_yml_file(path):
     with open(path, 'r') as stream:
         try:
             pipeline_path = yaml.load(stream)
@@ -125,14 +124,14 @@ def getYmlFile(path):
 # @BRIEF  creates or add enviroment variable
 #
 # @PARAM  STRING var, STRING content
-def addEnv(var, content):
+def add_env(var, content):
     if os.environ.__contains__(var):
         os.environ[var] += ('').join([content, ';'])
     else:
         os.environ[var] = ('').join([content, ';'])
     return os.environ[var]
 
-def getEnv(var):
+def get_env(var):
     if os.environ.__contains__(var):
         return os.environ[var].split(';')[0]
     LOG.warning('ENV doesnt exist: {}'.format(var))
@@ -146,7 +145,7 @@ def getEnv(var):
 # import setEnv
 # setEnv.SetEnv()
 
-# print getPipelinePath('img')
+# print get_pipeline_path('img')
 # print os.environ.get('PIPELINE_PATH', ')
 
-# print getImgPath('btn/btnReport4')
+# print get_img_path('btn/btnReport4')
