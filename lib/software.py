@@ -14,6 +14,7 @@
 
 import os
 import sys
+import subprocess
 
 # DELETE *************************
 sys.path.append("D:/Dropbox/arPipeline/2000/data")
@@ -32,21 +33,22 @@ LOG   = libLog.init(script=TITLE)
 # CLASS
 class Software(object):
 
-    def __init__(self, software):
+    def __init__(self, software, open_file=''):
         # GET data
         self.software_data = libData.get_data()['software'][software.upper()]
+        self.open_file = open_file
 
         # SET DATA/project/$project/Software.yml/$software/ENV
         # TODO: REPLACE variables
         env_data = self.software_data['ENV']
 
         for env, content in env_data.iteritems():
-            if  type(content) == list:
+            if  isinstance(content, list):
                 for each in content:
                     os.environ[env] = each
             else: os.environ[env] = str(content)
 
-        LOG.debug('SOFTWARE_ENV: {}'.format(env_data))
+        LOG.debug('{}_ENV: {}'.format(software.upper(), env_data))
 
         # SOFTWARE
         self.software   = software
@@ -56,6 +58,10 @@ class Software(object):
         self.pipeline_path = ("/").join([os.environ["SOFTWARE_PATH"], self.software])
         libData.add_env("PYTHONPATH", self.pipeline_path)
 
+        # RENDERER
+        self.renderer      = self.software_data['renderer']
+        self.renderer_path = self.software_data['renderer_path']
+
         if software == 'maya':
             self.maya()
         elif software == 'nuke':
@@ -64,12 +70,6 @@ class Software(object):
             self.houdini()
         else:
             raise LOG.warning('Software was not found')
-
-        # RENDERER
-        self.renderer      = self.software_data['renderer']
-        self.renderer_path = self.software_data['renderer_path']
-
-        sys.path.append(("/").join([os.environ["SOFTWARE_PATH"], "bin;"]))
 
 
     def __call__(self):
@@ -86,11 +86,13 @@ class Software(object):
 
     def nuke(self):
         print('Nuke')
+        # subprocess.check_output('start "{}" --nukex {}'.format(self.software_data['path'], self.open_file), shell=True)
+        subprocess.check_output('start "{}"'.format(self.software_data['path']), shell=True)
 
 
     def houdini(self):
         print('Houdini')
 
 
-soft = Software('maya')
+soft = Software('nuke')
 # soft.__call__()

@@ -1,8 +1,3 @@
-lib/libGit.py
-lib/extern
-lib/helper
-lib/default
-
 img/_src
 
 software/utilities/ui/_history

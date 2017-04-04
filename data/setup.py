@@ -17,7 +17,7 @@ import sys
 import yaml
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG = ''
+LOG   = ''
 
 class Setup(object):
 
@@ -27,7 +27,7 @@ class Setup(object):
         self.pipeline_env  = NewDict()
         this_path          = os.path.normpath(os.path.dirname(__file__))
         this_pipeline_path = os.path.normpath(os.path.dirname(this_path))
-        data_project_path  = os.path.normpath(("/").join([this_path, "pipeline.yml"]))
+        data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
 
         # OS & PYTHON_VERSION
         os.environ['OS'] = sys.platform
@@ -106,6 +106,10 @@ class Setup(object):
             LOG.warning('PROJECT PATH doesnt exist: {}'.format(project_data["path"]))
 
         self.__call__()
+
+
+    def create_user(self):
+        print 'create singleton user'
 
 
     def __call__(self):

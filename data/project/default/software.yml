@@ -36,11 +36,24 @@ MAYA:
 #************************
 # NUKE
 NUKE:
-  path:
+  path: C:/Program Files/Nuke10.5v2/Nuke10.5.exe
   version: 9.07
 
   renderer:
   renderer_path:
+
+  ENV:
+    NUKE_PATH: STATUS_PATH
+    NUKE_PATH: SOFTWARE_PATH
+    NUKE_PATH: PIPELINE_PATH
+    NUKE_PATH: PLUGIN_PATH
+
+    # Init & Menu
+    NUKE_INIT_PATH: SOFTWARE_PATH
+    NUKE_MENU_PATH: SOFTWARE_PATH
+
+    NUKE_DIR: C:/Program Files/%NUKE_VERSION%"
+    PATH: NUKE_DIR
 
 
 #************************
