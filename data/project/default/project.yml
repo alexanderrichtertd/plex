@@ -12,28 +12,53 @@
 # http://td.animationsinstitut.de
 #*********************************************************************
 
-PROJECT:
-  name: Default
-  # id:   default
+name: Default
+# id:   default
 
-  path: D:\Dropbox\arPipeline
+path: &PROJECT D:/Dropbox/arPipeline
 
-  resolution:
-    - 2048
-    - 872
+resolution:
+  - 2048
+  - 872
 
-  fps: 24
+fps: 24
 
 
-REPOSITORY:
-  username: richteralexander
-  password:
+PROJECT_PATH:
+  user              : !join [*PROJECT, /00_user]
 
-  owner: richteralexander
-  repository: pathfinder
+  footage           : &FOOTAGE !join [*PROJECT, /10_footage]
+  footage_hdri      : !join [*FOOTAGE, /hdri]
+  footage_shader    : !join [*FOOTAGE, /shader]
+  footage_scene     : !join [*FOOTAGE, /scene]
+  footage_textures  : !join [*FOOTAGE, /textures]
+
+  preproduction     : !join [*PROJECT, /20_pre]
+  rnd               : !join [*PROJECT, /25_rnd]
+
+  assets            : &ASSETS !join [*PROJECT, /30_assets]
+  assets_char       : !join [*ASSETS, "/ + TYPE_ASSETS[char]"]
+  assets_prop       : !join [*ASSETS, "/ + TYPE_ASSETS[prop]"]
+  assets_set        : !join [*ASSETS, "/ + TYPE_ASSETS[set]"]
+  assets_fx         : !join [*ASSETS, "/ + TYPE_ASSETS[fx]"]
+
+  shots             : &SHOTS !join [*PROJECT, /40_shots]
+  post              : !join [*SHOTS, ]
+  shots_alembic     : !join [*SHOTS, /s000_ALEMBIC/40_ANIM/WORK]
+  comp              : !join [*SHOTS, ]
+  comp_render       : !join [*SHOTS, /render]
+
+  render            : !join [*PROJECT, /45_render]
+
+  edit              : &EDIT !join [*PROJECT, /50_edit]
+  edit_cut          : !join [*EDIT, /_cut]
+  edit_music        : !join [*EDIT, /_music]
+  edit_sound        : !join [*EDIT, /_sound]
+  edit_final        : !join [*EDIT, /FINAL]
+
 
 HELP:
-  default:  https://github.com/alexanderrichter/arProject/wiki
-  arHeader: https://github.com/alexanderrichter/arProject/wiki/arHeader
+  default:  https://github.com/richteralexander/arProject/wiki
+  arHeader: https://github.com/richteralexander/arProject/wiki/arHeader
 
 

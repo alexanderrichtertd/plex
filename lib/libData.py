@@ -13,8 +13,8 @@
 #*********************************************************************
 
 import os
-import json
-import yaml
+import sys
+
 
 import libLog
 import libFileFolder
@@ -22,11 +22,20 @@ import libFileFolder
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
+try: import yaml
+except:
+    path = 'C:/Python27/Lib/site-packages'
+    sys.path.append(path)
+    LOG.debug('SYS_PATH added YAML: {}'.format(path))
+    import yaml
+
 DATA_FORMAT = '.yml'
 IMG_FORMAT  = '.png'
 
 # TODO: user_id with user class - see also below
-def get_data(file_name = '', user_id = os.getenv('username')):
+# GET data from files
+# Specific file or all files
+def get_data(file_name='', user_id=os.getenv('username')):
 
     def get_all_data():
         config_data        = {}
@@ -79,21 +88,7 @@ def get_pipeline_path(end_path):
     LOG.warning('PATH doesnt exists: {}'.format(path))
     return ''
 
-def get_project_path(end_path = ''):
-    project_path = os.environ.get('PROJECT_PATH', '')
-    project_path = os.path.normpath(('/').join([project_path, end_path]))
-
-    if os.path.exists(project_path):
-        return project_path
-
-    LOG.critical('PATH doesnt exist: {}'.format(project_path))
-    return ''
-
-def get_project_user_path(user = os.getenv('username')):
-    project_user_path = get_data('Path')['PROJECT_PATH']['user']
-    return get_project_path(('/').join([project_user_path, user]))
-
-def get_img_path(end_path = 'btn/default'):
+def get_img_path(end_path='btn/default'):
     path = get_pipeline_path('img/' + end_path + IMG_FORMAT)
     if not path:
         path = get_img_path(('/').join([os.path.dirname(end_path), 'default']))
@@ -105,20 +100,43 @@ def get_img_path(end_path = 'btn/default'):
 def set_yml_file(path, content):
     print 'set YAML file'
 
-
 def get_yml_file(path):
     with open(path, 'r') as stream:
         try:
+            # STRING into DICT
             pipeline_path = yaml.load(stream)
             if pipeline_path:
                 return pipeline_path
             else:
-                LOG.warning('CANT load fiel: {}'.format(path))
+                LOG.warning('CANT load file: {}'.format(path))
         except yaml.YAMLError as exc:
             LOG.error(exc, exc_info=True)
 
+# define & register custom tag handler
+# combine var with strings
+def join(loader, node):
+    seq = loader.construct_sequence(node)
+    return ''.join([str(i) for i in seq])
 
+# replace (multiple) ENV var
+def env(loader, node):
+    seq  = loader.construct_sequence(node)
+    path = os.environ.get(seq[0], '')
+    seq.pop(0)
 
+    if ';' in path: path = path.split(';')
+    else: path = [path]
+
+    new_env = ''
+    for env in path:
+        if new_env: new_env += ';'
+        new_env += env
+        if seq: new_env += ''.join([str(os.path.normpath(i)) for i in seq])
+    print new_env
+    return new_env
+
+yaml.add_constructor('!env', env)
+yaml.add_constructor('!join', join)
 
 
 # @BRIEF  creates or add enviroment variable
@@ -126,11 +144,12 @@ def get_yml_file(path):
 # @PARAM  STRING var, STRING content
 def add_env(var, content):
     if os.environ.__contains__(var):
-        os.environ[var] += ('').join([content, ';'])
+        os.environ[var] += ('').join([';', content])
     else:
-        os.environ[var] = ('').join([content, ';'])
+        os.environ[var] = ('').join([content])
     return os.environ[var]
 
+# GET env or empty str & WARNING
 def get_env(var):
     if os.environ.__contains__(var):
         return os.environ[var].split(';')[0]

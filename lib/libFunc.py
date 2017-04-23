@@ -13,6 +13,16 @@
 #*********************************************************************
 
 import time
+import getpass
+
+
+def console_header(title = 'default'):
+    print ('\n '+chr(218)+chr(196)*37 + chr(191)+'\n '+ chr(179) + \
+          ' '*15 + title +\
+          '\n '+chr(192)+chr(196)*37 + chr(217))
+
+    print ('\n' + ' '*12 + 'Welcome ' + getpass.getuser() + '\n')
+
 
 #************************
 # TIME

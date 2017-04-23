@@ -18,16 +18,16 @@ project: default
 
 # IMPORTANT: order
 # DEFAULT:   local, project, global
-status: pipeline
-
 PATH:
     # 1-local (dev & debug)
-    - C:\sandbox
+    - local:   C:\sandbox
     # 2-project (production)
-    - P:\project
+    - project: D:\Dropbox\arPipeline\1000
     # 3-pipeline (master)
-    - D:\Dropbox\arPipeline\2000
+    - master:  D:\Dropbox\arPipeline\2000
 
+OS_PATH:
+  - C:\Python27\Lib\site-packages
 
 # USER customize
 user_data: True
@@ -38,7 +38,14 @@ user_data: True
 # NEEDED DATA
 data_must:
   - project
-  - path
+  - software
   - script
-  - constant
   - rules
+
+
+REPOSITORY:
+  username: guest
+  password:
+
+  owner: richteralexander
+  repository: plex

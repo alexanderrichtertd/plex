@@ -1,48 +1,75 @@
-#*************************************************************
-# title:        menu
+#*********************************************************************
+# content   = menu Nuke
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# function:     starup script for Nuke Menu
-#           
-# depencence:   set "NUKE_PATH=%PLUGINS_PATH%;%NUKE_PATH%"
-#
-# author:       Alexander Richter 
-# email:        contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
 import nuke
 import webbrowser
 
-import settings as s
-
-# sys.path.append(s.PATH['lib'])
-import libUser
-import libFunction
-
-
-#************************
-# LOG
-#************************
 import libLog
-import logging
+# import libData
 
-TITLE = "nuke"
-os.environ["SOFTWARE"] = TITLE
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
+
+#*******************
+# TOOLBAR
+
+# menu_data = libData.get_data('software')['NUKE']['menu']
+
+# menuNode = nuke.menu('Nodes').addMenu(s.PROJECT_NAME, icon = 'nuke_toolbar.png')
+
+# create_menu(menuNode, menu_data)
+# add_gizmo_menu(menuNode)
+
+# menuNode.addCommand('Save', lambda: save(), 'ctrl+alt+s', "save.ico")
+# menuNode.addCommand('Load', lambda: load(), 'alt+l', "load.ico")
+
+# menuNode.addSeparator()
+
+# menuNode.addCommand('arWrite', lambda: arWrite(), 'alt+w', "write.ico")
+# menuNode.addSeparator()
+
+
+# menuNode.addCommand("Plugins/rrSubmit", lambda: rrender(), 'alt+b', "rrender.ico")
+# menuNode.addCommand('Plugins/Renderthreads', lambda: renderthreads(), 'alt+v', "renderthreads.ico")
+# menuNode.addCommand('Plugins/AtoN', lambda: startAton(), 'alt+a', "aton.ico")
+
+# menuNode.addSeparator()
+
+# menuNode.addCommand('Report', lambda: report(), 'alt+r', "report.ico")
+# menuNode.addCommand('Help', lambda: help_open(), 'alt+h', "help.ico")
+
+# m = menuNode.findItem('Write')
+# m.setEnabled(False)
 
 #************************
-# LOG
-#************************
-import logging
-LOG   = libLog.initLog(software=os.environ["SOFTWARE"], script=TITLE, level=logging.INFO, logger=logging.getLogger(TITLE))
-LOG.info("START")
-
+# MENU
+def create_menu(menu_node, new_command):
+    for keys, item in new_command.keys(), new_command.items():
+        print item
+        if isinstance(item, dict):
+            new_menu = item.keys() # nuke.menu('Nodes').addMenu(item.keys())
+            create_menu(new_menu, item)
+        else:
+            print('{} - {}').format(menu_node, keys)
+            # menu_node.(exec(item))
 
 #************************
 # GIZMOS
-#************************
-def buildGizmoMenu(menu):
+def add_gizmo_menu(menu):
   for file in os.listdir(s.PATH["nuke_gizmos"]):
     if file.endswith('.gizmo'):
       gizmo = file.replace('.gizmo', '')
@@ -50,47 +77,12 @@ def buildGizmoMenu(menu):
 
 
 #************************
-# INIT
-#************************
-print ("\nWelcome " + libUser.getCurrentUser())
-print ("\n" + s.PROJECT_NAME + ": MENU")
-
-
-menuNode = nuke.menu('Nodes').addMenu(s.PROJECT_NAME, icon = 'nuke_toolbar.png')
-
-
-#*******************
-# TOOLBAR
-#*******************
-menuNode.addCommand('Save', lambda: save(), 'ctrl+alt+s', "save.ico")
-menuNode.addCommand('Load', lambda: load(), 'alt+l', "load.ico")
-
-menuNode.addSeparator()
-
-menuNode.addCommand('arWrite', lambda: arWrite(), 'alt+w', "write.ico")
-menuNode.addSeparator()
-
-buildGizmoMenu(menuNode)
-
-menuNode.addCommand("Plugins/rrSubmit", lambda: rrender(), 'alt+b', "rrender.ico")
-menuNode.addCommand('Plugins/Renderthreads', lambda: renderthreads(), 'alt+v', "renderthreads.ico")
-menuNode.addCommand('Plugins/AtoN', lambda: startAton(), 'alt+a', "aton.ico")
-
-menuNode.addSeparator()
-
-menuNode.addCommand('Report', lambda: report(), 'alt+r', "report.ico")
-menuNode.addCommand('Help', lambda: helpWeb(), 'alt+h', "help.ico")
-
-# m = menuNode.findItem('Write')
-# m.setEnabled(False)
-
-
+# FUNC
 def save():
     from utilities import arSave
     reload(arSave)
     arSave.start()
     LOG.info('SAVE')
-
 
 def load():
     from utilities import arSaveAs
@@ -98,31 +90,19 @@ def load():
     arSaveAs.start(True)
     LOG.info('LOAD : arSaveAs')
 
-
-#********************************
 def arWrite():
     nuke.createNode("arWrite")
     LOG.info('arWrite')
 
-
-#********************************
-def startAton():
-    nuke.createNode("Aton")
-    LOG.info('AtoN')
-
-
-#********************************
 def rrender():
     import rrenderSubmit
     nuke.load('rrenderSubmit')
     rrenderSubmit.rrSubmit_Nuke()
     LOG.info('ROYAL RENDER : rrenderSubmit')
 
-
 def renderthreads():
     plugin_nuke.showPopup()
     LOG.info('RENDERTHREADS : Vincent')
-
 
 # def run_renderthreadsT():
 #     from plugins.renderthreads import renderthreads
@@ -130,8 +110,6 @@ def renderthreads():
 #     renderthreads.run()
 #     LOG.info('RENDERTHREADS : Timm')
 
-
-#********************************
 def report():
     from utilities import arReport
     reload(arReport)
@@ -139,20 +117,21 @@ def report():
     LOG.info('REPORT')
 
 
-def helpWeb():
+def help_open():
     libFunction.getHelp()
     LOG.info('HELP')
 
 
 #************************
 # INIT
-#************************
 def setWriteNode():
     from scripts import writeNode
 
     write = nuke.allNodes("arWrite")
-    for currentNode in write:     
+    for currentNode in write:
         writeNode.nodeCreate(currentNode)
 
-    
+
 nuke.addOnScriptSave(setWriteNode)
+
+

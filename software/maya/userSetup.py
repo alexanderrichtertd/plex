@@ -1,66 +1,43 @@
-#*************************************************************
-# title: 		User Setup
+#*********************************************************************
+# content   = setup maya
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# software:     Maya
-#
-# content:		start point for MAYA
-#
-# dependencies: "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
-#
-# author: 		Alexander Richter 
-# email:		contact@richteralexander.com
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <contact@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
 
 import maya.cmds as cmds
 
-import settings as s
+import libLog
+import libFunc
 
-from lib import libLog
-from lib import libUser
-
-
-#************************
-# LOG
-#************************
 TITLE = "maya"
-os.environ["SOFTWARE"] = TITLE
-os.environ["RENDERER"] = s.RENDERER[os.environ["SOFTWARE"]]
+LOG   = libLog.init(script=TITLE)
 
 
 #************************
-# LOG
-#************************
-import logging
-LOG   = libLog.initLog(software=os.environ["SOFTWARE"], script=TITLE, level=logging.INFO, logger=logging.getLogger(TITLE))
+# PRINT CONSOLE
+libFunc.console_header()
 
-
-#************************
-# START MAYA
-#************************
-print "-----------------------------------------"
-print "           " + s.PROJECT_NAME
-print "-----------------------------------------"
-print ("\n	Welcome " + libUser.getCurrentUser() + "\n")
-
-
-#************************
-# PIPELINE
-#************************
 print "PATH"
 print "  ON  - lib"
 print "  ON  - img"
 print "  ON  - data"
 print "  ON  - plugins"
-print "  ON  - utilities"
 print "  ON  - settings"
+print "  ON  - utilities"
 
 print ""
 
-
-# menu *************************
 print "MENU"
 try:
 	cmds.evalDeferred("from scripts import menu\nmenu.arMenuLoad()")
@@ -72,32 +49,16 @@ except:
 
 print ""
 
-
-# plugins *************************
 print "PLUGINS"
-print "  ON  - RenderMan"
-print "  ON  - Yeti"
 print "  ON  - Arnold"
 
 print ""
 
-
-# scripts *************************
 print "SCRIPTS"
-print "  ON  - Tween Machine"
-print "  ON  - Arctracker"
-print "  ON  - prSelection"
-print "  ON  - ngSkinTools"
-print "  ON  - AtoN"
-print "  ON  - SLibBrowser"
-print "  ON  - Import/Export .obj Seq"
+print "  ON  - Utilities"
 
 print ""
 
-
-#************************
-# SETTINGS
-#************************
 print "SETTINGS"
 try:
 	cmds.evalDeferred("from scripts import maya_settings")
@@ -108,5 +69,3 @@ except:
 	print "  OFF - RENDER: RenderMan"
 
 print ""
-
-LOG.info("START")

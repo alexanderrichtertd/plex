@@ -5,7 +5,7 @@
 #
 # license   = MIT
 # copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -14,17 +14,22 @@
 
 import os
 import sys
-import yaml
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = ''
+
+try: import yaml
+except:
+    sys.path.append('C:/Python27/Lib/site-packages')
+    import yaml
 
 class Setup(object):
 
     def __init__(self):
         global LOG
 
-        self.pipeline_env  = NewDict()
+        data_pipeline_path = []
+        self.pipeline_env  = SmartDict()
         this_path          = os.path.normpath(os.path.dirname(__file__))
         this_pipeline_path = os.path.normpath(os.path.dirname(this_path))
         data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
@@ -38,49 +43,67 @@ class Setup(object):
             with open(data_project_path , 'r') as stream:
                 try:
                     self.pipeline_data = yaml.load(stream)
-                    if this_pipeline_path in self.pipeline_data['PATH']:
-                        for index in range(0, self.pipeline_data["PATH"].index(this_pipeline_path)):
-                            self.pipeline_data['PATH'].pop(0)
-                        self.pipeline_env["PIPELINE_PATH"] = self.pipeline_data['PATH']
-                    else:
-                        print('STOP PROCESS\n\
-                               Missing current PATH in {}\n\
-                               GET:  {}\n\
-                               NEED: {}'.format(pipeline_data_path, self.pipeline_data["PATH"], this_pipeline_path))
-                        return
                 except yaml.YAMLError as exc:
                     print('STOP PROCESS\n'\
                           'The DATA file is corrupted.\n\n{}'.format(exc))
                     return
+
+                # SEARCH and ADD current and sub paths
+                sub_paths = False
+                for paths in self.pipeline_data['PATH']:
+                    if this_pipeline_path in paths.values() or sub_paths:
+                        if not sub_paths: self.pipeline_env['PIPELINE_STATUS'] = paths.keys()[0]
+                        data_pipeline_path.append(paths.values())
+                        sub_paths = True
+                    else:
+                        continue
         else:
-            print("STOP PROCESS\nCANT load DATA file: {}".format(pipeline_data_path ))
+            print('STOP PROCESS\n\
+                   CANT find current path in {}'.format(data_project_path))
             return
 
-        # CREATE all pipeline env
-        for eachPath in self.pipeline_data['PATH']:
+        # CREATE all pipeline ENV
+        for eachPath in data_pipeline_path:
+            eachPath = eachPath[0]
+
             if not os.path.exists(eachPath):
                 print('PIPELINE_PATH doesnt exist: {}\n'\
                       'SOURCE[PATH]: {}'.format(eachPath, data_project_path))
                 continue
 
-            self.pipeline_env.add("IMG_PATH",          eachPath + "/img")
-            self.pipeline_env.add("LIB_PATH",          eachPath + "/lib")
-            self.pipeline_env.add("SOFTWARE_PATH",     eachPath + "/software")
-            self.pipeline_env.add("DATA_PATH",         eachPath + "/data")
-            self.pipeline_env.add("DATA_USER_PATH",    eachPath + "/data/user/"    + os.getenv('username'))
-            self.pipeline_env.add("DATA_PROJECT_PATH", eachPath + "/data/project/" + self.pipeline_data['project'])
-
-            sys.path.append(eachPath)
-            sys.path.append(self.pipeline_env['SOFTWARE_PATH'][-1])
-            sys.path.append(self.pipeline_env['LIB_PATH'][-1])
+            self.pipeline_env.add('PIPELINE_PATH',     eachPath)
+            self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
+            self.pipeline_env.add('LIB_PATH',          eachPath + '/lib')
+            self.pipeline_env.add('UTILS_PATH',        eachPath + '/lib/utils')
+            self.pipeline_env.add('CLASSES_PATH',      eachPath + '/lib/classes')
+            self.pipeline_env.add('SOFTWARE_PATH',     eachPath + '/software')
+            self.pipeline_env.add('DATA_PATH',         eachPath + '/data')
+            self.pipeline_env.add('DATA_USER_PATH',    eachPath + '/data/user/'    + os.getenv('username'))
+            self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
 
         # ADD all pipeline env
-        self.add_env_var("PIPELINE_PATH",     (";").join(self.pipeline_env["PIPELINE_PATH"]))
-        self.add_env_var("IMG_PATH",          (";").join(self.pipeline_env["IMG_PATH"]))
-        self.add_env_var("LIB_PATH",          (";").join(self.pipeline_env["LIB_PATH"]))
-        self.add_env_var("SOFTWARE_PATH",     (";").join(self.pipeline_env["SOFTWARE_PATH"]))
-        self.add_env_var("DATA_PATH",         (";").join(self.pipeline_env["DATA_PATH"]))
-        self.add_env_var("DATA_PROJECT_PATH", (";").join(self.pipeline_env["DATA_PROJECT_PATH"]))
+        self.add_env('PIPELINE_PATH',     (';').join(self.pipeline_env['PIPELINE_PATH']))
+        self.add_env('IMG_PATH',          (';').join(self.pipeline_env['IMG_PATH']))
+        self.add_env('LIB_PATH',          (';').join(self.pipeline_env['LIB_PATH']))
+        self.add_env('UTILS_PATH',        (';').join(self.pipeline_env['UTILS_PATH']))
+        self.add_env('CLASSES_PATH',      (';').join(self.pipeline_env['CLASSES_PATH']))
+        self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
+        self.add_env('DATA_PATH',         (';').join(self.pipeline_env['DATA_PATH']))
+        self.add_env('DATA_PROJECT_PATH', (';').join(self.pipeline_env['DATA_PROJECT_PATH']))
+
+        sys.path.append(os.environ['PIPELINE_PATH'])
+        sys.path.append(os.environ['IMG_PATH'] )
+        sys.path.append(os.environ['LIB_PATH'])
+        sys.path.append(os.environ['UTILS_PATH'])
+        sys.path.append(os.environ['CLASSES_PATH'])
+        sys.path.append(os.environ['SOFTWARE_PATH'] )
+        sys.path.append(os.environ['DATA_PATH'])
+        sys.path.append(os.environ['DATA_PROJECT_PATH'])
+
+        self.add_env('PYTHONPATH', os.environ['LIB_PATH'])
+        self.add_env('PYTHONPATH', os.environ['UTILS_PATH'])
+        self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
+        self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'] )
 
         # LOG
         import libLog
@@ -88,22 +111,23 @@ class Setup(object):
         LOG.debug('')
         LOG.debug('______________________________SETUP______________________________')
 
-        # CHECK if user overwrite is possible
+        # CHECK if user overwrite is active
         if not self.pipeline_data['user_data']:
-            self.pipeline_env["DATA_USER_PATH"] = ''
+            self.pipeline_env['DATA_USER_PATH'] = ''
             LOG.warning('USER DATA will be ignored.')
 
-        self.add_env_var("DATA_USER_PATH", (";").join(self.pipeline_env["DATA_USER_PATH"]))
+        self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
+        sys.path.append(os.environ['DATA_USER_PATH'])
 
         import libData
+        project_data = libData.get_data('project')
+        os.environ['PROJECT_NAME'] = project_data['name']
 
-        project_data = libData.get_data('project')["PROJECT"]
-        os.environ["PROJECT_NAME"] = project_data["name"]
-
-        if os.path.exists(project_data["path"]):
-            os.environ["PROJECT_PATH"] = project_data["path"]
+        if os.path.exists(project_data['path']):
+            os.environ['PROJECT_PATH'] = os.path.normpath(project_data['path'])
         else:
-            LOG.warning('PROJECT PATH doesnt exist: {}'.format(project_data["path"]))
+            # ALT: PROJECT_PATH = '../pipeline'
+            LOG.critical('PROJECT PATH doesnt exist: {}'.format(project_data['path']))
 
         self.__call__()
 
@@ -115,16 +139,16 @@ class Setup(object):
     def __call__(self):
         global LOG
 
-        LOG.debug("PATH:{}".format('[%s]' % ', '.join(map(str, sys.path))))
-        LOG.debug('ENV: {}'.format(self.pipeline_env))
+        LOG.debug('PATH:   {}'.format('[%s]' % ', '.join(map(str, sys.path))))
+        LOG.debug('OS_ENV: {}'.format(self.pipeline_env))
 
 
     #************************
     # FUNCTIONS
-    def add_env_var(self, var, content):
+    def add_env(self, var, content):
         content = os.path.normpath(content)
         if os.environ.__contains__(var):
-            os.environ[var] += ("").join([";", content])
+            os.environ[var] += ('').join([';', content])
         else:
             os.environ[var] = content
         return os.environ[var]
@@ -132,9 +156,9 @@ class Setup(object):
 
 #************************
 # CLASS
-
 # add or overwrite dict + normpath
-class NewDict(dict):
+class SmartDict(dict):
+    global LOG
     def __init__(self):
         super(dict)
         self = dict()
@@ -146,11 +170,44 @@ class NewDict(dict):
         else:
             self[key] = [value]
 
+    def __missing__(self, key):
+        LOG.debug('MISSING Key: {}'.format(key))
+        return key
+
+
+#************************
+# SYSTEM PATHS
+# def myFilenameFilter(filename):
+#   if nuke.env['MACOS']:
+#       filename = filename.replace( s.PATH_SHORT, s.PATH_LONG )
+#   if nuke.env['WIN32']:
+#       filename = filename.replace( s.PATH_LONG, s.PATH_SHORT )
+#   if nuke.env['LINUX']:
+#       filename = filename.replace( s.PATH_SHORT, s.PATH_LONG )
+
+#   return filename
+
+# nuke.addFilenameFilter(myFilenameFilter)
+
+
+
+
 
 # DELETE
 # a = Setup()
+
 # import libData
 # print libData.getProjectUserPath()
 # import libRepo
 # libRepo.make_github_issue(title='Login Test', body='Body text', milestone=None, labels=['bug'])
+
+# import libData
+# print libData.get_data('software')['NUKE']
+
+# test = SmartDict()
+# test['hallo'] = 'test'
+
+# print test['hallo']
+# print test['hallo2']
+
 
