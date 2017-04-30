@@ -17,29 +17,21 @@ import os
 import sys
 import shutil
 
-from PySide.QtGui import *
-from PySide.QtCore import *
-from PySide import QtUiTools
+from PySide import QtGui, QtCore, QtUiTools
 
-import settings as s
-from img import img_rc
-
+import users
 import libLog
-import libUser
-import libImage
-import libRender
-import libFunction
-import libMessageBox
-import libFileService
+import libFunc
+import libFileFolder
 
-from utilities import arReport
+from arUtil import ArUtil
 
 
 #**********************
 # VARIABLE
 #**********************
-TITLE       = os.path.splitext(os.path.basename(__file__))[0]
-LOG         = ""
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 SAVE_DIR    = s.PATH["project"]
 SAVE_FILE   = ""
@@ -53,14 +45,6 @@ PATH_IMG    = ""
 #**********************
 WIDGET = QtUiTools.QUiLoader().load(PATH_UI)
 
-
-#************************
-# LOG
-#************************
-def log():
-    global LOG
-    import logging
-    LOG = libLog.initLog(software=os.environ["SOFTWARE"], script=TITLE, level=logging.INFO, logger=logging.getLogger(TITLE))
 
 
 #**********************
@@ -404,7 +388,7 @@ def init():
 #**********************
 # START UI
 #**********************
-def start():
+def main():
     global LOG, PATH_IMG, TITLE
 
     PATH_IMG = libFunction.rmTempImg()
@@ -441,6 +425,6 @@ def start():
     else:
         import arSaveAs
         reload(arSaveAs)
-        arSaveAs.start()
+        arSaveAs.main()
 
 # 587 - 442 = 145 * 100/587 = 25%    before: 86 rows - 14%

@@ -15,7 +15,6 @@
 import os
 import sys
 
-
 import libLog
 import libFileFolder
 
@@ -39,8 +38,8 @@ def get_data(file_name='', user_id=os.getenv('username')):
 
     def get_all_data():
         config_data        = {}
-        data_user_files    = libFileFolder.getFileList(path = get_env('DATA_USER_PATH'),    file_type = '*' + DATA_FORMAT)
-        data_project_files = libFileFolder.getFileList(path = get_env('DATA_PROJECT_PATH'), file_type = '*' + DATA_FORMAT)
+        data_user_files    = libFileFolder.getFileList(path=get_env('DATA_USER_PATH'),    file_type='*' + DATA_FORMAT)
+        data_project_files = libFileFolder.getFileList(path=get_env('DATA_PROJECT_PATH'), file_type='*' + DATA_FORMAT)
 
         data_project_files = list(set(data_user_files)|set(data_project_files))
         for each_file in data_project_files: config_data.update({each_file : get_data(each_file, user_id)})
@@ -74,7 +73,7 @@ def set_data(file_name, var, data):
 #************************
 # GET PATH
 def get_pipeline_path(end_path):
-    pipeline_path = os.environ.get('PIPELINE_PATH', '')
+    pipeline_path = os.getenv('PIPELINE_PATH')
     if pipeline_path:
         pipeline_path = pipeline_path.split(';')
         # find first fitting path
@@ -89,9 +88,11 @@ def get_pipeline_path(end_path):
     return ''
 
 def get_img_path(end_path='btn/default'):
-    path = get_pipeline_path('img/' + end_path + IMG_FORMAT)
+    if '.' in end_path: img_format = ''
+    else: img_format = IMG_FORMAT
+    path = get_pipeline_path('img/{}{}'.format(end_path, img_format))
     if not path:
-        path = get_img_path(('/').join([os.path.dirname(end_path), 'default']))
+        path = get_pipeline_path('img/btn/default{}'.format(IMG_FORMAT))
     return path
 
 
@@ -121,7 +122,7 @@ def join(loader, node):
 # replace (multiple) ENV var
 def env(loader, node):
     seq  = loader.construct_sequence(node)
-    path = os.environ.get(seq[0], '')
+    path = os.getenv(seq[0])
     seq.pop(0)
 
     if ';' in path: path = path.split(';')
@@ -132,7 +133,6 @@ def env(loader, node):
         if new_env: new_env += ';'
         new_env += env
         if seq: new_env += ''.join([str(os.path.normpath(i)) for i in seq])
-    print new_env
     return new_env
 
 yaml.add_constructor('!env', env)
@@ -156,15 +156,3 @@ def get_env(var):
     LOG.warning('ENV doesnt exist: {}'.format(var))
     return ''
 
-
-
-
-# import sys
-# sys.path.append('D:/Dropbox/arPipeline/2000/data')
-# import setEnv
-# setEnv.SetEnv()
-
-# print get_pipeline_path('img')
-# print os.environ.get('PIPELINE_PATH', ')
-
-# print get_img_path('btn/btnReport4')

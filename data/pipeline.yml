@@ -1,33 +1,31 @@
-# *************************************************************
-# content   = SET current project
+#*********************************************************************
+# content   = pipeline data
 # version   = 0.0.1
 # date      = 2017-01-01
-
+#
 # license   = MIT
 # copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
-# *********************************************************************
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
 # http://td.animationsinstitut.de
-# *********************************************************************
+#*********************************************************************
 
 # USE this project settings
-# project/$project
+# data/project/$project
 project: default
 
 # IMPORTANT: order
 # DEFAULT:   local, project, global
 PATH:
-    # 1-local (dev & debug)
+    # 1.local (dev & debug)
     - local:   C:\sandbox
-    # 2-project (production)
-    - project: D:\Dropbox\arPipeline\1000
-    # 3-pipeline (master)
-    - master:  D:\Dropbox\arPipeline\2000
+    # 2.project (production)
+    - project: D:\Dropbox\plex\1000
+    # 3.pipeline (master)
+    - master:  D:\Dropbox\plex\2000
 
-OS_PATH:
-  - C:\Python27\Lib\site-packages
 
 # USER customize
 user_data: True
@@ -35,12 +33,9 @@ user_data: True
 # [filled] - use user data before project
 
 
-# NEEDED DATA
-data_must:
-  - project
-  - software
-  - script
-  - rules
+PIPELINE:
+  name:    &PIPELINE plex
+  version: 0.0.1
 
 
 REPOSITORY:
@@ -48,4 +43,9 @@ REPOSITORY:
   password:
 
   owner: richteralexander
-  repository: plex
+  repository: *PIPELINE
+
+
+# CACHE:
+#   modified:
+#   ENV:

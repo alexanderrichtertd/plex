@@ -63,59 +63,7 @@ def init(software="default", script="default", level=logging.DEBUG, path="", *ar
                 "format": "%(asctime)s | %(levelname)-7s | %(module)-10s - %(funcName)-16s | %(lineno)-4d | %(message)s",
                 "datefmt":"%H:%M:%S"
             }
-        }#,
-
-        # handlers= {
-        #     "console": {
-        #         "class": "logging.StreamHandler",
-        #         "level": "DEBUG",
-        #         "formatter": "simpleConsole",
-        #         "stream": "ext://sys.stdout"
-        #     },
-
-        #     "info_file_handler": {
-        #         "class": "logging.handlers.RotatingFileHandler",
-        #         "level": "INFO",
-        #         "formatter": "simpleInfo",
-        #         "filename": info_path,
-        #         "maxBytes": 10485760,
-        #         "backupCount": 20,
-        #         "encoding": "utf8"
-        #     },
-
-        #     "debug_file_handler": {
-        #         "class": "logging.handlers.RotatingFileHandler",
-        #         "level": "DEBUG",
-        #         "formatter": "simpleInfo",
-        #         "filename": debug_path,
-        #         "maxBytes": 10485760,
-        #         "backupCount": 20,
-        #         "encoding": "utf8"
-        #     },
-
-        #     "error_file_handler": {
-        #         "class": "logging.handlers.RotatingFileHandler",
-        #         "level": "ERROR",
-        #         "formatter": "simpleDebug",
-        #         "filename": error_path,
-        #         "maxBytes": 10485760,
-        #         "backupCount": 20,
-        #         "encoding": "utf8"
-        #      }
-        # },
-
-        # logger= {
-        #     "my_module": {
-        #         "level": level,
-        #         "handlers": ["console"],
-        #         "propagate": "no"
-        #     }
-        # },
-
-        # root= {
-        #     "level": level,
-        #     #"handlers": ["console", "info_file_handler", "debug_file_handler", "error_file_handler"]
-        # }
+        }
     )
 
     # CONSOLE
@@ -164,30 +112,3 @@ def get_env(var):
     return ""
 
 
-#************************
-# TEST
-def test():
-    title = "default"
-    LOG1  = init(script=title, logger=logging.getLogger(title))
-    LOG1.info("START1")
-    print LOG1
-    LOG1.debug('Failed')
-    LOG1.error('Failed to open file', exc_info=True)
-
-    title = "default_new"
-    LOG2  = init(script=title, level=logging.DEBUG, logger=logging.getLogger(title))
-    LOG2.info("START2")
-    LOG2.debug('Failed')
-
-    try: a()
-    except: LOG2.error('Failed to open file', exc_info=True)
-
-    LOG1.info('START1_2')
-    print LOG2.warning("START2_SECONDTIME")
-
-    try:
-        1/0
-    except:
-        print ""
-
-# test()

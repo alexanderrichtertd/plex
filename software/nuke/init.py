@@ -20,6 +20,7 @@ import nuke
 import libLog
 import libData
 import libFunc
+from software import Software
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
@@ -36,45 +37,27 @@ RESOLUTION    = (' ').join([str(project_data['resolution'][0]),
 
 
 #************************
+# FOLDER CREATION
+def createWriteDir():
+    file_name = nuke.filename(nuke.thisNode())
+    file_path = os.path.dirname( file_name )
+    os_path   = nuke.callbacks.filenameFilter(file_path)
+
+    # cope with the directory existing already by ignoring that exception
+    try:
+      os.makedirs( os_path )
+    except OSError, e:
+      if e.errno != errno.EEXIST:
+        raise
+
+#************************
 # PIPELINE
-libFunc.console_header(project_data['name'])
+Software.print_header(software_data[os.getenv('SOFTWARE')]['MENU'])
 
-# **********************************
-
-LOG.debug(os.environ)
-
-print('PATHS')
-print('  {} ON  - libUtil'.format(chr(254)))
-print('  {} ON  - libClass'.format(chr(254)))
-print('  {} ON  - img'.format(chr(254)))
-print('  {} ON  - utilities'.format(chr(254)))
-print('')
-print('  {} ON  - gizmos'.format(chr(254)))
-print('  {} ON  - scripts'.format(chr(254)))
-print('  {} ON  - plugins'.format(chr(254)))
-
-
-print('') # ********************
-
-
-#************************
-print('SCRIPTS')
-try:
-    print('  {} ON  - {}'.format(chr(254), software_data['NUKE']['MENU']))
-except:
-    LOG.debug('  {} OFF - SCRIPTS: {}'.format(chr(254), software_data['NUKE']['MENU']))
-    pass
-
-
-print('') # ********************
-
-
-#************************
 print('SETTINGS')
-
 # FPS ***********************************
 try:
-    nuke.knobDefault('Root.fps', project_data['fps'])
+    nuke.knobDefault("nuke.Root()['fps'].setValue({})".format(project_data['fps']))
     print('  {} ON  - FPS: {}'.format(chr(254), project_data['fps']))
 except:
     pass
@@ -84,7 +67,7 @@ except:
 # RESOLUTION ****************************
 try:
     nuke.addFormat(RESOLUTION)
-    nuke.knobDefault('Root.format', s.PROJECT_NAME.replace(' ', ''))
+    nuke.knobDefault('Root.format', project_data['name'].replace(' ', ''))
     print('  {} ON  - RES: {}'.format(chr(254), RESOLUTION))
 except:
     LOG.debug('  OFF - RES: {}'.format(RESOLUTION))
@@ -95,23 +78,8 @@ try:
     nuke.addBeforeRender(createWriteDir)
     print('  {} ON  - BeR: createWriteDir'.format(chr(254)))
 except:
-    LOG.debug('  OFF - BeR: createWriteDir'.format(chr(254)))
+    LOG.error('  OFF - BeR: createWriteDir'.format(chr(254)), exc_info=True)
     print('  {} OFF - BeR: createWriteDir'.format(chr(254)))
 
 
 print('') # ********************
-
-
-#************************
-# FOLDER CREATION
-def createWriteDir():
-  file  = nuke.filename(nuke.thisNode())
-  dir   = os.path.dirname( file )
-  osdir = nuke.callbacks.filenameFilter( dir )
-  # cope with the directory existing already by ignoring that exception
-  try:
-    os.makedirs( osdir )
-  except OSError, e:
-    if e.errno != errno.EEXIST:
-      raise
-

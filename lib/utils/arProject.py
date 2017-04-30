@@ -15,22 +15,19 @@
 import os
 import sys
 
-from PySide import QtGui
-from PySide import QtCore
-from PySide import QtUiTools
-
-from arHeader import ArHeader
+from PySide import QtGui, QtCore, QtUiTools
 
 import libLog
+from arUtils import ArUtils
 
-TITLE    = os.path.splitext(os.path.basename(__file__))[0]
-LOG      = libLog.initLog(script=TITLE)
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 THIS_DIR = ("/").join([os.path.dirname(__file__), "ui"])
 PATH_UI  = ("/").join([THIS_DIR, TITLE + ".ui"])
 
 
-class ArProject(ArHeader):
+class ArProject(ArUtils):
 
     def __init__(self, initProject, openMenu):
         super(ArProject, self).__init__()
@@ -112,11 +109,8 @@ class ArProject(ArHeader):
         self.wgHeader.layMain.addWidget(self.wgAddition)
 
 
-def start(initProject = False, openMenu = -1):
+def main(initProject = False, openMenu = -1):
     app = QtGui.QApplication(sys.argv)
     classVar = ArProject(initProject, openMenu)
 
     app.exec_()
-
-start()
-

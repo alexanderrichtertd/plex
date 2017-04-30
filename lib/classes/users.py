@@ -24,18 +24,18 @@ TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 class User:
-    def __init__(self, user_id, name = '', birth = '', task = {}, position = '', settings = {}, rights = 'artist'):
+    def __init__(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
         self.id       = user_id         # arichter
         self.initial  = self.id[0:2]    #  ar
         self.name     = name            # Alexander Richter
 
-        self.birth    = birth           # 06.10.1986
-        self.task     = task            # {'LIGHT': [110, 120]}
-
-        self.position = position        # Pipeline
         self.settings = settings        # {'arLoad': []}
-
         self.rights   = rights          # admin, artist
+
+        # self.birth    = birth           # 06.10.1986
+        # self.task     = task            # {'LIGHT': [110, 120]}
+
+        # self.position = position        # Pipeline
 
     def __call__(self):
         return (self.id, ': ',  self.name,
@@ -84,13 +84,13 @@ class User:
 
     @property
     def is_admin(self):
-        return True if self.rights == 'admin' else False
+        return False # True if self.rights == 'admin' else False
 
 
     #************************
     # FUNCTIONS
     def read_data(self):
-        libData.setData()
+        libData.get_data()
 
     def write_data(self, scriptSettings):
         currentChange = self.read_user()
@@ -104,4 +104,3 @@ class User:
             os.remove(deletePath)
         else:
             LOG.info("FAIL : " + self.id + " - user doesnt exists")
-

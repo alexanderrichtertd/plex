@@ -1,11 +1,11 @@
 #*********************************************************************
-# content   = common functions (e.g.help)
+# content   = common functions
 # version   = 0.0.1
 # date      = 2017-01-01
 #
 # license   = MIT
 # copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -13,21 +13,32 @@
 #*********************************************************************
 
 import time
-import getpass
+import webbrowser
+
+import libData
+
+def get_help(name = ''):
+    project_data = libData.get_data('project')['HELP']
+    if not name:
+        name = os.getenv('SOFTWARE')
+    if name in project_data:
+        webbrowser.open(project_data[name])
+    else:
+        webbrowser.open(project_data['main'])
 
 
-def console_header(title = 'default'):
-    print ('\n '+chr(218)+chr(196)*37 + chr(191)+'\n '+ chr(179) + \
-          ' '*15 + title +\
-          '\n '+chr(192)+chr(196)*37 + chr(217))
-
-    print ('\n' + ' '*12 + 'Welcome ' + getpass.getuser() + '\n')
-
+# GET all (sub) keys in dict
+def get_all_keys(key_list, dictonary=[]):
+    for key, items in key_list.iteritems():
+        dictonary.append(key)
+        if isinstance(items, dict):
+            get_all_keys(items, dictonary)
+    return dictonary
 
 #************************
 # TIME
 # @BRIEF  count time of functions for optimazation
-def getDuration(method):
+def get_duration(method):
     def timed(*args, **kw):
         startTime  = time.time()
         resultTime = method(*args, **kw)

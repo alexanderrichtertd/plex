@@ -1,13 +1,16 @@
-#*************************************************************
-# function:     writeNode
-#        
-# software:     Nuke
-#   
-# depencence:   set "NUKE_PATH=%PLUGINS_PATH%;%NUKE_PATH%"
+#*********************************************************************
+# content   = write node functions
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# author:       Alexander Richter 
-# email:        alexander.richter@filmakademie.de
-#*************************************************************
+# license   = MIT
+# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 
 import os
@@ -17,21 +20,11 @@ import webbrowser
 
 import nuke
 
-import settings as s
-sys.path.append(s.PATH['lib'])
-
-import libFileService
-
-#************************
-# LOG
-#************************
 import libLog
-import logging
+import libFileFolder
 
-TITLE       = "write"
-SOFTWARE    = "nuke"
-LOG         = libLog.initLog(software=SOFTWARE, script=TITLE, level=logging.INFO, logger=logging.getLogger(TITLE))
-
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 #************************
 # INIT
@@ -58,15 +51,15 @@ def nodeCreate(currentNode = ""):
     currentNode["exrPath"].setValue(renderPath)
     currentNode["jpgPath"].setValue(renderPath.replace("exr","jpg"))
     currentNode["tifPath"].setValue(renderPath.replace("exr","tif"))
-    
+
     # setCommentPath()
     LOG.info("START  : " + fileName)
-    
+
 
 def openRV (renderPath):
     global LOG
 
-    if not os.path.exists(os.path.dirname(renderPath)) or not os.listdir(os.path.dirname(renderPath)): 
+    if not os.path.exists(os.path.dirname(renderPath)) or not os.listdir(os.path.dirname(renderPath)):
         LOG.warning("FOLDER : NOT EXISTS : " + renderPath)
         return "WARNING: path doesnt exist: " + renderPath
 
@@ -78,11 +71,11 @@ def openFolder(path):
     global LOG
     renderPath = os.path.dirname(path).replace("/","\\")
 
-    if not os.path.exists(renderPath) or not os.listdir(renderPath):   
+    if not os.path.exists(renderPath) or not os.listdir(renderPath):
         LOG.warning("FOLDER : NOT EXISTS : " + renderPath)
         return "WARNING: path doesnt exist: " + renderPath
 
-    webbrowser.open(renderPath) 
+    webbrowser.open(renderPath)
 
     LOG.info("FOLDER : OPEN :" + renderPath)
 
@@ -101,21 +94,21 @@ def render():
         from plugins.vuRenderThreads.plugin_nuke import plugin_nuke
         plugin_nuke.createThreads(frameStart, frameEnd, threads, [cn.name()])
         LOG.info("END    : RENDERTHREADS : " + cn["exrPathComment"].getValue())
-    
+
     elif cn["submit"].getValue() == 1.0:
         import rrenderSubmit
         nuke.load('rrenderSubmit')
         rrenderSubmit.rrSubmit_Nuke_Node(cn, frameStart, frameEnd)
         LOG.info("END    : RRSUBMIT : " + cn["exrPathComment"].getValue())
-    
+
     else:
         try:
             nuke.execute(nuke.thisNode(), start=frameStart, end=frameEnd, incr=1)
             LOG.info("END    : LOCAL : " + cn["exrPathComment"].getValue())
         except:
-            print "END    : LOCAL : Execution failed" 
+            print "END    : LOCAL : Execution failed"
             LOG.error("END    : LOCAL : " + cn["exrPathComment"].getValue(), exc_info=True)
-           
+
 
 def setCommentPath():
     cn = nuke.thisNode()
@@ -168,7 +161,7 @@ def setCommentPath():
 def publishRender(writeNode):
     cn = nuke.thisGroup()
 
-    if cn["chbPublish"].value():    
+    if cn["chbPublish"].value():
         print "PUBLISH"
 
         fileName    = []
@@ -176,7 +169,7 @@ def publishRender(writeNode):
 
         for part in splitFile:
             fileName.append(part)
-            if part == "COMP": 
+            if part == "COMP":
                 break
 
         fileName    = ("_").join(fileName)
@@ -226,6 +219,6 @@ def publishRender(writeNode):
                 newFrame = publishPath + "/" + newFrame
 
                 shutil.copyfile(oldFrame, newFrame)
-                
+
     else:
         print "WORK"

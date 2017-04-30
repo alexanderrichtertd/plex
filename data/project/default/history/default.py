@@ -3,7 +3,7 @@
 #
 # DEPENDENCIES  MASTER pipeline path
 #
-# EMAIL         contact@richteralexander.com
+# EMAIL         pipeline@richteralexander.com
 #*************************************************************
 
 import os

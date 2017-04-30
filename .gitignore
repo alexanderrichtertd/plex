@@ -1,5 +1,8 @@
 img/_src
 
+lib/ideas
+lib/extern
+
 software/utilities/ui/_history
 software/maya/plugins/*
 software/nuke/plugins/*

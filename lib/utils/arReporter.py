@@ -18,40 +18,28 @@ import time
 import shutil
 import logging
 import webbrowser
-
 from datetime import datetime
 
-from PySide import QtGui
-from PySide import QtCore
-from PySide import QtUiTools
-
-# import getProject
-# DATA = getProject.GetProject()
-
-# from img import img_rc
+from PySide import QtGui, QtCore, QtUiTools
 
 import libLog
 import libFunc
-import libRender
-import libMsgBox
 import libFileFolder
 
-from arHeader import ArHeader
+from arUtil import ArUtil
 
 
 #**********************
 # DEFAULT
-TITLE   = os.path.splitext(os.path.basename(__file__))[0]
-LOG     = libLog.initLog(script=TITLE)
-PATH_UI = DATA.PATH["utilities"] + "/ui/" + TITLE + ".ui"
-
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 #************************
 # REPORT
 #************************
-class Report (ArHeader):
+class Report (ArUtil):
 
-    def __init__(self, software = "unknown", user = "John Doe", filePath = "", reason = "bug", script =  "other", comment = "", error = ""):
+    def __init__(self, software=os.getenv('SOFTWARE'), user=os.getenv('username'), filePath='', reason='bug', script= 'other', comment='', error=''):
         self.time       = datetime.now().strftime('%Y.%m.%d %H:%M:%S')
         self.software   = software  #maya
         self.user       = user      #arichter
@@ -62,15 +50,15 @@ class Report (ArHeader):
         self.comment    = comment   #breaks after save
         self.error      = error     #troubleshot: file input line:234
 
-        REPORTS      = ""
+        REPORTS      = ''
         REPORT_INDEX = 0
         REPORT_DATA  = Report()
 
-        MSG_ERROR    = "Error Message"
-        MSG_COMMENT  = "Comment"
-        SAVE_DIR     = ""
+        MSG_ERROR    = 'Error Message'
+        MSG_COMMENT  = 'Comment'
+        SAVE_DIR     = ''
 
-        PATH_IMG     = ""
+        PATH_IMG     = ''
 
         self.software = os.environ['SOFTWARE']
 
@@ -78,15 +66,15 @@ class Report (ArHeader):
     def __call__(self):
         return (\
         ().join([\
-        "time:      ", self.time, "\n",\
-        "software:  ", self.software, "\n",\
-        "user:      ", self.user, "\n", "\n",\
-        "projectId: ", self.projectId, "\n", "\n",\
-        "file:      ", self.file, "\n", "\n",\
-        "reason:    ", self.reason, "\n",\
-        "script:    ", self.script, "\n",\
-        "comment:   ", self.comment, "\n",\
-        "error:     ", self.error, "\n"]))
+        'time:      ', self.time, '\n',\
+        'software:  ', self.software, '\n',\
+        'user:      ', self.user, '\n', '\n',\
+        'projectId: ', self.projectId, '\n', '\n',\
+        'file:      ', self.file, '\n', '\n',\
+        'reason:    ', self.reason, '\n',\
+        'script:    ', self.script, '\n',\
+        'comment:   ', self.comment, '\n',\
+        'error:     ', self.error, '\n']))
 
 
     #**********************
@@ -118,7 +106,7 @@ class Report (ArHeader):
             WIDGET.cbxScript.clear()
 
             init()
-            WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(""))))
+            WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(''))))
 
         else:
             WIDGET.edtComment.setReadOnly(True)
@@ -137,7 +125,7 @@ class Report (ArHeader):
             WIDGET.btnFolder.show()
             WIDGET.btnOpenFile.show()
 
-            REPORTS = libFileService.getFolderList(s.PATH["data_report"], "*.json")
+            REPORTS = libFileService.getFolderList(s.PATH['data_report'], '*.json')
 
             setReports(len(REPORTS) - 1)
 
@@ -151,30 +139,30 @@ class Report (ArHeader):
         if(len(REPORTS) < 1):
             return
 
-        src = DATA.PATH["data_report"] + "/" + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT["data"]
-        dst = DATA.PATH["data_report_history"] + "/" + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT["data"]
+        src = DATA.PATH['data_report'] + '/' + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT['data']
+        dst = DATA.PATH['data_report_history'] + '/' + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT['data']
         libFunction.createFolder(dst)
 
         if os.path.exists(src):
             shutil.move(src, dst)
 
-        src = DATA.PATH["data_report_img"] + "/" + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT["thumbs"]
-        dst = DATA.PATH["data_report_img"] + "/" + DATA.STATUS["history"] + "/" + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT["thumbs"]
+        src = DATA.PATH['data_report_img'] + '/' + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT['thumbs']
+        dst = DATA.PATH['data_report_img'] + '/' + DATA.STATUS['history'] + '/' + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT['thumbs']
         libFunction.createFolder(dst)
 
-        if not (dst.endswith("000.png")):
+        if not (dst.endswith('000.png')):
             if(os.path.exists(src)):
                 shutil.move(src, dst)
 
-        REPORTS = libFileService.getFolderList(s.PATH["data_report"], "*" + DATA.FILE_FORMAT["data"])
+        REPORTS = libFileService.getFolderList(s.PATH['data_report'], '*' + DATA.FILE_FORMAT['data'])
         libFunction.setErrorCount(WIDGET)
         setReports(1)
         WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG, True))))
 
-        LOG.info("ReportToHistory : " + REPORTS[REPORT_INDEX])
+        LOG.info('ReportToHistory : ' + REPORTS[REPORT_INDEX])
 
     def press_btnOpenFolder(self):
-        WIDGET.edtMsg.setText(libFunction.openFolder(s.PATH["data_report"]))
+        WIDGET.edtMsg.setText(libFunction.openFolder(s.PATH['data_report']))
 
     def press_btnScreenshot(self):
         libRender.createScreenshot(WIDGET, WIDGET.btnPreviewImg)
@@ -190,9 +178,9 @@ class Report (ArHeader):
     # change_TRIGGER
     #**********************
     def change_report(self):
-        currentImgPath = DATA.PATH['img_maya_shelf'] + "/" + "shelf_" + WIDGET.cbxReport.currentText() + "35.png"
+        currentImgPath = DATA.PATH['img_maya_shelf'] + '/' + 'shelf_' + WIDGET.cbxReport.currentText() + '35.png'
 
-        if(WIDGET.cbxReport.currentText() == DATA.REPORT_LIST["report"][-1]):
+        if(WIDGET.cbxReport.currentText() == DATA.REPORT_LIST['report'][-1]):
             WIDGET.edtErrorMsg.hide()
             WIDGET.btnScreenshot.hide()
             WIDGET.btnPreviewImg.hide()
@@ -253,28 +241,28 @@ class Report (ArHeader):
             WIDGET.lblErrorCount.move(470, 215 + changeY)
             WIDGET.btnHelp.move(480, 220 + changeY)
 
-        WIDGET.edtMsg.setText(WIDGET.cbxReport.currentText() + ": " + WIDGET.cbxScript.currentText())
+        WIDGET.edtMsg.setText(WIDGET.cbxReport.currentText() + ': ' + WIDGET.cbxScript.currentText())
         WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG))))
 
     def press_btnErrorImg(self):
         if (WIDGET.edtComment.isReadOnly()):
             os.system(PATH_IMG)
         else:
-            PATH_IMG = libMessageBox.folderMsgBox(WIDGET, "Image Files (*.jpg *.png *.tiff)", "Choose image file", os.environ['USERPROFILE'] + "/Desktop")
+            PATH_IMG = libMessageBox.folderMsgBox(WIDGET, 'Image Files (*.jpg *.png *.tiff)', 'Choose image file', os.environ['USERPROFILE'] + '/Desktop')
             WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG))))
 
     def press_btnOpenFile(self):
         try:
-            if self.software == "maya":
+            if self.software == 'maya':
                 import maya.mel as mel
-                mel.eval('file -f -options "v=0;"  -ignoreVersion  -typ "' + DATA.FILE_FORMAT_CODE[s.FILE_FORMAT[self.software]] + '" -o "' + SAVE_DIR + '"')
+                mel.eval('file -f -options 'v=0;'  -ignoreVersion  -typ '' + DATA.FILE_FORMAT_CODE[s.FILE_FORMAT[self.software]] + '' -o '' + SAVE_DIR + ''')
 
-            elif self.software == "nuke":
+            elif self.software == 'nuke':
                 import nuke
                 nuke.scriptOpen(SAVE_DIR)
 
-            elif self.software == "houdini":
-                print "houdini open"
+            elif self.software == 'houdini':
+                print 'houdini open'
 
             LOG.info ('END  : LOAD : ' + SAVE_DIR)
         except:
@@ -286,65 +274,65 @@ class Report (ArHeader):
     #**********************
     def errorMsg_In(self, event):
         if(WIDGET.edtErrorMsg.toPlainText() == MSG_ERROR):
-            WIDGET.edtErrorMsg.setPlainText("")
-            WIDGET.edtErrorMsg.setStyleSheet("color: rgb(255, 255, 255);")
+            WIDGET.edtErrorMsg.setPlainText('')
+            WIDGET.edtErrorMsg.setStyleSheet('color: rgb(255, 255, 255);')
         WIDGET.edtErrorMsg.setCursorWidth(1)
 
     def errorMsg_Out(self, event):
-        if(WIDGET.edtErrorMsg.toPlainText() == ""):
+        if(WIDGET.edtErrorMsg.toPlainText() == ''):
             WIDGET.edtErrorMsg.setPlainText(MSG_ERROR)
-            WIDGET.edtErrorMsg.setStyleSheet("color: rgb(175, 175, 175);")
+            WIDGET.edtErrorMsg.setStyleSheet('color: rgb(175, 175, 175);')
         WIDGET.edtErrorMsg.setCursorWidth(0)
 
     def comment_In(self, event):
         if(WIDGET.edtComment.toPlainText() == MSG_COMMENT):
-            WIDGET.edtComment.setPlainText("")
-            WIDGET.edtComment.setStyleSheet("color: rgb(255, 255, 255);")
+            WIDGET.edtComment.setPlainText('')
+            WIDGET.edtComment.setStyleSheet('color: rgb(255, 255, 255);')
         WIDGET.edtComment.setCursorWidth(1)
 
     def comment_Out(self, event):
-        if(WIDGET.edtComment.toPlainText() == ""):
+        if(WIDGET.edtComment.toPlainText() == ''):
             WIDGET.edtComment.setPlainText(MSG_COMMENT)
-            WIDGET.edtComment.setStyleSheet("color: rgb(175, 175, 175);")
+            WIDGET.edtComment.setStyleSheet('color: rgb(175, 175, 175);')
         WIDGET.edtComment.setCursorWidth(0)
 
 
     def saveReport(self):
 
         fileName = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-        dataPath = DATA.PATH["data_report"] + '/' + fileName + DATA.FILE_FORMAT["data"]
-        imgPath  = DATA.PATH["data_report_img"] + "/" + fileName + DATA.FILE_FORMAT["thumbs"]
+        dataPath = DATA.PATH['data_report'] + '/' + fileName + DATA.FILE_FORMAT['data']
+        imgPath  = DATA.PATH['data_report_img'] + '/' + fileName + DATA.FILE_FORMAT['thumbs']
 
-        if(WIDGET.cbxScript.currentText() == "other"):
+        if(WIDGET.cbxScript.currentText() == 'other'):
             script = WIDGET.edtScript.text()
         else:
             script = WIDGET.cbxScript.currentText()
 
         if(WIDGET.edtComment.toPlainText() == MSG_COMMENT):
-            WIDGET.edtComment.setPlainText("")
+            WIDGET.edtComment.setPlainText('')
 
         if(WIDGET.edtErrorMsg.toPlainText() == MSG_ERROR):
-            WIDGET.edtErrorMsg.setPlainText("")
+            WIDGET.edtErrorMsg.setPlainText('')
 
         try:
-            if(self.software == "maya"):
+            if(self.software == 'maya'):
                 import maya.cmds as cmds
                 filePath = cmds.file(q=True,sn=True)
-            elif(self.software == "nuke"):
+            elif(self.software == 'nuke'):
                 import nuke
                 filePath = nuke.root()['name'].value()
-            elif(self.software == "houdini"):
-                print "houdini save path"
+            elif(self.software == 'houdini'):
+                print 'houdini save path'
             else:
-                filePath = ""
+                filePath = ''
         except:
             LOG.error('FAIL : GET PATH', exc_info=True)
 
         report = Report(user = os.getenv('username'), filePath = filePath, reason = WIDGET.cbxReport.currentText(), script = script, comment = WIDGET.edtComment.toPlainText(), error = WIDGET.edtErrorMsg.toPlainText(), software = self.software)
 
         libFileService.setJsonFile(dataPath, report)
-        libRender.saveSnapshotImg(imgPath, "", True)
-        LOG.info("END : REPORT : " + fileName)
+        libRender.saveSnapshotImg(imgPath, '', True)
+        LOG.info('END : REPORT : ' + fileName)
 
 
     def setReports(self, index = len(REPORTS) - 1):
@@ -354,7 +342,7 @@ class Report (ArHeader):
 
         if len(REPORTS) < 1:
             press_showReport()
-            WIDGET.edtMsg.setText("No Reports at the time")
+            WIDGET.edtMsg.setText('No Reports at the time')
             WIDGET.edtComment.setPlainText(MSG_COMMENT)
             WIDGET.edtErrorMsg.setPlainText(MSG_ERROR)
             return
@@ -366,64 +354,64 @@ class Report (ArHeader):
         elif (REPORT_INDEX > ((len(REPORTS) - 1))):
             REPORT_INDEX = 0
 
-        REPORT_DATA = libFileService.getJsonFile(s.PATH["data_report"] + "/" + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT["data"])
+        REPORT_DATA = libFileService.getJsonFile(s.PATH['data_report'] + '/' + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT['data'])
 
-        WIDGET.cbxReport.addItem(REPORT_DATA["reason"])
-        WIDGET.cbxScript.addItem(REPORT_DATA["script"])
+        WIDGET.cbxReport.addItem(REPORT_DATA['reason'])
+        WIDGET.cbxScript.addItem(REPORT_DATA['script'])
 
-        WIDGET.edtErrorMsg.setPlainText(REPORT_DATA["error"])
-        WIDGET.edtComment.setPlainText(REPORT_DATA["comment"])
+        WIDGET.edtErrorMsg.setPlainText(REPORT_DATA['error'])
+        WIDGET.edtComment.setPlainText(REPORT_DATA['comment'])
 
-        WIDGET.edtMsg.setText(str(REPORT_INDEX) + ":" + str((len(REPORTS) - 1)) + " - " + REPORT_DATA["time"])
-        libImage.setUserImg(REPORT_DATA["user"], WIDGET.lblUser)
+        WIDGET.edtMsg.setText(str(REPORT_INDEX) + ':' + str((len(REPORTS) - 1)) + ' - ' + REPORT_DATA['time'])
+        libImage.setUserImg(REPORT_DATA['user'], WIDGET.lblUser)
 
         # change errorImg
-        PATH_IMG = DATA.PATH["data_report_img"] + "/" + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT["thumbs"]
+        PATH_IMG = DATA.PATH['data_report_img'] + '/' + REPORTS[REPORT_INDEX] + DATA.FILE_FORMAT['thumbs']
 
         WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG, True))))
-        WIDGET.btnOpenFile.setIcon(QPixmap(QImage(libImage.getProgramImg(REPORT_DATA["software"]))))
+        WIDGET.btnOpenFile.setIcon(QPixmap(QImage(libImage.getProgramImg(REPORT_DATA['software']))))
 
-        if(REPORT_DATA["file"] == ""):
+        if(REPORT_DATA['file'] == ''):
             WIDGET.btnOpenFile.setEnabled(False)
-            WIDGET.btnOpenFile.setToolTip("Status Report [R]")
+            WIDGET.btnOpenFile.setToolTip('Status Report [R]')
         else:
             WIDGET.btnOpenFile.setEnabled(True)
-            WIDGET.btnOpenFile.setToolTip(REPORT_DATA["file"])
-            SAVE_DIR = REPORT_DATA["file"]
+            WIDGET.btnOpenFile.setToolTip(REPORT_DATA['file'])
+            SAVE_DIR = REPORT_DATA['file']
 
 
     #**********************
     # INIT
     #**********************
-    def init(self, currentScript = "other"):
+    def init(self, currentScript = 'other'):
 
         libImage.setUserImg(os.getenv('username'), WIDGET.lblUser)
 
-        if os.getenv('username') in DATA.TEAM["admin"]: # RIGHTS
+        if os.getenv('username') in DATA.TEAM['admin']: # RIGHTS
             libFunction.setErrorCount(WIDGET)
         else:
             WIDGET.btnReport.hide()
             WIDGET.btnFolder.hide()
             WIDGET.lblErrorCount.hide()
 
-        WIDGET.cbxReport.addItems(s.REPORT_LIST["report"])
+        WIDGET.cbxReport.addItems(s.REPORT_LIST['report'])
 
         try:
             WIDGET.cbxScript.addItems(s.REPORT_LIST[self.software])
         except:
-            WIDGET.cbxScript.addItems(s.REPORT_LIST["other"])   # SCRIPTS CONFIG
+            WIDGET.cbxScript.addItems(s.REPORT_LIST['other'])   # SCRIPTS CONFIG
 
         WIDGET.edtComment.setPlainText(MSG_COMMENT)
         WIDGET.edtErrorMsg.setPlainText(MSG_ERROR)
 
         tmpIndex = WIDGET.cbxScript.findText(currentScript)
         if tmpIndex == -1:
-            tmpIndex = WIDGET.cbxScript.findText("other")
+            tmpIndex = WIDGET.cbxScript.findText('other')
 
         WIDGET.cbxScript.setCurrentIndex(tmpIndex)
         WIDGET.btnPreviewImg.setIcon(QPixmap(QImage(libImage.getReportImg(PATH_IMG))))
 
-        if self.software == "nuke":
+        if self.software == 'nuke':
             WIDGET.btnSnapshotViewport.hide()
 
 
@@ -431,25 +419,26 @@ class Report (ArHeader):
 # START UI
 #**********************
 def start(currentScript = 'other'):
-    WIDGET   = QtUiTools.QUiLoader().load(PATH_UI)
+    path_ui  = DATA.PATH['utilities'] + '/ui/' + TITLE + '.ui'
+    WIDGET   = QtUiTools.QUiLoader().load(path_ui)
     PATH_IMG = libFunction.rmTempImg()
 
-    # WIDGET.connect(WIDGET.btnAccept, SIGNAL("clicked()"), press_btnAccept)
-    WIDGET.connect(WIDGET.btnReport, SIGNAL("clicked()"), press_btnShowReport)
+    # WIDGET.connect(WIDGET.btnAccept, SIGNAL('clicked()'), press_btnAccept)
+    WIDGET.connect(WIDGET.btnReport, SIGNAL('clicked()'), press_btnShowReport)
 
-    WIDGET.connect(WIDGET.btnBefore, SIGNAL("clicked()"), press_btnBeforeReport)
-    WIDGET.connect(WIDGET.btnNext, SIGNAL("clicked()"), press_btnNextReport)
-    WIDGET.connect(WIDGET.btnSaveToHistory, SIGNAL("clicked()"), press_btnToHistory)
-    # WIDGET.connect(WIDGET.btnFolder, SIGNAL("clicked()"), press_btnOpenFolder)
-    WIDGET.connect(WIDGET.btnOpenFile, SIGNAL("clicked()"), press_btnOpenFile)
+    WIDGET.connect(WIDGET.btnBefore, SIGNAL('clicked()'), press_btnBeforeReport)
+    WIDGET.connect(WIDGET.btnNext, SIGNAL('clicked()'), press_btnNextReport)
+    WIDGET.connect(WIDGET.btnSaveToHistory, SIGNAL('clicked()'), press_btnToHistory)
+    # WIDGET.connect(WIDGET.btnFolder, SIGNAL('clicked()'), press_btnOpenFolder)
+    WIDGET.connect(WIDGET.btnOpenFile, SIGNAL('clicked()'), press_btnOpenFile)
 
-    WIDGET.connect(WIDGET.btnScreenshot, SIGNAL("clicked()"), press_btnScreenshot)
-    WIDGET.connect(WIDGET.btnSnapshotRender, SIGNAL("clicked()"), press_btnSnapshotRender)
-    WIDGET.connect(WIDGET.btnSnapshotViewport, SIGNAL("clicked()"), press_btnSnapshotViewport)
-    WIDGET.connect(WIDGET.btnPreviewImg, SIGNAL("clicked()"), press_btnErrorImg)
+    WIDGET.connect(WIDGET.btnScreenshot, SIGNAL('clicked()'), press_btnScreenshot)
+    WIDGET.connect(WIDGET.btnSnapshotRender, SIGNAL('clicked()'), press_btnSnapshotRender)
+    WIDGET.connect(WIDGET.btnSnapshotViewport, SIGNAL('clicked()'), press_btnSnapshotViewport)
+    WIDGET.connect(WIDGET.btnPreviewImg, SIGNAL('clicked()'), press_btnErrorImg)
 
-    WIDGET.connect(WIDGET.cbxReport, SIGNAL("currentIndexChanged(const QString&)"), change_report)
-    WIDGET.connect(WIDGET.cbxScript, SIGNAL("currentIndexChanged(const QString&)"), change_report)
+    WIDGET.connect(WIDGET.cbxReport, SIGNAL('currentIndexChanged(const QString&)'), change_report)
+    WIDGET.connect(WIDGET.cbxScript, SIGNAL('currentIndexChanged(const QString&)'), change_report)
 
     WIDGET.edtErrorMsg.focusInEvent  = errorMsg_In
     WIDGET.edtErrorMsg.focusOutEvent = errorMsg_Out

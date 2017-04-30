@@ -5,7 +5,7 @@
 #
 # license   = MIT
 # copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -46,22 +46,22 @@ MAYA:
     Save:
         p = menu,
         l = 'arSave',
-        c = 'from utilities import arSave\nreload(arSave)\narSave.start()'
+        c = 'from util import arSave\nreload(arSave)\narSave.start()'
 
     RIG:
       rigScript:
         p = menu,
         l = 'arSave',
-        c = 'from utilities import arSave\nreload(arSave)\narSave.start()'
+        c = 'from util import arSave\nreload(arSave)\narSave.start()'
 
 
 #************************
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
-  version_long: &VERSION_LONG !join [*NUKE_VERSION, v1]
+  version_long: &VERSION_LONG !join [*NUKE_VERSION, v2]
 
-  path:    !join ["C:/Program Files/Nuke", *VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
+  path: !join ["C:/Program Files/Nuke", *VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
 
   ENV:
     NUKE_PATH:
@@ -76,14 +76,25 @@ NUKE:
 
     NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *VERSION_LONG]
 
-    PATH:     *NUKE_DIR
+    PATH: *NUKE_DIR
 
   MENU:
-    Save: ".addCommand('Save', lambda: save(), 'ctrl+alt+s', 'save.ico')"
-    bk :  ".addSeparator()"
-    FUNC:
-      Save: ".addCommand('Save', lambda: save(), 'ctrl+alt+s', 'save.ico')"
-      Save: ".addCommand('Save', lambda: save(), 'ctrl+alt+s', 'save.ico')"
+    - Save:    "addCommand('Save', '', 'ctrl+alt+s', 'save.ico')"
+    - Load:    "addCommand('Load', '', 'ctrl+alt+l', 'load.ico')"
+
+    - break:   "addSeparator()"
+
+    - arWrite: "addCommand('arWrite', '', 'ctrl+alt+w', 'write.ico')"
+
+    - break:   "addSeparator()"
+
+    - Report:  "addCommand('Report', '', 'ctrl+alt+r', 'reporter.ico')"
+    - Help:    "addCommand('Help', '', 'ctrl+alt+h', 'help.ico')"
+
+    - break:   "addSeparator()"
+
+    - Others:
+               Test: "addCommand('New', '')"
 
 
 #************************

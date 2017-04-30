@@ -58,21 +58,20 @@ def openFolder(path):
 #         exclude string /string[]. '__init__.py' | '__init__' | ['btnReport48', 'btnHelp48']
 #
 # @RETURN strint[].
-def getFileList(path, file_type='*', extension=False, exclude='*', path_add = False):
-    getFile = []
-
+def getFileList(path, file_type='*', extension=False, exclude='*', add_path = False):
     if(os.path.exists(path)):
+        getFile = []
         os.chdir(path)
         for file_name in glob.glob(file_type):
-            if file_name.split('.')[0] in exclude:
+            if exclude in file_name:
                 continue
-            if path_add:
+            if add_path:
                 file_name = os.path.normpath(('/').join([path,file_name]))
             if extension:
                 getFile.append(file_name)
             else:
                 getFile.append((file_name.split('.')[0]))
-    return getFile
+        return getFile
 
 ##
 # @BRIEF  GET ALL subfolders in the path

@@ -12,10 +12,9 @@
 # http://td.animationsinstitut.de
 #*********************************************************************
 
-name: Default
-# id:   default
+name: Plex
 
-path: &PROJECT D:/Dropbox/arPipeline
+path: &PROJECT D:/Dropbox/plex
 
 resolution:
   - 2048
@@ -36,11 +35,7 @@ PROJECT_PATH:
   preproduction     : !join [*PROJECT, /20_pre]
   rnd               : !join [*PROJECT, /25_rnd]
 
-  assets            : &ASSETS !join [*PROJECT, /30_assets]
-  assets_char       : !join [*ASSETS, "/ + TYPE_ASSETS[char]"]
-  assets_prop       : !join [*ASSETS, "/ + TYPE_ASSETS[prop]"]
-  assets_set        : !join [*ASSETS, "/ + TYPE_ASSETS[set]"]
-  assets_fx         : !join [*ASSETS, "/ + TYPE_ASSETS[fx]"]
+  assets            : !join [*PROJECT, /30_assets]
 
   shots             : &SHOTS !join [*PROJECT, /40_shots]
   post              : !join [*SHOTS, ]
@@ -58,7 +53,11 @@ PROJECT_PATH:
 
 
 HELP:
-  default:  https://github.com/richteralexander/arProject/wiki
-  arHeader: https://github.com/richteralexander/arProject/wiki/arHeader
+  main: &HELP https://github.com/richteralexander/plex/wiki
+  arUtil:     !join [*HELP, /arUtil]
+  arSave:     !join [*HELP, /arSave]
+  arReporter: !join [*HELP, /arReporter]
+  arDesktop:  !join [*HELP, /arDesktop]
+  arNotificator: !join [*HELP, /arNotificator]
 
 
