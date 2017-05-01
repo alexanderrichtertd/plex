@@ -6,6 +6,7 @@ data/project/default/history
 data/project/default/hints.yml
 data/project/default/rules.yml
 data/project/default/statistic.yml
+data/user/arichter
 
 lib/ideas
 lib/libSnapshot.py
