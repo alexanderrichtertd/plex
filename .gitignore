@@ -26,11 +26,11 @@ lib/utils/arSmartLoader.py
 lib/utils/arUtil.py
 
 software/maya/plugins/*
-software/maya/scripts/*
+
 software/maya/shelf/*
 
 software/nuke/plugins/*
-software/nuke/gizmos/extern/*
+software/nuke/gizmos/extern
 
 software/houdini/plugins/*
 
