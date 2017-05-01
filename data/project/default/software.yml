@@ -4,7 +4,7 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# copyright = Copyright 2017 Animationsinstitut
 # author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
@@ -43,16 +43,18 @@ MAYA:
     MAYA_DISABLE_CER: 1
 
   MENU:
-    Save:
-        p = menu,
-        l = 'arSave',
-        c = 'from util import arSave\nreload(arSave)\narSave.start()'
+    - Save: menuItem(p={}, l='arSave', c='from util import arSave; reload(arSave); arSave.main()')
+    - Load: menuItem(p={}, l='arLoad', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
 
-    RIG:
-      rigScript:
-        p = menu,
-        l = 'arSave',
-        c = 'from util import arSave\nreload(arSave)\narSave.start()'
+    - break: menuItem(p = {}, d = True)
+
+    - Util:
+        position_selected: menuItem(p={}, l='Position Selected', c='import maya_utils; maya_utils.position_selected()')
+
+    - break: menuItem(p = {}, d = True)
+
+    - Report:  menuItem(p={}, l='arReporter', c='from utils import arReporter; reload(arReporter); arReporter.main()')
+    - Help:    menuItem(p={}, l='Help', c='import libFunc; libFunc.get_help('maya')')
 
 
 #************************
@@ -71,30 +73,30 @@ NUKE:
       # - PLUGIN_PATH
 
     # Init & Menu
-    NUKE_INIT_PATH: !env [SOFTWARE_PATH]
-    NUKE_MENU_PATH: !env [SOFTWARE_PATH]
+    NUKE_INIT_PATH: !env_first [SOFTWARE_PATH]
+    NUKE_MENU_PATH: !env_first [SOFTWARE_PATH]
 
     NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *VERSION_LONG]
 
     PATH: *NUKE_DIR
 
   MENU:
-    - Save:    "addCommand('Save', '', 'ctrl+alt+s', 'save.ico')"
-    - Load:    "addCommand('Load', '', 'ctrl+alt+l', 'load.ico')"
+    # - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
+    # - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
+
+    # - break:   "addSeparator()"
+
+    - arWrite: "addCommand('arWrite', 'import menu; arWrite()', 'ctrl+alt+w', 'write.ico')"
 
     - break:   "addSeparator()"
 
-    - arWrite: "addCommand('arWrite', '', 'ctrl+alt+w', 'write.ico')"
-
-    - break:   "addSeparator()"
-
-    - Report:  "addCommand('Report', '', 'ctrl+alt+r', 'reporter.ico')"
-    - Help:    "addCommand('Help', '', 'ctrl+alt+h', 'help.ico')"
+    # - Report:  "addCommand('Report', 'import menu; report()', 'ctrl+alt+r', 'reporter.ico')"
+    - Help:    "addCommand('Help', 'import menu; get_help()', 'ctrl+alt+h', 'help.ico')"
 
     - break:   "addSeparator()"
 
     - Others:
-               Test: "addCommand('New', '')"
+            Test: "addCommand('Test', '')"
 
 
 #************************

@@ -4,8 +4,8 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -18,7 +18,7 @@ import sys
 from PySide import QtGui, QtCore, QtUiTools
 
 import libLog
-from arUtils import ArUtils
+from arUtil import ArUtil
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
@@ -27,10 +27,10 @@ THIS_DIR = ("/").join([os.path.dirname(__file__), "ui"])
 PATH_UI  = ("/").join([THIS_DIR, TITLE + ".ui"])
 
 
-class ArProject(ArUtils):
+class ArProject(ArUtil):
 
     def __init__(self, initProject, openMenu):
-        super(ArProject, self).__init__()
+        super(ArUtil, self).__init__()
         self.widget      = QtUiTools.QUiLoader().load(PATH_UI)
         self.initProject = initProject
         self.openMenu    = openMenu

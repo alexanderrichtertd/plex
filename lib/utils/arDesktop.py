@@ -4,8 +4,8 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -22,6 +22,7 @@ import users
 import libLog
 import libData
 import libFunc
+from software import Software
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
@@ -33,7 +34,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     def __init__(self, parent=None):
         QtGui.QSystemTrayIcon.__init__(self, parent)
         #self.activated.connect(self.showMainWidget)
-        self.setIcon(QtGui.QIcon(libData.get_img_path("program/arpipeline")))
+        self.setIcon(QtGui.QIcon(libData.get_img_path('program/default')))
 
         self.parent = parent
         menu = QtGui.QMenu()
@@ -44,59 +45,59 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
         # ADMIN UI
         if self.user.is_admin:
-            adminMenu = QtGui.QMenu("Admin")
+            adminMenu = QtGui.QMenu('Admin')
             adminMenu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
             menu.addMenu(adminMenu)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnLogProjekt48")), "Project Data")
-            QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnOpenProjectLog)
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnLogLocal48")), "User Data")
-            QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnOpenLocalLog)
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnLogProjekt48')), 'Project Data')
+            QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenProjectLog)
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnLogLocal48')), 'User Data')
+            QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenLocalLog)
 
             adminMenu.addSeparator()
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnProject48")), "Reminder")
-            QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnWriteReminder)
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProject48')), 'Reminder')
+            QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnWriteReminder)
 
             menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path("user/%s"%self.user.name)), self.user.name)
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnShowUserData)
+        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('user/default')), self.user.name)
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnShowUserData)
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path("project/arPipeline")), self.config_data['project']["name"])
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnOpenProjectPath)
-
-        menu.addSeparator()
-
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnProject48")), 'Settings')
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnProject)
+        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('project/default')), self.config_data['project']['name'])
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenProjectPath)
 
         menu.addSeparator()
 
-        subMenu = QtGui.QMenu("Software")
+        # menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProject48')), 'Settings')
+        # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnProject)
+
+        # menu.addSeparator()
+
+        subMenu = QtGui.QMenu('Software')
         subMenu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
         menu.addMenu(subMenu)
 
-        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path("program/maya")), "Maya")
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnOpenMaya)
-        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path("program/nuke")), "Nuke")
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnOpenNuke)
-        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path("program/houdini")), "Houdini")
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnOpenHoudini)
+        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('program/maya')), 'Maya')
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenMaya)
+        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('program/nuke')), 'Nuke')
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenNuke)
+        # menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('program/houdini')), 'Houdini')
+        # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenHoudini)
 
         menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnReport48")), "Report")
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnReport)
-        self.setContextMenu(menu)
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnHelp48")), "Help")
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_btnHelp)
+        # menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnReport48')), 'Report')
+        # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnReport)
+        # self.setContextMenu(menu)
+        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnHelp48')), 'Help')
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnHelp)
         self.setContextMenu(menu)
 
         menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path("btn/btnDenial48")), "Quit")
-        QtCore.QObject.connect(menuItem, QtCore.SIGNAL("triggered()"), self.press_closeStartup)
+        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnDenial48')), 'Quit')
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_closeStartup)
         self.setContextMenu(menu)
 
         # startarNotificator()
@@ -109,11 +110,11 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        LOG.debug("showUserData")
+        LOG.debug('showUserData')
         webbrowser.open(libData.getEnv('PROJECT_USER_PATH'))
 
     def press_btnOpenProjectPath(self):
-        LOG.debug("openProjectPath")
+        LOG.debug('openProjectPath')
         webbrowser.open(libData.getEnv('PROJECT_PATH'))
     #------------------------------
     def press_btnProject(self):
@@ -121,19 +122,18 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         arProject.start()
     #------------------------------
     def press_btnOpenMaya(self):
-        LOG.debug("openMaya")
-        from settings import setMaya
-        setMaya.SetMaya()
+        LOG.debug('Maya')
+        Software('maya').start_software()
 
     def press_btnOpenNuke(self):
-        LOG.debug("openNuke")
-        import setNuke
-        #setNuke.SetNuke()
+        LOG.debug('Nuke')
+        Software('nuke').start_software()
+
 
     def press_btnOpenHoudini(self):
-        LOG.debug("openHoudini")
-        import setHoudini
-        #setHoudini.SetHoudini()
+        LOG.debug('Houdini')
+        Software().start_software()
+
     #------------------------------
     def press_btnOpenProjectLog(self):
         webbrowser.open(libData.getEnv('DATA_PROJECT_PATH'))
@@ -142,7 +142,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         webbrowser.open(libData.getEnv('DATA_USER_PATH'))
 
     def press_btnWriteReminder(self):
-        LOG.debug("writeReminder")
+        LOG.debug('writeReminder')
         from utilities import arNotificator
         arNotificator.main(True)
     #------------------------------
@@ -154,7 +154,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         libFunc.get_help(TITLE)
     #------------------------------
     def press_closeStartup(self):
-        LOG.debug("closeStartup")
+        LOG.debug('closeStartup')
         self.parent.instance().quit()
 
 
@@ -162,11 +162,11 @@ def main():
     app = QtGui.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
 
-    LOG.debug("START")
+    LOG.debug('START')
 
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
-    trayIcon.setToolTip(trayIcon.config_data['project']["name"] + ' [right click]') # project name
-    trayIcon.showMessage(trayIcon.config_data['project']["name"], 'Rick Click on Icon for options', QtGui.QSystemTrayIcon.Information , 20000) # project name
+    trayIcon.setToolTip(trayIcon.config_data['project']['name'] + ' [right click]') # project name
+    trayIcon.showMessage(trayIcon.config_data['project']['name'], 'Rick Click on Icon for options', QtGui.QSystemTrayIcon.Information , 20000) # project name
 
     app.exec_()

@@ -1,13 +1,12 @@
-#*************************************************************
-# CONTENT       set renderer enviroment variable
 #*********************************************************************
-# content   = set renderer enviroment variable
+# content   = renderer
+#             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.0.1
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.

@@ -1,30 +1,30 @@
-"""*************************************************************
-content   = create render or viewer snapshots
-version   = 0.0.1
-date      = 2017-01-01
-
-license   = MIT
-copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-author    = Alexander Richter <contact@richteralexander.com>
-*********************************************************************
-This source file has been developed within the scope of the
-Technical Director course at Filmakademie Baden-Wuerttemberg.
-http://td.animationsinstitut.de
-*********************************************************************"""
+#*********************************************************************
+# content   = snapshot
+#             executes other scripts on PUBLISH (on task in file name)
+# version   = 0.0.1
+# date      = 2017-01-01
+#
+# license   = MIT
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import time
 
-from PySide import QtGui
-from PySide import QtCore
+from PySide import QtGui, QtCore
 
+import libLog
 import libData
 import libFunc
 
 # DEFAULT
-import log
-LOG = log.initLog(script="lib")
-
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 
 #************************

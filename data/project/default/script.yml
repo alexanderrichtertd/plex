@@ -25,7 +25,7 @@ arSearchScript:
 
 
 # *******************
-arHeader:
+arUtil:
   # show header in all scripts
   active: True
   minimizeHeader: False
@@ -42,7 +42,7 @@ arSave:
 
 
 # *******************
-arReport:
+arReporter:
   active: True
   shortcut: ctrl+c
   count: 0
@@ -61,23 +61,7 @@ arReport:
 
 
 # *******************
-arReminder:
+arNotificator:
   active: True
   count:  0
 
-
-# *******************
-achievement:
-  active: True
-
-  # pipeline kid
-  script_report:
-    - 20
-    - 100
-    - 500
-
-  # unbreakable
-  script_crash:
-    - 20
-    - 100
-    - 500

@@ -12,7 +12,6 @@
 # http://td.animationsinstitut.de
 #*********************************************************************
 
-
 import os
 import sys
 import shutil
@@ -34,9 +33,6 @@ def nodeCreate(currentNode = ""):
     if currentNode == "":
         currentNode = nuke.thisNode()
 
-    global LOG
-    # LOG = libLog.initLog(software=SOFTWARE, script=TITLE, level=logging.INFO, logger=logging.getLogger(TITLE))
-
     if currentNode["frameRangeMode"].value() != "custom":
         currentNode["frameStart"].setValue(int(nuke.Root()['first_frame'].getValue()))
         currentNode["frameEnd"].setValue(int(nuke.Root()['last_frame'].getValue()))
@@ -45,7 +41,7 @@ def nodeCreate(currentNode = ""):
     currentNode["resolutionY"].setValue(currentNode.height())
 
     fileName    = os.path.basename(nuke.root().name()).split(".")[0]
-    renderPath  = os.path.dirname(nuke.root().name()) + "/" + s.STATUS["render"] + "/" + fileName + "/exr/" + fileName + ".%04d.exr"
+    renderPath  = os.path.dirname(nuke.root().name()) + "/RENDER/" + fileName + "/exr/" + fileName + ".%04d.exr"
 
     currentNode["rootPath"].setValue(renderPath)
     currentNode["exrPath"].setValue(renderPath)
@@ -57,18 +53,15 @@ def nodeCreate(currentNode = ""):
 
 
 def openRV (renderPath):
-    global LOG
-
     if not os.path.exists(os.path.dirname(renderPath)) or not os.listdir(os.path.dirname(renderPath)):
         LOG.warning("FOLDER : NOT EXISTS : " + renderPath)
         return "WARNING: path doesnt exist: " + renderPath
 
-    os.system('start "" "' + s.SOFTWARE["rv"] + '" ' + renderPath)
+    os.system('start "" "' + 'RV' + '" ' + renderPath)
     LOG.info("RV : OPEN : " + renderPath)
 
 
 def openFolder(path):
-    global LOG
     renderPath = os.path.dirname(path).replace("/","\\")
 
     if not os.path.exists(renderPath) or not os.listdir(renderPath):
@@ -81,8 +74,6 @@ def openFolder(path):
 
 
 def render():
-    global LOG
-
     cn = nuke.thisNode()
     setCommentPath()
 
@@ -119,7 +110,7 @@ def setCommentPath():
             comment = "PUBLISH"
 
             # delete publish
-            publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + s.STATUS["publish"]
+            publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/PUBLISH"
             if  os.path.exists(publishPath):
                 try:
                     print "Delete : " + publishPath
@@ -131,24 +122,24 @@ def setCommentPath():
             comment = cn["status"].value()
 
         print "STATUS: " + comment
-        exrPath     = cn["exrPath"].getValue().split("/")
-        fileName    = exrPath[-1].split(".")
-        newName     = fileName[0] + "_" + comment
-        newPath     = cn["exrPath"].getValue().replace(fileName[0], newName)
+        exrPath  = cn["exrPath"].getValue().split("/")
+        fileName = exrPath[-1].split(".")
+        newName  = fileName[0] + "_" + comment
+        newPath  = cn["exrPath"].getValue().replace(fileName[0], newName)
 
         cn["exrPathComment"].setValue(newPath)
 
-        jpgPath     = cn["jpgPath"].getValue().split("/")
-        fileName    = jpgPath[-1].split(".")
-        newName     = fileName[0] + "_" + comment
-        newPath     = cn["jpgPath"].getValue().replace(fileName[0], newName)
+        jpgPath  = cn["jpgPath"].getValue().split("/")
+        fileName = jpgPath[-1].split(".")
+        newName  = fileName[0] + "_" + comment
+        newPath  = cn["jpgPath"].getValue().replace(fileName[0], newName)
 
         cn["jpgPathComment"].setValue(newPath)
 
-        tifPath     = cn["tifPath"].getValue().split("/")
-        fileName    = tifPath[-1].split(".")
-        newName     = fileName[0] + "_" + comment
-        newPath     = cn["tifPath"].getValue().replace(fileName[0], newName)
+        tifPath  = cn["tifPath"].getValue().split("/")
+        fileName = tifPath[-1].split(".")
+        newName  = fileName[0] + "_" + comment
+        newPath  = cn["tifPath"].getValue().replace(fileName[0], newName)
 
         cn["tifPathComment"].setValue(newPath)
 
@@ -164,8 +155,8 @@ def publishRender(writeNode):
     if cn["chbPublish"].value():
         print "PUBLISH"
 
-        fileName    = []
-        splitFile   = os.path.basename(nuke.root().name()).split(".")[0].split("_")
+        fileName  = []
+        splitFile = os.path.basename(nuke.root().name()).split(".")[0].split("_")
 
         for part in splitFile:
             fileName.append(part)
@@ -173,7 +164,7 @@ def publishRender(writeNode):
                 break
 
         fileName    = ("_").join(fileName)
-        publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + s.STATUS["publish"] + "/exr"
+        publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/PUBLISH/exr"
         oldPath     = os.path.dirname(cn["exrPathComment"].getValue())
 
         if writeNode == "exr":
@@ -182,16 +173,14 @@ def publishRender(writeNode):
 
             LOG.info("PUBLISH: EXR : " + publishPath)
 
-            oldFrames = libFileService.getFolderList(oldPath, fileType='*exr', ex=True)
+            oldFrames = libFileFolder.getFolderList(oldPath, fileType='*exr', ex=True)
 
             for oldFrame in oldFrames:
                 framePart    = oldFrame.split(".")
                 framePart[0] = fileName
 
-                newFrame = (".").join(framePart)
-
+                newFrame = publishPath + "/" + (".").join(framePart)
                 oldFrame = oldPath + "/" + oldFrame
-                newFrame = publishPath + "/" + newFrame
 
                 shutil.copyfile(oldFrame, newFrame)
 
@@ -207,7 +196,7 @@ def publishRender(writeNode):
 
             LOG.info("PUBLISH: JPG : " + publishPath)
 
-            oldFrames = libFileService.getFolderList(oldPath, fileType='*jpg', ex=True)
+            oldFrames = libFileFolder.getFolderList(oldPath, fileType='*jpg', ex=True)
 
             for oldFrame in oldFrames:
                 framePart    = oldFrame.split(".")

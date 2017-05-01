@@ -1,17 +1,12 @@
-#*************************************************************
-# CONTENT       creates folder structure (assets & shots)
-#               saves a new file
-#               loads pipeline files
-#
 #*********************************************************************
-# content   = creates folder structure (assets & shots)
-#             saves a new file, loads pipeline files
+# content   = saves as
+#             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.0.1
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -24,25 +19,21 @@ import datetime
 
 from threading import Thread
 
-from PySide import QtGui
-from PySide import QtCore
-from PySide import QtUiTools
+from PySide import QtGui, QtCore, QtUiTools
 
 import libLog
-import libImage
-import libUser
+import users
 import libRender
-import libFunction
-import libMessageBox
-import libFileService
+import libFunc
+import libFileFolder
 
 from utilities import arReport
 
 #**********************
 # VARIABLE
 #**********************
-TITLE       = os.path.splitext(os.path.basename(__file__))[0]
-LOG         = ""
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 SAVE_DIR    = s.PATH["project"]
 SAVE_FILE   = ""

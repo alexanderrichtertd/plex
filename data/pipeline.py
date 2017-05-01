@@ -114,6 +114,7 @@ class Setup(object):
         sys.path.append(os.environ['DATA_PROJECT_PATH'])
 
         self.add_env('PYTHONPATH', os.environ['LIB_PATH'])
+        self.add_env('PYTHONPATH', os.environ['IMG_PATH'])
         self.add_env('PYTHONPATH', os.environ['UTILS_PATH'])
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
         self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'] )

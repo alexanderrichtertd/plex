@@ -4,7 +4,7 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+# copyright = Copyright 2017 Animationsinstitut
 # author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
@@ -12,6 +12,7 @@
 # http://td.animationsinstitut.de
 #*********************************************************************
 
+import os
 import time
 import webbrowser
 
@@ -35,16 +36,15 @@ def get_all_keys(key_list, dictonary=[]):
             get_all_keys(items, dictonary)
     return dictonary
 
-#************************
-# TIME
-# @BRIEF  count time of functions for optimazation
-def get_duration(method):
+
+# decorator: return function duration time
+def get_duration(func):
     def timed(*args, **kw):
         startTime  = time.time()
-        resultTime = method(*args, **kw)
+        resultTime = func(*args, **kw)
         endTime    = time.time()
 
-        printResult = '%r (%r, %r) %2.2f sec' % (method.__name__, args, kw, endTime-startTime)
+        printResult = '%r (%r, %r) %2.2f sec' % (func.__name__, args, kw, endTime-startTime)
         LOG.debug(printResult)
         return resultTime
     return timed

@@ -1,12 +1,38 @@
 img/_src
+img/img_rc.py
+
+data/exe/win_houdini.bat
+data/project/default/history
+data/project/default/hints.yml
+data/project/default/rules.yml
+data/project/default/statistic.yml
 
 lib/ideas
-lib/extern
+lib/libSnapshot.py
+lib/classes/contect.py
+lib/classes/renderer.py
+lib/classes/notification.py
+lib/classes/report.py
+lib/classes/subclass.py
+lib/utils/ui
+lib/utils/ui/_history
+lib/utils/arNotificator.py
+lib/utils/arProject.py
+lib/utils/arReporter.py
+lib/utils/arSave.py
+lib/utils/arSaveAs.py
+lib/utils/arSmartLoader.py
+lib/utils/arUtil.py
 
-software/utilities/ui/_history
 software/maya/plugins/*
+software/maya/scripts/*
+software/maya/shelf/*
+
 software/nuke/plugins/*
+software/nuke/gizmos/extern
+
 software/houdini/plugins/*
 
 *.pyc
 *.log
+*.qrc

@@ -1,16 +1,17 @@
-#*************************************************************
-# title: 		Create Playblast
+#*********************************************************************
+# content   = create playblast
+#             executes other scripts on PUBLISH (on task in file name)
+# version   = 0.0.1
+# date      = 2017-01-01
 #
-# software:     Maya
-#
-# content:		creates pipeline playblast
-#
-# dependencies: "PYTHONPATH=%SOFTWARE_PATH%;%PYTHONPATH%"
-#
-# author: 		Alexander Richter 
-# email:		contact@richteralexander.com
-#*************************************************************
-
+# license   = MIT
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+# This source file has been developed within the scope of the
+# Technical Director course at Filmakademie Baden-Wuerttemberg.
+# http://td.animationsinstitut.de
+#*********************************************************************
 
 import os
 import sys
@@ -19,9 +20,10 @@ from os import startfile
 import maya.cmds as cmds
 import maya.mel as mel
 
-import settings as s
-# sys.path.append(s.PATH['lib'])
-# import libUser
+import libLog
+
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = libLog.init(script=TITLE)
 
 
 def start():

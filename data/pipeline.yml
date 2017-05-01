@@ -34,18 +34,5 @@ user_data: True
 
 
 PIPELINE:
-  name:    &PIPELINE plex
+  name:    plex
   version: 0.0.1
-
-
-REPOSITORY:
-  username: guest
-  password:
-
-  owner: richteralexander
-  repository: *PIPELINE
-
-
-# CACHE:
-#   modified:
-#   ENV:

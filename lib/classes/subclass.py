@@ -10,7 +10,6 @@ class SingletonType(type):
             cls.__instance = super(SingletonType, cls).__call__(*args, **kwargs)
             return cls.__instance
 
-
 class Singleton:
     class __Singleton:
         def __init__(self, arg):

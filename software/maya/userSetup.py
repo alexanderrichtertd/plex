@@ -4,8 +4,8 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -18,23 +18,15 @@ import sys
 import maya.cmds as cmds
 
 import libLog
-import libFunc
+from software import Software
 
-TITLE = "maya"
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 
 #************************
 # PRINT CONSOLE
-libFunc.console_header()
-
-print "PATH"
-print "  ON  - lib"
-print "  ON  - img"
-print "  ON  - data"
-print "  ON  - plugins"
-print "  ON  - settings"
-print "  ON  - utilities"
+Software.print_header()
 
 print ""
 
@@ -49,23 +41,3 @@ except:
 
 print ""
 
-print "PLUGINS"
-print "  ON  - Arnold"
-
-print ""
-
-print "SCRIPTS"
-print "  ON  - Utilities"
-
-print ""
-
-print "SETTINGS"
-try:
-	cmds.evalDeferred("from scripts import maya_settings")
-	print "  ON  - TIME:   " + str(s.FPS)
-	print "  ON  - RENDER: RenderMan"
-except:
-	print "  OFF - TIME:   " + str(s.FPS)
-	print "  OFF - RENDER: RenderMan"
-
-print ""

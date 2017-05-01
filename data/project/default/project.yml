@@ -5,7 +5,7 @@
 #
 # license   = MIT
 # copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -50,6 +50,14 @@ PROJECT_PATH:
   edit_music        : !join [*EDIT, /_music]
   edit_sound        : !join [*EDIT, /_sound]
   edit_final        : !join [*EDIT, /FINAL]
+
+
+REPOSITORY:
+  username: guest
+  password:
+
+  owner: richteralexander
+  repository: plex
 
 
 HELP:

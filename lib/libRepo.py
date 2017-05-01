@@ -4,8 +4,8 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -14,7 +14,6 @@
 
 import os
 import json
-import base64
 import requests
 
 import libData
@@ -55,12 +54,12 @@ def make_github_issue(title, body=None, assignee=USERNAME, milestone=None, label
              'labels': labels}
 
     # Add the issue to our repository
-    r = session.post(url, json.dumps(issue))
+    repo = session.post(url, json.dumps(issue))
 
-    if r.status_code == 201:
+    if repo.status_code == 201:
         LOG.info('Successfully created Issue {}'.format(title))
     else:
-        LOG.warning('Could not create Issue {}.\nResponse:{}'.format(title, r.content))
+        LOG.warning('Could not create Issue {}.\nResponse:{}'.format(title, repo.content))
 
 
 #************************

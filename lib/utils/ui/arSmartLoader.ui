@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
+    <width>425</width>
     <height>47</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
    <string>Project</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../../../img/img.qrc">
     <normaloff>:/btn/btn/btnProject48.png</normaloff>:/btn/btn/btnProject48.png</iconset>
   </property>
   <property name="styleSheet">
@@ -186,7 +186,7 @@ background-color: rgb(71, 71, 71);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../../../img.qrc"/>
+  <include location="../../../img/img.qrc"/>
  </resources>
  <connections/>
 </ui>

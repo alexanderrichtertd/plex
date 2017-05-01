@@ -6,8 +6,8 @@
 # date      = 2017-01-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <contact@richteralexander.com>
+# copyright = Copyright 2017 Animationsinstitut
+# author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 # This source file has been developed within the scope of the
 # Technical Director course at Filmakademie Baden-Wuerttemberg.
@@ -28,7 +28,7 @@ LOG   = libLog.init(script=TITLE)
 # FOLDER
 # @BRIEF  creates a folder, checks if it already exists,
 #         creates the folder above if the path is a file
-def createFolder(path):
+def create_folder(path):
     if len(path.split('.')) > 1:
         path = os.path.dirname(path)
     if not os.path.exists(path):
@@ -38,7 +38,7 @@ def createFolder(path):
             LOG.info('CANT create folder: {}'.format(path))
 
 # @BRIEF  opens folder even if file is given
-def openFolder(path):
+def open_folder(path):
     if os.path.exists(path):
         if len(path.split('.')) > 1:
             path = os.path.dirname(path)
@@ -58,7 +58,7 @@ def openFolder(path):
 #         exclude string /string[]. '__init__.py' | '__init__' | ['btnReport48', 'btnHelp48']
 #
 # @RETURN strint[].
-def getFileList(path, file_type='*', extension=False, exclude='*', add_path = False):
+def get_file_list(path, file_type='*', extension=False, exclude='*', add_path = False):
     if(os.path.exists(path)):
         getFile = []
         os.chdir(path)
@@ -75,7 +75,7 @@ def getFileList(path, file_type='*', extension=False, exclude='*', add_path = Fa
 
 ##
 # @BRIEF  GET ALL subfolders in the path
-def getDeepFolderList(path):
+def get_deep_folder_list(path):
     getFile = map(lambda x: os.path.basename(x[0]), os.walk(path))
     getFile.pop(0)
     return getFile
@@ -83,7 +83,7 @@ def getDeepFolderList(path):
 
 #************************
 # TEMP IMAGE
-def rmTmpImg():
+def rm_tmp_img():
     tmpImgPath = DATA.PATH_EXTRA['img_tmp']  #temp user place (os independent)
     if os.path.exists(tmpImgPath):
         try:
