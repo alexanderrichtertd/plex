@@ -19,12 +19,13 @@ import sys
 
 import libLog
 import libData
+from subclass import Singleton
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
-class User:
-    def __init__(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
+class User(Singleton):
+    def setup(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
         self.id       = user_id         # arichter
         self.initial  = self.id[0:2]    #  ar
         self.name     = name            # Alexander Richter

@@ -21,6 +21,7 @@ import libLog
 import libData
 import libFunc
 import libFileFolder
+from subclass import Singleton
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
@@ -28,18 +29,26 @@ LOG   = libLog.init(script=TITLE)
 
 #************************
 # CLASS
-class Software(object):
+class Software(Singleton):
 
-    def __init__(self, software, open_file=''):
-        self.software  = software
-        self.open_file = open_file
+    def setup(self, software=os.getenv('SOFTWARE')):
+        self.software  = software.lower()
 
+        # GET data
+        self.software_data = libData.get_data()['software'][self.software.upper()]
+
+        self.ver = self.software_data['version']
+        self.software_path    = self.software_data['path']
+
+        # RENDERER
+        self.renderer      = self.software_data.get('renderer', '')
+        self.renderer_path = self.software_data.get('renderer_path', '')
+
+    def add_env(self):
         LOG.debug('______________________________{}'.format(self.software))
-
-        # RENEW SOFTWARE_PATH & add sub paths
         new_software_path = []
         for each_path in os.environ['SOFTWARE_PATH'].split(';'):
-            tmp_paths  = ('/').join([each_path, self.software.lower()])
+            tmp_paths  = ('/').join([each_path, self.software])
             LOG.debug(tmp_paths)
             tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py')
             new_path   = []
@@ -48,21 +57,12 @@ class Software(object):
             new_software_path.extend(new_path)
 
         os.environ['SOFTWARE'] = self.software.upper()
-        os.environ['SOFTWARE_PATH'] = ('/').join([each_path, self.software.lower()])
+        os.environ['SOFTWARE_PATH'] = ('/').join([each_path, self.software])
         os.environ['SOFTWARE_SUB_PATH'] = (';').join(new_software_path)
 
         # GET data
         self.software_data = libData.get_data()['software'][self.software.upper()]
-
-        # SOFTWARE
-        self.version = self.software_data['version']
-        self.path    = self.software_data['path']
-        self.env     = self.software_data.get('ENV', '')
-
-        # RENDERER
-        self.renderer      = self.software_data.get('renderer', '')
-        self.renderer_path = self.software_data.get('renderer_path', '')
-
+        self.env = self.software_data.get('ENV', '')
 
         # ADD software ENV
         if(self.env):
@@ -75,55 +75,40 @@ class Software(object):
             LOG.debug('{}_ENV: {}'.format(self.software.upper(), self.env))
 
 
-    # SOFTWARE specific behaviour
-    def start_software(self):
-        if(self.software == 'maya'):
-            self.maya()
-        elif(self.software == 'nuke'):
-            self.nuke()
-        elif(self.software == 'houdini'):
-            self.houdini()
-        else:
-            raise LOG.warning('Software was not found')
-
     #************************
     # SOFTWARE
-    def maya(self):
-        cmd = 'start "" {} -file "{}"'.format(self.software_data['path'], self.open_file)
-        LOG.debug(cmd)
-        subproces
-
-    def nuke(self):
-        cmd = 'start "" Nuke{}.exe --nukex "{}"'.format(self.software_data['version'], self.open_file)
-        LOG.debug(cmd)
-        subprocess.check_output(cmd, shell=True)
-
-    def houdini(self):
-        print('Houdini')
+    def start(self, open_file=''):
+        cmd = self.software_data['start'].format(open_file)
+        LOG.debug(self.software_data['start'])
+        subprocess.Popen(cmd, shell=True, env=os.environ)
 
     def __call__(self):
         LOG.info('SOFTWARE: {} {} - {}\n\
-                  ENV: {}'.format(self.software, self.version, self.path,
+                  ENV: {}'.format(self.software, self.ver, self.software_path,
                                   self.env))
 
+
+    #************************
+    # VARIABLES
+    @property
     def id(self):
         return id(self)
 
-    # @property
-    # def software(self):
-    #     return self.software
+    @property
+    def name(self):
+        return self.software
 
-    # @property
-    # def version(self):
-    #     return self.version
+    @property
+    def version(self):
+        return self.ver
 
-    # @property
-    # def path(self):
-    #     return self.path
+    @property
+    def path(self):
+        return self.software_path
 
-    # @property
-    # def env(self):
-    #     return self.env
+    @property
+    def software_env(self):
+        return self.env
 
     # @property
     # def renderer(self):
@@ -133,6 +118,9 @@ class Software(object):
     # def renderer_path(self):
     #     return self.renderer_path
 
+
+    #************************
+    # STATIC
     @staticmethod
     def add_menu(menu_node, new_command):
         for keys, item in new_command.iteritems():
@@ -148,7 +136,6 @@ class Software(object):
                 Software.add_menu(sub_menu, item)
             else:
                 eval('menu_node.{}'.format(item))
-
 
     @staticmethod
     def print_header(menu_data):

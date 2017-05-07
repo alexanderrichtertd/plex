@@ -1,3 +1,9 @@
+> ### In Development
+> A lot of features are still in production. Check out the documentary and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**
+> [**PatchDay**](https://github.com/richteralexander/plex/wiki/PatchDay): Every sunday will be new additions and fixes
+>
+> [FMX 2017 Talk - Open Source Pipeline](https://livestream.com/accounts/10071884/events/7339552/videos/155507577)
+
 ![plex](https://cloud.githubusercontent.com/assets/9514022/25578231/d5be91f6-2e6c-11e7-9a4b-2de3772e0fc0.png)
 
 ## **Introduction**

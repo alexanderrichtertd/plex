@@ -52,7 +52,8 @@ def createWriteDir():
 
 #************************
 # PIPELINE
-Software.print_header(software_data[os.getenv('SOFTWARE')]['MENU'])
+Software().setup()
+Software().print_header(software_data[os.getenv('SOFTWARE')]['MENU'])
 
 print('SETTINGS')
 # FPS ***********************************

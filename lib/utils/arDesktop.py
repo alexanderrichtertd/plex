@@ -162,11 +162,9 @@ def main():
     app = QtGui.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
 
-    LOG.debug('START')
-
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
-    trayIcon.setToolTip(trayIcon.config_data['project']['name'] + ' [right click]') # project name
+    trayIcon.setToolTip(trayIcon.config_data['project']['name'] + ' [right click]')
     trayIcon.showMessage(trayIcon.config_data['project']['name'], 'Rick Click on Icon for options', QtGui.QSystemTrayIcon.Information , 20000) # project name
 
     app.exec_()

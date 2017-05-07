@@ -53,12 +53,14 @@ project_data = libData.get_data()
 menu_data = project_data['software']['NUKE']['MENU']
 menuNode  = nuke.menu('Nodes').addMenu(project_data['project']['name'], icon = 'nuke.ico')
 
-add_gizmo_menu(menuNode)
 nuke.addOnScriptSave(add_write_node)
 
 for menu_item in menu_data:
     software.Software.add_menu(menuNode, menu_item)
 
+menuNode.addSeparator()
+
+add_gizmo_menu(menuNode)
 
 
 #*******************

@@ -16,7 +16,10 @@
 # MAYA
 MAYA:
   version: &MAYA_VERSION 2017
-  path:    !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /maya.exe]
+  path: &PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /maya.exe]
+
+# place {} to be replaced by open_file
+  start: !join ['start ', *PATH, ' -file "{}"']
 
   renderer:
   renderer_path:
@@ -61,9 +64,11 @@ MAYA:
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
-  version_long: &VERSION_LONG !join [*NUKE_VERSION, v2]
+  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v2]
 
-  path: !join ["C:/Program Files/Nuke", *VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
+  start: !join ['start Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
+
+  path: !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
 
   ENV:
     NUKE_PATH:
@@ -76,7 +81,7 @@ NUKE:
     NUKE_INIT_PATH: !env_first [SOFTWARE_PATH]
     NUKE_MENU_PATH: !env_first [SOFTWARE_PATH]
 
-    NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *VERSION_LONG]
+    NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
 
     PATH: *NUKE_DIR
 
@@ -96,14 +101,16 @@ NUKE:
     - break:   "addSeparator()"
 
     - Others:
-            Test: "addCommand('Test', '')"
+        Test: "addCommand('Test', '')"
 
 
 #************************
 # HOUDINI
 HOUDINI:
-  path:
   version: 15.56
+  path:
+
+  start:
 
   renderer:
   renderer_path:

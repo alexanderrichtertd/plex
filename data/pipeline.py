@@ -194,8 +194,11 @@ args = parser.parse_args()
 if args.script:
     Setup()
     if args.script == 'software':
-        import software
-        software.Software(args.software).start_software()
+        from software import Software
+        soft = Software()
+        soft.setup(args.software)
+        soft.add_env()
+        soft.start()
     elif args.script == 'desktop':
         import arDesktop
         arDesktop.main()
