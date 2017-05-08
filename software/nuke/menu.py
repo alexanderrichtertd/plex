@@ -19,7 +19,8 @@ import webbrowser
 import libLog
 import libData
 import libFunc
-import software
+import libFileFolder
+from software import Software
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
@@ -39,24 +40,29 @@ def add_write_node():
     for currentNode in write:
         writeNode.nodeCreate(currentNode)
 
-def add_all_img():
+def add_plugin_paths():
+    # ADD all IMG paths
     for img in os.getenv('IMG_PATH').split(';'):
-        nuke.pluginAddPath('{}/software/nuke'.format(img))
-        nuke.pluginAddPath('{}/software/nuke/menu'.format(img))
+        for img_sub in libFileFolder.get_deep_folder_list(path=img, add_path=True):
+            nuke.pluginAddPath(img_sub)
+
+    # ADD sub software paths
+    for paths in os.getenv('SOFTWARE_SUB_PATH').split(';'):
+        nuke.pluginAddPath(paths)
 
 
 #*******************
 # TOOLBAR
-add_all_img()
+add_plugin_paths()
 
 project_data = libData.get_data()
 menu_data = project_data['software']['NUKE']['MENU']
 menuNode  = nuke.menu('Nodes').addMenu(project_data['project']['name'], icon = 'nuke.ico')
 
-nuke.addOnScriptSave(add_write_node)
+# nuke.addOnScriptSave(add_write_node)
 
 for menu_item in menu_data:
-    software.Software.add_menu(menuNode, menu_item)
+    Software.add_menu(menuNode, menu_item)
 
 menuNode.addSeparator()
 

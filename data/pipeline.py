@@ -197,7 +197,6 @@ if args.script:
         from software import Software
         soft = Software()
         soft.setup(args.software)
-        soft.add_env()
         soft.start()
     elif args.script == 'desktop':
         import arDesktop

@@ -11,7 +11,7 @@ Gizmo {
  addUserKnob {26 banner l @writeBanner52.png t "<b><font size='4' color='#dc520f'> arWRITE</font></b><font size='2' align='right'><br> pipeline write node</font>" T "<b><font size='4' color='#dc520f'> arWRITE</font></b><font size='2' align='right'><br> pipeline write node</font>"}
  addUserKnob {26 ""}
  addUserKnob {2 rootPath l INVISIBLE +INVISIBLE}
- rootPath M:/LosMariachis/project/episode01/shots/sWin001002003/images/sWin010_COMP_v001_ar/exr/sWin010_COMP_v001_ar.%04d.exr
+ rootPath P:/project/shots/s0010/comp/s0010_COMP_v001_ar.%04d.exr
  addUserKnob {4 status l Status M {" " "plate " preViz postViz preComp postComp comp final "" "" ""}}
  addUserKnob {26 space4 l "" -STARTLINE T " |  "}
  addUserKnob {6 chbPublish l PUBLISH t "Publish for EDIT (overwrite old publish)" -STARTLINE}
@@ -20,7 +20,7 @@ Gizmo {
  addUserKnob {6 chbExr l " " -STARTLINE}
  chbExr true
  addUserKnob {2 exrPath l "" -STARTLINE}
- exrPath M:/LosMariachis/project/episode01/shots/sWin001002003/images/sWin010_COMP_v001_ar/exr/sWin010_COMP_v001_ar.%04d.exr
+ exrPath P:/project/shots/s0010/comp/s0010_COMP_v001_ar.%04d.exr
  addUserKnob {22 exrFolder l @btnFolder48.png t "open render folder" -STARTLINE T "reload(writeNode)\nwriteNode.openFolder(nuke.thisNode()\[\"exrPathComment\"].getValue())"}
  addUserKnob {22 exrRv l @rv.png t "open rendering in rv player" -STARTLINE T "reload(writeNode)\nwriteNode.openRV(nuke.thisNode()\[\"exrPathComment\"].getValue())"}
  addUserKnob {26 lblJpg l "JPG  " T ""}
@@ -37,7 +37,7 @@ Gizmo {
  addUserKnob {22 tifFolder l @btnFolder48.png t "open render folder" -STARTLINE +DISABLED T "reload(writeNode)\nwriteNode.openFolder(nuke.thisNode()\[\"tifPathComment\"].getValue())"}
  addUserKnob {22 tifRv l @rv.png t "open rendering in rv player" -STARTLINE +DISABLED T "reload(writeNode)\nwriteNode.openRV(nuke.thisNode()\[\"tifPathComment\"].getValue())"}
  addUserKnob {1 exrPathComment l INVISIBLE +INVISIBLE}
- exrPathComment M:/LosMariachis/project/episode01/shots/sWin001002003/images/sWin010_COMP_v001_ar/exr/sWin010_COMP_v001_ar.%04d.exr
+ exrPathComment P:/project/shots/s0010/comp/s0010_COMP_v001_ar.%04d.exr
  addUserKnob {1 jpgPathComment l INVISIBLE +INVISIBLE}
  jpgPathComment M:/LosMariachis/project/episode01/shots/sWin001002003/images/sWin010_COMP_v001_ar/jpg/sWin010_COMP_v001_ar.%04d.jpg
  addUserKnob {1 tifPathComment l INVISIBLE +INVISIBLE}

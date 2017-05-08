@@ -1,6 +1,6 @@
 > ### In Development
 > A lot of features are still in production. Check out the documentary and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**
-> [**PatchDay**](https://github.com/richteralexander/plex/wiki/PatchDay): Every sunday will be new additions and fixes
+> [**Releases**](https://github.com/richteralexander/plex/wiki/Releases): Every sunday will be a patch day with new additions and fixes.
 >
 > [FMX 2017 Talk - Open Source Pipeline](https://livestream.com/accounts/10071884/events/7339552/videos/155507577)
 
@@ -17,6 +17,11 @@ The basic idea is to handle the file and folder structure work, setups basic rul
 The main idea is to have an overall system which lays the **foundation for the modular scripts** that are plugged into the pipeline and add to its functionality and overall awesomeness.
 
 ![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
+
+## Environment [in development]
+- [x] **OS**: Windows (| Linux | Max)
+- [x] **Software**: Nuke 10.5+ | Maya 2017+ (| Houdini 16+)
+- [x] **Renderer**: Arnold5+ (| RenderMan21+ | Mantra | V-Ray3+)
 
 ## Project Features
 - [x] vfx, animation & game production management system

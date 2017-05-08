@@ -15,35 +15,35 @@
 #************************
 # MAYA
 MAYA:
-  version: &MAYA_VERSION 2017
-  path: &PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /maya.exe]
+  version: &MAYA_VERSION 2016
+  path: &PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
 # place {} to be replaced by open_file
-  start: !join ['start ', *PATH, ' -file "{}"']
+  start: !join ['start "', *PATH, '" -file "{}"']
 
   renderer:
   renderer_path:
 
   ENV:
     PYTHONPATH:
-      - !env [SOFTWARE_PATH, /scripts]
-      - !env [SOFTWARE_PATH, /plugins]
-      - !env [SOFTWARE_PATH, /shelf]
+      - !env_first [SOFTWARE_PATH, /scripts]
+      - !env_first [SOFTWARE_PATH, /plugins]
+      - !env_first [SOFTWARE_PATH, /shelf]
 
-    MAYA_SCRIPT_PATH:
+    MAYA_SCRIPT_PATH: [SOFTWARE_PATH, /scripts]
 
     MAYA_PLUG_IN_PATH:
-      - !env [SOFTWARE_PATH, /plugins]
+      - !env_first [SOFTWARE_PATH, /plugins]
 
     MAYA_SHELF_PATH:
-      - !env [SOFTWARE_PATH, /shelf]
+      - !env_first [SOFTWARE_PATH, /shelf]
 
     # SPLASHSCREEN
     XBMLANGPATH: !env [IMG_PATH, /software/maya]
 
     # DISABLE close reports
-    MAYA_DISABLE_CIP: 1
-    MAYA_DISABLE_CER: 1
+    MAYA_DISABLE_CIP: "1"
+    MAYA_DISABLE_CER: "1"
 
   MENU:
     - Save: menuItem(p={}, l='arSave', c='from util import arSave; reload(arSave); arSave.main()')
@@ -91,12 +91,12 @@ NUKE:
 
     # - break:   "addSeparator()"
 
-    - arWrite: "addCommand('arWrite', 'import menu; arWrite()', 'ctrl+alt+w', 'write.ico')"
+    - arWrite: "addCommand('arWrite', 'arWrite()', 'ctrl+alt+w', 'write.ico')"
 
     - break:   "addSeparator()"
 
     # - Report:  "addCommand('Report', 'import menu; report()', 'ctrl+alt+r', 'reporter.ico')"
-    - Help:    "addCommand('Help', 'import menu; get_help()', 'ctrl+alt+h', 'help.ico')"
+    - Help:    "addCommand('Help', 'get_help()', 'ctrl+alt+h', 'help.ico')"
 
     - break:   "addSeparator()"
 

@@ -75,8 +75,11 @@ def get_file_list(path, file_type='*', extension=False, exclude='*', add_path = 
 
 ##
 # @BRIEF  GET ALL subfolders in the path
-def get_deep_folder_list(path):
-    getFile = map(lambda x: os.path.basename(x[0]), os.walk(path))
+def get_deep_folder_list(path,  add_path = False):
+    if add_path:
+        getFile = map(lambda x: x[0], os.walk(path))
+    else:
+        getFile = map(lambda x: os.path.basename(x[0]), os.walk(path))
     getFile.pop(0)
     return getFile
 

@@ -31,14 +31,14 @@ LOG   = libLog.init(script=TITLE)
 # CLASS
 class Software(Singleton):
 
-    def setup(self, software=os.getenv('SOFTWARE')):
-        self.software  = software.lower()
+    def setup(self, software):
+        self.software = software.lower()
 
         # GET data
         self.software_data = libData.get_data()['software'][self.software.upper()]
 
         self.ver = self.software_data['version']
-        self.software_path    = self.software_data['path']
+        self.software_path = self.software_data['path']
 
         # RENDERER
         self.renderer      = self.software_data.get('renderer', '')
@@ -67,6 +67,7 @@ class Software(Singleton):
         # ADD software ENV
         if(self.env):
             for env, content in self.env.iteritems():
+                LOG.debug('{} _ {}'.format(env, content))
                 if isinstance(content, list):
                     for each in content:
                         libData.add_env(env, each)
@@ -78,8 +79,10 @@ class Software(Singleton):
     #************************
     # SOFTWARE
     def start(self, open_file=''):
+        self.add_env()
+
         cmd = self.software_data['start'].format(open_file)
-        LOG.debug(self.software_data['start'])
+        LOG.debug(cmd)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
     def __call__(self):

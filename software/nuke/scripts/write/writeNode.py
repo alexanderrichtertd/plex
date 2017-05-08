@@ -28,9 +28,9 @@ LOG   = libLog.init(script=TITLE)
 #************************
 # INIT
 #************************
-def nodeCreate(currentNode = ""):
+def nodeCreate(currentNode=''):
 
-    if currentNode == "":
+    if currentNode == '':
         currentNode = nuke.thisNode()
 
     if currentNode["frameRangeMode"].value() != "custom":
@@ -57,7 +57,7 @@ def openRV (renderPath):
         LOG.warning("FOLDER : NOT EXISTS : " + renderPath)
         return "WARNING: path doesnt exist: " + renderPath
 
-    os.system('start "" "' + 'RV' + '" ' + renderPath)
+    os.system('start '' "RV" ' + renderPath)
     LOG.info("RV : OPEN : " + renderPath)
 
 
