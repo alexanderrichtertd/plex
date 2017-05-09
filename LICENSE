@@ -1,0 +1,23 @@
+https://github.com/richteralexander/plex
+
+www.richteralexander.com
+pipeline@richteralexander.com
+
+-----------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the MIT License as published by the Open Source Initiative.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the MIT License for more details.
+
+-----------------------------------------------------------------------
+
+The binaries are linked against the following libraries:
+Yaml   (MIT)  - https://pypi.python.org/pypi/PyYAML
+PySide (LGPL) - https://pypi.python.org/pypi/PySide

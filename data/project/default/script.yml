@@ -1,0 +1,67 @@
+
+# seperate with comma: save,report
+
+# active:   True|False
+# software: os, maya,nuke,houdini,c4d,blender
+
+
+# *******************
+arSearchScript:
+  active:   True
+
+  software: os,maya,nuke,houdini
+  shortcut: F1
+  count:    0
+
+  script:
+    General: arReport,arSave
+    GEO:     arWhatever
+  # last script used for autocomplete
+  script_last:
+
+  ignore:       # arSave,arReport
+  favourite:    # arSave,arReport
+  search_format: py
+
+
+# *******************
+arUtil:
+  # show header in all scripts
+  active: True
+  minimizeHeader: False
+  count: 0
+
+
+# *******************
+arSave:
+  active: True
+  count: 0
+
+  maya_format: mb
+  texture: png, jpg, tiff
+
+
+# *******************
+arReporter:
+  active: True
+  shortcut: ctrl+c
+  count: 0
+
+  reason:
+    - bug
+    - feature
+    - support
+
+  # report ui pops up when script errors
+  autoReport: True
+  # send issue when script errors
+  autoSend: True
+  # auto screenshot when open report
+  autoScreenshot: True
+
+
+# *******************
+arNotificator:
+  active: True
+  count:  0
+

@@ -1,0 +1,78 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Gizmo {
+ knobChanged "\n\ncurrentNode = nuke.thisNode()\n\n# THREADS\nif currentNode\[\"ddlLetterbox\"].value() == \"custom\":\n    currentNode\[\"edtX\"].setVisible(True)\n    currentNode\[\"edtY\"].setVisible(True)\n    #currentNode\[\"edtX\"].setValue(currentNode.width())\n    #currentNode\[\"edtY\"].setValue(currentNode.height())\nelse:\n    currentNode\[\"letterbox\"].setVisible(False)\n    currentNode\[\"edtX\"].setVisible(False)\n    currentNode\[\"edtY\"].setVisible(False)\n\n    ratio = int(currentNode\[\"ddlLetterbox\"].value().split(\":\")\[0]) / int(currentNode\[\"ddlLetterbox\"].value().split(\":\")\[1])\n\n    if (currentNode.width() / currentNode.height()) == ratio:\n        currentNode\[\"edtX\"].setValue(currentNode.width())\n        currentNode\[\"edtY\"].setValue(currentNode.height())\n\n    elif (currentNode.width() / currentNode.height()) < ratio:\n        currentNode\[\"edtX\"].setValue(currentNode.width())\n        currentNode\[\"edtY\"].setValue(currentNode.width() / ratio)\n    elif ratio == 1.0:\n        currentNode\[\"edtX\"].setValue(currentNode.height())\n        currentNode\[\"edtY\"].setValue(currentNode.height())\t\n    else:\n        currentNode\[\"edtX\"].setValue(currentNode.width() / ratio)\n        currentNode\[\"edtY\"].setValue(currentNode.height() )      \n\n"
+ addUserKnob {20 letterbox l Letterbox +HIDDEN}
+ addUserKnob {52 knobChange l "" +STARTLINE T "nuke.thisNode().knob('knobChanged').setValue('''\n\ncurrentNode = nuke.thisNode()\n\n# THREADS\nif currentNode\[\"ddlLetterbox\"].value() == \"custom\":\n    currentNode\[\"edtX\"].setVisible(True)\n    currentNode\[\"edtY\"].setVisible(True)\n    #currentNode\[\"edtX\"].setValue(currentNode.width())\n    #currentNode\[\"edtY\"].setValue(currentNode.height())\nelse:\n    currentNode\[\"letterbox\"].setVisible(False)\n    currentNode\[\"edtX\"].setVisible(False)\n    currentNode\[\"edtY\"].setVisible(False)\n\n    ratio = int(currentNode\[\"ddlLetterbox\"].value().split(\":\")\[0]) / int(currentNode\[\"ddlLetterbox\"].value().split(\":\")\[1])\n\n    if (currentNode.width() / currentNode.height()) == ratio:\n        currentNode\[\"edtX\"].setValue(currentNode.width())\n        currentNode\[\"edtY\"].setValue(currentNode.height())\n\n    elif (currentNode.width() / currentNode.height()) < ratio:\n        currentNode\[\"edtX\"].setValue(currentNode.width())\n        currentNode\[\"edtY\"].setValue(currentNode.width() / ratio)\n    elif ratio == 1.0:\n        currentNode\[\"edtX\"].setValue(currentNode.height())\n        currentNode\[\"edtY\"].setValue(currentNode.height())\t\n    else:\n        currentNode\[\"edtX\"].setValue(currentNode.width() / ratio)\n        currentNode\[\"edtY\"].setValue(currentNode.height() )      \n\n''')" +STARTLINE}
+ addUserKnob {26 lblLetterbox l Letterbox T ""}
+ addUserKnob {6 cbxLetterbox l "" -STARTLINE}
+ cbxLetterbox true
+ addUserKnob {4 ddlLetterbox l " |  " -STARTLINE M {1:1 4:3 14:9 16:9 21:9 custom "" "" "" "" ""}}
+ ddlLetterbox 16:9
+ addUserKnob {3 edtX l " |  Resolution" -STARTLINE +HIDDEN}
+ edtX 1920
+ addUserKnob {3 edtY l "x " -STARTLINE +HIDDEN}
+ edtY 1080
+ addUserKnob {26 lblSpace04 l " | " -STARTLINE T ""}
+ addUserKnob {6 chbReformat l Reformat -STARTLINE}
+ addUserKnob {7 letterbox_opacity l Opacity}
+ letterbox_opacity 1
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 91
+ }
+set N8507bc00 [stack 0]
+ Dot {
+  name Dot2
+  xpos 189
+  ypos 91
+ }
+set N8507b800 [stack 0]
+push $N8507bc00
+ Crop {
+  box {{"(input.width - parent.edtX) / 2" x113 0 x122 0} {"(input.height - parent.edtY) / 2" x122 0} {"parent.edtX + (input.width - parent.edtX) / 2" x113 1920 x122 1920} {"input.height - (input.height - parent.edtY) / 2" x113 1080 x122 1080}}
+  reformat {{parent.chbReformat}}
+  name crop
+  selected true
+  xpos 0
+  ypos 172
+ }
+set N8507b400 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{"\[value parent.cbxLetterbox] ? 1 - parent.letterbox_opacity : 0" x113 0.585}}
+  name Merge1
+  xpos 155
+  ypos 172
+ }
+push $N8507b800
+ Switch {
+  inputs 2
+  which {{parent.cbxLetterbox}}
+  name Switch1
+  xpos 265
+  ypos 172
+ }
+set N8507ac00 [stack 0]
+ Output {
+  name Output1
+  xpos 265
+  ypos 237
+ }
+push $N8507b400
+push $N8507ac00
+ Viewer {
+  inputs 2
+  frame_range 1-300
+  name Viewer1
+  xpos -322
+  ypos 69
+ }
+end_group
