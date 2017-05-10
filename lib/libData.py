@@ -156,11 +156,16 @@ yaml.add_constructor('!join', join)
 #
 # @PARAM  STRING var, STRING content
 def add_env(var, content):
-    if os.environ.__contains__(var):
-        os.environ[var] += ('').join([';', content])
+    if isinstance(content, list):
+        for item in content:
+            add_env(var, item)
     else:
-        os.environ[var] = ('').join([content])
-    return os.environ[var]
+        if content == None: content = ''
+        if os.environ.__contains__(var):
+            os.environ[var] += ('').join([';', content])
+        else:
+            os.environ[var] = ('').join([content])
+        return os.environ[var]
 
 # GET env or empty str & WARNING
 def get_env(var):

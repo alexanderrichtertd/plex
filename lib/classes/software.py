@@ -46,6 +46,7 @@ class Software(Singleton):
 
     def add_env(self):
         LOG.debug('______________________________{}'.format(self.software))
+
         new_software_path = []
         for each_path in os.environ['SOFTWARE_PATH'].split(';'):
             tmp_paths  = ('/').join([each_path, self.software])
@@ -66,7 +67,6 @@ class Software(Singleton):
         # ADD software ENV
         if(self.env):
             for env, content in self.env.iteritems():
-                LOG.debug('{} _ {}'.format(env, content))
                 if isinstance(content, list):
                     for each in content:
                         libData.add_env(env, each)

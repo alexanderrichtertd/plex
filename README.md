@@ -1,5 +1,6 @@
 > ### In Development
 > A lot of features are still in production. Check out the documentary and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**
+>
 > [**Releases**](https://github.com/richteralexander/plex/releases): Every sunday will be a patch day with new additions and fixes.
 >
 > [FMX 2017 Talk - Open Source Pipeline](https://livestream.com/accounts/10071884/events/7339552/videos/155507577)

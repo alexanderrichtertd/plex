@@ -1,6 +1,7 @@
 img/_src
 img/img_rc.py
 
+data/test.py
 data/exe/win_houdini.bat
 data/project/default/history
 data/project/default/hints.yml
