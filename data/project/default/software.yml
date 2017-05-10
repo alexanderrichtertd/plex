@@ -18,13 +18,13 @@ MAYA:
   version: &MAYA_VERSION 2017
   path: &PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
-# place {} to be replaced by open_file
-  start: !join ['start "" "', *PATH, '" -file "{}"']
+  # start command
+  start: !join ['start "" "', *PATH, '" -file "{}"'] # {} replaced by open_file
 
   renderer:
   renderer_path:
 
-  ENV:
+  ENV: # Added BEFORE software start
     PYTHONPATH:
       - !env_first [SOFTWARE_PATH, /scripts]
       - !env_first [SOFTWARE_PATH, /plugins]
@@ -42,12 +42,12 @@ MAYA:
     XBMLANGPATH: !env [IMG_PATH, /software/maya]
 
     # DISABLE close reports
-    MAYA_DISABLE_CIP: '1'
-    MAYA_DISABLE_CER: '1'
+    MAYA_DISABLE_CIP: 1
+    MAYA_DISABLE_CER: 1
 
   MENU:
-    - Save: menuItem(p={}, l='arSave', c='from util import arSave; reload(arSave); arSave.main()')
-    - Load: menuItem(p={}, l='arLoad', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
+    - Save: menuItem(p={}, l='Save', c='from util import arSave; reload(arSave); arSave.main()')
+    - Load: menuItem(p={}, l='Load', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
 
     - break: menuItem(p = {}, d = True)
 
@@ -56,7 +56,7 @@ MAYA:
 
     - break: menuItem(p = {}, d = True)
 
-    - Report:  menuItem(p={}, l='arReporter', c='from utils import arReporter; reload(arReporter); arReporter.main()')
+    - Report:  menuItem(p={}, l='Report', c='from utils import arReporter; reload(arReporter); arReporter.main()')
     - Help:    menuItem(p={}, l='Help', c='import libFunc; libFunc.get_help('maya')')
 
 

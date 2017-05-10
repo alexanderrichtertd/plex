@@ -31,6 +31,10 @@ except:
 DATA_FORMAT = '.yml'
 IMG_FORMAT  = '.png'
 
+
+#************************
+# DATA
+#
 # TODO: user_id with user class - see also below
 # GET data from files
 # Specific file or all files
@@ -71,7 +75,7 @@ def set_data(file_name, var, data):
 
 
 #************************
-# GET PATH
+# PATH
 def get_pipeline_path(end_path):
     pipeline_path = os.getenv('PIPELINE_PATH')
     if pipeline_path:
@@ -106,8 +110,7 @@ def get_yml_file(path):
         try:
             # STRING into DICT
             pipeline_path = yaml.load(stream)
-            if pipeline_path:
-                return pipeline_path
+            if pipeline_path: return pipeline_path
             else:
                 LOG.warning('CANT load file: {}'.format(path))
         except yaml.YAMLError as exc:
@@ -152,15 +155,23 @@ yaml.add_constructor('!env_first', env_first)
 yaml.add_constructor('!join', join)
 
 
+#************************
+# ENV
+#
 # @BRIEF  creates or add enviroment variable
 #
 # @PARAM  STRING var, STRING content
 def add_env(var, content):
+    if not content: return
+
+    # CHECK for list
     if isinstance(content, list):
         for item in content:
             add_env(var, item)
     else:
-        if content == None: content = ''
+        content = str(content)
+
+        # CHECK empty
         if os.environ.__contains__(var):
             os.environ[var] += ('').join([';', content])
         else:

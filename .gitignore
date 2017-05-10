@@ -2,7 +2,13 @@ img/_src
 img/img_rc.py
 
 data/test.py
+
 data/exe/win_houdini.bat
+data/exe/debug_win_houdini.bat
+data/exe/debug_win_maya.bat
+data/exe/debug_win_nuke.bat
+data/exe/debug_win_arDesktop.bat
+
 data/project/default/history
 data/project/default/hints.yml
 data/project/default/rules.yml
