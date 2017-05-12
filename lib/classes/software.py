@@ -32,47 +32,48 @@ LOG   = libLog.init(script=TITLE)
 class Software(Singleton):
 
     def setup(self, software):
-        self.software = software.lower()
+        self._software = software.lower()
 
         # GET data
-        self.software_data = libData.get_data()['software'][self.software.upper()]
+        self._software_data = libData.get_data()['software'][self._software.upper()]
 
-        self.ver = self.software_data['version']
-        self.software_path = self.software_data['path']
+        self._version = self._software_data['version']
+        self._path = self._software_data['path']
 
         # RENDERER
-        self.renderer      = self.software_data.get('renderer', '')
-        self.renderer_path = self.software_data.get('renderer_path', '')
+        self._renderer      = self._software_data.get('renderer', '')
+        self._renderer_path = self._software_data.get('renderer_path', '')
 
     def add_env(self):
-        LOG.debug('______________________________{}'.format(self.software))
+        LOG.debug('______________________________{}'.format(self._software))
 
-        new_software_path = []
+        new_path = []
         for each_path in os.environ['SOFTWARE_PATH'].split(';'):
-            tmp_paths  = ('/').join([each_path, self.software])
+            LOG.debug(self._software)
+            tmp_paths  = ('/').join([each_path, self._software])
             tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py')
             new_path   = []
             for folder in tmp_folder:
                 new_path.append(os.path.normpath(('/').join([tmp_paths, folder])))
-            new_software_path.extend(new_path)
+            new_path.extend(new_path)
 
-        os.environ['SOFTWARE'] = self.software.upper()
-        os.environ['SOFTWARE_PATH'] = ('/').join([each_path, self.software])
-        os.environ['SOFTWARE_SUB_PATH'] = (';').join(new_software_path)
+        os.environ['SOFTWARE'] = self._software.upper()
+        os.environ['SOFTWARE_PATH'] = ('/').join([each_path, self._software])
+        os.environ['SOFTWARE_SUB_PATH'] = (';').join(new_path)
 
         # GET data
-        self.software_data = libData.get_data()['software'][self.software.upper()]
-        self.env = self.software_data.get('ENV', '')
+        self._software_data = libData.get_data()['software'][self._software.upper()]
+        self._env = self._software_data.get('ENV', '')
 
         # ADD software ENV
-        if(self.env):
-            for env, content in self.env.iteritems():
+        if(self._env):
+            for env, content in self._env.iteritems():
                 if isinstance(content, list):
                     for each in content:
                         libData.add_env(env, each)
                 else: libData.add_env(env, content)
 
-            LOG.debug('{}_ENV: {}'.format(self.software.upper(), self.env))
+            LOG.debug('{}_ENV: {}'.format(self._software.upper(), self._env))
 
 
     #************************
@@ -80,14 +81,14 @@ class Software(Singleton):
     def start(self, open_file=''):
         self.add_env()
 
-        cmd = self.software_data['start'].format(open_file)
+        cmd = self._software_data['start'].format(open_file)
         LOG.debug(cmd)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
     def __call__(self):
         LOG.info('SOFTWARE: {} {} - {}\n\
-                  ENV: {}'.format(self.software, self.ver, self.software_path,
-                                  self.env))
+                  ENV: {}'.format(self._software, self._version, self._path,
+                                  self._env))
 
 
     #************************
@@ -97,50 +98,48 @@ class Software(Singleton):
         return id(self)
 
     @property
-    def name(self):
-        return self.software
+    def software(self):
+        return self._software
 
     @property
     def version(self):
-        return self.ver
+        return self._version
 
     @property
     def path(self):
-        return self.software_path
+        return self._path
 
     @property
-    def software_env(self):
-        return self.env
+    def env(self):
+        return self._env
 
-    # @property
-    # def renderer(self):
-    #     return self.renderer
+    @property
+    def renderer(self):
+        return self._renderer
 
-    # @property
-    # def renderer_path(self):
-    #     return self.renderer_path
+    @property
+    def renderer_path(self):
+        return self._renderer_path
 
 
     #************************
     # STATIC
-    @staticmethod
-    def add_menu(menu_node, new_command):
+    def add_menu(self, menu_node, new_command):
         for keys, item in new_command.iteritems():
             if isinstance(item, dict):
-                if os.getenv('SOFTWARE') == 'MAYA':
+                if self._software == 'maya':
                     import maya.cmds as cmds
                     sub_menu = cmds.menuItem(p = menu_node, l = keys, sm = True)
-                elif os.getenv('SOFTWARE') == 'NUKE':
+                elif self._software == 'nuke':
                     sub_menu = menu_node.addMenu(keys)
                 else:
                     LOG.debug('CANT find software: {}'.format(software))
                     continue
-                Software.add_menu(sub_menu, item)
+                self.add_menu(sub_menu, item)
             else:
                 eval('menu_node.{}'.format(item))
 
-    @staticmethod
-    def print_header(menu_data):
+    def print_header(self, menu_data):
         space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1
 
         # project name & user namse
@@ -157,10 +156,10 @@ class Software(Singleton):
         print('  {} ON  - data'.format(chr(254)))
         print('  {} ON  - lib/utils'.format(chr(254)))
         print('  {} ON  - lib/classes'.format(chr(254)))
-        print('  {} ON  - software/{}'.format(chr(254), os.getenv('SOFTWARE').lower()))
-        print('  {} ON  - software/{}/scripts'.format(chr(254), os.getenv('SOFTWARE').lower()))
-        print('  {} ON  - software/{}/plugins'.format(chr(254), os.getenv('SOFTWARE').lower()))
-        # print('  {} ON  - software/{}/gizmos'.format(chr(254), os.getenv('SOFTWARE')))
+        print('  {} ON  - software/{}'.format(chr(254), self._software))
+        print('  {} ON  - software/{}/scripts'.format(chr(254), self._software))
+        print('  {} ON  - software/{}/plugins'.format(chr(254), self._software))
+        # print('  {} ON  - software/{}/gizmos'.format(chr(254), self._software))
 
         print('') # ********************
 
@@ -173,8 +172,7 @@ class Software(Singleton):
 
         print('') # ********************
 
-    @staticmethod
-    def print_checked_header(text, content, func):
+    def print_checked_header(self, text, content, func):
         try:
             func
             print('  {} ON  - {}: {}'.format(chr(254), text, content))

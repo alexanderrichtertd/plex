@@ -28,6 +28,7 @@ except:
     LOG.debug('SYS_PATH added YAML: {}'.format(path))
     import yaml
 
+
 DATA_FORMAT = '.yml'
 IMG_FORMAT  = '.png'
 
@@ -49,8 +50,7 @@ def get_data(file_name='', user_id=os.getenv('username')):
         for each_file in data_project_files: config_data.update({each_file : get_data(each_file, user_id)})
         return config_data
 
-    if not file_name:
-        return get_all_data()
+    if not file_name: return get_all_data()
 
     file_name = file_name.split('.')[0]
     file_path = ''
@@ -65,8 +65,7 @@ def get_data(file_name='', user_id=os.getenv('username')):
     if os.path.exists(file_path):
         # LOG.debug(file_path)
         return get_yml_file(file_path)
-    else:
-        LOG.warning('CANT find file: {}'.format(file_path))
+    else: LOG.warning('CANT find file: {}'.format(file_path))
     return ''
 
 def set_data(file_name, var, data):
@@ -78,15 +77,16 @@ def set_data(file_name, var, data):
 # PATH
 def get_pipeline_path(end_path):
     pipeline_path = os.getenv('PIPELINE_PATH')
-    if pipeline_path:
-        pipeline_path = pipeline_path.split(';')
-        # find first fitting path
-        for eachPath in pipeline_path:
-            path = os.path.normpath(('/').join([eachPath,end_path]))
+    if not pipeline_path: return
 
-            if os.path.exists(path):
-                # LOG.debug('PATH exists: {0}'.format(path))
-                return path
+    pipeline_path = pipeline_path.split(';')
+    # find first fitting path
+    for eachPath in pipeline_path:
+        path = os.path.normpath(('/').join([eachPath,end_path]))
+
+        if os.path.exists(path):
+            # LOG.debug('PATH exists: {0}'.format(path))
+            return path
 
     LOG.warning('PATH doesnt exists: {}'.format(path))
     return ''
@@ -94,9 +94,9 @@ def get_pipeline_path(end_path):
 def get_img_path(end_path='btn/default'):
     if '.' in end_path: img_format = ''
     else: img_format = IMG_FORMAT
+
     path = get_pipeline_path('img/{}{}'.format(end_path, img_format))
-    if not path:
-        path = get_pipeline_path('img/btn/default{}'.format(IMG_FORMAT))
+    if not path: path = get_pipeline_path('img/btn/default{}'.format(IMG_FORMAT))
     return path
 
 

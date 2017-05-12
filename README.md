@@ -3,7 +3,7 @@
 >
 > [**Releases**](https://github.com/richteralexander/plex/releases): Every sunday will be a patch day with new additions and fixes.
 >
-> [FMX 2017 Talk - Open Source Pipeline](https://livestream.com/accounts/10071884/events/7339552/videos/155507577)
+> [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)
 
 ![plex](https://cloud.githubusercontent.com/assets/9514022/25578231/d5be91f6-2e6c-11e7-9a4b-2de3772e0fc0.png)
 

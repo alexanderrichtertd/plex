@@ -62,7 +62,7 @@ menuNode  = nuke.menu('Nodes').addMenu(project_data['project']['name'], icon = '
 # nuke.addOnScriptSave(add_write_node)
 
 for menu_item in menu_data:
-    Software.add_menu(menuNode, menu_item)
+    Software().add_menu(menuNode, menu_item)
 
 menuNode.addSeparator()
 

@@ -17,6 +17,7 @@ import sys
 import webbrowser
 
 from PySide import QtGui, QtCore
+# from extern.Qt import QtGui, QtWidgets, QtCore
 
 import users
 import libLog

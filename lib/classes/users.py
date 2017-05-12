@@ -26,17 +26,16 @@ LOG   = libLog.init(script=TITLE)
 
 class User(Singleton):
     def setup(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
-        self.id       = user_id         # arichter
-        self.initial  = self.id[0:2]    #  ar
-        self.name     = name            # Alexander Richter
+        self._id       = user_id         # arichter
+        self._initial  = self.id[0:2]    #  ar
+        self._name     = name            # Alexander Richter
 
-        self.settings = settings        # {'arLoad': []}
-        self.rights   = rights          # admin, artist
+        self._settings = settings        # {'arLoad': []}
+        self._rights   = rights          # admin, artist
 
-        # self.birth    = birth           # 06.10.1986
-        # self.task     = task            # {'LIGHT': [110, 120]}
+        # self._task     = task            # {'LIGHT': [110, 120]}
 
-        # self.position = position        # Pipeline
+        # self._position = position        # Pipeline
 
     def __call__(self):
         return (self.id, ': ',  self.name,
@@ -50,27 +49,27 @@ class User(Singleton):
     # VARIABLES
     @property
     def id(self):
-        return self.id
+        return self._id
 
     @property
     def initial(self):
-        return self.initial
+        return self._initial
 
     @property
     def name(self):
-        return self.name
+        return self._name
 
     @property
-    def rights(self):
-        return self.rights
+    # def rights(self):
+    #     return self.rights
 
     @property
-    def get_project_user_path(user = os.getenv('username')):
-        project_user_path = get_data('Path')['PROJECT_PATH']['user']
-        return project_user_path + '/' + user
+    # def get_project_user_path(user = os.getenv('username')):
+    #     project_user_path = get_data('Path')['PROJECT_PATH']['user']
+    #     return project_user_path + '/' + user
 
-    #************************
-    # EXTRAS
+    # #************************
+    # # EXTRAS
     @property
     def data_path(self):
         return "data_path"
@@ -85,7 +84,7 @@ class User(Singleton):
 
     @property
     def is_admin(self):
-        return False # True if self.rights == 'admin' else False
+        return True if self._rights == 'admin' else False
 
 
     #************************
