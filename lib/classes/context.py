@@ -3,24 +3,26 @@
 
 
 
-
+import libFileFolder
 
 
 class Context():
-    def __init__(self):
-        self.project_name = project_name          # project
-        self.project_path = project_path          # //awesome/project
+    def setup(self):
+        # self.project_name = project_name          # project
+        # self.project_path = project_path          # //awesome/project
 
-        self.path       = path             # D:/project/asset/file.format
+        # self.path       = path             # D:/project/asset/file.format
 
-        self.step       = step             # shot or asset
-        self.task       = task             # ANIMATION
+        # self.step       = step             # shot or asset
+        # self.task       = task             # ANIMATION
 
-        self.resolution = resolution       # [1920, 1080]
-        self.fps        = fps              # 25
+        # self.resolution = resolution       # [1920, 1080]
+        # self.fps        = fps              # 25
 
-        self.author     = author           # arichter
-        self.comment    = comment          # "Broken scene"
+        # self.author     = author           # arichter
+        # self.comment    = comment          # "Broken scene"
+        pass
+
 
 
     #*******************

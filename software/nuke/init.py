@@ -20,7 +20,7 @@ import nuke
 import libLog
 import libData
 import libFunc
-from software import Software
+from tank import Tank
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
@@ -52,8 +52,8 @@ def createWriteDir():
 
 #************************
 # PIPELINE
-Software().setup('nuke')
-Software().print_header(software_data[os.getenv('SOFTWARE')]['MENU'])
+Tank().init_software()
+
 
 print('SETTINGS')
 # FPS ***********************************

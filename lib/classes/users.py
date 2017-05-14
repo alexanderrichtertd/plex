@@ -25,7 +25,12 @@ TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 class User(Singleton):
-    def setup(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
+    def setup(user_id):
+        # get user data and set
+        # if not create create
+        pass
+
+    def create(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
         self._id       = user_id         # arichter
         self._initial  = self.id[0:2]    #  ar
         self._name     = name            # Alexander Richter
@@ -36,6 +41,9 @@ class User(Singleton):
         # self._task     = task            # {'LIGHT': [110, 120]}
 
         # self._position = position        # Pipeline
+
+        # create folder and file
+
 
     def __call__(self):
         return (self.id, ': ',  self.name,
@@ -60,8 +68,8 @@ class User(Singleton):
         return self._name
 
     @property
-    # def rights(self):
-    #     return self.rights
+    def rights(self):
+        return self._rights
 
     @property
     # def get_project_user_path(user = os.getenv('username')):

@@ -31,7 +31,9 @@ LOG   = libLog.init(script=TITLE)
 # CLASS
 class Software(Singleton):
 
-    def setup(self, software):
+    def setup(self, software=os.getenv('SOFTWARE')):
+        if not software: raise
+
         self._software = software.lower()
 
         # GET data
@@ -51,11 +53,8 @@ class Software(Singleton):
         for each_path in os.environ['SOFTWARE_PATH'].split(';'):
             LOG.debug(self._software)
             tmp_paths  = ('/').join([each_path, self._software])
-            tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py')
-            new_path   = []
-            for folder in tmp_folder:
-                new_path.append(os.path.normpath(('/').join([tmp_paths, folder])))
-            new_path.extend(new_path)
+            tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py', add_path=True)
+            new_path.extend(tmp_folder)
 
         os.environ['SOFTWARE'] = self._software.upper()
         os.environ['SOFTWARE_PATH'] = ('/').join([each_path, self._software])
@@ -139,7 +138,7 @@ class Software(Singleton):
             else:
                 eval('menu_node.{}'.format(item))
 
-    def print_header(self, menu_data):
+    def print_header(self):
         space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1
 
         # project name & user namse
@@ -159,13 +158,17 @@ class Software(Singleton):
         print('  {} ON  - software/{}'.format(chr(254), self._software))
         print('  {} ON  - software/{}/scripts'.format(chr(254), self._software))
         print('  {} ON  - software/{}/plugins'.format(chr(254), self._software))
-        # print('  {} ON  - software/{}/gizmos'.format(chr(254), self._software))
+        if self._software == 'maya':
+            print('  {} ON  - software/{}/shelf'.format(chr(254), self._software))
+        if self._software == 'nuke':
+            print('  {} ON  - software/{}/gizmos'.format(chr(254), self._software))
+
 
         print('') # ********************
 
         print('SCRIPTS')
         # scripts from software/MENU
-        for menu_item in menu_data:
+        for menu_item in self._software_data['MENU']:
             for key in menu_item:
                 if key == 'break': continue
                 print('  {} ON  - {}'.format(chr(254), key))

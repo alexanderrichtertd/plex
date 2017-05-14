@@ -15,7 +15,7 @@
 #************************
 # MAYA
 MAYA:
-  version: &MAYA_VERSION 2017
+  version: &MAYA_VERSION 2015
   path: &PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
   # start command
@@ -64,7 +64,7 @@ MAYA:
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
-  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]
+  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v2]
 
   start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
