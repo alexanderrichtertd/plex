@@ -25,10 +25,11 @@ TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 class User(Singleton):
-    def setup(user_id):
+    def setup(self, user_id=os.getenv('username')):
         # get user data and set
         # if not create create
-        pass
+        self.create()
+
 
     def create(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
         self._id       = user_id         # arichter

@@ -23,6 +23,7 @@ import users
 import libLog
 import libData
 import libFunc
+from tank import Tank
 from software import Software
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
@@ -33,15 +34,16 @@ LOG   = libLog.init(script=TITLE)
 class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
     def __init__(self, parent=None):
+        Tank().init_os()
         QtGui.QSystemTrayIcon.__init__(self, parent)
         #self.activated.connect(self.showMainWidget)
-        self.setIcon(QtGui.QIcon(libData.get_img_path('program/default')))
+        self.setIcon(QtGui.QIcon(libData.get_img_path('software/default')))
 
+        self.user   = Tank().user
         self.parent = parent
-        menu = QtGui.QMenu()
-        self.user = users.User()
+        menu        = QtGui.QMenu()
 
-        self.config_data = libData.get_data()
+        self.config_data = Tank().data
         menu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
 
         # ADMIN UI
@@ -79,11 +81,11 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         subMenu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
         menu.addMenu(subMenu)
 
-        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('program/maya')), 'Maya')
+        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/maya')), 'Maya')
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenMaya)
-        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('program/nuke')), 'Nuke')
+        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/nuke')), 'Nuke')
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenNuke)
-        # menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('program/houdini')), 'Houdini')
+        # menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/houdini')), 'Houdini')
         # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenHoudini)
 
         menu.addSeparator()
@@ -112,11 +114,11 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
         LOG.debug('showUserData')
-        webbrowser.open(libData.getEnv('PROJECT_USER_PATH'))
+        webbrowser.open(libData.get_env('PROJECT_USER_PATH'))
 
     def press_btnOpenProjectPath(self):
         LOG.debug('openProjectPath')
-        webbrowser.open(libData.getEnv('PROJECT_PATH'))
+        webbrowser.open(libData.get_env('PROJECT_PATH'))
     #------------------------------
     def press_btnProject(self):
         import arProject
@@ -124,23 +126,22 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     #------------------------------
     def press_btnOpenMaya(self):
         LOG.debug('Maya')
-        Software('maya').start_software()
+        Software().start('maya')
 
     def press_btnOpenNuke(self):
         LOG.debug('Nuke')
-        Software('nuke').start_software()
-
+        Software().start('nuke')
 
     def press_btnOpenHoudini(self):
         LOG.debug('Houdini')
-        Software().start_software()
+        Software().start('houdini')
 
     #------------------------------
     def press_btnOpenProjectLog(self):
-        webbrowser.open(libData.getEnv('DATA_PROJECT_PATH'))
+        webbrowser.open(libData.get_env('DATA_PROJECT_PATH'))
 
     def press_btnOpenLocalLog(self):
-        webbrowser.open(libData.getEnv('DATA_USER_PATH'))
+        webbrowser.open(libData.get_env('DATA_USER_PATH'))
 
     def press_btnWriteReminder(self):
         LOG.debug('writeReminder')

@@ -18,21 +18,21 @@ import sys
 import maya.cmds as cmds
 
 import libLog
-from software import Software
+from tank import Tank
 
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
+TITLE = 'userSetup' # os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 
 #************************
 # PRINT CONSOLE
-Software.print_header()
+Tank().init_software()
 
 print ""
 
 print "MENU"
 try:
-	cmds.evalDeferred("from scripts import menu\nmenu.arMenuLoad()")
+	cmds.evalDeferred("from scripts import menu\nmenu.load_menu()")
 	print "  ON  - menu"
 	print "  ON  - shelf"
 except:

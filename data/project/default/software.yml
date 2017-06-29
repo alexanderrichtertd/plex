@@ -26,6 +26,7 @@ MAYA:
 
   ENV: # Added BEFORE software start
     PYTHONPATH:
+      - !env_first [SOFTWARE_PATH]
       - !env_first [SOFTWARE_PATH, /scripts]
       - !env_first [SOFTWARE_PATH, /plugins]
       - !env_first [SOFTWARE_PATH, /shelf]
@@ -64,13 +65,18 @@ MAYA:
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
-  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v2]
+  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]
 
   start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
   path: !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
 
   ENV:
+    PYTHONPATH:
+      - !env_first [SOFTWARE_PATH, /scripts]
+      - !env_first [SOFTWARE_PATH, /plugins]
+      - !env_first [SOFTWARE_PATH, /shelf]
+
     NUKE_PATH:
       - !env [PIPELINE_PATH]
       - !env [SOFTWARE_PATH]
@@ -109,6 +115,16 @@ NUKE:
 HOUDINI:
   version: 15.56
   path:
+
+  start:
+
+  renderer:
+  renderer_path:
+
+
+RV:
+  version:
+  path: "C:/Program Files/Tweak/RV/bin/rv.exe"
 
   start:
 

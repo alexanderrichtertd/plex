@@ -117,7 +117,7 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['IMG_PATH'])
         self.add_env('PYTHONPATH', os.environ['UTILS_PATH'])
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
-        self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'] )
+        # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
 
         import libLog
         LOG = libLog.init(script=TITLE)

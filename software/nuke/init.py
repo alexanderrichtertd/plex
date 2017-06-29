@@ -18,8 +18,6 @@ import errno
 import nuke
 
 import libLog
-import libData
-import libFunc
 from tank import Tank
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
@@ -28,7 +26,7 @@ LOG   = libLog.init(script=TITLE)
 
 #************************
 # PIPELINE
-all_data      = libData.get_data()
+all_data      = Tank().data
 project_data  = all_data['project']
 software_data = all_data['software']
 RESOLUTION    = (' ').join([str(project_data['resolution'][0]),
@@ -53,6 +51,21 @@ def createWriteDir():
 #************************
 # PIPELINE
 Tank().init_software()
+
+
+try:
+    print('arWRITE IS ON MAN')
+    from scripts import write_node
+
+except:
+    LOG.warning('FAILED loading write_node')
+
+# LOAD paths
+try:
+    for paths in os.getenv('SOFTWARE_SUB_PATH').split(';'):
+        nuke.pluginAddPath(paths)
+except:
+    LOG.warning('FAILED loading SOFTWARE_SUB_PATH')
 
 
 print('SETTINGS')
@@ -84,3 +97,4 @@ except:
 
 
 print('') # ********************
+

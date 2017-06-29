@@ -1,6 +1,8 @@
 
 import os
 
+import libData
+
 from users import User
 from software import Software
 from context import Context
@@ -13,7 +15,8 @@ class Tank(Singleton):
     def init_os(self):
         # self._notificator = Notificator()
         # self._notificator.setup()
-        pass
+        self._user = User()
+        self._user.setup()
 
 
     def init_software(self):
@@ -39,3 +42,7 @@ class Tank(Singleton):
     @property
     def context(self):
         return self._context
+
+    @property
+    def data(self):
+        return libData.get_data()

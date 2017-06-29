@@ -77,10 +77,13 @@ class Software(Singleton):
 
     #************************
     # SOFTWARE
-    def start(self, open_file=''):
+    def start(self, software='', open_file=''):
+        if software: self.setup(software)
         self.add_env()
 
         cmd = self._software_data['start'].format(open_file)
+        if self._software == 'maya' and not open_file:
+            cmd = cmd.split('-file')[0]
         LOG.debug(cmd)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
@@ -136,17 +139,24 @@ class Software(Singleton):
                     continue
                 self.add_menu(sub_menu, item)
             else:
-                eval('menu_node.{}'.format(item))
+                if self._software == 'maya':
+                    import maya.cmds as cmds
+                    cmd = ('cmds.{}'.format(item)).format(menu_node)
+                    LOG.debug(cmd)
+                    eval(cmd)
+                if self._software == 'nuke':
+                    eval('menu_node.{}'.format(item))
 
     def print_header(self):
         space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1
 
-        # project name & user namse
+        # project name
         print('')
         print(chr(218) + chr(196)*38 + chr(191))
         print(chr(179) + ' '*space + os.getenv('PROJECT_NAME') + ' '*space + chr(179))
         print(chr(192) + chr(196)*38 + chr(217))
 
+        # user name
         print ('\n' + ' '*12 + 'Welcome ' + getpass.getuser() + '\n')
 
         print('PATHS')
@@ -162,7 +172,6 @@ class Software(Singleton):
             print('  {} ON  - software/{}/shelf'.format(chr(254), self._software))
         if self._software == 'nuke':
             print('  {} ON  - software/{}/gizmos'.format(chr(254), self._software))
-
 
         print('') # ********************
 
