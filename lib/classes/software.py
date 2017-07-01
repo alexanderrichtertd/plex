@@ -52,6 +52,7 @@ class Software(Singleton):
         new_path = []
         for each_path in os.environ['SOFTWARE_PATH'].split(';'):
             LOG.debug(self._software)
+            if not each_path.endswith('software'): each_path = os.path.dirname(each_path)
             tmp_paths  = ('/').join([each_path, self._software])
             tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py', add_path=True)
             new_path.extend(tmp_folder)

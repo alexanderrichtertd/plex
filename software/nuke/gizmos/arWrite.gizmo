@@ -44,9 +44,9 @@ Gizmo {
  tifPathComment P:/project/shots/s0010/comp/s0010_COMP_v001_ar.%04d.tif
  addUserKnob {26 ""}
  addUserKnob {3 resolutionX l Resolution +DISABLED}
- resolutionX 822.8571429
+ resolutionX 877.7142857
  addUserKnob {3 resolutionY l "x " -STARTLINE +DISABLED}
- resolutionY 817
+ resolutionY 872
  addUserKnob {26 space7 l "" -STARTLINE T " |  "}
  addUserKnob {4 letterbox l "Letterbox " -STARTLINE M {1:1 4:3 14:9 16:9 21:9 custom "" "" "" "" "" "" ""}}
  letterbox 21:9
@@ -113,7 +113,7 @@ Gizmo {
   xpos -42
   ypos -180
  }
-set Ncc011000 [stack 0]
+set N2ac99c00 [stack 0]
  Dot {
   name Dot4
   xpos -184
@@ -127,7 +127,7 @@ set Ncc011000 [stack 0]
   xjustify right
   yjustify center
   Transform 1
-  box {1574 {"\[value input.height] - 56"} 1907 {"\[value input.height] - 12"}}
+  box {{"\[value input.width] - 30"} {"\[value input.height] - 56"} {"\[value input.width] - 30"} {"\[value input.height] - 12"}}
   center {1024 576}
   name text_user
   xpos -218
@@ -184,7 +184,7 @@ set Ncc011000 [stack 0]
   font_height_toolbar 100
   opacity {{text_master.opacity}}
   message "\[date %d.%m.%Y]  \[date %H:%M]"
-  old_message {{50 57 46 48 54 46 50 48 49 55 32 32 49 52 58 51 54}
+  old_message {{48 49 46 48 55 46 50 48 49 55 32 32 49 50 58 49 55}
     }
   old_expression_markers {{0 9 12 16}
     }
@@ -225,7 +225,7 @@ set Ncc011000 [stack 0]
  }
  Text {
   opacity {{text_master.opacity}}
-  message "\[value parent.frameStart] - \[value parent.frameEnd] |     \[value frame] \n"
+  message "\[value frame] | \[value parent.frameStart] - \[value parent.frameEnd]\n"
   font C:/Windows/Fonts/impact.ttf
   size {{text_master.size}}
   xjustify right
@@ -247,7 +247,7 @@ set Ncc011000 [stack 0]
   xjustify right
   yjustify center
   Transform 1
-  box {1574 0 1907 20}
+  box {{"\[value input.width] - 30"} 0 {"\[value input.width] - 30"} 20}
   center {1024 576}
   name text_resolution
   selected true
@@ -260,7 +260,7 @@ set Ncc011000 [stack 0]
   xpos -185
   ypos 110
  }
-push $Ncc011000
+push $N2ac99c00
  Switch {
   inputs 2
   which {{"\[value parent.meta]"}}
@@ -273,14 +273,14 @@ push $Ncc011000
   xpos -8
   ypos 132
  }
-set N22e14400 [stack 0]
+set N7024d000 [stack 0]
  Dot {
   name Dot7
   xpos 96
   ypos 250
  }
-set N22e14000 [stack 0]
-push $N22e14400
+set N7024cc00 [stack 0]
+push $N7024d000
  Crop {
   box {{"(input.width - parent.resolutionX) / 2" x113 0 x122 0} {"(input.height - parent.resolutionY) / 2" x122 0} {"parent.resolutionX + (input.width - parent.resolutionX) / 2" x113 1920 x122 1920} {"input.height - (input.height - parent.resolutionY) / 2" x113 1080 x122 1080}}
   reformat {{parent.reformat x40 0}}
@@ -297,7 +297,7 @@ push $N22e14400
   xpos -42
   ypos 246
  }
-push $N22e14000
+push $N7024cc00
  Switch {
   inputs 2
   which 1
@@ -305,7 +305,7 @@ push $N22e14000
   xpos -42
   ypos 324
  }
-set Nfc5a0d80 [stack 0]
+set Nbcd0a880 [stack 0]
  Output {
   name Output1
   xpos -42
@@ -327,13 +327,13 @@ set Nfc5a0d80 [stack 0]
   ypos -85
   disable {{curve x1 0 x57 0}}
  }
-push $Nfc5a0d80
+push $Nbcd0a880
  Dot {
   name Dot1
   xpos 269
   ypos 328
  }
-set N12017400 [stack 0]
+set Nffdc5400 [stack 0]
  Write {
   file "\[value parent.jpgPath]"
   checkHashOnRead false
@@ -348,7 +348,7 @@ set N12017400 [stack 0]
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $N12017400
+push $Nffdc5400
  Write {
   channels rgba
   file "\[value parent.exrPath]"
@@ -363,13 +363,15 @@ push $N12017400
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $N12017400
+push $Nffdc5400
  Write {
   channels rgba
   file "\[value parent.tifPath]"
   colorspace sRGB
   checkHashOnRead false
   version 1
+  in_colorspace linear
+  out_colorspace linear
   afterRender "write_node.publishRender(\"exr\")"
   name Write_Tif
   xpos 235

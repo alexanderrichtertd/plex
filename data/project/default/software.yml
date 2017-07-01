@@ -106,8 +106,8 @@ NUKE:
 
     - break:   addSeparator()
 
-    - Others:
-        Sub:   addCommand('Script', '')
+    #- Others:
+    #    Sub:   addCommand('Script', '')
 
 
 #************************
@@ -122,11 +122,11 @@ HOUDINI:
   renderer_path:
 
 
+#************************
+# RV
 RV:
   version:
   path: "C:/Program Files/Tweak/RV/bin/rv.exe"
 
   start:
 
-  renderer:
-  renderer_path:
