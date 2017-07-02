@@ -98,7 +98,7 @@ def report():
     LOG.info('REPORT')
 
 
-def get_help():
-    libFunc.get_help()
+def get_help(topic=''):
+    libFunc.get_help(topic)
     LOG.info('HELP')
 

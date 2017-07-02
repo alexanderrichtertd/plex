@@ -63,5 +63,6 @@ HELP:
   arNotificator: !join [*HELP, /arNotificator]
 
   shelf: !join [*HELP, /shelf]
+  issues: https://github.com/richteralexander/plex/issues
 
 

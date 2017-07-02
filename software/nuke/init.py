@@ -53,12 +53,8 @@ def createWriteDir():
 Tank().init_software()
 
 
-try:
-    print('arWRITE IS ON MAN')
-    from scripts import write_node
-
-except:
-    LOG.warning('FAILED loading write_node')
+try:    from scripts import write_node
+except: LOG.warning('FAILED loading write_node')
 
 # LOAD paths
 try:

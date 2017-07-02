@@ -52,14 +52,15 @@ MAYA:
     # - break: menuItem(p = {}, d = True)
 
     # - Report:  menuItem(p={}, l='Report', c='from utils import arReporter; reload(arReporter); arReporter.main()')
-    - Help:    menuItem(p={}, l='Help', c='import libFunc; libFunc.get_help('maya')')
+    - Report: menuItem(p={}, l='Report', c='import libFunc; libFunc.get_help("issues")')
+    - Help:   menuItem(p={}, l='Help', c='import libFunc; libFunc.get_help()')
 
 
 #************************
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
-  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]
+  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v2]
 
   start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
@@ -96,6 +97,7 @@ NUKE:
     - break:   addSeparator()
 
     # - Report:  "addCommand('Report', 'import menu; report()', 'ctrl+alt+r', 'reporter.ico')"
+    - Report:  addCommand('Report', 'get_help("issues")', 'ctrl+alt+r', 'report.ico')
     - Help:    addCommand('Help', 'get_help()', 'ctrl+alt+h', 'help.ico')
 
     - break:   addSeparator()
