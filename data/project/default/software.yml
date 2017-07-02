@@ -2,14 +2,8 @@
 # content   = software data
 # version   = 0.0.1
 # date      = 2017-01-01
-#
-# license   = MIT
-# copyright = Copyright 2017 Animationsinstitut
+
 # author    = Alexander Richter <pipeline@richteralexander.com>
-#*********************************************************************
-# This source file has been developed within the scope of the
-# Technical Director course at Filmakademie Baden-Wuerttemberg.
-# http://td.animationsinstitut.de
 #*********************************************************************
 
 #************************
@@ -47,17 +41,17 @@ MAYA:
     MAYA_DISABLE_CER: 1
 
   MENU:
-    - Save: menuItem(p={}, l='Save', c='from util import arSave; reload(arSave); arSave.main()')
-    - Load: menuItem(p={}, l='Load', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
+    # - Save: menuItem(p={}, l='Save', c='from util import arSave; reload(arSave); arSave.main()')
+    # - Load: menuItem(p={}, l='Load', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
 
-    - break: menuItem(p = {}, d = True)
+    # - break: menuItem(p = {}, d = True)
 
-    - Util:
-        position_selected: menuItem(p={}, l='Position Selected', c='import maya_utils; maya_utils.position_selected()')
+    # - Util:
+    #     position_selected: menuItem(p={}, l='Position Selected', c='import maya_utils; maya_utils.position_selected()')
 
-    - break: menuItem(p = {}, d = True)
+    # - break: menuItem(p = {}, d = True)
 
-    - Report:  menuItem(p={}, l='Report', c='from utils import arReporter; reload(arReporter); arReporter.main()')
+    # - Report:  menuItem(p={}, l='Report', c='from utils import arReporter; reload(arReporter); arReporter.main()')
     - Help:    menuItem(p={}, l='Help', c='import libFunc; libFunc.get_help('maya')')
 
 

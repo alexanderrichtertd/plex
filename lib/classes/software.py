@@ -47,11 +47,10 @@ class Software(Singleton):
         self._renderer_path = self._software_data.get('renderer_path', '')
 
     def add_env(self):
-        LOG.debug('______________________________{}'.format(self._software))
+        LOG.debug('------------------------------ {}'.format(self._software))
 
         new_path = []
         for each_path in os.environ['SOFTWARE_PATH'].split(';'):
-            LOG.debug(self._software)
             if not each_path.endswith('software'): each_path = os.path.dirname(each_path)
             tmp_paths  = ('/').join([each_path, self._software])
             tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py', add_path=True)

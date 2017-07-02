@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = SET default environment paths
-# version   = 0.0.1
-# date      = 2017-01-01
+# version   = 0.4.0
+# date      = 2017-07-02
 #
 # license   = MIT
 # copyright = Copyright 2017 Animationsinstitut
@@ -28,40 +28,38 @@ class Setup(object):
     def __init__(self):
         global LOG
 
+        this_path = os.path.normpath(os.path.dirname(__file__))
         self.data_pipeline_path = []
+        self.data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
 
         self.pipeline_env  = SmartDict()
-        this_path          = os.path.normpath(os.path.dirname(__file__))
         this_pipeline_path = os.path.normpath(os.path.dirname(this_path))
-        data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
 
         # OS & PYTHON_VERSION
         os.environ['OS'] = sys.platform
         os.environ['PYTHON_VERSION'] = sys.version[:3]
 
-        # LOAD project data
-        if os.path.exists(data_project_path):
-            with open(data_project_path , 'r') as stream:
+        # LOAD pipeline data
+        if os.path.exists(self.data_project_path):
+            with open(self.data_project_path , 'r') as stream:
                 try:
                     self.pipeline_data = yaml.load(stream)
                 except yaml.YAMLError as exc:
-                    print('STOP PROCESS\n'\
-                          'The DATA file is corrupted.\n\n{}'.format(exc))
-                    return
-
-                # SEARCH and ADD current and sub paths
-                sub_paths = False
-                for paths in self.pipeline_data['PATH']:
-                    if this_pipeline_path in paths.values() or sub_paths:
-                        if not sub_paths: self.pipeline_env['PIPELINE_STATUS'] = paths.keys()[0]
-                        self.data_pipeline_path.append(paths.values())
-                        sub_paths = True
-                    else:
-                        continue
+                    raise OSError ('STOP PROCESS', 'DATA file is corrupted', exc)
         else:
-            print('STOP PROCESS\n\
-                   CANT find current path in {}'.format(data_project_path))
-            return
+            raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
+
+        # SEARCH and ADD current and sub paths
+        for paths in self.pipeline_data['PATH']:
+            if this_pipeline_path in paths.values() or self.pipeline_env.has_key('PIPELINE_STATUS'):
+                if os.path.exists(paths.values()[0]):
+                    self.data_pipeline_path.append(paths.values()[0])
+                    if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = paths.keys()[0]
+                else:
+                    print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(eachPath, self.data_project_path))
+
+        if not self.data_pipeline_path:
+            raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.py', this_pipeline_path)
 
         self.set_pipeline_env()
         self.__call__()
@@ -69,18 +67,7 @@ class Setup(object):
     def set_pipeline_env(self):
         global LOG
 
-        if not self.data_pipeline_path:
-            print('data/pipeline/PATH doesnt exist')
-            return
-
         for eachPath in self.data_pipeline_path:
-            eachPath = eachPath[0]
-
-            if not os.path.exists(eachPath):
-                print('PIPELINE_PATH doesnt exist: {}\n'\
-                      'SOURCE[PATH]: {}'.format(eachPath, data_project_path))
-                continue
-
             self.pipeline_env.add('PIPELINE_PATH',     eachPath)
 
             self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
@@ -119,11 +106,6 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
         # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
 
-        import libLog
-        LOG = libLog.init(script=TITLE)
-        LOG.debug('')
-        LOG.debug('______________________________SETUP______________________________')
-
         # CHECK if user overwrite is active
         if self.pipeline_data['user_data']:
             self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
@@ -136,12 +118,25 @@ class Setup(object):
         import libData
         project_data = libData.get_data('project')
         os.environ['PROJECT_NAME'] = project_data['name']
-
+         # ADD project path
         if os.path.exists(project_data['path']):
             os.environ['PROJECT_PATH'] = os.path.normpath(project_data['path'])
         else:
             # ALT: PROJECT_PATH = '../pipeline'
             LOG.critical('PROJECT PATH doesnt exist: {}'.format(project_data['path']))
+
+        # SETUP logging
+        import libLog
+        LOG = libLog.init(script=TITLE)
+        LOG.debug('____________________________________________________________')
+        LOG.debug('PIPELINE: {} [{}, {}, {}]'.format(self.pipeline_data['PIPELINE']['name'],
+                                                   self.pipeline_data['PIPELINE']['version'],
+                                                   self.pipeline_env['PIPELINE_STATUS'],
+                                                   'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite'))
+
+        LOG.debug('PROJECT:  {} [{}]'.format(project_data['name'],
+                                             os.path.normpath(project_data['path'])))
+        LOG.debug('------------------------------------------------------------')
 
 
     def __call__(self):
@@ -201,6 +196,3 @@ if args.script:
     elif args.script == 'desktop':
         import arDesktop
         arDesktop.main()
-
-
-

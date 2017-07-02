@@ -1,15 +1,9 @@
 #*********************************************************************
 # content   = pipeline data
-# version   = 0.0.1
+# version   = 0.0.4
 # date      = 2017-01-01
 #
-# license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
 # author    = Alexander Richter <pipeline@richteralexander.com>
-#*********************************************************************
-# This source file has been developed within the scope of the
-# Technical Director course at Filmakademie Baden-Wuerttemberg.
-# http://td.animationsinstitut.de
 #*********************************************************************
 
 # USE this project settings
@@ -17,12 +11,12 @@
 project: default
 
 # IMPORTANT: order
-# DEFAULT:   local, project, global
+# DEFAULT:   local, project, master
 PATH:
     # 1.local (dev & debug)
     - local:   C:\sandbox
     # 2.project (production)
-    - project: D:\Dropbox\plex\1000
+    - project: D:\Dropbox\project
     # 3.pipeline (master)
     - master:  D:\Dropbox\plex\2000
 
@@ -34,5 +28,5 @@ user_data: True
 
 
 PIPELINE:
-  name:    plex
-  version: 0.0.1
+  name:    Plex
+  version: 0.0.4
