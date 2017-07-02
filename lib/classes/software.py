@@ -127,25 +127,29 @@ class Software(Singleton):
     #************************
     # STATIC
     def add_menu(self, menu_node, new_command):
-        for keys, item in new_command.iteritems():
-            if isinstance(item, dict):
-                if self._software == 'maya':
-                    import maya.cmds as cmds
-                    sub_menu = cmds.menuItem(p = menu_node, l = keys, sm = True)
-                elif self._software == 'nuke':
-                    sub_menu = menu_node.addMenu(keys)
+        try:
+            for keys, item in new_command.iteritems():
+                if isinstance(item, dict):
+                    if self._software == 'maya':
+                        import maya.cmds as cmds
+                        sub_menu = cmds.menuItem(p = menu_node, l = keys, sm = True)
+                    elif self._software == 'nuke':
+                        sub_menu = menu_node.addMenu(keys)
+                    else:
+                        LOG.debug('CANT find software: {}'.format(software))
+                        continue
+                    self.add_menu(sub_menu, item)
                 else:
-                    LOG.debug('CANT find software: {}'.format(software))
-                    continue
-                self.add_menu(sub_menu, item)
-            else:
-                if self._software == 'maya':
-                    import maya.cmds as cmds
-                    cmd = ('cmds.{}'.format(item)).format(menu_node)
-                    LOG.debug(cmd)
-                    eval(cmd)
-                if self._software == 'nuke':
-                    eval('menu_node.{}'.format(item))
+                    if self._software == 'maya':
+                        import maya.cmds as cmds
+                        cmd = ('cmds.{}'.format(item)).format(menu_node)
+                        LOG.debug(cmd)
+                        eval(cmd)
+                    if self._software == 'nuke':
+                        eval('menu_node.{}'.format(item))
+        except:
+              LOG.error('DATA Menu couldnt be created', exc_info=True)
+
 
     def print_header(self):
         space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1

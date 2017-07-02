@@ -28,16 +28,13 @@ LOG   = libLog.init(script=TITLE)
 # PRINT CONSOLE
 Tank().init_software()
 
-print ""
-
 print "MENU"
 try:
 	cmds.evalDeferred("from scripts import menu\nmenu.load_menu()")
 	print "  ON  - menu"
-	print "  ON  - shelf"
 except:
-	print "  OFF - menu"
-	print "  OFF - shelf"
+    print "  OFF - menu"
+
+print "  ON  - shelf"
 
 print ""
-

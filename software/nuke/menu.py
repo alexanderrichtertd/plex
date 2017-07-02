@@ -88,17 +88,3 @@ def arWrite():
     reload(write_node)
     nuke.createNode('arWrite')
     LOG.info('arWrite')
-
-
-#********************************
-def report():
-    from utils import arReporter
-    reload(arReporter)
-    arReporter.main()
-    LOG.info('REPORT')
-
-
-def get_help(topic=''):
-    libFunc.get_help(topic)
-    LOG.info('HELP')
-
