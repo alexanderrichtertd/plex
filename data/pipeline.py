@@ -51,12 +51,16 @@ class Setup(object):
 
         # SEARCH and ADD current and sub paths
         for paths in self.pipeline_data['PATH']:
-            if this_pipeline_path in paths.values() or self.pipeline_env.has_key('PIPELINE_STATUS'):
-                if os.path.exists(paths.values()[0]):
-                    self.data_pipeline_path.append(paths.values()[0])
-                    if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = paths.keys()[0]
-                else:
-                    print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(eachPath, self.data_project_path))
+            for key, value in paths.items():
+                if value == '$this': value = this_pipeline_path
+
+                if this_pipeline_path == value or self.pipeline_env.has_key('PIPELINE_STATUS'):
+                    print value
+                    if os.path.exists(value):
+                        self.data_pipeline_path.append(value)
+                        if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = key
+                    else:
+                        print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(value, self.data_project_path))
 
         if not self.data_pipeline_path:
             raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.py', this_pipeline_path)
@@ -115,7 +119,10 @@ class Setup(object):
             LOG.warning('USER DATA will be ignored.')
 
         # SET project Data
-        import libData
+        try:
+            import libData
+        except:
+            raise OSError ('STOP PROCESS', 'Pipeline PATH is missing the pipeline', eachPath)
         project_data = libData.get_data('project')
         os.environ['PROJECT_NAME'] = project_data['name']
          # ADD project path
@@ -129,10 +136,11 @@ class Setup(object):
         import libLog
         LOG = libLog.init(script=TITLE)
         LOG.debug('____________________________________________________________')
-        LOG.debug('PIPELINE: {} [{}, {}, {}]'.format(self.pipeline_data['PIPELINE']['name'],
+        LOG.debug('PIPELINE: {} [{}, {}, {}] {}'.format(self.pipeline_data['PIPELINE']['name'],
                                                    self.pipeline_data['PIPELINE']['version'],
                                                    self.pipeline_env['PIPELINE_STATUS'],
-                                                   'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite'))
+                                                   'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite',
+                                                   self.data_pipeline_path))
 
         LOG.debug('PROJECT:  {} [{}]'.format(project_data['name'],
                                              os.path.normpath(project_data['path'])))

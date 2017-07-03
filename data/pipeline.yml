@@ -12,13 +12,14 @@ project: default
 
 # IMPORTANT: order
 # DEFAULT:   local, project, master
+# use $this for current location
 PATH:
     # 1.local (dev & debug)
     - local:   C:\sandbox
     # 2.project (production)
-    - project: D:\Dropbox\project
+    - project: D:\project
     # 3.pipeline (master)
-    - master:  D:\Dropbox\plex\2000
+    - master:  $this # D:\plex\
 
 
 # USER customize
