@@ -55,7 +55,6 @@ class Setup(object):
                 if value == '$this': value = this_pipeline_path
 
                 if this_pipeline_path == value or self.pipeline_env.has_key('PIPELINE_STATUS'):
-                    print value
                     if os.path.exists(value):
                         self.data_pipeline_path.append(value)
                         if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = key
@@ -74,16 +73,24 @@ class Setup(object):
         for eachPath in self.data_pipeline_path:
             self.pipeline_env.add('PIPELINE_PATH',     eachPath)
 
-            self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
-            self.pipeline_env.add('SOFTWARE_PATH',     eachPath + '/software')
+            if os.path.exists(eachPath + '/img'):
+                self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
+            if os.path.exists(eachPath + '/software'):
+                self.pipeline_env.add('SOFTWARE_PATH',     eachPath + '/software')
 
-            self.pipeline_env.add('LIB_PATH',          eachPath + '/lib')
-            self.pipeline_env.add('UTILS_PATH',        eachPath + '/lib/utils')
-            self.pipeline_env.add('CLASSES_PATH',      eachPath + '/lib/classes')
+            if os.path.exists(eachPath + '/lib'):
+                self.pipeline_env.add('LIB_PATH',          eachPath + '/lib')
+            if os.path.exists(eachPath + '/lib/utils'):
+                self.pipeline_env.add('UTILS_PATH',        eachPath + '/lib/utils')
+            if os.path.exists(eachPath + '/lib/classes'):
+                self.pipeline_env.add('CLASSES_PATH',      eachPath + '/lib/classes')
 
-            self.pipeline_env.add('DATA_PATH',         eachPath + '/data')
-            self.pipeline_env.add('DATA_USER_PATH',    eachPath + '/data/user/'    + os.getenv('username'))
-            self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
+            if os.path.exists(eachPath + '/data'):
+                self.pipeline_env.add('DATA_PATH',         eachPath + '/data')
+            if os.path.exists(eachPath + '/data/user/'    + os.getenv('username')):
+                self.pipeline_env.add('DATA_USER_PATH',    eachPath + '/data/user/'    + os.getenv('username'))
+            if os.path.exists(eachPath + '/data/project/' + self.pipeline_data['project']):
+                self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
 
         # ADD all pipeline env
         self.add_env('PIPELINE_PATH',     (';').join(self.pipeline_env['PIPELINE_PATH']))
@@ -104,8 +111,8 @@ class Setup(object):
         sys.path.append(os.environ['DATA_PATH'])
         sys.path.append(os.environ['DATA_PROJECT_PATH'])
 
-        self.add_env('PYTHONPATH', os.environ['LIB_PATH'])
         self.add_env('PYTHONPATH', os.environ['IMG_PATH'])
+        self.add_env('PYTHONPATH', os.environ['LIB_PATH'])
         self.add_env('PYTHONPATH', os.environ['UTILS_PATH'])
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
         # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
@@ -118,11 +125,12 @@ class Setup(object):
             os.getenv['DATA_USER_PATH'] = ''
             LOG.warning('USER DATA will be ignored.')
 
+        print os.environ['PYTHONPATH']
+
         # SET project Data
-        try:
-            import libData
-        except:
-            raise OSError ('STOP PROCESS', 'Pipeline PATH is missing the pipeline', eachPath)
+        try:    import libData
+        except: raise OSError ('STOP PROCESS', 'Pipeline PATH is missing. See pipeline.yml')
+
         project_data = libData.get_data('project')
         os.environ['PROJECT_NAME'] = project_data['name']
          # ADD project path
