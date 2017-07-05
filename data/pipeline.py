@@ -71,7 +71,7 @@ class Setup(object):
         global LOG
 
         for eachPath in self.data_pipeline_path:
-            self.pipeline_env.add('PIPELINE_PATH',     eachPath)
+            self.pipeline_env.add('PIPELINE_PATH', eachPath)
 
             if os.path.exists(eachPath + '/img'):
                 self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
@@ -91,6 +91,10 @@ class Setup(object):
                 self.pipeline_env.add('DATA_USER_PATH',    eachPath + '/data/user/'    + os.getenv('username'))
             if os.path.exists(eachPath + '/data/project/' + self.pipeline_data['project']):
                 self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
+
+        # reversed to match with PYTHONPATH
+        self.pipeline_env['DATA_PATH'] = list(reversed(self.pipeline_env['DATA_PATH']))
+        self.pipeline_env['DATA_PROJECT_PATH'] = list(reversed(self.pipeline_env['DATA_PROJECT_PATH']))
 
         # ADD all pipeline env
         self.add_env('PIPELINE_PATH',     (';').join(self.pipeline_env['PIPELINE_PATH']))
