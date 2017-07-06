@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = SET default environment paths
-# version   = 0.4.0
-# date      = 2017-07-02
+# version   = 0.6.0
+# date      = 2017-07-07
 #
 # license   = MIT
 # copyright = Copyright 2017 Animationsinstitut
@@ -32,16 +32,11 @@ class Setup(object):
         self.pipeline_env  = SmartDict()
         self.this_pipeline = os.path.normpath(os.path.dirname(this_path))
 
-        # OS & PYTHON_VERSION
-        os.environ['OS'] = sys.platform
-        os.environ['PYTHON_VERSION'] = sys.version[:3]
-
         # LOAD pipeline data
         if os.path.exists(self.data_project_path):
             with open(self.data_project_path , 'r') as stream:
-                try: self.pipeline_data = yaml.load(stream)
-                except yaml.YAMLError as exc:
-                    raise OSError ('STOP PROCESS', 'DATA file is corrupted', exc)
+                try:   self.pipeline_data = yaml.load(stream)
+                except yaml.YAMLError as exc: raise OSError ('STOP PROCESS', 'DATA file is corrupted', exc)
         else: raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
 
         # SEARCH and ADD current and sub paths
@@ -49,7 +44,6 @@ class Setup(object):
             # REPLACE $this with current_path
             if paths == '$this': paths = self.this_pipeline
 
-            # ADD current and sub_paths
             if self.this_pipeline == paths or self.data_pipeline_path:
                 if    os.path.exists(paths): self.data_pipeline_path.append(paths)
                 else: print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(paths, self.data_project_path))
@@ -57,28 +51,28 @@ class Setup(object):
         if not self.data_pipeline_path:
             raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
 
-        try:    self.pipeline_env['PIPELINE_STATUS'] = PIPELINE_STATUS[len(self.data_pipeline_path) - 1]
-        except: self.pipeline_env['PIPELINE_STATUS'] = 'development{}'.format(len(self.data_pipeline_path) - 1)
-
         self.set_pipeline_env()
         self.__call__()
 
     def set_pipeline_env(self):
 
+        try:    os.environ['PIPELINE_STATUS'] = PIPELINE_STATUS[len(self.data_pipeline_path) - 1]
+        except: os.environ['PIPELINE_STATUS'] = 'development{}'.format(len(self.data_pipeline_path) - 1)
 
+        # ADD sub ENV
         for eachPath in self.data_pipeline_path:
             self.pipeline_env.add('PIPELINE_PATH', eachPath)
 
-            if os.path.exists(eachPath + '/img'): self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
-            if os.path.exists(eachPath + '/software'): self.pipeline_env.add('SOFTWARE_PATH',     eachPath + '/software')
+            if os.path.exists(eachPath + '/img'): self.pipeline_env.add('IMG_PATH', eachPath + '/img')
+            if os.path.exists(eachPath + '/software'): self.pipeline_env.add('SOFTWARE_PATH', eachPath + '/software')
 
-            if os.path.exists(eachPath + '/lib'): self.pipeline_env.add('LIB_PATH',          eachPath + '/lib')
-            if os.path.exists(eachPath + '/lib/utils'): self.pipeline_env.add('UTILS_PATH',        eachPath + '/lib/utils')
-            if os.path.exists(eachPath + '/lib/classes'): self.pipeline_env.add('CLASSES_PATH',      eachPath + '/lib/classes')
+            if os.path.exists(eachPath + '/lib'): self.pipeline_env.add('LIB_PATH', eachPath + '/lib')
+            if os.path.exists(eachPath + '/lib/utils'): self.pipeline_env.add('UTILS_PATH', eachPath + '/lib/utils')
+            if os.path.exists(eachPath + '/lib/classes'): self.pipeline_env.add('CLASSES_PATH', eachPath + '/lib/classes')
 
-            if os.path.exists(eachPath + '/data'): self.pipeline_env.add('DATA_PATH',         eachPath + '/data')
-            if os.path.exists(eachPath + '/data/user/'    + os.getenv('username')):
-                self.pipeline_env.add('DATA_USER_PATH',    eachPath + '/data/user/'    + os.getenv('username'))
+            if os.path.exists(eachPath + '/data'): self.pipeline_env.add('DATA_PATH', eachPath + '/data')
+            if os.path.exists(eachPath + '/data/user/' + os.getenv('username')):
+                self.pipeline_env.add('DATA_USER_PATH', eachPath + '/data/user/' + os.getenv('username'))
             if os.path.exists(eachPath + '/data/project/' + self.pipeline_data['project']):
                 self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
 
@@ -109,7 +103,7 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
         # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
 
-        # CHECK if user overwrite is active
+        # CHECK for data user overwrite
         if self.pipeline_data['user_data']:
             self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
             sys.path.append(os.environ['DATA_USER_PATH'])
@@ -125,29 +119,34 @@ class Setup(object):
         # ADD project path
         if os.path.exists(self.project_data['path']):
             os.environ['PROJECT_PATH'] = os.path.normpath(self.project_data['path'])
+        else: os.environ['PROJECT_PATH'] = ''
+
+        # OS & PYTHON_VERSION
+        os.environ['OS'] = sys.platform
+        os.environ['PYTHON_VERSION'] = sys.version[:3]
+
 
     def __call__(self):
         import libLog
-
         TITLE = os.path.splitext(os.path.basename(__file__))[0]
         LOG   = libLog.init(script=TITLE)
 
         LOG.debug('____________________________________________________________')
         LOG.debug('PIPELINE: {} [{}, {}, {}] {}'.format(self.pipeline_data['PIPELINE']['name'],
-                                                   self.pipeline_data['PIPELINE']['version'],
-                                                   self.pipeline_env['PIPELINE_STATUS'],
-                                                   'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite',
-                                                   self.data_pipeline_path))
+                           self.pipeline_data['PIPELINE']['version'],
+                           self.pipeline_env['PIPELINE_STATUS'],
+                           'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite',
+                           self.data_pipeline_path))
 
         LOG.debug('PROJECT:  {} [{}, {}] [{}{}]'.format(self.project_data['name'],
-                                            '{} x {}'.format(self.project_data['resolution'][0], self.project_data['resolution'][1]),
-                                            self.project_data['fps'],
-                                            '' if os.path.exists(self.project_data['path']) else 'MISS: ',
-                                            os.path.normpath(self.project_data['path'])))
+                            '{} x {}'.format(self.project_data['resolution'][0], self.project_data['resolution'][1]),
+                            self.project_data['fps'],
+                            '' if os.path.exists(self.project_data['path']) else 'NOT existing: ',
+                            os.path.normpath(self.project_data['path'])))
 
         LOG.debug('------------------------------------------------------------')
-        LOG.debug('PATH:   {}'.format('[%s]' % ', '.join(map(str, sys.path))))
-        LOG.debug('OS_ENV: {}'.format(self.pipeline_env))
+        LOG.debug('SYS_PATH: {}'.format('[%s]' % ', '.join(map(str, sys.path))))
+        LOG.debug('ADD_ENV:  {}'.format(self.pipeline_env))
 
 
     #************************
