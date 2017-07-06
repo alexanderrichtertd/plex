@@ -24,6 +24,10 @@ from tank import Tank
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
+all_data      = Tank().data
+project_data  = all_data['project']
+software_data = all_data['software']
+
 #************************
 # FUNC
 def add_gizmo_menu(menu):
@@ -53,9 +57,8 @@ def add_plugin_paths():
 # TOOLBAR
 add_plugin_paths()
 
-project_data = Tank().data
-menu_data    = project_data['software']['NUKE']['MENU']
-menuNode     = nuke.menu('Nodes').addMenu(project_data['project']['name'], icon = 'nuke.ico')
+menu_data    = software_data['NUKE']['MENU']
+menuNode     = nuke.menu('Nodes').addMenu(project_data['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 

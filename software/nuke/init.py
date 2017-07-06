@@ -67,11 +67,10 @@ except:
 print('SETTINGS')
 # FPS ***********************************
 try:
-    nuke.knobDefault("nuke.Root()['fps'].setValue({})".format(project_data['fps']))
+    nuke.knobDefault("Root.fps", str(project_data['fps']))
     print('  {} ON  - FPS: {}'.format(chr(254), project_data['fps']))
 except:
-    pass
-    LOG.debug('  OFF - FPS: {}'.format(project_data['fps']))
+    LOG.error('  OFF - FPS: {}'.format(project_data['fps']), exc_info=True)
     print('  {} OFF - FPS: {}'.format(chr(254), project_data['fps']))
 
 # RESOLUTION ****************************
@@ -80,7 +79,7 @@ try:
     nuke.knobDefault('Root.format', project_data['name'].replace(' ', ''))
     print('  {} ON  - RES: {}'.format(chr(254), RESOLUTION))
 except:
-    LOG.debug('  OFF - RES: {}'.format(RESOLUTION))
+    LOG.error('  OFF - RES: {}'.format(RESOLUTION), exc_info=True)
     print('  {} OFF - RES: {}'.format(chr(254), RESOLUTION))
 
 # createFolder ****************************

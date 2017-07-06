@@ -142,12 +142,12 @@ def env(loader, node):
 def env_first(loader, node):
     seq  = loader.construct_sequence(node)
     path = os.getenv(seq[0])
-    seq.pop(0)
 
     if ';' in path: path = path.split(';')[0]
-    else: path = path
+    seq.pop(0)
 
     if seq: path += ''.join([str(os.path.normpath(i)) for i in seq])
+    # LOG.debug(path)
     return path
 
 yaml.add_constructor('!env', env)

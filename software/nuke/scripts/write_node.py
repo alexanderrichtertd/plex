@@ -48,8 +48,6 @@ def nodeCreate(this_node=''):
     this_node["jpgPath"].setValue(renderPath.replace("exr","jpg"))
     this_node["tifPath"].setValue(renderPath.replace("exr","tif"))
 
-    LOG.info("START : " + fileName)
-
 
 def openRV(path):
     if not os.path.exists(os.path.dirname(path)) or not os.listdir(os.path.dirname(path)):

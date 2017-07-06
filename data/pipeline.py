@@ -33,7 +33,7 @@ class Setup(object):
         self.data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
 
         self.pipeline_env  = SmartDict()
-        this_pipeline_path = os.path.normpath(os.path.dirname(this_path))
+        self.this_pipeline = os.path.normpath(os.path.dirname(this_path))
 
         # OS & PYTHON_VERSION
         os.environ['OS'] = sys.platform
@@ -52,9 +52,9 @@ class Setup(object):
         # SEARCH and ADD current and sub paths
         for paths in self.pipeline_data['PATH']:
             for key, value in paths.items():
-                if value == '$this': value = this_pipeline_path
+                if value == '$this': value = self.this_pipeline
 
-                if this_pipeline_path == value or self.pipeline_env.has_key('PIPELINE_STATUS'):
+                if self.this_pipeline == value or self.pipeline_env.has_key('PIPELINE_STATUS'):
                     if os.path.exists(value):
                         self.data_pipeline_path.append(value)
                         if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = key
@@ -62,7 +62,7 @@ class Setup(object):
                         print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(value, self.data_project_path))
 
         if not self.data_pipeline_path:
-            raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.py', this_pipeline_path)
+            raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
 
         self.set_pipeline_env()
         self.__call__()
@@ -92,19 +92,18 @@ class Setup(object):
             if os.path.exists(eachPath + '/data/project/' + self.pipeline_data['project']):
                 self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
 
-        # reversed to match with PYTHONPATH
-        self.pipeline_env['DATA_PATH'] = list(reversed(self.pipeline_env['DATA_PATH']))
-        self.pipeline_env['DATA_PROJECT_PATH'] = list(reversed(self.pipeline_env['DATA_PROJECT_PATH']))
-
         # ADD all pipeline env
         self.add_env('PIPELINE_PATH',     (';').join(self.pipeline_env['PIPELINE_PATH']))
-        self.add_env('IMG_PATH',          (';').join(self.pipeline_env['IMG_PATH']))
-        self.add_env('LIB_PATH',          (';').join(self.pipeline_env['LIB_PATH']))
-        self.add_env('UTILS_PATH',        (';').join(self.pipeline_env['UTILS_PATH']))
-        self.add_env('CLASSES_PATH',      (';').join(self.pipeline_env['CLASSES_PATH']))
-        self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
-        self.add_env('DATA_PATH',         (';').join(self.pipeline_env['DATA_PATH']))
-        self.add_env('DATA_PROJECT_PATH', (';').join(self.pipeline_env['DATA_PROJECT_PATH']))
+        try:
+            self.add_env('IMG_PATH',          (';').join(self.pipeline_env['IMG_PATH']))
+            self.add_env('LIB_PATH',          (';').join(self.pipeline_env['LIB_PATH']))
+            self.add_env('UTILS_PATH',        (';').join(self.pipeline_env['UTILS_PATH']))
+            self.add_env('CLASSES_PATH',      (';').join(self.pipeline_env['CLASSES_PATH']))
+            self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
+            self.add_env('DATA_PATH',         (';').join(self.pipeline_env['DATA_PATH']))
+            self.add_env('DATA_PROJECT_PATH', (';').join(self.pipeline_env['DATA_PROJECT_PATH']))
+        except:
+            raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
 
         sys.path.append(os.environ['PIPELINE_PATH'])
         sys.path.append(os.environ['IMG_PATH'] )
@@ -128,8 +127,6 @@ class Setup(object):
         else:
             os.getenv['DATA_USER_PATH'] = ''
             LOG.warning('USER DATA will be ignored.')
-
-        print os.environ['PYTHONPATH']
 
         # SET project Data
         try:    import libData
