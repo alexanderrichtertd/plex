@@ -1,10 +1,10 @@
 :: HOUDINI
 
 :: Hide Commands
-:: @echo off
+@echo off
 
-set "newDir=%~dp0\.."
+set "newDir=%~dp0\..\data"
 python %newDir%\pipeline.py %1 --script software --software houdini
 
-:: exit
+exit
 

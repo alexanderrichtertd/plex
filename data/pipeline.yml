@@ -15,11 +15,11 @@ project: default
 # use $this for current location
 PATH:
     # 1.local (dev & debug)
-    - local:   C:\sandbox
+    - C:\sandbox
     # 2.project (production)
-    - project: D:\project
+    - D:\project
     # 3.pipeline (master)
-    - master:  $this # D:\plex\
+    - $this # D:\plex\
 
 
 # USER customize

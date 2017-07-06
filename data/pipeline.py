@@ -20,6 +20,8 @@ except:
     sys.path.append('C:/Python27/Lib/site-packages')
     import yaml
 
+PIPELINE_STATUS = ['master', 'project', 'user']
+
 class Setup(object):
 
     def __init__(self):
@@ -44,22 +46,26 @@ class Setup(object):
 
         # SEARCH and ADD current and sub paths
         for paths in self.pipeline_data['PATH']:
-            for key, value in paths.items():
-                if value == '$this': value = self.this_pipeline
+            # REPLACE $this with current_path
+            if paths == '$this': paths = self.this_pipeline
 
-                if self.this_pipeline == value or self.pipeline_env.has_key('PIPELINE_STATUS'):
-                    if os.path.exists(value): self.data_pipeline_path.append(value)
-                        if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = key
-                    else:
-                        print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(value, self.data_project_path))
+            # ADD current and sub_paths
+            if self.this_pipeline == paths or self.data_pipeline_path:
+                if    os.path.exists(paths): self.data_pipeline_path.append(paths)
+                else: print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(paths, self.data_project_path))
 
         if not self.data_pipeline_path:
             raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
+
+        try:    self.pipeline_env['PIPELINE_STATUS'] = PIPELINE_STATUS[len(self.data_pipeline_path) - 1]
+        except: self.pipeline_env['PIPELINE_STATUS'] = 'development{}'.format(len(self.data_pipeline_path) - 1)
 
         self.set_pipeline_env()
         self.__call__()
 
     def set_pipeline_env(self):
+
+
         for eachPath in self.data_pipeline_path:
             self.pipeline_env.add('PIPELINE_PATH', eachPath)
 
@@ -148,8 +154,8 @@ class Setup(object):
     # FUNCTIONS
     def add_env(self, var, content):
         content = os.path.normpath(content)
-        if    os.environ.__contains__(var): os.environ[var] += ('').join([';', content])
-        else: os.environ[var] = content
+        if     os.environ.__contains__(var): os.environ[var] += ('').join([';', content])
+        else:  os.environ[var] = content
         return os.getenv(var)
 
 
