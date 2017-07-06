@@ -31,11 +31,9 @@ LOG   = libLog.init(script=TITLE)
 class Software(Singleton):
 
     def setup(self, software=os.getenv('SOFTWARE')):
-        if not software: raise
+        if not software: raise OSError ('STOP PROCESS', 'SOFTWARE couldnt be found.')
 
         self._software = software.lower()
-
-        # GET data
         self._software_data = libData.get_data()['software'][self._software.upper()]
 
         self._version = self._software_data['version']
