@@ -10,10 +10,10 @@
 # MAYA
 MAYA:
   version: &MAYA_VERSION 2015
-  path: &PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
+  path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
   # start command
-  start: !join ['start "" "', *PATH, '" -file "{}"'] # {} replaced by open_file
+  start: !join ['start "" "', *MAYA_PATH, '" -file "{}"'] # {} replaced by open_file
 
   renderer:
   renderer_path:
@@ -109,13 +109,19 @@ NUKE:
 #************************
 # HOUDINI
 HOUDINI:
-  version: 15.56
-  path:
+  version: &HOUDINI_VERSION 16.0.633
+  path:    &HOUDINI_PATH !join ["C:/Program Files/Side Effects Software/Houdini ", *HOUDINI_VERSION, /bin/houdini.exe]
 
-  start:
+  start: *HOUDINI_PATH
 
   renderer:
   renderer_path:
+
+  ENV:
+    PYTHONPATH:
+      - *HOUDINI_PATH
+
+    HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
 
 
 #************************

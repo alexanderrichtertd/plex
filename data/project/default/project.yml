@@ -8,7 +8,7 @@
 
 name: Plex
 
-path: &PROJECT D:/Dropbox/plex
+path: &PROJECT D:/project
 
 resolution:
   - 2048
@@ -17,33 +17,30 @@ resolution:
 fps: 24
 
 
-PROJECT_PATH:
-  user              : !join [*PROJECT, /00_user]
+PATH:
+  user              : !join [*PROJECT, /05_user]
+  preproduction     : !join [*PROJECT, /10_pre]
 
-  footage           : &FOOTAGE !join [*PROJECT, /10_footage]
+  footage           : &FOOTAGE !join [*PROJECT, /20_footage]
   footage_hdri      : !join [*FOOTAGE, /hdri]
   footage_shader    : !join [*FOOTAGE, /shader]
   footage_scene     : !join [*FOOTAGE, /scene]
   footage_textures  : !join [*FOOTAGE, /textures]
 
-  preproduction     : !join [*PROJECT, /20_pre]
-  rnd               : !join [*PROJECT, /25_rnd]
-
   assets            : !join [*PROJECT, /30_assets]
 
   shots             : &SHOTS !join [*PROJECT, /40_shots]
-  post              : !join [*SHOTS, ]
-  shots_alembic     : !join [*SHOTS, /s000_ALEMBIC/40_ANIM/WORK]
   comp              : !join [*SHOTS, ]
-  comp_render       : !join [*SHOTS, /render]
 
   render            : !join [*PROJECT, /45_render]
-
-  edit              : &EDIT !join [*PROJECT, /50_edit]
-  edit_cut          : !join [*EDIT, /_cut]
-  edit_music        : !join [*EDIT, /_music]
-  edit_sound        : !join [*EDIT, /_sound]
-  edit_final        : !join [*EDIT, /FINAL]
+  post              : &POST !join [*PROJECT, /50_post]
+  post_edit         : &EDIT !join [*POST, /edit]
+  post_edit_cut     : !join [*EDIT, /_cut]
+  post_edit_music   : !join [*EDIT, /_music]
+  post_edit_sound   : !join [*EDIT, /_sound]
+  final             : !join [*POST, /final]
+  grade             : !join [*POST, /grade]
+  mov               : !join [*POST, /mov]
 
 
 REPOSITORY:

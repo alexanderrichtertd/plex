@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = OS startup file
-# version   = 0.0.1
-# date      = 2017-01-01
+# version   = 0.6.0
+# date      = 2017-07-07
 #
 # license   = MIT
 # copyright = Copyright 2017 Animationsinstitut
@@ -17,9 +17,7 @@ import sys
 import webbrowser
 
 from PySide import QtGui, QtCore
-# from extern.Qt import QtGui, QtWidgets, QtCore
 
-import users
 import libLog
 import libData
 import libFunc
@@ -28,6 +26,8 @@ from software import Software
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
+
+project_data = Tank().data['project']
 
 #**********************
 # CLASS
@@ -85,14 +85,14 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenMaya)
         menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/nuke')), 'Nuke')
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenNuke)
-        # menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/houdini')), 'Houdini')
-        # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenHoudini)
+        menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/houdini')), 'Houdini')
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenHoudini)
 
         menu.addSeparator()
 
-        # menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnReport48')), 'Report')
-        # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnReport)
-        # self.setContextMenu(menu)
+        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnReport48')), 'Report')
+        QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnReport)
+        self.setContextMenu(menu)
         menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnHelp48')), 'Help')
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnHelp)
         self.setContextMenu(menu)
@@ -113,44 +113,38 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        LOG.debug('showUserData')
-        webbrowser.open(libData.get_env('PROJECT_USER_PATH'))
+        print os.path.normpath(project_data['PATH']['user'])
+        webbrowser.open(os.path.normpath(project_data['PATH']['user']))
 
     def press_btnOpenProjectPath(self):
-        LOG.debug('openProjectPath')
-        webbrowser.open(libData.get_env('PROJECT_PATH'))
+        webbrowser.open(os.path.normpath(project_data['path']))
     #------------------------------
     def press_btnProject(self):
         import arProject
         arProject.start()
     #------------------------------
     def press_btnOpenMaya(self):
-        LOG.debug('Maya')
         Software().start('maya')
 
     def press_btnOpenNuke(self):
-        LOG.debug('Nuke')
         Software().start('nuke')
 
     def press_btnOpenHoudini(self):
-        LOG.debug('Houdini')
         Software().start('houdini')
 
     #------------------------------
     def press_btnOpenProjectLog(self):
-        webbrowser.open(libData.get_env('DATA_PROJECT_PATH'))
+        webbrowser.open(os.path.normpath(libData.get_env('DATA_PROJECT_PATH')))
 
     def press_btnOpenLocalLog(self):
-        webbrowser.open(libData.get_env('DATA_USER_PATH'))
+        webbrowser.open(os.path.normpath(libData.get_env('DATA_USER_PATH')))
 
     def press_btnWriteReminder(self):
-        LOG.debug('writeReminder')
         from utilities import arNotificator
         arNotificator.main(True)
     #------------------------------
     def press_btnReport(self):
-        import arReporter
-        arReporter.start(TITLE)
+        libFunc.get_help('issues')
 
     def press_btnHelp(self):
         libFunc.get_help(TITLE)

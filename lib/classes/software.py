@@ -19,7 +19,6 @@ import subprocess
 
 import libLog
 import libData
-import libFunc
 import libFileFolder
 from subclass import Singleton
 
