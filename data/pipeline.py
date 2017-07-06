@@ -15,9 +15,6 @@
 import os
 import sys
 
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = ''
-
 try: import yaml
 except:
     sys.path.append('C:/Python27/Lib/site-packages')
@@ -26,8 +23,6 @@ except:
 class Setup(object):
 
     def __init__(self):
-        global LOG
-
         this_path = os.path.normpath(os.path.dirname(__file__))
         self.data_pipeline_path = []
         self.data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
@@ -68,8 +63,6 @@ class Setup(object):
         self.__call__()
 
     def set_pipeline_env(self):
-        global LOG
-
         for eachPath in self.data_pipeline_path:
             self.pipeline_env.add('PIPELINE_PATH', eachPath)
 
@@ -120,30 +113,30 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
         # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
 
+
         # CHECK if user overwrite is active
         if self.pipeline_data['user_data']:
             self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
             sys.path.append(os.environ['DATA_USER_PATH'])
         else:
             os.getenv['DATA_USER_PATH'] = ''
-            LOG.warning('USER DATA will be ignored.')
 
         # SET project Data
         try:    import libData
         except: raise OSError ('STOP PROCESS', 'Pipeline PATH is missing. See pipeline.yml')
 
-        project_data = libData.get_data('project')
-        os.environ['PROJECT_NAME'] = project_data['name']
-         # ADD project path
-        if os.path.exists(project_data['path']):
-            os.environ['PROJECT_PATH'] = os.path.normpath(project_data['path'])
-        else:
-            # ALT: PROJECT_PATH = '../pipeline'
-            LOG.critical('PROJECT PATH doesnt exist: {}'.format(project_data['path']))
+        self.project_data = libData.get_data('project')
+        os.environ['PROJECT_NAME'] = self.project_data['name']
 
-        # SETUP logging
+        # ADD project path
+        if os.path.exists(self.project_data['path']):
+            os.environ['PROJECT_PATH'] = os.path.normpath(self.project_data['path'])
+
+    def __call__(self):
         import libLog
-        LOG = libLog.init(script=TITLE)
+        TITLE = os.path.splitext(os.path.basename(__file__))[0]
+        LOG   = libLog.init(script=TITLE)
+
         LOG.debug('____________________________________________________________')
         LOG.debug('PIPELINE: {} [{}, {}, {}] {}'.format(self.pipeline_data['PIPELINE']['name'],
                                                    self.pipeline_data['PIPELINE']['version'],
@@ -151,13 +144,13 @@ class Setup(object):
                                                    'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite',
                                                    self.data_pipeline_path))
 
-        LOG.debug('PROJECT:  {} [{}]'.format(project_data['name'],
-                                             os.path.normpath(project_data['path'])))
+        LOG.debug('PROJECT:  {} [{}, {}] [{}{}]'.format(self.project_data['name'],
+                                            '{} x {}'.format(self.project_data['resolution'][0], self.project_data['resolution'][1]),
+                                            self.project_data['fps'],
+                                            '' if os.path.exists(self.project_data['path']) else 'MISS: ',
+                                            os.path.normpath(self.project_data['path'])))
+
         LOG.debug('------------------------------------------------------------')
-
-
-    def __call__(self):
-        global LOG
         LOG.debug('PATH:   {}'.format('[%s]' % ', '.join(map(str, sys.path))))
         LOG.debug('OS_ENV: {}'.format(self.pipeline_env))
 
