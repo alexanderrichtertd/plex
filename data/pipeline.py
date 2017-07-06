@@ -37,12 +37,10 @@ class Setup(object):
         # LOAD pipeline data
         if os.path.exists(self.data_project_path):
             with open(self.data_project_path , 'r') as stream:
-                try:
-                    self.pipeline_data = yaml.load(stream)
+                try: self.pipeline_data = yaml.load(stream)
                 except yaml.YAMLError as exc:
                     raise OSError ('STOP PROCESS', 'DATA file is corrupted', exc)
-        else:
-            raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
+        else: raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
 
         # SEARCH and ADD current and sub paths
         for paths in self.pipeline_data['PATH']:
@@ -50,8 +48,7 @@ class Setup(object):
                 if value == '$this': value = self.this_pipeline
 
                 if self.this_pipeline == value or self.pipeline_env.has_key('PIPELINE_STATUS'):
-                    if os.path.exists(value):
-                        self.data_pipeline_path.append(value)
+                    if os.path.exists(value): self.data_pipeline_path.append(value)
                         if not self.pipeline_env.has_key('PIPELINE_STATUS'): self.pipeline_env['PIPELINE_STATUS'] = key
                     else:
                         print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(value, self.data_project_path))
@@ -66,20 +63,14 @@ class Setup(object):
         for eachPath in self.data_pipeline_path:
             self.pipeline_env.add('PIPELINE_PATH', eachPath)
 
-            if os.path.exists(eachPath + '/img'):
-                self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
-            if os.path.exists(eachPath + '/software'):
-                self.pipeline_env.add('SOFTWARE_PATH',     eachPath + '/software')
+            if os.path.exists(eachPath + '/img'): self.pipeline_env.add('IMG_PATH',          eachPath + '/img')
+            if os.path.exists(eachPath + '/software'): self.pipeline_env.add('SOFTWARE_PATH',     eachPath + '/software')
 
-            if os.path.exists(eachPath + '/lib'):
-                self.pipeline_env.add('LIB_PATH',          eachPath + '/lib')
-            if os.path.exists(eachPath + '/lib/utils'):
-                self.pipeline_env.add('UTILS_PATH',        eachPath + '/lib/utils')
-            if os.path.exists(eachPath + '/lib/classes'):
-                self.pipeline_env.add('CLASSES_PATH',      eachPath + '/lib/classes')
+            if os.path.exists(eachPath + '/lib'): self.pipeline_env.add('LIB_PATH',          eachPath + '/lib')
+            if os.path.exists(eachPath + '/lib/utils'): self.pipeline_env.add('UTILS_PATH',        eachPath + '/lib/utils')
+            if os.path.exists(eachPath + '/lib/classes'): self.pipeline_env.add('CLASSES_PATH',      eachPath + '/lib/classes')
 
-            if os.path.exists(eachPath + '/data'):
-                self.pipeline_env.add('DATA_PATH',         eachPath + '/data')
+            if os.path.exists(eachPath + '/data'): self.pipeline_env.add('DATA_PATH',         eachPath + '/data')
             if os.path.exists(eachPath + '/data/user/'    + os.getenv('username')):
                 self.pipeline_env.add('DATA_USER_PATH',    eachPath + '/data/user/'    + os.getenv('username'))
             if os.path.exists(eachPath + '/data/project/' + self.pipeline_data['project']):
@@ -95,8 +86,7 @@ class Setup(object):
             self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
             self.add_env('DATA_PATH',         (';').join(self.pipeline_env['DATA_PATH']))
             self.add_env('DATA_PROJECT_PATH', (';').join(self.pipeline_env['DATA_PROJECT_PATH']))
-        except:
-            raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
+        except: raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
 
         sys.path.append(os.environ['PIPELINE_PATH'])
         sys.path.append(os.environ['IMG_PATH'] )
@@ -113,13 +103,11 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['CLASSES_PATH'])
         # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
 
-
         # CHECK if user overwrite is active
         if self.pipeline_data['user_data']:
             self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
             sys.path.append(os.environ['DATA_USER_PATH'])
-        else:
-            os.getenv['DATA_USER_PATH'] = ''
+        else: os.getenv['DATA_USER_PATH'] = ''
 
         # SET project Data
         try:    import libData
@@ -134,6 +122,7 @@ class Setup(object):
 
     def __call__(self):
         import libLog
+
         TITLE = os.path.splitext(os.path.basename(__file__))[0]
         LOG   = libLog.init(script=TITLE)
 
@@ -159,30 +148,24 @@ class Setup(object):
     # FUNCTIONS
     def add_env(self, var, content):
         content = os.path.normpath(content)
-        if os.environ.__contains__(var):
-            os.environ[var] += ('').join([';', content])
-        else:
-            os.environ[var] = content
+        if    os.environ.__contains__(var): os.environ[var] += ('').join([';', content])
+        else: os.environ[var] = content
         return os.getenv(var)
 
 
 #************************
 # CLASS
 class SmartDict(dict):
-    global LOG
     def __init__(self):
         super(dict)
         self = dict()
 
     def add(self, key, value):
         value = os.path.normpath(value)
-        if self.has_key(key):
-            self[key].append(value)
-        else:
-            self[key] = [value]
+        if self.has_key(key): self[key].append(value)
+        else:                 self[key] = [value]
 
     def __missing__(self, key):
-        LOG.debug('MISSING Key: {}'.format(key))
         return key
 
 
