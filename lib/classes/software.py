@@ -142,10 +142,11 @@ class Software(Singleton):
                     if self._software == 'maya':
                         import maya.cmds as cmds
                         cmd = ('cmds.{}'.format(item)).format(menu_node)
-                        LOG.debug(cmd)
                         eval(cmd)
-                    if self._software == 'nuke':
+                    elif self._software == 'nuke':
                         eval('menu_node.{}'.format(item))
+                    else:
+                        LOG.debug('CANT find software: {}'.format(software))
         except:
               LOG.error('DATA Menu couldnt be created', exc_info=True)
 

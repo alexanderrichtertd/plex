@@ -18,6 +18,7 @@ MAYA:
   renderer:
   renderer_path:
 
+
   ENV: # Added BEFORE software start
     PYTHONPATH:
       - !env_first [SOFTWARE_PATH]
@@ -40,6 +41,7 @@ MAYA:
     MAYA_DISABLE_CIP: 1
     MAYA_DISABLE_CER: 1
 
+
   MENU:
     # - Save: menuItem(p="{}", l='Save', c='from util import arSave; reload(arSave); arSave.main()')
     # - Load: menuItem(p="{}", l='Load', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
@@ -51,10 +53,21 @@ MAYA:
 
     - break: menuItem(p="{}", d=True)
 
-    # - Report:  menuItem(p="{}", l='Report', c='from utils import arReporter; reload(arReporter); arReporter.main()')
     - Report: menuItem(p="{}", l='Report', c='import libFunc; libFunc.get_help("issues")')
     - Help:   menuItem(p="{}", l='Help', c='import libFunc; libFunc.get_help()')
 
+
+  # SPECIFIC settings
+  SETTINGS:
+    FPS:
+      24: film
+      25: pal
+      30: ntsc
+      48: show
+      50: palf
+      60: ntscf
+
+    unit: cm
 
 #************************
 # NUKE
@@ -65,6 +78,7 @@ NUKE:
   start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
   path: !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
+
 
   ENV:
     PYTHONPATH:
@@ -86,6 +100,7 @@ NUKE:
 
     PATH: *NUKE_DIR
 
+
   MENU:
     # - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
     # - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
@@ -96,7 +111,6 @@ NUKE:
 
     - break:   addSeparator()
 
-    # - Report:  "addCommand('Report', 'import menu; report()', 'ctrl+alt+r', 'reporter.ico')"
     - Report:  addCommand('Report', 'import libFunc; libFunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
     - Help:    addCommand('Help', 'import libFunc; libFunc.get_help()', 'ctrl+alt+h', 'help.ico')
 
@@ -116,6 +130,7 @@ HOUDINI:
 
   renderer:
   renderer_path:
+
 
   ENV:
     PYTHONPATH:
