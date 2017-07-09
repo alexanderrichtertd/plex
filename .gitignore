@@ -3,11 +3,11 @@ img/img_rc.py
 
 data/test.py
 
-data/exe/win_houdini.bat
-data/exe/debug_win_houdini.bat
-data/exe/debug_win_maya.bat
-data/exe/debug_win_nuke.bat
-data/exe/debug_win_arDesktop.bat
+exe/win_houdini.bat
+exe/debug_win_houdini.bat
+exe/debug_win_maya.bat
+exe/debug_win_nuke.bat
+exe/debug_win_arDesktop.bat
 
 data/project/default/history
 data/project/default/hints.yml
@@ -33,8 +33,13 @@ lib/utils/arSmartLoader.py
 lib/utils/arUtil.py
 
 software/maya/plugins/*
-software/maya/scripts/*
-software/maya/shelf/*
+software/maya/scripts/SHD
+software/maya/scripts/ANIM
+software/maya/scripts/LIGHT
+software/maya/scripts/LOOKDEV
+software/maya/scripts/RENDER
+software/maya/scripts/SHD
+software/maya/scripts/GEO
 
 software/nuke/plugins/*
 software/nuke/gizmos/extern

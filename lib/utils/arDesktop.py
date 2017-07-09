@@ -21,6 +21,7 @@ from PySide import QtGui, QtCore
 import libLog
 import libData
 import libFunc
+import libFileFolder
 from tank import Tank
 from software import Software
 
@@ -113,11 +114,10 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        print os.path.normpath(project_data['PATH']['user'])
-        webbrowser.open(os.path.normpath(project_data['PATH']['user']))
+        libFileFolder.open_folder(project_data['PATH']['user'] + '/' + os.getenv('username'))
 
     def press_btnOpenProjectPath(self):
-        webbrowser.open(os.path.normpath(project_data['path']))
+        libFileFolder.open_folder(project_data['path'])
     #------------------------------
     def press_btnProject(self):
         import arProject
@@ -134,10 +134,10 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
     #------------------------------
     def press_btnOpenProjectLog(self):
-        webbrowser.open(os.path.normpath(libData.get_env('DATA_PROJECT_PATH')))
+        libFileFolder.open_folder(libData.get_env('DATA_PROJECT_PATH'))
 
     def press_btnOpenLocalLog(self):
-        webbrowser.open(os.path.normpath(libData.get_env('DATA_USER_PATH')))
+        libFileFolder.open_folder(libData.get_env('DATA_USER_PATH'))
 
     def press_btnWriteReminder(self):
         from utilities import arNotificator
@@ -150,7 +150,6 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         libFunc.get_help(TITLE)
     #------------------------------
     def press_closeStartup(self):
-        LOG.debug('closeStartup')
         self.parent.instance().quit()
 
 
