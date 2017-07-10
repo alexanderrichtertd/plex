@@ -36,7 +36,7 @@ def position_selected():
 	        cam_new.rotate.set(cam_origin.rotate.get())
 	        cam_new.scale.set(cam_origin.scale.get())
 	else:
-	    LOG.warning("FAIL : Need at least 2 selections")
+	    LOG.warning("FAIL : Need at least 2 selections to set everything on the first selection position.")
 
 
 #************************

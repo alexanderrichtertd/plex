@@ -88,8 +88,7 @@ class Software(Singleton):
 
     def __call__(self):
         LOG.info('SOFTWARE: {} {} - {}\n\
-                  ENV: {}'.format(self._software, self._version, self._path,
-                                  self._env))
+                  ENV: {}'.format(self._software, self._version, self._path, self._env))
 
 
     #************************
@@ -143,12 +142,10 @@ class Software(Singleton):
                         import maya.cmds as cmds
                         cmd = ('cmds.{}'.format(item)).format(menu_node)
                         eval(cmd)
-                    elif self._software == 'nuke':
-                        eval('menu_node.{}'.format(item))
-                    else:
-                        LOG.debug('CANT find software: {}'.format(software))
+                    elif self._software == 'nuke': eval('menu_node.{}'.format(item))
+                    else: LOG.debug('CANT find software: {}'.format(software))
         except:
-              LOG.error('DATA Menu couldnt be created', exc_info=True)
+              LOG.error('SOFTWARE Menu couldnt be created', exc_info=True)
 
 
     def print_header(self):
@@ -187,6 +184,7 @@ class Software(Singleton):
                 print('  {} ON  - {}'.format(chr(254), key))
 
         print('') # ********************
+
 
     def print_checked_header(self, text, content, func):
         try:

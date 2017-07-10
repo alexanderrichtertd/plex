@@ -35,7 +35,7 @@ def create_folder(path):
         try:
             os.makedirs(path)
         except:
-            LOG.info('CANT create folder: {}'.format(path))
+            LOG.warning('CANT create folder: {}'.format(path))
 
 # @BRIEF  opens folder even if file is given
 def open_folder(path):
@@ -44,7 +44,7 @@ def open_folder(path):
             path = os.path.dirname(path)
         webbrowser.open(path)
     else:
-        LOG.info('UNVALID path: {}'.format(path))
+        LOG.warning('UNVALID path: {}'.format(path))
     return path
 
 

@@ -6,6 +6,7 @@
 # author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 
+
 #************************
 # MAYA
 MAYA:
@@ -43,15 +44,22 @@ MAYA:
 
 
   MENU:
+
+    - Plex:
+        open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import libFileFolder; libFileFolder.open_folder(cmds.file(q=True, sceneName=True))')
+        open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import libFileFolder;import libData; libFileFolder.open_folder(libData.get_data("project")["path"])')
+
+    - break:  menuItem(p="{}", d=True)
+
     # - Save: menuItem(p="{}", l='Save', c='from util import arSave; reload(arSave); arSave.main()')
     # - Load: menuItem(p="{}", l='Load', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
 
-    # - break: menuItem(p="{}", d=True)
+    # - break:  menuItem(p="{}", d=True)
 
-    # - Util:
-    #     position_selected: menuItem(p="{}", l='Position Selected', c='import maya_utils; maya_utils.position_selected()')
+    - Utils:
+        position_selected: menuItem(p="{}", l='Position to First Selection', c='import maya_utils; maya_utils.position_selected()')
 
-    - break: menuItem(p="{}", d=True)
+    - break:  menuItem(p="{}", d=True)
 
     - Report: menuItem(p="{}", l='Report', c='import libFunc; libFunc.get_help("issues")')
     - Help:   menuItem(p="{}", l='Help', c='import libFunc; libFunc.get_help()')
@@ -73,7 +81,7 @@ MAYA:
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
-  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v2]
+  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]
 
   start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
@@ -102,6 +110,12 @@ NUKE:
 
 
   MENU:
+    - Plex:
+        open_scene_folder: addCommand('Open Scene Folder', 'import libFileFolder; libFileFolder.open_folder(nuke.root().knob("name").value())')
+        open_project_folder: addCommand('Open Project Folder', 'import libFileFolder;import libData; libFileFolder.open_folder(libData.get_data("project")["path"])')
+
+    - break:   addSeparator()
+
     # - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
     # - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
 
@@ -114,10 +128,6 @@ NUKE:
     - Report:  addCommand('Report', 'import libFunc; libFunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
     - Help:    addCommand('Help', 'import libFunc; libFunc.get_help()', 'ctrl+alt+h', 'help.ico')
 
-    - break:   addSeparator()
-
-    #- Others:
-    #    Sub:   addCommand('Script', '')
 
 
 #************************
