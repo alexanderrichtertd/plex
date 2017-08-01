@@ -1,9 +1,7 @@
-#*************************************************************
-# CONTENT       create, search etc in/for file and folders
 #*********************************************************************
 # content   = create, search etc in/for file and folders
-# version   = 0.0.1
-# date      = 2017-01-01
+# version   = 0.1.0
+# date      = 2017-07-30
 #
 # license   = MIT
 # copyright = Copyright 2017 Animationsinstitut
@@ -32,16 +30,14 @@ def create_folder(path):
     if len(path.split('.')) > 1:
         path = os.path.dirname(path)
     if not os.path.exists(path):
-        try:
-            os.makedirs(path)
-        except:
-            LOG.warning('CANT create folder: {}'.format(path))
+        try:    os.makedirs(path)
+        except: LOG.warning('CANT create folder: {}'.format(path))
 
 # @BRIEF  opens folder even if file is given
 def open_folder(path):
+    path = os.path.normpath(path)
     if os.path.exists(path):
-        if len(path.split('.')) > 1:
-            path = os.path.dirname(path)
+        if len(path.split('.')) > 1: path = os.path.dirname(path)
         webbrowser.open(path)
     else:
         LOG.warning('UNVALID path: {}'.format(path))
@@ -75,12 +71,13 @@ def get_file_list(path, file_type='*', extension=False, exclude='*', add_path = 
 
 ##
 # @BRIEF  GET ALL subfolders in the path
-def get_deep_folder_list(path,  add_path = False):
-    if add_path:
-        getFile = map(lambda x: x[0], os.walk(path))
-    else:
-        getFile = map(lambda x: os.path.basename(x[0]), os.walk(path))
-    getFile.pop(0)
+def get_deep_folder_list(path, add_path=False):
+    if add_path: getFile = map(lambda x: x[0], os.walk(path))
+    else:        getFile = map(lambda x: os.path.basename(x[0]), os.walk(path))
+
+    try:    getFile.pop(0)
+    except: LOG.error('CANT pop file. Path: {}'.format(path), exc_info=True)
+
     return getFile
 
 
@@ -89,8 +86,6 @@ def get_deep_folder_list(path,  add_path = False):
 def rm_tmp_img():
     tmpImgPath = DATA.PATH_EXTRA['img_tmp']  #temp user place (os independent)
     if os.path.exists(tmpImgPath):
-        try:
-            os.remove(tmpImgPath)
-        except:
-            LOG.error('FAIL : cant delete tmpFile : ' + tmpImgPath)
+        try:    os.remove(tmpImgPath)
+        except: LOG.error('FAIL : cant delete tmpFile : ' + tmpImgPath, exc_info=True)
     return tmpImgPath

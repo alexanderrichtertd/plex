@@ -114,7 +114,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        libFileFolder.open_folder(project_data['PATH']['user'] + '/' + os.getenv('username'))
+        libFileFolder.open_folder(project_data['PROJECT_PATH']['user'] + '/' + os.getenv('username'))
 
     def press_btnOpenProjectPath(self):
         libFileFolder.open_folder(project_data['path'])
