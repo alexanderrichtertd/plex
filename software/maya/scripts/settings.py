@@ -26,7 +26,7 @@ LOG   = libLog.init(script=TITLE)
 
 all_data      = Tank().data
 project_data  = all_data['project']
-software_data = all_data['software']
+software_data = all_data['software'][Tank().software.software]
 
 
 #*************************

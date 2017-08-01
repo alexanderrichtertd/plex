@@ -37,7 +37,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     def __init__(self, parent=None):
         Tank().init_os()
         QtGui.QSystemTrayIcon.__init__(self, parent)
-        #self.activated.connect(self.showMainWidget)
+        # self.activated.connect(self.showMainWidget)
         self.setIcon(QtGui.QIcon(libData.get_img_path('software/default')))
 
         self.user   = Tank().user
@@ -160,6 +160,6 @@ def main():
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
     trayIcon.setToolTip(trayIcon.config_data['project']['name'] + ' [right click]')
-    trayIcon.showMessage(trayIcon.config_data['project']['name'], 'Rick Click on Icon for options', QtGui.QSystemTrayIcon.Information , 20000) # project name
+    trayIcon.showMessage(trayIcon.config_data['project']['name'], 'Rick Click on Icon for options', QtGui.QSystemTrayIcon.Information , 20000)
 
     app.exec_()

@@ -17,11 +17,10 @@ data/user/arichter
 
 lib/ideas
 lib/libSnapshot.py
-lib/classes/contect.py
+lib/classes/context.py
 lib/classes/renderer.py
 lib/classes/notification.py
 lib/classes/report.py
-lib/classes/subclass.py
 lib/utils/ui
 lib/utils/ui/_history
 lib/utils/arNotificator.py

@@ -11,7 +11,7 @@ Gizmo {
  addUserKnob {26 banner l @writeBanner52.png t "<b><font size='4' color='#dc520f'> arWRITE</font></b><font size='2' align='right'><br> pipeline write node</font>" T "<b><font size='4' color='#dc520f'> arWRITE</font></b><font size='2' align='right'><br> pipeline write node</font>"}
  addUserKnob {26 ""}
  addUserKnob {2 rootPath l INVISIBLE +INVISIBLE}
- rootPath C:/Users/arichter/Desktop/RENDER/test/exr/test.%04d.exr
+ rootPath D://RENDER/new/exr/new.%04d.exr
  addUserKnob {4 status l Status M {" " "plate " preViz postViz preComp postComp comp final "" "" ""}}
  addUserKnob {26 space4 l "" -STARTLINE T " |  "}
  addUserKnob {6 chbPublish l PUBLISH t "Publish for EDIT (overwrite old publish)" -STARTLINE}
@@ -20,20 +20,20 @@ Gizmo {
  addUserKnob {6 chbExr l " " -STARTLINE}
  chbExr true
  addUserKnob {2 exrPath l "" -STARTLINE}
- exrPath C:/Users/arichter/Desktop/RENDER/test/exr/test.%04d.exr
+ exrPath D://RENDER/new/exr/new.%04d.exr
  addUserKnob {22 exrFolder l @btnFolder48c.png t "open render folder" -STARTLINE T "write_node.openFolder(nuke.thisNode()\[\"exrPath\"].getValue())"}
  addUserKnob {22 exrRv l @rv.png t "open rendering in rv player" -STARTLINE T "write_node.openRV(nuke.thisNode()\[\"exrPath\"].getValue())"}
  addUserKnob {26 lblJpg l "JPG  " T ""}
  addUserKnob {6 chbJpg l " " -STARTLINE}
  chbJpg true
  addUserKnob {2 jpgPath l "" -STARTLINE}
- jpgPath C:/Users/arichter/Desktop/RENDER/test/jpg/test.%04d.jpg
+ jpgPath D://RENDER/new/jpg/new.%04d.jpg
  addUserKnob {22 jpgFolder l @btnFolder48c.png t "open render folder" -STARTLINE T "write_node.openFolder(nuke.thisNode()\[\"jpgPath\"].getValue())"}
  addUserKnob {22 jpgRv l @rv.png t "open rendering in rv player" -STARTLINE T "write_node.openRV(nuke.thisNode()\[\"jpgPath\"].getValue())"}
  addUserKnob {26 lblTif l "TIF  " T ""}
  addUserKnob {6 chbTif l " " -STARTLINE}
  addUserKnob {2 tifPath l "" -STARTLINE +DISABLED}
- tifPath C:/Users/arichter/Desktop/RENDER/test/tif/test.%04d.tif
+ tifPath D://RENDER/new/tif/new.%04d.tif
  addUserKnob {22 tifFolder l @btnFolder48c.png t "open render folder" -STARTLINE +DISABLED T "write_node.openFolder(nuke.thisNode()\[\"tifPath\"].getValue())"}
  addUserKnob {22 tifRv l @rv.png t "open rendering in rv player" -STARTLINE +DISABLED T "write_node.openRV(nuke.thisNode()\[\"tifPath\"].getValue())"}
  addUserKnob {1 exrPathComment l INVISIBLE +INVISIBLE}
@@ -44,17 +44,17 @@ Gizmo {
  tifPathComment P:/project/shots/s0010/comp/s0010_COMP_v001_ar.%04d.tif
  addUserKnob {26 ""}
  addUserKnob {3 resolutionX l Resolution +DISABLED}
- resolutionX 877.7142857
+ resolutionX 1920
  addUserKnob {3 resolutionY l "x " -STARTLINE +DISABLED}
- resolutionY 872
+ resolutionY 1080
  addUserKnob {26 space7 l "" -STARTLINE T " |  "}
  addUserKnob {4 letterbox l "Letterbox " -STARTLINE M {1:1 4:3 14:9 16:9 21:9 custom "" "" "" "" "" "" ""}}
- letterbox 21:9
+ letterbox 16:9
  addUserKnob {6 reformat l Reformat -STARTLINE}
  addUserKnob {3 frameStart l "Frame Range" +DISABLED}
- frameStart 1
+ frameStart 1040
  addUserKnob {3 frameEnd l "- " -STARTLINE +DISABLED}
- frameEnd 104
+ frameEnd 1140
  addUserKnob {26 space14 l "" -STARTLINE T "  |  "}
  addUserKnob {6 customRange l "custom range" -STARTLINE}
  addUserKnob {26 ""}
@@ -113,7 +113,7 @@ Gizmo {
   xpos -42
   ypos -180
  }
-set N2ac99c00 [stack 0]
+set Naa34f000 [stack 0]
  Dot {
   name Dot4
   xpos -184
@@ -184,7 +184,7 @@ set N2ac99c00 [stack 0]
   font_height_toolbar 100
   opacity {{text_master.opacity}}
   message "\[date %d.%m.%Y]  \[date %H:%M]"
-  old_message {{48 49 46 48 55 46 50 48 49 55 32 32 49 50 58 49 55}
+  old_message {{48 49 46 48 56 46 50 48 49 55 32 32 49 50 58 51 57}
     }
   old_expression_markers {{0 9 12 16}
     }
@@ -231,7 +231,7 @@ set N2ac99c00 [stack 0]
   xjustify right
   yjustify top
   Transform 1
-  box {{"\[value input.width] / 2 - 100" x1 768.3573967 x301 816} -72 {"\[value input.width] / 2 + 100" x301 1106} -34}
+  box {{"\[value input.width] / 2 - 200" x1 768.3573967 x301 816 x1040 860} -72 {"\[value input.width] / 2 + 150" x301 1106 x1040 1229} -34}
   scale {1 0.8600000143}
   center {1024 576}
   name text_frames
@@ -241,7 +241,7 @@ set N2ac99c00 [stack 0]
  }
  Text {
   opacity {{text_master.opacity}}
-  message "\[value parent.resolutionX] x \[value parent.resolutionY]\n"
+  message "\[format \"%.f\" \[value parent.resolutionX]] x \[format \"%.f\" \[value parent.resolutionY]]\n"
   font C:/Windows/Fonts/impact.ttf
   size {{text_master.size}}
   xjustify right
@@ -260,7 +260,7 @@ set N2ac99c00 [stack 0]
   xpos -185
   ypos 110
  }
-push $N2ac99c00
+push $Naa34f000
  Switch {
   inputs 2
   which {{"\[value parent.meta]"}}
@@ -273,14 +273,14 @@ push $N2ac99c00
   xpos -8
   ypos 132
  }
-set N7024d000 [stack 0]
+set Nb5106400 [stack 0]
  Dot {
   name Dot7
   xpos 96
   ypos 250
  }
-set N7024cc00 [stack 0]
-push $N7024d000
+set Nb5106000 [stack 0]
+push $Nb5106400
  Crop {
   box {{"(input.width - parent.resolutionX) / 2" x113 0 x122 0} {"(input.height - parent.resolutionY) / 2" x122 0} {"parent.resolutionX + (input.width - parent.resolutionX) / 2" x113 1920 x122 1920} {"input.height - (input.height - parent.resolutionY) / 2" x113 1080 x122 1080}}
   reformat {{parent.reformat x40 0}}
@@ -297,7 +297,7 @@ push $N7024d000
   xpos -42
   ypos 246
  }
-push $N7024cc00
+push $Nb5106000
  Switch {
   inputs 2
   which 1
@@ -305,7 +305,7 @@ push $N7024cc00
   xpos -42
   ypos 324
  }
-set Nbcd0a880 [stack 0]
+set Nb86c9680 [stack 0]
  Output {
   name Output1
   xpos -42
@@ -327,13 +327,13 @@ set Nbcd0a880 [stack 0]
   ypos -85
   disable {{curve x1 0 x57 0}}
  }
-push $Nbcd0a880
+push $Nb86c9680
  Dot {
   name Dot1
   xpos 269
   ypos 328
  }
-set Nffdc5400 [stack 0]
+set Nb86b8800 [stack 0]
  Write {
   file "\[value parent.jpgPath]"
   checkHashOnRead false
@@ -348,7 +348,7 @@ set Nffdc5400 [stack 0]
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $Nffdc5400
+push $Nb86b8800
  Write {
   channels rgba
   file "\[value parent.exrPath]"
@@ -363,7 +363,7 @@ push $Nffdc5400
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $Nffdc5400
+push $Nb86b8800
  Write {
   channels rgba
   file "\[value parent.tifPath]"
