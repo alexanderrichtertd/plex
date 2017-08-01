@@ -48,22 +48,22 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         menu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
 
         # ADMIN UI
-        if self.user.is_admin:
+        if True: # self.user.is_admin:
             adminMenu = QtGui.QMenu('Admin')
             adminMenu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
             menu.addMenu(adminMenu)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnLogProjekt48')), 'Project Data')
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProjectEdit48')), 'Project Data')
             QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenProjectLog)
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnLogLocal48')), 'User Data')
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('user/default.png')), 'User Data')
             QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenLocalLog)
 
             adminMenu.addSeparator()
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProject48')), 'Reminder')
-            QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnWriteReminder)
+            # menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProject48')), 'Reminder')
+            # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnWriteReminder)
 
-            menu.addSeparator()
+            # menu.addSeparator()
 
         menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('user/default')), self.user.name)
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnShowUserData)
@@ -114,7 +114,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        libFileFolder.open_folder(project_data['PROJECT_PATH']['user'] + '/' + os.getenv('username'))
+        libFileFolder.open_folder(project_data['PATH']['user'] + '/' + os.getenv('username'))
 
     def press_btnOpenProjectPath(self):
         libFileFolder.open_folder(project_data['path'])

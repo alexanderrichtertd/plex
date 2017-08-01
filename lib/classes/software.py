@@ -47,14 +47,14 @@ class Software(Singleton):
         LOG.debug('------------------------------ {}'.format(self._software))
 
         new_path = []
-        for each_path in os.environ['SOFTWARE_PATH'].split(';'):
+        for each_path in os.environ['SRC_SOFTWARE_PATH'].split(';'):
             if not each_path.endswith('software'): each_path = os.path.dirname(each_path)
             tmp_paths  = ('/').join([each_path, self._software])
             tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py', add_path=True)
             new_path.extend(tmp_folder)
 
         os.environ['SOFTWARE'] = self._software.upper()
-        os.environ['SOFTWARE_PATH'] = os.environ['SOFTWARE_PATH'].replace('software', 'software/' + self._software)
+        os.environ['SOFTWARE_PATH'] = os.environ['SRC_SOFTWARE_PATH'].replace('software', 'software/' + self._software)
         os.environ['SOFTWARE_SUB_PATH'] = (';').join(new_path)
 
         LOG.debug("SOFTWARE_PATH: {}".format(os.environ['SOFTWARE_PATH']))

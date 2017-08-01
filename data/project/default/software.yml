@@ -10,7 +10,7 @@
 #************************
 # MAYA
 MAYA:
-  version: &MAYA_VERSION 2015
+  version: &MAYA_VERSION 2016
   path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
   # start command

@@ -84,6 +84,7 @@ class Setup(object):
             self.add_env('UTILS_PATH',        (';').join(self.pipeline_env['UTILS_PATH']))
             self.add_env('CLASSES_PATH',      (';').join(self.pipeline_env['CLASSES_PATH']))
             self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
+            self.add_env('SRC_SOFTWARE_PATH', (';').join(self.pipeline_env['SOFTWARE_PATH']))
             self.add_env('DATA_PATH',         (';').join(self.pipeline_env['DATA_PATH']))
             self.add_env('DATA_PROJECT_PATH', (';').join(self.pipeline_env['DATA_PROJECT_PATH']))
         except: raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
