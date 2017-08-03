@@ -20,7 +20,7 @@ import maya.cmds as cmds
 import libLog
 from tank import Tank
 
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
+TITLE = 'userSetup' # os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 
