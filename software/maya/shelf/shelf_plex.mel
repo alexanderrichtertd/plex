@@ -12,25 +12,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Outliner"
+        -annotation "Outliner" 
         -enableBackground 0
-        -align "center"
-        -label "Outliner"
+        -align "center" 
+        -label "Outliner" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "shelf_outliner35.png"
-        -image1 "shelf_outliner35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "shelf_outliner35.png" 
+        -image1 "shelf_outliner35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "OutlinerWindow"
-        -sourceType "mel"
+        -command "OutlinerWindow" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -42,25 +42,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Hypershade"
+        -annotation "Hypershade" 
         -enableBackground 0
-        -align "center"
-        -label "Hypershade"
+        -align "center" 
+        -label "Hypershade" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "shelf_hypershade35.png"
-        -image1 "shelf_hypershade35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "shelf_hypershade35.png" 
+        -image1 "shelf_hypershade35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "HypershadeWindow"
-        -sourceType "mel"
+        -command "HypershadeWindow" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -72,25 +72,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Node Editor"
+        -annotation "Node Editor" 
         -enableBackground 0
-        -align "center"
-        -label "Node Editor"
+        -align "center" 
+        -label "Node Editor" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "shelf_nodeEditor35.png"
-        -image1 "shelf_nodeEditor35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "shelf_nodeEditor35.png" 
+        -image1 "shelf_nodeEditor35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "NodeEditorWindow"
-        -sourceType "mel"
+        -command "NodeEditorWindow" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -102,25 +102,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Edit animation curves"
+        -annotation "Edit animation curves" 
         -enableBackground 0
-        -align "center"
-        -label "Graph Editor"
+        -align "center" 
+        -label "Graph Editor" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.5
-        -image "shelf_graphEditor35.png"
-        -image1 "shelf_graphEditor35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "shelf_graphEditor35.png" 
+        -image1 "shelf_graphEditor35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "GraphEditor"
-        -sourceType "mel"
+        -command "GraphEditor" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -132,25 +132,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "-------------------"
+        -annotation "-------------------" 
         -enableBackground 0
-        -align "center"
-        -label "-------------------"
+        -align "center" 
+        -label "-------------------" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "concrete.png"
-        -image1 "concrete.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "concrete.png" 
+        -image1 "concrete.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "// Dont touch me, pervert!"
-        -sourceType "mel"
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -162,25 +162,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "ARNOLD: Low Render Settings"
+        -annotation "ARNOLD: Low Render Settings" 
         -enableBackground 0
-        -align "center"
-        -label "Low Render Settings"
+        -align "center" 
+        -label "Low Render Settings" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.5
-        -image "shelf_renderLow35.png"
-        -image1 "shelf_renderLow35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "shelf_renderLow35.png" 
+        -image1 "shelf_renderLow35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "setAttr \"defaultArnoldRenderOptions.AASamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseSamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossySamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GISssSamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeSamples\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.GITotalDepth\" 10;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossyDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIReflectionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeDepth\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.aovMode\" 0;\n"
-        -sourceType "mel"
+        -command "setAttr \"defaultArnoldRenderOptions.AASamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseSamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossySamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GISssSamples\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeSamples\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.GITotalDepth\" 10;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossyDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIReflectionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeDepth\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.aovMode\" 0;\n" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -192,25 +192,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "ARNOLD: High Render Settings"
+        -annotation "ARNOLD: High Render Settings" 
         -enableBackground 0
-        -align "center"
-        -label "High  Render Settings"
+        -align "center" 
+        -label "High  Render Settings" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.5
-        -image "shelf_renderHigh35.png"
-        -image1 "shelf_renderHigh35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "shelf_renderHigh35.png" 
+        -image1 "shelf_renderHigh35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "setAttr \"defaultArnoldRenderOptions.AASamples\" 4;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseSamples\" 3;\nsetAttr \"defaultArnoldRenderOptions.GIGlossySamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GISssSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeSamples\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.GITotalDepth\" 10;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossyDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIReflectionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeDepth\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.aovMode\" 0;"
-        -sourceType "mel"
+        -command "setAttr \"defaultArnoldRenderOptions.AASamples\" 4;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseSamples\" 3;\nsetAttr \"defaultArnoldRenderOptions.GIGlossySamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GISssSamples\" 1;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeSamples\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.GITotalDepth\" 10;\nsetAttr \"defaultArnoldRenderOptions.GIDiffuseDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIGlossyDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIReflectionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIRefractionDepth\" 2;\nsetAttr \"defaultArnoldRenderOptions.GIVolumeDepth\" 0;\n\nsetAttr \"defaultArnoldRenderOptions.aovMode\" 0;" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -222,25 +222,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "-------------------"
+        -annotation "-------------------" 
         -enableBackground 0
-        -align "center"
-        -label "-------------------"
+        -align "center" 
+        -label "-------------------" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "concrete.png"
-        -image1 "concrete.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "concrete.png" 
+        -image1 "concrete.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "// Dont touch me, pervert!"
-        -sourceType "mel"
+        -command "// Dont touch me, pervert!" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -252,25 +252,25 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Report Error and Suggestions"
+        -annotation "Report Error and Suggestions" 
         -enableBackground 0
-        -align "center"
-        -label "Report"
+        -align "center" 
+        -label "Report" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "shelf_report35.png"
-        -image1 "shelf_report35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "shelf_report35.png" 
+        -image1 "shelf_report35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "from utils import arReporter;reload(arReporter);arReporter.start()"
-        -sourceType "python"
+        -command "from utils import arReporter;reload(arReporter);arReporter.start()" 
+        -sourceType "python" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -282,27 +282,27 @@ global proc shelf_plex () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Open Wiki in your browser"
+        -annotation "Open Wiki in your browser" 
         -enableBackground 0
-        -align "center"
-        -label "Help"
+        -align "center" 
+        -label "Help" 
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont"
-        -overlayLabelColor 0.8 0.8 0.8
-        -overlayLabelBackColor 0 0 0 0.2
-        -image "shelf_help35.png"
-        -image1 "shelf_help35.png"
-        -style "iconOnly"
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "shelf_help35.png" 
+        -image1 "shelf_help35.png" 
+        -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "import libFunc;libFunc.get_help(\"shelf\")"
-        -sourceType "python"
+        -command "import libFunc;libFunc.get_help(\"shelf\")" 
+        -sourceType "python" 
         -commandRepeatable 1
         -flat 1
     ;
 
-}
+} 
