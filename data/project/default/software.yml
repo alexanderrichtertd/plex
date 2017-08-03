@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = software data
-# version   = 0.0.1
-# date      = 2017-01-01
+# version   = 0.1.0
+# date      = 2017-08-01
 
 # author    = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
@@ -35,8 +35,10 @@ MAYA:
     MAYA_SHELF_PATH:
       - !env_first [SOFTWARE_PATH, /shelf]
 
-    # SPLASHSCREEN
-    XBMLANGPATH: !env [IMG_PATH, /software/maya]
+    # SPLASHSCREEN & IMG PATH
+    XBMLANGPATH:
+      - !env [IMG_PATH, /software/maya]
+      - !env [IMG_PATH, /software/maya/shelf]
 
     # DISABLE close reports
     MAYA_DISABLE_CIP: 1
@@ -76,6 +78,7 @@ MAYA:
       60: ntscf
 
     unit: cm
+
 
 #************************
 # NUKE

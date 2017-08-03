@@ -45,6 +45,7 @@ software/nuke/gizmos/extern
 
 software/houdini/plugins/*
 
+*.bak
 *.pyc
 *.log
 *.qrc

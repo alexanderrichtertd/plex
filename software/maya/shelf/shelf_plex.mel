@@ -25,8 +25,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_outliner35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_outliner35.png" 
+        -image "shelf_outliner35.png" 
+        -image1 "shelf_outliner35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -56,8 +56,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_hypershade35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_hypershade35.png" 
+        -image "shelf_hypershade35.png" 
+        -image1 "shelf_hypershade35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -87,8 +87,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_nodeEditor35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_nodeEditor35.png" 
+        -image "shelf_nodeEditor35.png" 
+        -image1 "shelf_nodeEditor35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -118,8 +118,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_graphEditor35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_graphEditor35.png" 
+        -image "shelf_graphEditor35.png" 
+        -image1 "shelf_graphEditor35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -149,8 +149,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/concrete.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/concrete.png" 
+        -image "concrete.png" 
+        -image1 "concrete.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -180,8 +180,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_renderLow35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_renderLow35.png" 
+        -image "shelf_renderLow35.png" 
+        -image1 "shelf_renderLow35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -211,8 +211,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_renderHigh35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_renderHigh35.png" 
+        -image "shelf_renderHigh35.png" 
+        -image1 "shelf_renderHigh35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -242,8 +242,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/concrete.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/concrete.png" 
+        -image "concrete.png" 
+        -image1 "concrete.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -273,8 +273,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_report35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_report35.png" 
+        -image "shelf_report35.png" 
+        -image1 "shelf_report35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -304,8 +304,8 @@ global proc shelf_plex () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.2 
-        -image "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_help35.png" 
-        -image1 "//sasquatch/studentsmaterials/Programme/plex/img/software/maya/shelf/shelf_help35.png" 
+        -image "shelf_help35.png" 
+        -image1 "shelf_help35.png" 
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
