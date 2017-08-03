@@ -3,7 +3,9 @@
 :: Hide Commands
 @echo off
 
+call %~dp0\win_env.bat
+
 set "newDir=%~dp0\..\data"
-python %newDir%\pipeline.py %1 --script desktop
+start "" pythonw %newDir%\pipeline.py %1 --script desktop
 
 exit
