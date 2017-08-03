@@ -20,7 +20,7 @@ import maya.cmds as cmds
 import libLog
 from tank import Tank
 
-TITLE = 'userSetup' # os.path.splitext(os.path.basename(__file__))[0]
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 
@@ -37,8 +37,6 @@ except: print "  OFF - menu"
 print "  ON  - shelf"
 
 print ""
-
-
 
 
 #*************************
