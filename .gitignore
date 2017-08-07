@@ -32,6 +32,7 @@ lib/utils/arSmartLoader.py
 lib/utils/arUtil.py
 
 software/maya/plugins/*
+
 software/maya/scripts/SHD
 software/maya/scripts/ANIM
 software/maya/scripts/LIGHT
@@ -44,6 +45,8 @@ software/nuke/plugins/*
 software/nuke/gizmos/extern
 
 software/houdini/plugins/*
+
+!__init__.py
 
 *.bak
 *.pyc

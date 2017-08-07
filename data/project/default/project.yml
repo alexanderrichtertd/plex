@@ -1,9 +1,9 @@
 #*********************************************************************
-# content   = project data
-# version   = 0.0.1
-# date      = 2017-01-01
+# content = project data
+# version = 0.1.0
+# date    = 2017-08-01
 
-# author    = Alexander Richter <pipeline@richteralexander.com>
+# author  = Alexander Richter <pipeline@richteralexander.com>
 #*********************************************************************
 
 name: Plex
@@ -11,10 +11,10 @@ name: Plex
 path: &PROJECT D:/project
 
 resolution:
-  - 2048
-  - 872
+  - 1920
+  - 1080
 
-fps: 25
+fps: 24
 
 
 PATH:
@@ -59,7 +59,7 @@ HELP:
   arDesktop:  !join [*HELP, /arDesktop]
   arNotificator: !join [*HELP, /arNotificator]
 
-  shelf: !join [*HELP, /shelf]
+  shelf:  !join [*HELP, /shelf]
   issues: https://github.com/richteralexander/plex/issues
 
 

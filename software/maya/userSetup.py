@@ -39,8 +39,6 @@ print "  ON  - shelf"
 print ""
 
 
-
-
 #*************************
  # MENU
 def load_menu():
