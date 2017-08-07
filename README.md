@@ -1,6 +1,5 @@
 > ### In Development   
-> A lot of features are still in production. Check out the documentary and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**    
-> [**Releases**](https://github.com/richteralexander/plex/releases): Every sunday will be a patch day with new additions and fixes.   
+> Still in devlopment. Check out the documentary, [**releases**](https://github.com/richteralexander/plex/releases) and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**    
 >
 > [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)     
 
@@ -74,11 +73,3 @@ The main idea is to have an overall system which lays the **foundation for the m
 
 ## **License**
 Plex is available under the **MIT License**. You can use it for commercial or non-commercial projects. Please include the attributes and a credit in your docs.
-
-
-## **"Make it better"-Promise** 
-Everyone should have a great time working on their project and focusing on creativity.    
-Or help me to make this one a fine piece of software.   
-I offer an introduction or support to make additions to the software.  
-- **[contributor](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**: 2h personal or skype
-- **good friend** (+ beer): 4h personal or skype
