@@ -21,7 +21,7 @@ lib/classes/context.py
 lib/classes/renderer.py
 lib/classes/notification.py
 lib/classes/report.py
-lib/utils/ui
+lib/utils/ui/arSave.ui
 lib/utils/ui/_history
 lib/utils/arNotificator.py
 lib/utils/arProject.py
@@ -46,7 +46,6 @@ software/nuke/gizmos/extern
 software/houdini/plugins/*
 
 !__init__.py
-!lib/utils/ui/arUtil.ui
 
 *.bak
 *.pyc
