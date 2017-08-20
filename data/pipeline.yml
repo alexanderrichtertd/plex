@@ -30,4 +30,4 @@ user_data: True
 
 PIPELINE:
   name:    Plex
-  version: 0.0.4
+  version: 1.0.0

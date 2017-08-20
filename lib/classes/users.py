@@ -85,7 +85,7 @@ class User(Singleton):
 
     @property
     def user_path(self):
-        return "user_path"
+        return libData.get_data('project')['PATH']['user'] + '/' + self._id
 
     @property
     def local_path(self):

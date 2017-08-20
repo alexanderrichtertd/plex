@@ -1,9 +1,8 @@
 > ### In Development   
-> Still in devlopment. Check out the documentary, [**releases**](https://github.com/richteralexander/plex/releases) and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**    
->
+> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases) and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**     
 > [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)     
 
-![plex](https://cloud.githubusercontent.com/assets/9514022/25578231/d5be91f6-2e6c-11e7-9a4b-2de3772e0fc0.png)
+![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
 
 ## **Introduction**
 **Plex** is an **Animation, VFX and Games pipeline** managing important workflows during production.
@@ -15,11 +14,11 @@ The basic idea is to handle the file and folder structure work, setups basic rul
 
 The main idea is to have an overall system which lays the **foundation for the modular scripts** that are plugged into the pipeline and add to its functionality and overall awesomeness.    
 
-![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
+[![plex_00_introduction](https://user-images.githubusercontent.com/9514022/29458175-179be8ba-841e-11e7-8be7-a83b0a37b28e.PNG)](https://youtu.be/gqRailvSmtw)
 
 ## Environment [in development]
 - [x] **OS**: Windows (| Linux | Mac)
-- [x] **Software**: Nuke 9+ | Maya 2015+ | Houdini 15+
+- [x] **Software**: Nuke 9+ | Maya 2015+ | Houdini 15+ | 3ds Max 2015+
 - [x] **Renderer**: Arnold | RenderMan | Mantra | V-Ray
 
 ## Project Features
@@ -31,6 +30,8 @@ The main idea is to have an overall system which lays the **foundation for the m
 - [x] user-pipeline integration
 - [x] SSTP (simple | smart | transparent | performant)
 
+![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
+
 
 ## Pipeline Features
 - [x] **Layered Pipeline**
@@ -41,8 +42,8 @@ The main idea is to have an overall system which lays the **foundation for the m
  - personal (user)
 - [x] **Basic scripts**
  - save (+ publish) | load | create | render
- - import | export
  - get, set and handle data | img | scripts
+ - arUtils (user, report, help, accept, comment, color code)
 - [x] **Workflows and Charts**
  - naming conventions
  - software pipeline
@@ -55,12 +56,7 @@ The main idea is to have an overall system which lays the **foundation for the m
  - additional libraries
 - [x] **Feedback & Debug** (+ advanced logging) 
  - inform user about processes
- - debug like a king \*bow\*
-- [x] **Parent Scripts**
- - header (script info, user, report & help)
- - footer (accept, comment, color code)
- - menu (navigation)
- - info (shot, asset)
+ - debug like a king \*bow\*   
 
 
 ## **Projects [realized with]**

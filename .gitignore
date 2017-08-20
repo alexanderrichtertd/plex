@@ -29,7 +29,6 @@ lib/utils/arReporter.py
 lib/utils/arSave.py
 lib/utils/arSaveAs.py
 lib/utils/arSmartLoader.py
-lib/utils/arUtil.py
 
 software/maya/plugins/*
 
@@ -47,6 +46,7 @@ software/nuke/gizmos/extern
 software/houdini/plugins/*
 
 !__init__.py
+!lib/utils/ui/arUtil.ui
 
 *.bak
 *.pyc

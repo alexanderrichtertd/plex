@@ -184,4 +184,3 @@ def get_env(var):
         return os.environ[var].split(';')[0]
     LOG.warning('ENV doesnt exist: {}'.format(var))
     return ''
-

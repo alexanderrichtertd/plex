@@ -84,7 +84,7 @@ def get_deep_folder_list(path, add_path=False):
 #************************
 # TEMP IMAGE
 def rm_tmp_img():
-    tmpImgPath = DATA.PATH_EXTRA['img_tmp']  #temp user place (os independent)
+    tmpImgPath = 'C:/temp/tmp.png'  #temp user place (os independent)
     if os.path.exists(tmpImgPath):
         try:    os.remove(tmpImgPath)
         except: LOG.error('FAIL : cant delete tmpFile : ' + tmpImgPath, exc_info=True)

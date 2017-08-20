@@ -30,8 +30,8 @@ Tank().init_software()
 
 print "MENU"
 try:
-	cmds.evalDeferred("load_menu()")
-	print "  ON  - menu"
+    cmds.evalDeferred("load_menu()")
+    print "  ON  - menu"
 except: print "  OFF - menu"
 
 print "  ON  - shelf"
@@ -42,16 +42,15 @@ print ""
 #*************************
  # MENU
 def load_menu():
-  delete_menu()
+    delete_menu()
 
-  menu = cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), hm = 1, p = 'MayaWindow',
-                   l = os.getenv('PROJECT_NAME').replace(' ',''), to = 1, )
+    menu = cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), hm = 1, p = 'MayaWindow',
+                    l = os.getenv('PROJECT_NAME').replace(' ',''), to = 1, )
 
-  for menu_item in Tank().data['software']['MAYA']['MENU']:
-        Tank().software.add_menu(menu, menu_item)
+    Tank().software.add_menu(menu)
 
 
 def delete_menu():
-  if cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), query = True, exists = True):
+    if cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), query = True, exists = True):
         cmds.deleteUI(os.getenv('PROJECT_NAME').replace(' ',''), menu = True)
 

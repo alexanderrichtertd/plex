@@ -124,31 +124,61 @@ class Software(Singleton):
 
     #************************
     # STATIC
-    def add_menu(self, menu_node, new_command):
-        try:
-            for keys, item in new_command.iteritems():
-                if isinstance(item, dict):
-                    if self._software == 'maya':
-                        import maya.cmds as cmds
-                        sub_menu = cmds.menuItem(p = menu_node, l = keys, sm = True)
-                    elif self._software == 'nuke':
-                        sub_menu = menu_node.addMenu(keys)
-                    else:
-                        LOG.debug('CANT find software: {}'.format(software))
-                        continue
-                    self.add_menu(sub_menu, item)
-                else:
-                    if self._software == 'maya':
-                        import maya.cmds as cmds
-                        cmd = ('cmds.{}'.format(item)).format(menu_node)
-                        eval(cmd)
-                    elif self._software == 'nuke': eval('menu_node.{}'.format(item))
-                    else: LOG.debug('CANT find software: {}'.format(software))
-        except:
-              LOG.error('SOFTWARE Menu couldnt be created', exc_info=True)
+    def add_menu(self, menu_node):
+        self.add_sub_menu = []
+
+        for menu_item in self._software_data['MENU']:
+            try:    self.add_menu_item(menu_node, menu_item)
+            except: LOG.error('SOFTWARE Menu couldnt be created', exc_info=True)
+
+        if self._software == 'max':
+            import MaxPlus
+            main_menu = menu_node.Create(MaxPlus.MenuManager.GetMainMenu())
+            for sub in self.add_sub_menu: sub.Create(main_menu, 0)
+
+    def add_menu_item(self, menu_node, new_command):
+        if   self._software == 'maya':    import maya.cmds as cmds
+        elif self._software == 'max':     import MaxPlus
+        elif self._software == 'houdini': pass
+        elif self._software == 'nuke':    pass
+        else:
+            LOG.debug('CANT find software: {}'.format(software))
+            return
+
+        sub_menu = ''
+
+        for keys, item in new_command.iteritems():
+            if isinstance(item, dict):
+                if self._software == 'maya':
+                    sub_menu = cmds.menuItem(p=menu_node, l=keys, sm=True)
+                elif self._software == 'max':
+                    LOG.debug('menu_node.{}'.format("nop"))
+                    MaxPlus.MenuManager.UnregisterMenu(unicode(keys))
+                    sub_menu = MaxPlus.MenuBuilder(keys)
+                    self.add_sub_menu.append(sub_menu)
+                elif self._software == 'houdini':
+                    pass
+                elif self._software == 'nuke':
+                    sub_menu = menu_node.addMenu(keys)
+
+                # ADD sub_menu
+                if sub_menu: self.add_menu_item(sub_menu, item)
+
+            else:
+                if self._software == 'maya':
+                    eval('cmds.{}'.format(item).format(menu_node))
+                elif self._software == 'max':
+                    import max_menu
+                    eval('menu_node.{}'.format(item))
+                elif self._software == 'houdini':
+                    pass
+                elif self._software == 'nuke':
+                    eval('menu_node.{}'.format(item))
 
 
     def print_header(self):
+        if self._software == 'max': return
+
         space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1
 
         # project name

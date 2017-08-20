@@ -53,17 +53,12 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
             adminMenu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
             menu.addMenu(adminMenu)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProjectEdit48')), 'Project Data')
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProjectEdit48')), 'Open Project Data')
             QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenProjectLog)
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('user/default.png')), 'User Data')
+            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('user/default.png')), 'Open User Data')
             QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenLocalLog)
 
             adminMenu.addSeparator()
-
-            # menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProject48')), 'Reminder')
-            # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnWriteReminder)
-
-            # menu.addSeparator()
 
         menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('user/default')), self.user.name)
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnShowUserData)
@@ -72,11 +67,6 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnOpenProjectPath)
 
         menu.addSeparator()
-
-        # menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnProject48')), 'Settings')
-        # QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_btnProject)
-
-        # menu.addSeparator()
 
         subMenu = QtGui.QMenu('Software')
         subMenu.setStyleSheet(self.config_data['style']['arDesktop']['menu'])
@@ -104,7 +94,6 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         QtCore.QObject.connect(menuItem, QtCore.SIGNAL('triggered()'), self.press_closeStartup)
         self.setContextMenu(menu)
 
-        # startarNotificator()
 
     def startArNotificator(self):
         import arNotificator
@@ -131,7 +120,6 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
     def press_btnOpenHoudini(self):
         Software().start('houdini')
-
     #------------------------------
     def press_btnOpenProjectLog(self):
         libFileFolder.open_folder(libData.get_env('DATA_PROJECT_PATH'))

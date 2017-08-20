@@ -7,7 +7,7 @@
 #*********************************************************************
 
 
-#************************
+#*****************************************************************************************************************************
 # MAYA
 MAYA:
   version: &MAYA_VERSION 2016
@@ -80,7 +80,8 @@ MAYA:
     unit: cm
 
 
-#************************
+
+#*****************************************************************************************************************************
 # NUKE
 NUKE:
   version:      &NUKE_VERSION 10.5
@@ -95,7 +96,7 @@ NUKE:
     PYTHONPATH:
       - !env_first [SOFTWARE_PATH, /scripts]
       - !env_first [SOFTWARE_PATH, /plugins]
-      - !env_first [SOFTWARE_PATH, /shelf]
+      - !env_first [SOFTWARE_PATH, /gizmos]
 
     NUKE_PATH:
       - !env [PIPELINE_PATH]
@@ -114,7 +115,7 @@ NUKE:
 
   MENU:
     - Plex:
-        open_scene_folder: addCommand('Open Scene Folder', 'import libFileFolder; libFileFolder.open_folder(nuke.root().knob("name").value())')
+        open_scene_folder:   addCommand('Open Scene Folder', 'import libFileFolder; libFileFolder.open_folder(nuke.root().knob("name").value())')
         open_project_folder: addCommand('Open Project Folder', 'import libFileFolder;import libData; libFileFolder.open_folder(libData.get_data("project")["path"])')
 
     - break:   addSeparator()
@@ -133,7 +134,7 @@ NUKE:
 
 
 
-#************************
+#*****************************************************************************************************************************
 # HOUDINI
 HOUDINI:
   version: &HOUDINI_VERSION 16.0.633
@@ -147,12 +148,58 @@ HOUDINI:
 
   ENV:
     PYTHONPATH:
-      - *HOUDINI_PATH
+      - !env_first [SOFTWARE_PATH]
+      - !env_first [SOFTWARE_PATH, /scripts]
+      - !env_first [SOFTWARE_PATH, /plugins]
 
     HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
 
 
-#************************
+
+#*****************************************************************************************************************************
+# 3DsMax
+MAX:
+  version: &MAX_VERSION 2017
+  path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]
+
+  start: *MAX_PATH
+
+  renderer:
+  renderer_path:
+
+  ENV:
+    PATH:
+      - !env_first [SOFTWARE_PATH]
+      - !env_first [SOFTWARE_PATH, /scripts]
+      - !env_first [SOFTWARE_PATH, /plugins]
+      - !env_first [IMG_PATH, /software/max]
+
+    PYTHONPATH:
+      - !env_first [SOFTWARE_PATH]
+      - !env_first [SOFTWARE_PATH, /scripts]
+      - !env_first [SOFTWARE_PATH, /plugins]
+      - !env_first [IMG_PATH, /software/max]
+
+  # ADSKFLEX_LICENSE_FILE:
+
+  MENU:
+    - plex:
+        open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder2', 'Open Scene Folder', max_menu.open_scene_folder))
+        open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder2', 'Open Project Folder', max_menu.open_project_folder))
+
+    - break: AddSeparator()
+
+    # - Save:    AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', 'import libFunc; libFunc.get_help("issues")')))
+    # - Load:    AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', 'import libFunc; libFunc.get_help("issues")')))
+
+    # - break:   AddSeparator()
+
+    - Report: "AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', max_menu.get_report))"
+    - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help2', 'Help', max_menu.get_help))"
+
+
+
+#*****************************************************************************************************************************
 # RV
 RV:
   version:

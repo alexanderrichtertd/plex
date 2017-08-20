@@ -18,10 +18,11 @@ import webbrowser
 
 import libData
 
-def get_help(name = ''):
+def get_help(name=''):
     project_data = libData.get_data('project')['HELP']
     if not name:
         name = os.getenv('SOFTWARE')
+
     if name in project_data:
         webbrowser.open(project_data[name])
     else:
@@ -34,6 +35,7 @@ def get_all_keys(key_list, dictonary=[]):
         dictonary.append(key)
         if isinstance(items, dict):
             get_all_keys(items, dictonary)
+
     return dictonary
 
 
@@ -47,4 +49,5 @@ def get_duration(func):
         printResult = '%r (%r, %r) %2.2f sec' % (func.__name__, args, kw, endTime-startTime)
         LOG.debug(printResult)
         return resultTime
+
     return timed

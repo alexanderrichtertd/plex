@@ -62,11 +62,9 @@ menuNode     = nuke.menu('Nodes').addMenu(project_data['name'], icon = 'nuke.ico
 
 nuke.addOnScriptSave(add_write_node)
 
-for menu_item in menu_data:
-    Tank().software.add_menu(menuNode, menu_item)
-
+# ADD menu
+Tank().software.add_menu(menuNode)
 menuNode.addSeparator()
-
 add_gizmo_menu(menuNode)
 
 

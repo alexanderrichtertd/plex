@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = SET default environment paths
-# version   = 0.6.0
-# date      = 2017-07-07
+# version   = 0.7.0
+# date      = 2017-08-15
 #
 # license   = MIT
 # copyright = Copyright 2017 Animationsinstitut
@@ -77,7 +77,7 @@ class Setup(object):
                 self.pipeline_env.add('DATA_PROJECT_PATH', eachPath + '/data/project/' + self.pipeline_data['project'])
 
         # ADD all pipeline env
-        self.add_env('PIPELINE_PATH',     (';').join(self.pipeline_env['PIPELINE_PATH']))
+        self.add_env('PIPELINE_PATH', (';').join(self.pipeline_env['PIPELINE_PATH']))
         try:
             self.add_env('IMG_PATH',          (';').join(self.pipeline_env['IMG_PATH']))
             self.add_env('LIB_PATH',          (';').join(self.pipeline_env['LIB_PATH']))

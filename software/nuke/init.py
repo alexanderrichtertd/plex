@@ -42,8 +42,7 @@ def createWriteDir():
     os_path   = nuke.callbacks.filenameFilter(file_path)
 
     # cope with the directory existing already by ignoring that exception
-    try:
-      os.makedirs( os_path )
+    try: os.makedirs( os_path )
     except OSError, e:
       if e.errno != errno.EEXIST:
         raise
