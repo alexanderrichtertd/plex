@@ -1,12 +1,12 @@
 :: NUKE
 
 :: Hide Commands
-@echo off
+::@echo off
 
 :: call %~dp0\win_env.bat
 
 set "newDir=%~dp0\..\data"
-pythonw %newDir%\pipeline.py %1 --script software --software nuke
+python %newDir%\pipeline.py %1 --script software --software nuke
 
-exit
+::exit
 

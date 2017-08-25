@@ -105,10 +105,9 @@ class Setup(object):
         # self.add_env('PYTHONPATH', os.environ['SOFTWARE_PATH'])
 
         # CHECK for data user overwrite
-        if self.pipeline_data['user_data']:
-            self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
-            sys.path.append(os.environ['DATA_USER_PATH'])
-        else: os.getenv['DATA_USER_PATH'] = ''
+        os.environ['DATA_USER_OVERWRITE'] = str(self.pipeline_data['user_data'])
+        self.add_env('DATA_USER_PATH', (';').join(self.pipeline_env['DATA_USER_PATH']))
+        sys.path.append(os.environ['DATA_USER_PATH'])
 
         # SET project Data
         try:    import libData
@@ -183,15 +182,17 @@ parser = argparse.ArgumentParser(description='Setup your pipeline and start scri
 parser.add_argument('-s','--script', help='add script: software')
 parser.add_argument('-so','--software', help='add software: nuke')
 parser.add_argument('-p', '--proxy', action='store_true')
+
 args = parser.parse_args()
 
 if args.script:
     Setup()
+
     if args.script == 'software':
         from software import Software
-        soft = Software()
-        soft.setup(args.software)
-        soft.start()
+        Software().setup(args.software)
+        Software().start()
+
     elif args.script == 'desktop':
         import arDesktop
         arDesktop.main()

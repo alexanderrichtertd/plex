@@ -10,6 +10,7 @@
 # data/project/$project
 project: default
 
+
 # IMPORTANT: order
 # DEFAULT:   local, project, master
 # use $this for current location
@@ -24,8 +25,8 @@ PATH:
 
 # USER customize
 user_data: True
-# [empty]  - use just project data
-# [filled] - use user data before project
+# [True] - overwrite project with user data (if exists)
+# [False]- use just project data
 
 
 PIPELINE:

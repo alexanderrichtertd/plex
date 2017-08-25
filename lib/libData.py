@@ -36,14 +36,13 @@ IMG_FORMAT  = '.png'
 #************************
 # DATA
 #
-# TODO: user_id with user class - see also below
 # GET data from files
 # Specific file or all files
 def get_data(file_name='', user_id=os.getenv('username')):
 
     def get_all_data():
-        config_data        = {}
-        data_user_files    = libFileFolder.get_file_list(path=get_env('DATA_USER_PATH'),    file_type='*' + DATA_FORMAT)
+        config_data = {}
+        data_user_files = libFileFolder.get_file_list(path=get_env('DATA_USER_PATH'), file_type='*' + DATA_FORMAT)
         data_project_files = libFileFolder.get_file_list(path=get_env('DATA_PROJECT_PATH'), file_type='*' + DATA_FORMAT)
 
         data_project_files = list(set(data_user_files)|set(data_project_files))
@@ -55,7 +54,7 @@ def get_data(file_name='', user_id=os.getenv('username')):
     file_name = file_name.split('.')[0]
     file_path = ''
 
-    if user_id:
+    if user_id and get_env('DATA_USER_OVERWRITE') == 'True':
         file_path = os.path.normpath(('/').join([get_env('DATA_USER_PATH'), file_name + DATA_FORMAT]))
 
     if not os.path.exists(file_path):
@@ -65,6 +64,7 @@ def get_data(file_name='', user_id=os.getenv('username')):
     if os.path.exists(file_path):
         # LOG.debug(file_path)
         return get_yml_file(file_path)
+
     else: LOG.warning('CANT find file: {}'.format(file_path))
     return ''
 

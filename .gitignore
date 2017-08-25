@@ -3,16 +3,11 @@ img/img_rc.py
 
 data/test.py
 
-exe/win_houdini.bat
-exe/debug_win_houdini.bat
-exe/debug_win_maya.bat
-exe/debug_win_nuke.bat
-exe/debug_win_arDesktop.bat
-
 data/project/default/history
 data/project/default/hints.yml
 data/project/default/rules.yml
 data/project/default/statistic.yml
+
 data/user/arichter
 data/user/Alex/tmp_img.png
 
@@ -22,32 +17,30 @@ lib/classes/context.py
 lib/classes/renderer.py
 lib/classes/notification.py
 lib/classes/report.py
-lib/utils/ui/arSave.ui
+
 lib/utils/history
-lib/utils/arNotificator.py
-lib/utils/arProject.py
-lib/utils/arReporter.py
 lib/utils/arSave.py
 lib/utils/arSaveAs.py
 lib/utils/arSmartLoader.py
 
+lib/utils/ui/arSave.ui
+lib/utils/ui/arSaveAs.py
 lib/utils/ui/arSmartLoader.ui
 lib/utils/ui/arSmartLoader_rst.ui
 
-software/maya/plugins/*
-
+software/maya/scripts/GEO
 software/maya/scripts/SHD
 software/maya/scripts/ANIM
 software/maya/scripts/LIGHT
 software/maya/scripts/LOOKDEV
 software/maya/scripts/RENDER
-software/maya/scripts/SHD
-software/maya/scripts/GEO
 
+software/max/plugins/*
+software/maya/plugins/*
 software/nuke/plugins/*
-software/nuke/gizmos/extern
-
 software/houdini/plugins/*
+
+software/nuke/gizmos/extern
 
 !__init__.py
 
