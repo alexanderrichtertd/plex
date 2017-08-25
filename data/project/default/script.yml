@@ -12,63 +12,44 @@
 # software: os, maya,nuke,houdini,c4d,blender
 
 
-# *******************
-arSearchScript:
-  active:   True
-
-  software: os,maya,nuke,houdini
-  shortcut: F1
-  count:    0
-
-  script:
-    General: arReport,arSave
-    GEO:     arWhatever
-  # last script used for autocomplete
-  script_last:
-
-  ignore:       # arSave,arReport
-  favourite:    # arSave,arReport
-  search_format: py
-
 
 # *******************
 arUtil:
   # show header in all scripts
   active: True
-  minimizeHeader: False
-  count: 0
 
 
 # *******************
 arSave:
   active: True
-  count: 0
+  start: &arSave import arSave; arSave.start()
 
-  maya_format: mb
   texture: png, jpg, tiff
 
 
 # *******************
-arReporter:
-  active: True
-  shortcut: ctrl+c
-  count: 0
+smartLoader:
+  active:   True
+  start: &smartLoader import arSave; arSave.start()
 
-  reason:
-    - bug
-    - feature
-    - support
+  shortcut: F1
 
-  # report ui pops up when script errors
-  autoReport: True
-  # send issue when script errors
-  autoSend: True
-  # auto screenshot when open report
-  autoScreenshot: True
+  ignore:
+  favourite:
 
+  # priority order
+  CONTENT:
+    SHOTS:  Tank().data['project']['PATH']['shots']
 
-# *******************
-arNotificator:
-  active: True
-  count:  0
+    ASSETS: Tank().data['project']['PATH']['assets']
 
+    SCRIPTS:
+      arSave: *arSave
+      Report: import libFunc; libFunc.get_help('issues')
+      Help:   import libFunc; libFunc.get_help()
+
+    SOFTWARE:
+      maya:    Tank().data['software']['MAYA']['start']
+      nuke:    Tank().data['software']['NUKE']['start']
+      3ds max: Tank().data['software']['MAX']['start']
+      houdini: Tank().data['software']['HOUDINI']['start']

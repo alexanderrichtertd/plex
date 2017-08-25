@@ -14,6 +14,7 @@ data/project/default/hints.yml
 data/project/default/rules.yml
 data/project/default/statistic.yml
 data/user/arichter
+data/user/Alex/tmp_img.png
 
 lib/ideas
 lib/libSnapshot.py
@@ -22,13 +23,16 @@ lib/classes/renderer.py
 lib/classes/notification.py
 lib/classes/report.py
 lib/utils/ui/arSave.ui
-lib/utils/ui/_history
+lib/utils/history
 lib/utils/arNotificator.py
 lib/utils/arProject.py
 lib/utils/arReporter.py
 lib/utils/arSave.py
 lib/utils/arSaveAs.py
 lib/utils/arSmartLoader.py
+
+lib/utils/ui/arSmartLoader.ui
+lib/utils/ui/arSmartLoader_rst.ui
 
 software/maya/plugins/*
 

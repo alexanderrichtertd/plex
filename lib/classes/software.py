@@ -110,6 +110,14 @@ class Software(Singleton):
         return self._path
 
     @property
+    def data(self):
+        return self._software_data
+
+    @property
+    def menu(self):
+        return self._software_data['MENU']
+
+    @property
     def env(self):
         return self._env
 
@@ -123,7 +131,7 @@ class Software(Singleton):
 
 
     #************************
-    # STATIC
+    # MENU
     def add_menu(self, menu_node):
         self.add_sub_menu = []
 
@@ -139,7 +147,6 @@ class Software(Singleton):
     def add_menu_item(self, menu_node, new_command):
         if   self._software == 'maya':    import maya.cmds as cmds
         elif self._software == 'max':     import MaxPlus
-        elif self._software == 'houdini': pass
         elif self._software == 'nuke':    pass
         else:
             LOG.debug('CANT find software: {}'.format(software))
@@ -152,12 +159,9 @@ class Software(Singleton):
                 if self._software == 'maya':
                     sub_menu = cmds.menuItem(p=menu_node, l=keys, sm=True)
                 elif self._software == 'max':
-                    LOG.debug('menu_node.{}'.format("nop"))
                     MaxPlus.MenuManager.UnregisterMenu(unicode(keys))
                     sub_menu = MaxPlus.MenuBuilder(keys)
                     self.add_sub_menu.append(sub_menu)
-                elif self._software == 'houdini':
-                    pass
                 elif self._software == 'nuke':
                     sub_menu = menu_node.addMenu(keys)
 
@@ -170,12 +174,12 @@ class Software(Singleton):
                 elif self._software == 'max':
                     import max_menu
                     eval('menu_node.{}'.format(item))
-                elif self._software == 'houdini':
-                    pass
                 elif self._software == 'nuke':
                     eval('menu_node.{}'.format(item))
 
 
+    #*******************
+    # PRINT
     def print_header(self):
         if self._software == 'max': return
 

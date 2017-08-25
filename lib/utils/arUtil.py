@@ -19,12 +19,12 @@ import webbrowser
 from PySide import QtGui, QtCore, QtUiTools
 from PySide.QtGui import QLabel
 
-from users import User
 import libLog
 import libFunc
 import libData
 import libFileFolder
 
+from users import User
 
 #**********************
 # VARIABLE
@@ -51,35 +51,21 @@ class ArUtil(object):
         self.open_path = ""
         User().create()
 
-        self.wgHeader.lblProjectName.setText(TITLE)
         self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnProject48"))))
 
         # BUTTONS ICONS
-        # + toolTips
         self.wgHeader.btnReport.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnReport48"))))
         self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/default"))))
         self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnFolder48"))))
-
-        self.wgHeader.lblScriptImg.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnProject48"))))
-        self.wgHeader.lblArrowUp.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("lbl/lblArrowU18"))))
-
         self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("user/default")))) # current user
         self.wgHeader.btnUser.setToolTip(("").join(['<html><head/><body><p><span style=" font-weight:600;">',
                                                     User().name, '</span><br>',
                                                     User().rights, '</p></body></html>']))
 
-        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path('software/default')))) # current user
+        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path('btn/btnProject48')))) # current user
         self.wgHeader.btnProject.setToolTip(os.environ['PROJECT_NAME'])
 
         # SIGNAL
-        # clickable(self.wgHeader.wgHeader).connect(self.press_lblTitleBar)
-
-        self.wgHeader.btnMinimize.clicked.connect(self.press_btnMinimize)
-        self.wgHeader.btnMaximize.clicked.connect(self.press_btnMaximize)
-        self.wgHeader.btnLayoutL.clicked.connect(self.press_btnLayoutL)
-        self.wgHeader.btnLayoutR.clicked.connect(self.press_btnLayoutR)
-        self.wgHeader.btnClose.clicked.connect(self.press_btnClose)
-
         self.wgHeader.btnAccept.clicked.connect(self.press_btnAccept)
         self.wgHeader.btnAccept.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.wgHeader.btnOption.clicked.connect(self.press_btnOption)
@@ -90,33 +76,23 @@ class ArUtil(object):
         self.wgHeader.btnReport.clicked.connect(self.press_btnReport)
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
-        # CURSOR STYLE
-        self.wgHeader.setCursor(QtGui.QCursor(QtCore.Qt.SizeFDiagCursor))
-        self.wgHeader.wg.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.wgHeader.wgHeader.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
-        self.wgHeader.wgHeaderBtn.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-
-        # self.wgHeader.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
         # SETUP
-        self.refreshData()
-        self.setStatus()
-        self.setOpenFolder()
-        #self.addPreview()
-        #self.addMenu()
+        self.refresh_data()
+        self.set_status()
+        self.set_open_folder()
+        #self.add_preview()
+        #self.add_menu()
 
-        self.wgHeader.wgHeader.hide()
         # self.wgHeader.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint) # | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
-        self.wgHeader.show()
+        # self.wgHeader.show()
 
 
-    def addPreview(self):
-        print('preview')
+    def add_preview(self):
         self.wgPreview = QtUiTools.QUiLoader().load(self.path_review_ui)
         self.wgHeader.layMain.addWidget(self.wgPreview, 0, 0)
 
 
-    def addMenu(self):
+    def add_menu(self):
         self.wgMenu = QtUiTools.QUiLoader().load(self.path_menu_ui)
         self.wgHeader.layMain.addWidget(self.wgMenu, 1, 1)
 
@@ -154,13 +130,10 @@ class ArUtil(object):
         print("Accept")
 
     def press_btnOption(self):
-        print("Cancel")
-        # reload data
-        self.setOpenFolder('C:/')
+        print("Option")
 
     def press_btnOpenFolder(self):
-        print("openfolder")
-        webbrowser.open(self.open_path)
+        libFileFolder.open_folder(self.open_path)
 
     def press_btnUser(self):
         libFileFolder.open_folder(User().user_path)
@@ -188,8 +161,8 @@ class ArUtil(object):
         tmp_menu.setStyleSheet("background-color: rgb(51, 140, 188);")
 
         if menu_tag == 'data':
-            self.config_data = libData.get_data()
-            for eachKey in self.config_data.keys():
+            self.data = libData.get_data()
+            for eachKey in self.data.keys():
                 print eachKey
                 addButton = QtGui.QPushButton(eachKey)
                 addButton.clicked.connect(lambda: self.press_btnSubMenu(eachKey))
@@ -210,56 +183,28 @@ class ArUtil(object):
 
             btn_tmp.setFont(btn_font)
 
-    # TOP
-    def press_lblTitleBar(self):
-        print('drag around')
-
-    def press_btnMinimize(self):
-        print("minimize")
-        self.wgHeader.showMinimized()
-
-    def press_btnMaximize(self):
-        print("maximize")
-        if self.wgHeader.size() == self.monitor_size:
-            self.wgHeader.resize(self.default_size)
-            self.wgHeader.move(QtGui.QApplication.desktop().screen().rect().center() - self.wgHeader.rect().center())
-        else:
-            self.wgHeader.setGeometry(self.monitor_res)
-
-    def press_btnLayoutL(self):
-        self.wgHeader.resize(self.monitor_res.width()/2, (self.monitor_res.height()))
-        self.wgHeader.move(0, 0)
-
-    def press_btnLayoutR(self):
-        self.wgHeader.resize(self.monitor_res.width()/2, (self.monitor_res.height()))
-        self.wgHeader.move(self.monitor_res.width()/2, 0)
-
-    def press_btnClose(self):
-        print("close")
-        self.wgHeader.close()
-
 
     #*********************************************************************
     # FUNCTION
-    def setStatus(self, msg = '', msg_type = 0):
+    def set_status(self, msg = '', msg_type = 0):
         # 0 - neutral - blue
         # 1 - done    - green
         # 2 - warning - yellow
         # 3 - failed  - red
 
         self.wgHeader.edtComment.setText(msg)
-        self.wgHeader.lblCommentImg.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path(self.config_data['style']['arUtil']['progress_img'][msg_type]))))
+        self.wgHeader.lblCommentImg.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path(self.data['style']['arUtil']['progress_img'][msg_type]))))
 
         if not msg_type:
             template_css = """QProgressBar::chunk { background: %s; }"""
-            css = template_css % self.config_data['style']['arUtil']['progress_color'][msg_type]
+            css = template_css % self.data['style']['arUtil']['progress_color'][msg_type]
             self.wgHeader.prbStatus.setStyleSheet(css)
-            self.setProgress(100)
+            self.set_progress(100)
 
-    def setProgress(self, count = 0):
+    def set_progress(self, count = 0):
         self.wgHeader.prbStatus.setValue(count)
 
-    def setOpenFolder(self, path=''):
+    def set_open_folder(self, path=''):
         if os.path.exists(path):
             # active btnOpenFolder
             self.wgHeader.btnOpenFolder.setEnabled(True)
@@ -270,26 +215,8 @@ class ArUtil(object):
             self.wgHeader.btnOpenFolder.setEnabled(False)
             # LOG.info("PATH doesnt exist: {}".format(path))
 
-    def refreshData(self):
-        self.config_data = libData.get_data()
-
-
-def clickable(widget):
-    class Filter(QtCore.QObject):
-        clicked = QtCore.Signal()
-        def eventFilter(self, obj, event):
-            if obj == widget:
-                if event.type() == QtCore.QEvent.MouseButtonPress:
-                    if obj.rect().contains(event.pos()):
-                        self.clicked.emit()
-                        print 'press'
-                        return True
-                if event.type() == QtCore.QEvent.MouseButtonRelease:
-                    print 'release'
-            return False
-    filter = Filter(widget)
-    widget.installEventFilter(filter)
-    return filter.clicked
+    def refresh_data(self):
+        self.data = libData.get_data()
 
 
 #**********************

@@ -28,8 +28,8 @@ PATH:
   footage_textures  : !join [*FOOTAGE, /textures]
 
   assets            : !join [*PROJECT, /30_assets]
-
   shots             : &SHOTS !join [*PROJECT, /40_shots]
+
   comp              : !join [*SHOTS, ]
 
   render            : !join [*PROJECT, /45_render]
@@ -41,6 +41,11 @@ PATH:
   final             : !join [*POST, /final]
   grade             : !join [*POST, /grade]
   mov               : !join [*POST, /mov]
+
+
+STATUS:
+  work:    WORK
+  publish: PUBLISH
 
 
 REPOSITORY:

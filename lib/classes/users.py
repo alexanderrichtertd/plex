@@ -40,10 +40,7 @@ class User(Singleton):
         self._rights   = rights          # admin, artist
 
         # self._task     = task            # {'LIGHT': [110, 120]}
-
         # self._position = position        # Pipeline
-
-        # create folder and file
 
 
     def __call__(self):
@@ -72,7 +69,7 @@ class User(Singleton):
     def rights(self):
         return self._rights
 
-    @property
+    # @property
     # def get_project_user_path(user = os.getenv('username')):
     #     project_user_path = get_data('Path')['PROJECT_PATH']['user']
     #     return project_user_path + '/' + user

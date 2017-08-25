@@ -27,8 +27,7 @@ LOG   = libLog.init(script=TITLE)
 # @BRIEF  creates a folder, checks if it already exists,
 #         creates the folder above if the path is a file
 def create_folder(path):
-    if len(path.split('.')) > 1:
-        path = os.path.dirname(path)
+    if len(path.split('.')) > 1: path = os.path.dirname(path)
     if not os.path.exists(path):
         try:    os.makedirs(path)
         except: LOG.warning('CANT create folder: {}'.format(path))
@@ -39,8 +38,7 @@ def open_folder(path):
     if os.path.exists(path):
         if len(path.split('.')) > 1: path = os.path.dirname(path)
         webbrowser.open(path)
-    else:
-        LOG.warning('UNVALID path: {}'.format(path))
+    else: LOG.warning('UNVALID path: {}'.format(path))
     return path
 
 
@@ -59,14 +57,10 @@ def get_file_list(path, file_type='*', extension=False, exclude='*', add_path = 
         getFile = []
         os.chdir(path)
         for file_name in glob.glob(file_type):
-            if exclude in file_name:
-                continue
-            if add_path:
-                file_name = os.path.normpath(('/').join([path,file_name]))
-            if extension:
-                getFile.append(file_name)
-            else:
-                getFile.append((file_name.split('.')[0]))
+            if exclude in file_name: continue
+            if add_path:  file_name = os.path.normpath(('/').join([path,file_name]))
+            if extension: getFile.append(file_name)
+            else:         getFile.append((file_name.split('.')[0]))
         return getFile
 
 ##

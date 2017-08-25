@@ -40,7 +40,7 @@ print ""
 
 
 #*************************
- # MENU
+# MENU
 def load_menu():
     delete_menu()
 

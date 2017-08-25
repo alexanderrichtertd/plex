@@ -51,3 +51,11 @@ def get_duration(func):
         return resultTime
 
     return timed
+
+
+def find_inbetween(text, first, last):
+    try:
+        start = text.index(first) + len(first)
+        end   = text.index(last, start)
+    except ValueError: return ""
+    return text[start:end]

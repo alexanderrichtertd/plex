@@ -8,6 +8,20 @@
 
 
 #*****************************************************************************************************************************
+# DEFAULT
+FILE_FORMAT_CODE:
+  ma  : mayaAscii
+  mb  : mayaBinary
+  obj : OBJ
+  abc : Alembic
+  nk  : nuke
+  tif : tiff
+  exr : openExr
+  avi : avi
+  jpg : jpeg
+
+
+#*****************************************************************************************************************************
 # MAYA
 MAYA:
   version: &MAYA_VERSION 2016
@@ -69,6 +83,8 @@ MAYA:
 
   # SPECIFIC settings
   SETTINGS:
+    file_format: ma
+
     FPS:
       24: film
       25: pal
@@ -132,6 +148,8 @@ NUKE:
     - Report:  addCommand('Report', 'import libFunc; libFunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
     - Help:    addCommand('Help', 'import libFunc; libFunc.get_help()', 'ctrl+alt+h', 'help.ico')
 
+  SETTINGS:
+    file_format: nk
 
 
 #*****************************************************************************************************************************
@@ -152,8 +170,15 @@ HOUDINI:
       - !env_first [SOFTWARE_PATH, /scripts]
       - !env_first [SOFTWARE_PATH, /plugins]
 
+    # HOUDINI_PATH:
+    #   - !env [DATA_PROJECT_PATH, houdini]
+
     HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
 
+  # MENU: plex/data/$project/houdini/MainMenuMaster.xml
+
+  SETTINGS:
+    file_format: hip
 
 
 #*****************************************************************************************************************************
@@ -197,6 +222,9 @@ MAX:
     - Report: "AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', max_menu.get_report))"
     - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help2', 'Help', max_menu.get_help))"
 
+
+  SETTINGS:
+    file_format: max
 
 
 #*****************************************************************************************************************************
