@@ -27,6 +27,7 @@ LOG   = libLog.init(script=TITLE)
 all_data      = Tank().data
 project_data  = all_data['project']
 software_data = all_data['software']
+wgObject = ''
 
 #************************
 # FUNC
@@ -38,9 +39,10 @@ def add_gizmo_menu(menu):
                 menu.addCommand('Gizmos/' + gizmo, 'nuke.tcl("{}")'.format(gizmo))
 
 def add_write_node():
+    from scripts import write_node
     write = nuke.allNodes('arWrite')
     for currentNode in write:
-        write_node.nodeCreate(currentNode)
+        write_node.create_node(currentNode)
 
 def add_plugin_paths():
     # ADD all IMG paths
@@ -73,15 +75,15 @@ add_gizmo_menu(menuNode)
 def save():
     from utils import arSave
     reload(arSave)
-    arSave.main()
+    arSave.start()
     LOG.info('SAVE')
 
 
 def load():
-    from utils import arSaveAs
-    reload(arSaveAs)
-    arSaveAs.main(True)
-    LOG.info('LOAD : arSaveAs')
+    from utils import arLoad
+    reload(arLoad)
+    arLoad.start()
+    LOG.info('LOAD : arLoad')
 
 
 #********************************

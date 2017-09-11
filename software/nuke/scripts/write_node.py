@@ -30,7 +30,7 @@ LOG   = libLog.init(script=TITLE)
 #************************
 # INIT
 #************************
-def nodeCreate(this_node=''):
+def create_node(this_node=''):
     if this_node == '': this_node = nuke.thisNode()
 
     if this_node["customRange"].getValue():
