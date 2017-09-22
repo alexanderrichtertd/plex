@@ -64,30 +64,31 @@ except:
 
 
 print('SETTINGS')
-# FPS ***********************************
-try:
-    nuke.knobDefault("Root.fps", str(project_data['fps']))
-    print('  {} ON  - FPS: {}'.format(chr(254), project_data['fps']))
-except:
-    LOG.error('  OFF - FPS: {}'.format(project_data['fps']), exc_info=True)
-    print('  {} OFF - FPS: {}'.format(chr(254), project_data['fps']))
 
 # RESOLUTION ****************************
 try:
     nuke.addFormat(RESOLUTION)
     nuke.knobDefault('Root.format', project_data['name'].replace(' ', ''))
-    print('  {} ON  - RES: {}'.format(chr(254), RESOLUTION))
+    print('  {} ON  - {}'.format(chr(254), RESOLUTION))
 except:
-    LOG.error('  OFF - RES: {}'.format(RESOLUTION), exc_info=True)
-    print('  {} OFF - RES: {}'.format(chr(254), RESOLUTION))
+    LOG.error('  OFF - {}'.format(RESOLUTION), exc_info=True)
+    print('  {} OFF - {}'.format(chr(254), RESOLUTION))
+
+# FPS ***********************************
+try:
+    nuke.knobDefault("Root.fps", str(project_data['fps']))
+    print('  {} ON  - {} fps'.format(chr(254), project_data['fps']))
+except:
+    LOG.error('  OFF - {} fps'.format(project_data['fps']), exc_info=True)
+    print('  {} OFF - {} fps'.format(chr(254), project_data['fps']))
 
 # createFolder ****************************
 try:
     nuke.addBeforeRender(createWriteDir)
-    print('  {} ON  - BeR: createWriteDir'.format(chr(254)))
+    print('  {} ON  - createWriteDir (before render)'.format(chr(254)))
 except:
-    LOG.error('  OFF - BeR: createWriteDir'.format(chr(254)), exc_info=True)
-    print('  {} OFF - BeR: createWriteDir'.format(chr(254)))
+    LOG.error('  OFF - createWriteDir (before render)'.format(chr(254)), exc_info=True)
+    print('  {} OFF - createWriteDir (before render)'.format(chr(254)))
 
 
 print('') # ********************

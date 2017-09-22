@@ -39,10 +39,9 @@ def add_gizmo_menu(menu):
                 menu.addCommand('Gizmos/' + gizmo, 'nuke.tcl("{}")'.format(gizmo))
 
 def add_write_node():
-    from scripts import write_node
-    write = nuke.allNodes('arWrite')
-    for currentNode in write:
-        write_node.create_node(currentNode)
+    import write_node
+    for node in nuke.allNodes('arWrite'):
+        write_node.create_node(node)
 
 def add_plugin_paths():
     # ADD all IMG paths
@@ -76,18 +75,15 @@ def save():
     from utils import arSave
     reload(arSave)
     arSave.start()
-    LOG.info('SAVE')
 
 
 def load():
     from utils import arLoad
     reload(arLoad)
     arLoad.start()
-    LOG.info('LOAD : arLoad')
 
 
 #********************************
 def arWrite():
     reload(write_node)
     nuke.createNode('arWrite')
-    LOG.info('arWrite')

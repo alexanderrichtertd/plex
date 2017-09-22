@@ -13,11 +13,13 @@
 #*********************************************************************
 
 import os
+import shutil
 
 import MaxPlus
 
 import libLog
 import libFunc
+import libData
 import libFileFolder
 from tank import Tank
 
@@ -32,6 +34,7 @@ menu_name = os.getenv('PROJECT_NAME')
 #************************
 # MENU
 def create_menu():
+    # copy_splash()
     delete_menu()
 
     if MaxPlus.MenuManager.MenuExists(menu_name):
@@ -45,8 +48,16 @@ def delete_menu():
     MaxPlus.MenuManager.UnregisterMenu(unicode(menu_name))
 
 
-create_menu()
+def copy_splash():
+    splash_path = libData.get_img_path("software/max/splash.bmp")
+    max_path    = os.path.dirname(Tank().software.data['path'])
 
+    if not os.path.exists(max_path + '/splash.bmp'):
+        try: shutil.copy(splash_path, max_path)
+        except: LOG.error('FAILED to copy splash: '.format(max_path), exc_info=True)
+
+
+create_menu()
 
 
 

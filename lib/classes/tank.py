@@ -33,7 +33,7 @@ class Tank(Singleton):
 
     @property
     def software(self):
-        return self._software
+        return Software()
 
     @property
     def user(self):
