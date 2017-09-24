@@ -30,8 +30,7 @@ The main idea is to have an overall system which lays the **foundation for the m
 - [x] user-pipeline integration
 - [x] SSTP (simple | smart | transparent | performant)
 
-![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
-
+![desktop_load](https://user-images.githubusercontent.com/9514022/30782643-477e0060-a136-11e7-883d-eadc16fbf0e0.gif)
 
 ## Pipeline Features
 - [x] **Layered Pipeline**
@@ -58,7 +57,7 @@ The main idea is to have an overall system which lays the **foundation for the m
  - inform user about processes
  - debug like a king \*bow\*   
 
-![desktop_load](https://user-images.githubusercontent.com/9514022/30782643-477e0060-a136-11e7-883d-eadc16fbf0e0.gif)
+![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
 
 ## **Projects [realized with]**
 - [Breaking Point](https://vimeo.com/178452618) \[VFX short film 2016\]   
