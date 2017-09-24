@@ -11,7 +11,6 @@ data/user/arichter
 data/user/Alex/tmp_img.jpg
 
 lib/ideas
-lib/libSnapshot.py
 lib/classes/context.py
 lib/classes/renderer.py
 lib/classes/notification.py
