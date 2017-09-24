@@ -1,5 +1,5 @@
-> ### In Development   
-> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases) and **[help us to improve.](https://github.com/richteralexander/plex/wiki/How-to-Contribute)**     
+> ### "A feature can't be a bug"-Release   
+> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases) and read the **[open letter](https://github.com/richteralexander/plex/wiki/open-letter)**.     
 > [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)     
 
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
@@ -58,6 +58,7 @@ The main idea is to have an overall system which lays the **foundation for the m
  - inform user about processes
  - debug like a king \*bow\*   
 
+![desktop_load](https://user-images.githubusercontent.com/9514022/30782643-477e0060-a136-11e7-883d-eadc16fbf0e0.gif)
 
 ## **Projects [realized with]**
 - [Breaking Point](https://vimeo.com/178452618) \[VFX short film 2016\]   

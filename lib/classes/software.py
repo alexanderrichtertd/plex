@@ -14,6 +14,7 @@
 
 import os
 import sys
+import yaml
 import getpass
 import subprocess
 
@@ -26,7 +27,7 @@ TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = libLog.init(script=TITLE)
 
 
-#************************
+#*********************************************************************
 # CLASS
 class Software(Singleton):
 
@@ -37,20 +38,21 @@ class Software(Singleton):
         self._software_data = libData.get_data()['software'][self._software.upper()]
 
         self._version = self._software_data['version']
-        self._path = self._software_data['path']
+        self._path    = self._software_data['path']
 
         # RENDERER
         self._renderer      = self._software_data.get('renderer', '')
         self._renderer_path = self._software_data.get('renderer_path', '')
 
-    def add_env(self):
         LOG.debug('------------------------------ {}'.format(self._software))
 
         new_path = []
+        LOG.debug(os.environ['SRC_SOFTWARE_PATH'])
         for each_path in os.environ['SRC_SOFTWARE_PATH'].split(';'):
             if not each_path.endswith('software'): each_path = os.path.dirname(each_path)
             tmp_paths  = ('/').join([each_path, self._software])
             tmp_folder = libFileFolder.get_file_list(path=tmp_paths, exclude='.py', add_path=True)
+            if not tmp_folder: continue
             new_path.extend(tmp_folder)
 
         os.environ['SOFTWARE'] = self._software.upper()
@@ -67,31 +69,40 @@ class Software(Singleton):
         if(self._env):
             for env, content in self._env.iteritems():
                 if isinstance(content, list):
-                    for each in content:
-                        libData.add_env(env, each)
+                    for each in content: libData.add_env(env, each)
                 else: libData.add_env(env, content)
 
             LOG.debug('{}_ENV: {}'.format(self._software.upper(), self._env))
 
 
-    #************************
+    #*********************************************************************
     # SOFTWARE
-    def start(self, software='', open_file=''):
-        if software: self.setup(software)
-        self.add_env()
+    def start(self, software, open_file=''):
+        try:    tmp_software = self._software
+        except: tmp_software = ''
+
+        self.setup(software)
 
         cmd = self._software_data['start'].format(open_file)
-        if self._software == 'maya' and not open_file:
-            cmd = cmd.split('-file')[0]
+
+        if open_file:
+            if self._software == 'maya':
+                cmd = '{} -file "{}"'.format(cmd, open_file)
+            if self._software == 'max' or self._software == 'houdini':
+                cmd = '"{}" "{}"'.format(cmd, open_file)
+
         LOG.debug(cmd)
         subprocess.Popen(cmd, shell=True, env=os.environ)
+
+        if tmp_software: self.setup(tmp_software)
+
 
     def __call__(self):
         LOG.info('SOFTWARE: {} {} - {}\n\
                   ENV: {}'.format(self._software, self._version, self._path, self._env))
 
 
-    #************************
+    #*********************************************************************
     # VARIABLES
     @property
     def id(self):
@@ -114,6 +125,10 @@ class Software(Singleton):
         return self._software_data
 
     @property
+    def extension(self):
+        return libData.get_data()['software']['EXTENSION'][self._software]
+
+    @property
     def menu(self):
         return self._software_data['MENU']
 
@@ -130,7 +145,83 @@ class Software(Singleton):
         return self._renderer_path
 
 
-    #************************
+    #*********************************************************************
+    # FUNCTION
+
+    @property
+    def scene_path(self):
+        scene_path = ''
+        if self._software == "maya":
+            import pymel.core as pm
+            scene_path = pm.sceneName()
+        elif self._software == "nuke":
+            import nuke
+            scene_path = nuke.root().knob('name').value()
+        elif self._software == "max":
+            import MaxPlus
+            scene_path = MaxPlus.Core.EvalMAXScript("maxFilePath + maxFileName").Get()
+        elif self._software == "houdini":
+            print "file->houdini"
+            scene_path = ''
+        else: LOG.warning('NO scene returned: No software cmd found')
+        LOG.info('scene_path: {}'.format(scene_path))
+        return scene_path
+
+    def scene_save(self):
+        scene_path = ''
+        if self._software == "maya":
+            import pymel.core as pm
+            scene_path = pm.saveFile(file)
+        elif self._software == "nuke":
+            import nuke
+            scene_path = nuke.scriptSave()
+        elif self._software == "max":
+            import MaxPlus
+            scene_path = MaxPlus.FileManager.Save()
+        elif self._software == "houdini":
+            print "file->houdini"
+            return ''
+        else: LOG.warning('NO scene returned: No software cmd found')
+        return scene_path
+
+    def scene_saveAs(self, file):
+        print 'SAVE'
+        scene_path = ''
+        if self._software == "maya":
+            import pymel.core as pm
+            scene_path = pm.saveAs(file)
+        elif self._software == "nuke":
+            import nuke
+            nuke.scriptSaveAs(file)
+        elif self._software == "max":
+            import MaxPlus
+            scene_path = MaxPlus.FileManager.Save(file)
+        elif self._software == "houdini":
+            print "file->houdini"
+            return ''
+        else: LOG.warning('NO scene returned: No software cmd found')
+        return scene_path
+
+    def scene_open(self, file):
+        scene_path = ''
+        if self._software == "maya":
+            import pymel.core as pm
+            scene_path = pm.openFile(file, force=True)
+        elif self._software == "nuke":
+            import nuke
+            scene_path = nuke.scriptOpen(file)
+        elif self._software == "max":
+            import MaxPlus
+            scene_path = MaxPlus.FileManager.Open(file)
+        elif self._software == "houdini":
+            print "file->houdini"
+            return ''
+        else: LOG.warning('NO scene returned: No software cmd found')
+        return scene_path
+
+
+
+    #*********************************************************************
     # MENU
     def add_menu(self, menu_node):
         self.add_sub_menu = []
@@ -145,9 +236,9 @@ class Software(Singleton):
             for sub in self.add_sub_menu: sub.Create(main_menu, 0)
 
     def add_menu_item(self, menu_node, new_command):
-        if   self._software == 'maya':    import maya.cmds as cmds
-        elif self._software == 'max':     import MaxPlus
-        elif self._software == 'nuke':    pass
+        if   self._software == 'maya': import maya.cmds as cmds
+        elif self._software == 'max':  import MaxPlus
+        elif self._software == 'nuke': pass
         else:
             LOG.debug('CANT find software: {}'.format(software))
             return
@@ -178,7 +269,7 @@ class Software(Singleton):
                     eval('menu_node.{}'.format(item))
 
 
-    #*******************
+    #*********************************************************************
     # PRINT
     def print_header(self):
         if self._software == 'max': return
@@ -227,3 +318,32 @@ class Software(Singleton):
         except:
             LOG.debug('  OFF - {}: {}'.format(content))
             print('  {} OFF - {}: {}'.format(chr(254), text, content))
+
+
+
+
+     # def load_file(self, ref = False):
+     #        try:
+     #            if check_texture(): pass
+
+     #            elif self.software == "maya":
+     #                import maya.mel as mel
+
+     #                # reference or open
+     #                if ref or ".abc" in self.save_dir or ".obj" in self.save_dir or ".fbx" in self.save_dir:
+     #                    # file -r -type "mayaBinary"  -ignoreVersion -gl -mergeNamespacesOnClash false -namespace "bull_MODEL_v004_jo" -options "v=0;" "K:/30_assets/bull/10_MODEL/WORK/bull_MODEL_v004_jo.mb";
+     #                    mel.eval('file -r -type "' + s.FILE_FORMAT_CODE["." + self.save_dir.split(".")[-1]] + '" -ignoreVersion -gl -mergeNamespacesOnClash false "' + self.save_dir.replace("\\", "/") + '"')
+     #                else:
+     #                    mel.eval('file -f -options "v=0;"  -ignoreVersion  -typ "' + s.FILE_FORMAT_CODE[s.FILE_FORMAT[self.software]] + '" -o "' + self.save_dir.replace("\\", "/") + '"')
+
+     #            elif self.software == "nuke":
+     #                import nuke
+     #                nuke.scriptOpen(self.save_dir)
+     #            elif self.software == "max":
+     #                print "max open"
+     #            elif self.software == "houdini":
+     #                print "houdini open"
+
+     #            LOG.info('END  : LOAD : ' + self.save_dir)
+
+     #        except: LOG.error('FAIL : LOAD : ' + self.save_dir, exc_info=True)

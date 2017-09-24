@@ -27,8 +27,8 @@ class Tank(Singleton):
         self._user = User()
         self._user.setup()
 
-        self._context = Context()
-        self._context.setup()
+        # self._context = Context()
+        # self._context.setup()
 
 
     @property

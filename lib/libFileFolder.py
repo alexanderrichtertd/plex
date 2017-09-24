@@ -52,7 +52,7 @@ def open_folder(path):
 #         exclude string /string[]. '__init__.py' | '__init__' | ['btnReport48', 'btnHelp48']
 #
 # @RETURN strint[].
-def get_file_list(path, file_type='*', extension=False, exclude='*', add_path = False):
+def get_file_list(path, file_type='*', extension=False, exclude='*', add_path=False):
     if(os.path.exists(path)):
         getFile = []
         os.chdir(path)

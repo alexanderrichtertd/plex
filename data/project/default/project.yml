@@ -43,11 +43,6 @@ PATH:
   mov               : !join [*POST, /mov]
 
 
-STATUS:
-  work:    WORK
-  publish: PUBLISH
-
-
 REPOSITORY:
   username: guest
   password:

@@ -9,7 +9,7 @@
 
 #*****************************************************************************************************************************
 # DEFAULT
-FILE_FORMAT_CODE:
+EXTENSION_CODE:
   ma  : mayaAscii
   mb  : mayaBinary
   obj : OBJ
@@ -21,14 +21,25 @@ FILE_FORMAT_CODE:
   jpg : jpeg
 
 
+EXTENSION:
+  maya:      ma
+  max :      max
+  nuke:      nk
+  houdini:   hipnc
+  photoshop: psd
+
+  texture: png
+  render:  exr
+
+
 #*****************************************************************************************************************************
 # MAYA
 MAYA:
-  version: &MAYA_VERSION 2016
+  version: &MAYA_VERSION 2016.5
   path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
   # start command
-  start: !join ['start "" "', *MAYA_PATH, '" -file "{}"'] # {} replaced by open_file
+  start: !join ['start "" "', *MAYA_PATH, '"'] # {} replaced by open_file
 
   renderer:
   renderer_path:
@@ -36,18 +47,18 @@ MAYA:
 
   ENV: # Added BEFORE software start
     PYTHONPATH:
-      - !env_first [SOFTWARE_PATH]
-      - !env_first [SOFTWARE_PATH, /scripts]
-      - !env_first [SOFTWARE_PATH, /plugins]
-      - !env_first [SOFTWARE_PATH, /shelf]
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [SOFTWARE_PATH, /shelf]
 
     MAYA_SCRIPT_PATH: #[SOFTWARE_PATH, /scripts]
 
     MAYA_PLUG_IN_PATH:
-      - !env_first [SOFTWARE_PATH, /plugins]
+      - !env [SOFTWARE_PATH, /plugins]
 
     MAYA_SHELF_PATH:
-      - !env_first [SOFTWARE_PATH, /shelf]
+      - !env [SOFTWARE_PATH, /shelf]
 
     # SPLASHSCREEN & IMG PATH
     XBMLANGPATH:
@@ -60,17 +71,16 @@ MAYA:
 
 
   MENU:
-
     - Plex:
         open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import libFileFolder; libFileFolder.open_folder(cmds.file(q=True, sceneName=True))')
         open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import libFileFolder;import libData; libFileFolder.open_folder(libData.get_data("project")["path"])')
 
     - break:  menuItem(p="{}", d=True)
 
-    # - Save: menuItem(p="{}", l='Save', c='from util import arSave; reload(arSave); arSave.main()')
-    # - Load: menuItem(p="{}", l='Load', c='from util import arSaveAs; reload(arSaveAs); arSaveAs.main(True)')
+    - Save: menuItem(p="{}", l='Save', c='import arSave; reload(arSave); arSave.start()')
+    - Load: menuItem(p="{}", l='Load', c='import arLoad; reload(arLoad); arLoad.start()')
 
-    # - break:  menuItem(p="{}", d=True)
+    - break:  menuItem(p="{}", d=True)
 
     - Utils:
         position_selected: menuItem(p="{}", l='Position to First Selection', c='import maya_utils; maya_utils.position_selected()')
@@ -83,8 +93,6 @@ MAYA:
 
   # SPECIFIC settings
   SETTINGS:
-    file_format: ma
-
     FPS:
       24: film
       25: pal
@@ -110,9 +118,9 @@ NUKE:
 
   ENV:
     PYTHONPATH:
-      - !env_first [SOFTWARE_PATH, /scripts]
-      - !env_first [SOFTWARE_PATH, /plugins]
-      - !env_first [SOFTWARE_PATH, /gizmos]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [SOFTWARE_PATH, /gizmos]
 
     NUKE_PATH:
       - !env [PIPELINE_PATH]
@@ -121,8 +129,8 @@ NUKE:
       # - PLUGIN_PATH
 
     # Init & Menu
-    NUKE_INIT_PATH: !env_first [SOFTWARE_PATH]
-    NUKE_MENU_PATH: !env_first [SOFTWARE_PATH]
+    NUKE_INIT_PATH: !env [SOFTWARE_PATH]
+    NUKE_MENU_PATH: !env [SOFTWARE_PATH]
 
     NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
 
@@ -136,10 +144,10 @@ NUKE:
 
     - break:   addSeparator()
 
-    # - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
-    # - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
+    - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
+    - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
 
-    # - break:   "addSeparator()"
+    - break:   "addSeparator()"
 
     - arWrite: addCommand('arWrite', 'arWrite()', 'ctrl+alt+w', 'write.ico')
 
@@ -149,7 +157,6 @@ NUKE:
     - Help:    addCommand('Help', 'import libFunc; libFunc.get_help()', 'ctrl+alt+h', 'help.ico')
 
   SETTINGS:
-    file_format: nk
 
 
 #*****************************************************************************************************************************
@@ -166,11 +173,16 @@ HOUDINI:
 
   ENV:
     PYTHONPATH:
-      - !env_first [SOFTWARE_PATH]
-      - !env_first [SOFTWARE_PATH, /scripts]
-      - !env_first [SOFTWARE_PATH, /plugins]
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [DATA_PROJECT_PATH, /houdini]
 
-    # HOUDINI_PATH:
+    HOUDINI_USER_PREF_DIR:
+      - !env_first [DATA_PROJECT_PATH, /houdini]
+    HOUDIN_PATH:
+      - !env [DATA_PROJECT_PATH, /houdini]
+
     #   - !env [DATA_PROJECT_PATH, houdini]
 
     HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
@@ -178,7 +190,6 @@ HOUDINI:
   # MENU: plex/data/$project/houdini/MainMenuMaster.xml
 
   SETTINGS:
-    file_format: hip
 
 
 #*****************************************************************************************************************************
@@ -194,37 +205,46 @@ MAX:
 
   ENV:
     PATH:
-      - !env_first [SOFTWARE_PATH]
-      - !env_first [SOFTWARE_PATH, /scripts]
-      - !env_first [SOFTWARE_PATH, /plugins]
-      - !env_first [IMG_PATH, /software/max]
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [IMG_PATH, /software/max]
 
     PYTHONPATH:
-      - !env_first [SOFTWARE_PATH]
-      - !env_first [SOFTWARE_PATH, /scripts]
-      - !env_first [SOFTWARE_PATH, /plugins]
-      - !env_first [IMG_PATH, /software/max]
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [IMG_PATH, /software/max]
 
   # ADSKFLEX_LICENSE_FILE:
 
   MENU:
     - plex:
-        open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder2', 'Open Scene Folder', max_menu.open_scene_folder))
-        open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder2', 'Open Project Folder', max_menu.open_project_folder))
+        open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder', 'Open Scene Folder', max_menu.open_scene_folder))
+        open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder', 'Open Project Folder', max_menu.open_project_folder))
 
     - break: AddSeparator()
 
-    # - Save:    AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', 'import libFunc; libFunc.get_help("issues")')))
-    # - Load:    AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', 'import libFunc; libFunc.get_help("issues")')))
+    - Save:    AddItem(MaxPlus.ActionFactory.Create('Save', 'Save', max_menu.save))
+    - Load:    AddItem(MaxPlus.ActionFactory.Create('Load', 'Load', max_menu.load))
 
-    # - break:   AddSeparator()
+    - break:   AddSeparator()
 
-    - Report: "AddItem(MaxPlus.ActionFactory.Create('Report2', 'Report', max_menu.get_report))"
-    - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help2', 'Help', max_menu.get_help))"
+    - Report: "AddItem(MaxPlus.ActionFactory.Create('Report', 'Report', max_menu.get_report))"
+    - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help', 'Help', max_menu.get_help))"
 
 
   SETTINGS:
-    file_format: max
+
+
+#*****************************************************************************************************************************
+# NUKE
+DESKTOP:
+  version:  0.1.0
+  path:
+
+  start:
+
 
 
 #*****************************************************************************************************************************

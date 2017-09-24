@@ -179,20 +179,19 @@ class SmartDict(dict):
 import argparse
 
 parser = argparse.ArgumentParser(description='Setup your pipeline and start scripts.')
-parser.add_argument('-s','--script', help='add script: software')
 parser.add_argument('-so','--software', help='add software: nuke')
 parser.add_argument('-p', '--proxy', action='store_true')
 
 args = parser.parse_args()
 
-if args.script:
+if args.software:
     Setup()
 
-    if args.script == 'software':
-        from software import Software
+    from software import Software
+    if args.software == 'desktop':
         Software().setup(args.software)
-        Software().start()
-
-    elif args.script == 'desktop':
         import arDesktop
-        arDesktop.main()
+        arDesktop.start()
+    else:
+        Software().start(args.software)
+

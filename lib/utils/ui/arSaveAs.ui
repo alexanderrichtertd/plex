@@ -1,460 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>arSaveAs</class>
- <widget class="QWidget" name="arSaveAs">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>97</height>
+    <width>740</width>
+    <height>80</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16615</width>
-    <height>1111</height>
-   </size>
-  </property>
-  <property name="font">
-   <font>
-    <family>Calibri</family>
-    <pointsize>11</pointsize>
-    <weight>75</weight>
-    <bold>true</bold>
-   </font>
-  </property>
   <property name="windowTitle">
-   <string>arSave As(s)</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="../../../img/img.qrc">
-    <normaloff>:/btn/btn/btnSave.png</normaloff>:/btn/btn/btnSave.png</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">color: rgb(225, 225, 225);
-background-color: rgb(35, 35, 35);</string>
+   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1,0,1,0,0,0">
      <item>
-      <widget class="QComboBox" name="cbxShot">
-       <property name="enabled">
-        <bool>true</bool>
+      <widget class="QComboBox" name="cbxScene">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>26</height>
+        </size>
        </property>
        <property name="font">
         <font>
-         <family>Malgun Gothic</family>
          <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
         </font>
-       </property>
-       <property name="toolTip">
-        <string>Status</string>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
        </property>
        <property name="editable">
         <bool>false</bool>
        </property>
-       <property name="insertPolicy">
-        <enum>QComboBox::InsertAtBottom</enum>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
+       <item>
+        <property name="text">
+         <string>shots</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cbxShotName">
-       <property name="font">
-        <font>
-         <family>Malgun Gothic</family>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <property name="maxVisibleItems">
-        <number>100</number>
-       </property>
-       <property name="insertPolicy">
-        <enum>QComboBox::InsertAtBottom</enum>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="modelColumn">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbxShotGroup">
-       <property name="font">
-        <font>
-         <family>Malgun Gothic</family>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <property name="maxVisibleItems">
-        <number>100</number>
-       </property>
-       <property name="insertPolicy">
-        <enum>QComboBox::InsertAtBottom</enum>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="modelColumn">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnAddShotName">
+      <widget class="QLabel" name="label_4">
        <property name="maximumSize">
         <size>
-         <width>22</width>
-         <height>22</height>
+         <width>5</width>
+         <height>16777215</height>
         </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
        </property>
        <property name="text">
-        <string/>
+        <string>/</string>
        </property>
-       <property name="icon">
-        <iconset resource="../../../img/img.qrc">
-         <normaloff>:/btn/btn/btnAdd48.png</normaloff>:/btn/btn/btnAdd48.png</iconset>
-       </property>
-       <property name="iconSize">
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbxSet">
+       <property name="minimumSize">
         <size>
-         <width>22</width>
-         <height>22</height>
+         <width>0</width>
+         <height>26</height>
         </size>
        </property>
-       <property name="shortcut">
-        <string>+</string>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>seq010</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblSet">
+       <property name="maximumSize">
+        <size>
+         <width>5</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>/</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbxAsset">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>s010_mayhem</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="maximumSize">
+        <size>
+         <width>5</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>/</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QComboBox" name="cbxTask">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>26</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <family>Malgun Gothic</family>
          <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
         </font>
-       </property>
-       <property name="toolTip">
-        <string>Task</string>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
        </property>
        <property name="editable">
         <bool>false</bool>
        </property>
-       <property name="maxVisibleItems">
-        <number>100</number>
-       </property>
-       <property name="insertPolicy">
-        <enum>QComboBox::InsertAtBottom</enum>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="modelColumn">
-        <number>0</number>
-       </property>
+       <item>
+        <property name="text">
+         <string>RIG</string>
+        </property>
+       </item>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QPushButton" name="btnShowPublish">
+      <widget class="QLabel" name="lblStatus">
        <property name="maximumSize">
         <size>
-         <width>22</width>
-         <height>22</height>
+         <width>16777215</width>
+         <height>16777215</height>
         </size>
        </property>
-       <property name="toolTip">
-        <string>Show PUBLISH/WORK Files [P]</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../img/img.qrc">
-         <normaloff>:/btn/btn/btnShowPublish48.png</normaloff>
-         <activeon>:/btn/btn/btnShowPublish48p.png</activeon>:/btn/btn/btnShowPublish48.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>22</width>
-         <height>22</height>
-        </size>
-       </property>
-       <property name="shortcut">
-        <string>P</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbxShotChoice">
        <property name="font">
         <font>
-         <family>Malgun Gothic</family>
          <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>File</string>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(56, 56, 56);</string>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <property name="maxVisibleItems">
-        <number>100</number>
-       </property>
-       <property name="insertPolicy">
-        <enum>QComboBox::InsertAtBottom</enum>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="modelColumn">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLineEdit" name="edtShot">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="font">
-        <font>
-         <family>Malgun Gothic</family>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
         </font>
        </property>
        <property name="text">
-        <string/>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtShotName">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="font">
-        <font>
-         <family>Malgun Gothic</family>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtMsgDate">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="font">
-        <font>
-         <family>MS Shell Dlg 2</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(180, 180, 180);
-background-color: 'transparent';</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
+        <string>/WORK</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtShotGroup">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="font">
-        <font>
-         <family>Malgun Gothic</family>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtTask">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="font">
-        <font>
-         <family>Malgun Gothic</family>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="placeholderText">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtMsgSize">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="font">
-        <font>
-         <family>MS Shell Dlg 2</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(180, 180, 180);
-background-color: 'transparent';</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -463,13 +188,11 @@ background-color: 'transparent';</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cbxShot</tabstop>
+  <tabstop>cbxAsset</tabstop>
+  <tabstop>cbxSet</tabstop>
   <tabstop>cbxTask</tabstop>
-  <tabstop>edtShotName</tabstop>
+  <tabstop>cbxScene</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../img/img.qrc"/>
-  <include location="../../../img/img.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

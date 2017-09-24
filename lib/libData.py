@@ -32,6 +32,11 @@ except:
 DATA_FORMAT = '.yml'
 IMG_FORMAT  = '.png'
 
+META_NAME     = 'info'
+META_FOLDER   = 'meta'
+THUMBS_FORMAT = '.jpg'
+
+META_INFO = '/' + META_FOLDER + '/' + META_NAME + DATA_FORMAT
 
 #************************
 # DATA
@@ -68,9 +73,12 @@ def get_data(file_name='', user_id=os.getenv('username')):
     else: LOG.warning('CANT find file: {}'.format(file_path))
     return ''
 
-def set_data(file_name, var, data):
-    print('set_data')
-    # set_yml_file
+def set_data(path, key, value):
+    if os.path.exists(path):
+        tmp_content = get_yml_file(path)
+    else: tmp_content = {}
+    tmp_content[key] = value
+    set_yml_file(path, tmp_content)
 
 
 #************************
@@ -88,7 +96,7 @@ def get_pipeline_path(end_path):
             # LOG.debug('PATH exists: {0}'.format(path))
             return path
 
-    LOG.warning('PATH doesnt exists: {}'.format(path))
+    # LOG.warning('PATH doesnt exists: {}'.format(path))
     return ''
 
 def get_img_path(end_path='btn/default'):
@@ -96,6 +104,7 @@ def get_img_path(end_path='btn/default'):
     else: img_format = IMG_FORMAT
 
     path = get_pipeline_path('img/{}{}'.format(end_path, img_format))
+    if not path: path = get_pipeline_path('img/{}/default{}'.format(os.path.dirname(end_path), IMG_FORMAT))
     if not path: path = get_pipeline_path('img/btn/default{}'.format(IMG_FORMAT))
     return path
 
@@ -103,18 +112,23 @@ def get_img_path(end_path='btn/default'):
 #************************
 # YAML
 def set_yml_file(path, content):
-    print 'set YAML file'
-
-def get_yml_file(path):
-    with open(path, 'r') as stream:
+    with open(path, 'w') as outfile:
         try:
-            # STRING into DICT
-            pipeline_path = yaml.load(stream)
-            if pipeline_path: return pipeline_path
-            else:
-                LOG.warning('CANT load file: {}'.format(path))
+            yaml.dump(content, outfile, default_flow_style=False)
         except yaml.YAMLError as exc:
             LOG.error(exc, exc_info=True)
+
+
+def get_yml_file(path):
+    try:
+        with open(path, 'r') as stream:
+            # STRING into DICT
+            yml_content = yaml.load(stream)
+            if yml_content: return yml_content
+            else:
+                LOG.warning('CANT load file: {}'.format(path))
+    except yaml.YAMLError as exc:
+        LOG.error(exc, exc_info=True)
 
 # define & register custom tag handler
 # combine var with strings

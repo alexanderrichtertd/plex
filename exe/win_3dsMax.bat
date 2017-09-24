@@ -1,11 +1,9 @@
 :: 3DsMax
 
 :: Hide Commands
-:: @echo off
-
-:: call %~dp0\win_env.bat
+@echo off
 
 set "newDir=%~dp0\..\data"
-pythonw %newDir%\pipeline.py %1 --script software --software max
+pythonw %newDir%\pipeline.py %1 --software max
 
-::exit
+exit

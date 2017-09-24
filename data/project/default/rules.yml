@@ -1,0 +1,64 @@
+#*********************************************************************
+# content   = rules
+# version   = 0.0.1
+# date      = 2017-01-01
+
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+
+
+start_frame: 1001
+
+
+STATUS:
+  work:    WORK
+  publish: PUBLISH
+  render:  RENDER
+
+
+FILE:
+  # assets: \d\d\d   # s412
+  # shots:  s\d\d\d_   # s412
+  version: _v\d\d\d  # _v001
+  author : _\w\w     # _ar
+  # comment: [:30]
+
+
+# sq010_sky/s020_angle/RIG/WORK/s020_angle_RIG_v001.mb
+# items.format(set='sq010_sequence', asset='s010_shot', task='RIG', status='WORK', version='v001', frame='1001', user='ar', extension='mb')
+SCENES:
+  assets: "{set}/{asset}/{task}/{status}/{asset}_{task}_{version}.{extension}"
+  shots : "{asset}/{task}/{status}/{asset}_{task}_{version}.{extension}"
+  render: "{asset}/{task}/{status}/{asset}_{task}_{version}.{frame}.{extension}"
+
+
+rights:
+  - admin
+  - pipeline
+  - production
+  - user
+
+
+TASK:
+  assets: &ASSET_TASK
+    - GEO
+    - TEX
+    - SHD
+    - RIG
+
+  shots: &SHOT_TASK
+    - ANIM
+    - LGT
+    - FX
+    - RENDER
+    - COMP
+
+  render: *SHOT_TASK
+
+SET:
+  assets: &ASSET_SET
+    - char
+    - prop
+    - set
+
+  # shots: &SHOT_SET

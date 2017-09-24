@@ -14,14 +14,22 @@
 
 import os
 import time
+import getpass
 import webbrowser
 
 import libData
+import arNotice
 
 def get_help(name=''):
     project_data = libData.get_data('project')['HELP']
-    if not name:
-        name = os.getenv('SOFTWARE')
+    if not name: name = os.getenv('SOFTWARE').lower()
+
+    note = arNotice.Notice(title = name,
+                           msg   = 'get help & solve issues here',
+                           func  = 'HELP',
+                           img   = 'lbl/lbl{}131'.format(name.title()),
+                           img_link = '')
+    arNotice.ArNotice(note)
 
     if name in project_data:
         webbrowser.open(project_data[name])

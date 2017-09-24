@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>194</height>
+    <height>62</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>150</height>
+    <width>664</width>
+    <height>56</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -40,9 +40,15 @@
     <widget class="QWidget" name="wg" native="true">
      <property name="styleSheet">
       <string notr="true">QWidget{
-	background-color: rgb(70, 70, 70);
+	background-color: rgb(50, 50, 50);
 	selection-background-color: rgb(1, 79, 131);
 	color: rgb(235, 235, 235);
+}
+
+QListWidget::item:selected
+{
+  color: rgb(235, 235, 235);
+   background-color: rgb(61, 120, 200);
 }
 
 QPushButton { 
@@ -81,7 +87,7 @@ QToolTip {
         </property>
         <item>
          <widget class="QWidget" name="wgMain" native="true">
-          <layout class="QHBoxLayout" name="layMain">
+          <layout class="QVBoxLayout" name="layMain">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -98,7 +104,7 @@ QToolTip {
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>40</height>
+          <height>50</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -113,7 +119,7 @@ QToolTip {
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>6</height>
+             <height>4</height>
             </size>
            </property>
            <property name="value">
@@ -132,7 +138,7 @@ QToolTip {
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>0</height>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -142,23 +148,17 @@ QToolTip {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(41, 115, 255);
-	color: rgb(255, 255, 255);
-}
-
-QPushButton { 
+            <string notr="true">QPushButton { 
+   background-color: rgb(65, 65, 65);
 	border:0px;
 }
 
-QPushButton:hover {
-	background-color: rgb(61, 135, 255);
-}
+QPushButton:hover {background-color: rgb(80, 80, 80); }
 
 QPushButton:pressed{ 
 	 border: 0px solid green;
-	 background-color: rgb(52, 158, 158);
-}</string>
+}
+</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <property name="spacing">
@@ -191,8 +191,8 @@ QPushButton:pressed{
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>14</width>
-                  <height>14</height>
+                  <width>16</width>
+                  <height>16</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -226,22 +226,6 @@ QPushButton:pressed{
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_15">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QCheckBox" name="cbxAdd">
                 <property name="font">
                  <font>
@@ -259,6 +243,22 @@ QPushButton:pressed{
                </widget>
               </item>
               <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
                <widget class="QPushButton" name="btnOption">
                 <property name="minimumSize">
                  <size>
@@ -269,11 +269,12 @@ QPushButton:pressed{
                 <property name="maximumSize">
                  <size>
                   <width>10000</width>
-                  <height>10000</height>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="font">
                  <font>
+                  <pointsize>8</pointsize>
                   <weight>75</weight>
                   <bold>true</bold>
                  </font>
@@ -298,63 +299,66 @@ QPushButton:pressed{
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QPushButton" name="btnAccept">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>10000</width>
-                  <height>10000</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Accept</string>
-                </property>
-                <property name="text">
-                 <string>SAVE</string>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>35</width>
-                  <height>35</height>
-                 </size>
-                </property>
-                <property name="shortcut">
-                 <string>Enter</string>
-                </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
              </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnAccept">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>10000</width>
+                <height>10000</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>MS Shell Dlg 2</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+                <underline>false</underline>
+                <strikeout>false</strikeout>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Accept</string>
+              </property>
+              <property name="text">
+               <string>SAVE</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>35</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Return</string>
+              </property>
+              <property name="checkable">
+               <bool>false</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default">
+               <bool>false</bool>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -367,14 +371,33 @@ QPushButton:pressed{
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>16</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>20</height>
+          <height>16</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	background-color: rgb(30, 90, 190);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton { 
+	border:0px;
+}
+
+QPushButton:hover {
+	background-color: rgb(20, 60, 140);
+}
+
+QPushButton:pressed{ 
+	 border: 0px solid green;
+	 background-color: rgb(52, 158, 158);
+}</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
