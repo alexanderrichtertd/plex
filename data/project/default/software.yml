@@ -1,0 +1,257 @@
+#*********************************************************************
+# content = software data
+# version = 0.1.0
+# date    = 2017-08-01
+
+# author  = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+
+
+#*****************************************************************************************************************************
+# DEFAULT
+EXTENSION_CODE:
+  ma  : mayaAscii
+  mb  : mayaBinary
+  obj : OBJ
+  abc : Alembic
+  nk  : nuke
+  tif : tiff
+  exr : openExr
+  avi : avi
+  jpg : jpeg
+
+
+EXTENSION:
+  maya:      ma
+  max :      max
+  nuke:      nk
+  houdini:   hipnc
+  photoshop: psd
+
+  texture: png
+  render:  exr
+
+
+#*****************************************************************************************************************************
+# MAYA
+MAYA:
+  version: &MAYA_VERSION 2017
+  path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
+
+  # start command
+  start: !join ['start "" "', *MAYA_PATH, '"'] # {} replaced by open_file
+
+  renderer:
+  renderer_path:
+
+
+  ENV: # Added BEFORE software start
+    PYTHONPATH:
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [SOFTWARE_PATH, /shelf]
+
+    MAYA_SCRIPT_PATH: #[SOFTWARE_PATH, /scripts]
+
+    MAYA_PLUG_IN_PATH:
+      - !env [SOFTWARE_PATH, /plugins]
+
+    MAYA_SHELF_PATH:
+      - !env [SOFTWARE_PATH, /shelf]
+
+    # SPLASHSCREEN & IMG PATH
+    XBMLANGPATH:
+      - !env [IMG_PATH, /software/maya]
+      - !env [IMG_PATH, /software/maya/shelf]
+
+    # DISABLE close reports
+    MAYA_DISABLE_CIP: 1
+    MAYA_DISABLE_CER: 1
+
+
+  MENU:
+    - Plex:
+        open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import libFunc; libFunc.open_folder(cmds.file(q=True, sceneName=True))')
+        open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import libFunc;import libData; libFunc.open_folder(libData.get_data("project")["path"])')
+
+    - break:  menuItem(p="{}", d=True)
+
+    - Save: menuItem(p="{}", l='Save', c='import arSave; arSave.start()')
+    - Load: menuItem(p="{}", l='Load', c='import arLoad; arLoad.start()')
+
+    - break:  menuItem(p="{}", d=True)
+
+    - Utils:
+        position_selected: menuItem(p="{}", l='Position to First Selection', c='import maya_utils; maya_utils.position_selected()')
+
+    - break:  menuItem(p="{}", d=True)
+
+    - Report: menuItem(p="{}", l='Report', c='import libFunc; libFunc.get_help("issues")')
+    - Help:   menuItem(p="{}", l='Help', c='import libFunc; libFunc.get_help()')
+
+
+  # SPECIFIC settings
+  SETTINGS:
+    FPS:
+      24: film
+      25: pal
+      30: ntsc
+      48: show
+      50: palf
+      60: ntscf
+
+    unit: cm
+
+
+
+#*****************************************************************************************************************************
+# NUKE
+NUKE:
+  version:      &NUKE_VERSION 11.0                                # SET version
+  version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      # SET versiom
+
+  start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
+
+  path: !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
+
+
+  ENV:
+    PYTHONPATH:
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [SOFTWARE_PATH, /gizmos]
+
+    NUKE_PATH:
+      - !env [PIPELINE_PATH]
+      - !env [SOFTWARE_PATH]
+      # - STATUS_PATH
+      # - PLUGIN_PATH
+
+    # Init & Menu
+    NUKE_INIT_PATH: !env [SOFTWARE_PATH]
+    NUKE_MENU_PATH: !env [SOFTWARE_PATH]
+
+    NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
+
+    PATH: *NUKE_DIR
+
+
+  MENU:
+    - Plex:
+        open_scene_folder:   addCommand('Open Scene Folder', 'import libFunc; libFunc.open_folder(nuke.root().knob("name").value())')
+        open_project_folder: addCommand('Open Project Folder', 'import libFunc;import libData; libFunc.open_folder(libData.get_data("project")["path"])')
+
+    - break:   addSeparator()
+
+    - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
+    - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
+
+    - break:   "addSeparator()"
+
+    - arWrite: addCommand('arWrite', 'arWrite()', 'ctrl+alt+w', 'write.ico')
+
+    - break:   addSeparator()
+
+    - Report:  addCommand('Report', 'import libFunc; libFunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
+    - Help:    addCommand('Help', 'import libFunc; libFunc.get_help()', 'ctrl+alt+h', 'help.ico')
+
+  SETTINGS:
+
+
+#*****************************************************************************************************************************
+# HOUDINI
+HOUDINI:
+  version: &HOUDINI_VERSION 16.0.633
+  path:    &HOUDINI_PATH !join ["C:/Program Files/Side Effects Software/Houdini ", *HOUDINI_VERSION, /bin/houdini.exe]
+
+  start: *HOUDINI_PATH
+
+  renderer:
+  renderer_path:
+
+
+  ENV:
+    PYTHONPATH:
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [DATA_PROJECT_PATH, /houdini]
+
+    HOUDINI_USER_PREF_DIR:
+      - !env_first [DATA_PROJECT_PATH, /houdini]
+    HOUDIN_PATH:
+      - !env [DATA_PROJECT_PATH, /houdini]
+
+    #   - !env [DATA_PROJECT_PATH, houdini]
+
+    HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
+
+  # MENU: plex/data/$project/houdini/MainMenuMaster.xml
+
+  SETTINGS:
+
+
+#*****************************************************************************************************************************
+# 3DsMax
+MAX:
+  version: &MAX_VERSION 2017
+  path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]
+
+  start: *MAX_PATH
+
+  renderer:
+  renderer_path:
+
+  ENV:
+    PATH:
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [IMG_PATH, /software/max]
+
+    PYTHONPATH:
+      - !env [SOFTWARE_PATH]
+      - !env [SOFTWARE_PATH, /scripts]
+      - !env [SOFTWARE_PATH, /plugins]
+      - !env [IMG_PATH, /software/max]
+
+  # ADSKFLEX_LICENSE_FILE:
+
+  MENU:
+    - plex:
+        open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder', 'Open Scene Folder', max_menu.open_scene_folder))
+        open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder', 'Open Project Folder', max_menu.open_project_folder))
+
+    - break: AddSeparator()
+
+    - Save:    AddItem(MaxPlus.ActionFactory.Create('Save', 'Save', max_menu.save))
+    - Load:    AddItem(MaxPlus.ActionFactory.Create('Load', 'Load', max_menu.load))
+
+    - break:   AddSeparator()
+
+    - Report: "AddItem(MaxPlus.ActionFactory.Create('Report', 'Report', max_menu.get_report))"
+    - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help', 'Help', max_menu.get_help))"
+
+
+  SETTINGS:
+
+
+#*****************************************************************************************************************************
+# NUKE
+DESKTOP:
+  version:  0.1.0
+  path:
+
+  start:
+
+
+
+#*****************************************************************************************************************************
+# RV
+RV:
+  version:
+  path: "C:/Program Files/Tweak/RV/bin/rv.exe"
+
+  start:
+

@@ -1,0 +1,34 @@
+#*********************************************************************
+# content   = pipeline data
+# version   = 0.0.4
+# date      = 2017-01-01
+#
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+
+# USE this project settings
+# data/project/$project
+project: default
+
+
+# IMPORTANT: order
+# DEFAULT:   local, project, master
+# use $this for current location
+PATH:
+    # 1.local (dev & debug)
+    - C:\sandbox
+    # 2.project (production)
+    - D:\project
+    # 3.pipeline (master)
+    - $this # D:\plex
+
+
+# USER customize
+user_data: True
+# [True] - overwrite project with user data (if exists)
+# [False]- use just project data
+
+
+PIPELINE:
+  name:    Plex
+  version: 1.0.4

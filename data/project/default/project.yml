@@ -1,0 +1,65 @@
+#*********************************************************************
+# content = project data
+# version = 0.1.0
+# date    = 2017-08-01
+
+# author  = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+
+name: Plex
+
+path: &PROJECT D:/project
+
+resolution:
+  - 1920
+  - 1080
+
+fps: 24
+
+
+PATH:
+  user              : !join [*PROJECT, /05_user]
+  preproduction     : !join [*PROJECT, /10_pre]
+
+  footage           : &FOOTAGE !join [*PROJECT, /20_footage]
+  footage_hdri      : !join [*FOOTAGE, /hdri]
+  footage_shader    : !join [*FOOTAGE, /shader]
+  footage_scene     : !join [*FOOTAGE, /scene]
+  footage_textures  : !join [*FOOTAGE, /textures]
+
+  assets            : !join [*PROJECT, /30_assets]
+  shots             : &SHOTS !join [*PROJECT, /40_shots]
+
+  comp              : !join [*SHOTS, ]
+
+  render            : !join [*PROJECT, /45_render]
+  post              : &POST !join [*PROJECT, /50_post]
+  post_edit         : &EDIT !join [*POST, /edit]
+  post_edit_cut     : !join [*EDIT, /_cut]
+  post_edit_music   : !join [*EDIT, /_music]
+  post_edit_sound   : !join [*EDIT, /_sound]
+  final             : !join [*POST, /final]
+  grade             : !join [*POST, /grade]
+  mov               : !join [*POST, /mov]
+
+
+REPOSITORY:
+  username: guest
+  password:
+
+  owner: richteralexander
+  repository: plex
+
+
+HELP:
+  main: &HELP https://github.com/richteralexander/plex/wiki
+  arUtil:     !join [*HELP, /arUtil]
+  arSave:     !join [*HELP, /arSave]
+  arReporter: !join [*HELP, /arReporter]
+  arDesktop:  !join [*HELP, /arDesktop]
+  arNotificator: !join [*HELP, /arNotificator]
+
+  shelf:  !join [*HELP, /shelf]
+  issues: https://github.com/richteralexander/plex/issues
+
+

@@ -1,0 +1,102 @@
+#*********************************************************************
+# content   = scripts
+# version   = 0.0.1
+# date      = 2017-01-01
+
+# author    = Alexander Richter <pipeline@richteralexander.com>
+#*********************************************************************
+
+# seperate with comma: save,report
+
+# active:   True|False
+# software: os, maya,nuke,houdini,c4d,blender
+
+
+
+#*********************************************************************
+arUtil:
+  active: True
+
+  progress_color:
+    - lightblue   # 0-neutral
+    - lightgreen  # 1-done
+    - orange      # 2-warning
+    - red         # 3-failed
+
+  progress_img:
+    - btn/btnWrite48
+    - btn/btnAccept48
+    - btn/btnWarning48
+    - btn/btnDenial48
+
+
+#*********************************************************************
+arNotice:
+  active: True
+
+  timer: 7
+
+
+#*********************************************************************
+arSave:
+  active: True
+
+  start: &arSave import arSave; arSave.start()
+  img: &arSave_img png, jpg, tiff
+
+  just_screenshot: True
+
+
+#*********************************************************************
+arLoad:
+  active: True
+  img: *arSave_img
+
+
+#*********************************************************************
+arDesktop:
+  active: True
+  auto_start: True
+
+  style: "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
+
+  SOFTWARE:
+    maya: self.press_btnOpenMaya
+    max: self.press_btnOpenMax
+    nuke: self.press_btnOpenNuke
+    houdini: self.press_btnOpenHoudini
+
+
+#*********************************************************************
+arWrite:
+  active: True
+  renderthreads: 12
+
+
+#*********************************************************************
+smartLoader:
+  active:   True
+
+  start: &smartLoader import arSave; arSave.start()
+
+  shortcut: F1
+
+  ignore:
+  favourite:
+
+  # priority order
+  CONTENT:
+    SHOTS:  Tank().data['project']['PATH']['shots']
+
+    ASSETS: Tank().data['project']['PATH']['assets']
+
+    SCRIPTS:
+      arSave: *arSave
+      Report: import libFunc; libFunc.get_help('issues')
+      Help:   import libFunc; libFunc.get_help()
+
+    SOFTWARE:
+      maya:    Tank().data['software']['MAYA']['start']
+      nuke:    Tank().data['software']['NUKE']['start']
+      3ds max: Tank().data['software']['MAX']['start']
+      houdini: Tank().data['software']['HOUDINI']['start']
