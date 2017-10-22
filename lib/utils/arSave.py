@@ -54,7 +54,7 @@ class ArSave(ArUtil):
         self.wgSave.btnVersionUp.clicked.connect(self.update_version)
         self.wgSave.btnVersionDown.clicked.connect(lambda: self.update_version(add=-1))
 
-        self.wgSave.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
+        # self.wgSave.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
         self.wgSave.btnScreenshot.clicked.connect(self.press_btnScreenshot)
         self.wgSave.btnSnapshotViewport.clicked.connect(self.press_btnSnapshotViewport)
         self.wgSave.btnSnapshotRender.clicked.connect(self.press_btnSnapshotRender)
@@ -193,7 +193,6 @@ class ArSave(ArUtil):
 
         note = arNotice.Notice(title = os.path.basename(self.save_file).split('.')[0],
                                msg   = self.wgSave.edtComment.text(),
-                               user  = User().id,
                                func  = 'SAVE' if not self.wgHeader.cbxAdd.isChecked() else 'PUBLISH',
                                img   = libSnapshot.default_tmp_path,
                                img_link = os.path.dirname(self.save_file))
@@ -205,7 +204,7 @@ class ArSave(ArUtil):
     def set_meta_data(self, save_path=''):
         if not save_path: save_path = self.save_file
         meta_path = os.path.dirname(save_path) + libData.META_INFO
-        LOG.info(meta_path)
+        # LOG.info(meta_path)
         comment_dict = {'user':   User().id,
                         'comment': str(self.wgSave.edtComment.text())}
         libData.set_data(meta_path, os.path.basename(save_path), comment_dict)
