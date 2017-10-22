@@ -162,6 +162,7 @@ def save_snapshot(rlt_path, src_path=default_tmp_path):
     libFunc.create_folder(rlt_path)
     img.save(rlt_path, format=libData.THUMBS_FORMAT)
     remove_tmp_img(src_path)
+    return rlt_path
 
 def remove_tmp_img(img_path=default_tmp_path):
     try:    os.remove(img_path)

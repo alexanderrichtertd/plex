@@ -191,6 +191,9 @@ class Software(Singleton):
     def scene_saveAs(self, file):
         print 'SAVE'
         scene_path = ''
+
+        self.scene_setup(file)
+
         if self._software == "maya":
             import pymel.core as pm
             scene_path = pm.saveAs(file)
@@ -231,6 +234,12 @@ class Software(Singleton):
         # if ref or ".abc" in self.save_dir or ".obj" in self.save_dir or ".fbx" in self.save_dir:
         #     # file -r -type "mayaBinary"  -ignoreVersion -gl -mergeNamespacesOnClash false -namespace "bull_MODEL_v004_jo" -options "v=0;" "K:/30_assets/bull/10_MODEL/WORK/bull_MODEL_v004_jo.mb";
         #     mel.eval('file -r -type "' + s.FILE_FORMAT_CODE["." + self.save_dir.split(".")[-1]] + '" -ignoreVersion -gl -mergeNamespacesOnClash false "' + self.save_dir.replace("\\", "/") + '"')
+
+    def scene_setup(self, file):
+        if self._software == "maya":
+            import settings
+            settings.setup_scene(file)
+        else: LOG.warning('NO scene returned: No software cmd found')
 
 
     #*********************************************************************

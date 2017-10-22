@@ -184,9 +184,8 @@ class ArSaveAs(ArUtil):
         if self.new_file:
             Tank().software.scene_saveAs(self.save_file)
             libSnapshot.create_any_screenshot(self.wgSaveAs)
-            libSnapshot.save_snapshot(self.save_file)
+            tmp_img_path = libSnapshot.save_snapshot(self.save_file)
 
-            tmp_img_path = libSnapshot.default_tmp_path
             tmp_title = os.path.basename(self.save_file).split('.')[0]
             tmp_func = 'SAVE AS'
 
@@ -202,7 +201,6 @@ class ArSaveAs(ArUtil):
 
         note = arNotice.Notice(title  = tmp_title,
                                msg    = 'CREATED a new {} with folders'.format(self.wgSaveAs.cbxScene.currentText()),
-                               user   = User().id,
                                func   = tmp_func,
                                img    = tmp_img_path,
                                img_link = os.path.dirname(self.save_file))
