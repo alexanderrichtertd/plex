@@ -20,6 +20,7 @@ import subprocess
 import libLog
 import libData
 import libFunc
+
 from subclass import Singleton
 
 
@@ -188,11 +189,11 @@ class Software(Singleton):
         else: LOG.warning('NO scene returned: No software cmd found')
         return scene_path
 
-    def scene_saveAs(self, file):
+    def scene_saveAs(self, file, setup_scene=False):
         print 'SAVE'
         scene_path = ''
 
-        self.scene_setup(file)
+        if setup_scene: self.scene_setup(file)
 
         if self._software == "maya":
             import pymel.core as pm
@@ -237,8 +238,8 @@ class Software(Singleton):
 
     def scene_setup(self, file):
         if self._software == "maya":
-            import settings
-            settings.setup_scene(file)
+            import maya_settings
+            maya_settings.setup_scene(file)
         else: LOG.warning('NO scene returned: No software cmd found')
 
 

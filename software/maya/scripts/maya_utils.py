@@ -12,9 +12,9 @@
 # http://td.animationsinstitut.de
 #*********************************************************************
 
+import maya.mel as mel
 from pymel.core import *
 from functools import wraps
-import maya.mel as mel
 
 import libLog
 

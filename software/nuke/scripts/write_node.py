@@ -105,7 +105,6 @@ def render():
 
     note = arNotice.Notice(title = os.path.basename(nuke.root().name()).split('.')[0],
                            msg   = notice_status[tmp_job],
-                           user  = getpass.getuser(),
                            func  = tmp_job,
                            img   = 'lbl/lblNuke131' if tmp_job!='NO JOB' else 'lbl/lblWarning131',
                            img_link = '')

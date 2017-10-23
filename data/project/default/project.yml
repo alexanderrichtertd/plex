@@ -8,7 +8,7 @@
 
 name: Plex
 
-path: &PROJECT D:/project
+path: &PROJECT C:\Users\arichter\project
 
 resolution:
   - 1920

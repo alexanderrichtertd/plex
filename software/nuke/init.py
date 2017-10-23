@@ -39,11 +39,11 @@ RESOLUTION    = (' ').join([str(project_data['resolution'][0]),
 # FOLDER CREATION
 def createWriteDir():
     file_name = nuke.filename(nuke.thisNode())
-    file_path = os.path.dirname( file_name )
+    file_path = os.path.dirname(file_name)
     os_path   = nuke.callbacks.filenameFilter(file_path)
 
     # cope with the directory existing already by ignoring that exception
-    try: os.makedirs( os_path )
+    try: os.makedirs(os_path)
     except OSError, e:
       if e.errno != errno.EEXIST:
         raise

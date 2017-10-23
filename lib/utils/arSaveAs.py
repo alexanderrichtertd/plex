@@ -182,7 +182,7 @@ class ArSaveAs(ArUtil):
         for folder in save_list: libFunc.create_folder(folder)
 
         if self.new_file:
-            Tank().software.scene_saveAs(self.save_file)
+            Tank().software.scene_saveAs(self.save_file, setup_scene=True)
             libSnapshot.create_any_screenshot(self.wgSaveAs)
             tmp_img_path = libSnapshot.save_snapshot(self.save_file)
 
