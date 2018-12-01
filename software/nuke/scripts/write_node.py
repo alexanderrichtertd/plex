@@ -1,15 +1,10 @@
 #*********************************************************************
 # content   = write node functions
 # version   = 1.0.0
-# date      = 2017-01-01
+# date      = 2018-12-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Filmakademie Baden-Wuerttemberg, Animationsinstitut
-# author    = Alexander Richter <pipeline@richteralexander.com>
-#*********************************************************************
-# This source file has been developed within the scope of the
-# Technical Director course at Filmakademie Baden-Wuerttemberg.
-# http://td.animationsinstitut.de
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 import os

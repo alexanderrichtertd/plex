@@ -1,15 +1,10 @@
 #*********************************************************************
 # content   = setup software attributes
 # version   = 0.0.1
-# date      = 2017-01-01
+# date      = 2018-12-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Animationsinstitut
-# author    = Alexander Richter <pipeline@richteralexander.com>
-#*********************************************************************
-# This source file has been developed within the scope of the
-# Technical Director course at Filmakademie Baden-Wuerttemberg.
-# http://td.animationsinstitut.de
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 import os
@@ -155,77 +150,70 @@ class Software(Singleton):
 
     @property
     def scene_path(self):
-        scene_path = ''
         if self._software == "maya":
             import pymel.core as pm
-            scene_path = pm.sceneName()
+            return pm.sceneName()
         elif self._software == "nuke":
             import nuke
-            scene_path = nuke.root().knob('name').value()
+            return nuke.root().knob('name').value()
         elif self._software == "max":
             import MaxPlus
-            scene_path = MaxPlus.Core.EvalMAXScript("maxFilePath + maxFileName").Get()
-        elif self._software == "houdini":
-            print "file->houdini"
-            scene_path = ''
-        else: LOG.warning('NO scene returned: No software cmd found')
-        LOG.info('scene_path: {}'.format(scene_path))
-        return scene_path
-
-    def scene_save(self):
-        scene_path = ''
-        if self._software == "maya":
-            import pymel.core as pm
-            scene_path = pm.saveFile(file)
-        elif self._software == "nuke":
-            import nuke
-            scene_path = nuke.scriptSave()
-        elif self._software == "max":
-            import MaxPlus
-            scene_path = MaxPlus.FileManager.Save()
+            return MaxPlus.Core.EvalMAXScript("maxFilePath + maxFileName").Get()
         elif self._software == "houdini":
             print "file->houdini"
             return ''
         else: LOG.warning('NO scene returned: No software cmd found')
         return scene_path
 
+    def scene_save(self):
+        if self._software == "maya":
+            import pymel.core as pm
+            return pm.saveFile(file)
+        elif self._software == "nuke":
+            import nuke
+            return nuke.scriptSave()
+        elif self._software == "max":
+            import MaxPlus
+            return MaxPlus.FileManager.Save()
+        elif self._software == "houdini":
+            print "file->houdini"
+            return ''
+        else: LOG.warning('NO scene returned: No software cmd found')
+
     def scene_saveAs(self, file, setup_scene=False):
         print 'SAVE'
-        scene_path = ''
 
         if setup_scene: self.scene_setup(file)
 
         if self._software == "maya":
             import pymel.core as pm
-            scene_path = pm.saveAs(file)
+            return pm.saveAs(file)
         elif self._software == "nuke":
             import nuke
             nuke.scriptSaveAs(file)
         elif self._software == "max":
             import MaxPlus
-            scene_path = MaxPlus.FileManager.Save(file)
+            return MaxPlus.FileManager.Save(file)
         elif self._software == "houdini":
             print "file->houdini"
             return ''
         else: LOG.warning('NO scene returned: No software cmd found')
-        return scene_path
 
     def scene_open(self, file):
-        scene_path = ''
+        return ''
         if self._software == "maya":
             import pymel.core as pm
-            scene_path = pm.openFile(file, force=True)
+            return pm.openFile(file, force=True)
         elif self._software == "nuke":
             import nuke
-            scene_path = nuke.scriptOpen(file)
+            return nuke.scriptOpen(file)
         elif self._software == "max":
             import MaxPlus
-            scene_path = MaxPlus.FileManager.Open(file)
+            return MaxPlus.FileManager.Open(file)
         elif self._software == "houdini":
             print "file->houdini"
             return ''
         else: LOG.warning('NO scene returned: No software cmd found')
-        return scene_path
 
     def scene_import(self, file):
         pass

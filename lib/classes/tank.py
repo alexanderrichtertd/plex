@@ -1,4 +1,11 @@
-
+#*********************************************************************
+# content   = main hub
+# version   = 0.0.1
+# date      = 2018-12-01
+#
+# license   = MIT
+# author    = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
 import os
 
 import libData

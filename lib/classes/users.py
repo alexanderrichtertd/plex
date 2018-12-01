@@ -1,15 +1,10 @@
 #*********************************************************************
 # content   = set und get user data
 # version   = 0.0.1
-# date      = 2017-01-01
+# date      = 2018-12-01
 #
 # license   = MIT
-# copyright = Copyright 2017 Animationsinstitut
-# author    = Alexander Richter <pipeline@richteralexander.com>
-#*********************************************************************
-# This source file has been developed within the scope of the
-# Technical Director course at Filmakademie Baden-Wuerttemberg.
-# http://td.animationsinstitut.de
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 # why users? because user is already taken by python
