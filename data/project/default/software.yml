@@ -1,9 +1,9 @@
 #*********************************************************************
 # content = software data
 # version = 0.1.0
-# date    = 2017-08-01
+# date    = 2018-12-01
 
-# author  = Alexander Richter <pipeline@richteralexander.com>
+# author  = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 
@@ -115,7 +115,7 @@ NUKE:
 
   start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
-  path: !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
+  path:  !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
 
 
   ENV:
@@ -240,7 +240,7 @@ MAX:
 
 
 #*****************************************************************************************************************************
-# NUKE
+# DESKTOP
 DESKTOP:
   version:  0.1.0
   path:

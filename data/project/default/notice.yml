@@ -1,0 +1,155 @@
+#*********************************************************************
+# content   = info for default notice
+# version   = 0.1.0
+# date      = 2018-12-01
+#
+# license   = MIT
+# author    = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+
+common:
+    cancel:
+        title : CANCEL
+        msg   : |
+                Action was aborted.
+        quote : NOP! Changed my mind!
+        img   : fail
+
+
+    unknown:
+        title : UNKNOWN
+        msg   : |
+                Something did happen ... good/bad?
+        quote : Dont panic!
+        img:    help
+
+    changelog:
+        title : CHANGELOG
+        msg   : Newest updates live
+
+    fail:
+        title : FAILED PROCESS
+        msg   : Something failed
+        quote : We are sorry but disappointment is part of progress.
+
+    up_to_date:
+        title : UP TO DATE
+        msg   : |
+                Everything has the newest version.
+        quote : What are the kids up to today?
+        img   : renderlayer
+
+    open_folder:
+        title : OPEN FOLDER
+        msg   : Open current scene/render folder
+        quote : You want it? You get it!
+        img   : open_folder
+
+
+error:
+    no_open_scene:
+        title : NO SCENE IS OPEN
+        msg   : |
+                We need an open scene to work.
+        quote : Magic needs substance.
+
+    no_open_folder:
+        title : FOLDER CANT BE OPEN
+        msg   : |
+                Folder doesnt exist.
+        quote : Magic needs direction.
+
+    no_pipeline_path:
+        title : NO PIPELINE PATH
+        msg   : |
+                The current path is not pipeline conform.
+        quote : Our pipeline dogs are on to you ...
+
+    no_selection:
+        title : NOTHING WAS SELECTED
+        msg   : |
+                This process needs a selection to work.
+        quote : ... its selective.
+
+    no_renderer:
+        title : NO PRODUCTION RENDERER
+        msg   : |
+                Select the main renderer.
+        quote : Its not called chaos for nothing.
+
+    no_reference:
+        title : NO REFERENCE
+        msg   : |
+                There are no references in the scene.
+        quote : Who is this 'Reference'?!
+
+    no_light_selection:
+        title : NO SELECTION
+        msg   : |
+                Missing selection of lights & meshes
+                Just lights selected will get default state.
+        quote : Where is my guiding light, man?!
+
+
+
+rendersettings:
+    lgt:
+        title : LGT - RENDERSETTINGS
+        msg   : |
+                It doesnt look pretty but it is great to work with.
+        quote : Welcome to the Age of Fire.
+
+    preview:
+        title : PREVIEW - RENDERSETTINGS
+        msg   : A close to final stage.
+        quote : Lets have a look.
+
+    final:
+        title : FINAL - RENDERSETTINGS
+        msg   : |
+                Great finisher but customize it if needed
+                and use "custom" on submit.
+        quote : The client is expecting it to be ... pretty.
+
+    custom:
+        title : CUSTOM - RENDERSETTINGS
+        msg   : Will use your scene settings.
+        quote : Do your own thing.
+        img   : final
+
+
+shelf:
+    save:
+        title : SAVE SHOT
+        msg   : Version up your scene (to be save)
+        quote : Scenes are not build to last.
+
+    submit:
+        title : SUBMIT
+        msg   : |
+                Submit to the farm.
+        quote : They arent called slaves for nothing.
+
+
+    light_linking:
+        title : CHANGE LIGHT LINKING
+        msg   : |
+                Selected lights and objects are linked/unlinked.
+                Default State: Just lights selected
+        quote : Put a spot on it
+        img   : final
+
+    report:
+        title : REPORT
+        msg   : |
+                Write about issues and features.
+                Use labels, members and be precise.
+        quote : Bad reports lead to bad solutions.
+
+    help:
+        title : HELP
+        msg   : |
+                lgt workflow and lgt shelf
+                is a good source
+        quote : Stop working! Start browsing (for help)!

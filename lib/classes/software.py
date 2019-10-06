@@ -247,7 +247,7 @@ class Software(Singleton):
 
     def add_menu_item(self, menu_node, new_command):
         if   self._software == 'maya': import maya.cmds as cmds
-        elif self._software == 'max':  import MaxPlus
+        elif self._software == 'max' : import MaxPlus
         elif self._software == 'nuke': pass
         else:
             LOG.debug('CANT find software: {}'.format(software))

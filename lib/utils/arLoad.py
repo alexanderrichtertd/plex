@@ -1,7 +1,7 @@
 #*********************************************************************
-# content   = saves work and publish files
-#             executes other scripts on PUBLISH (on task in file name)
-# version   = 0.0.1
+# content   = saves work and publishes files
+#             executes other scripts on PUBLISH (task in file name)
+# version   = 0.1.1
 # date      = 2018-12-01
 #
 # license   = MIT
@@ -115,7 +115,7 @@ class ArLoad(ArUtil):
 
         open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]].upper()
 
-       # OPEN in current software
+        # OPEN in current software
         try:
             if open_software.lower() == Tank().software.software.lower():
                 Tank().software.scene_open(self.load_file)
