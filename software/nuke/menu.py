@@ -1,29 +1,31 @@
 #*********************************************************************
 # content   = menu Nuke
 # version   = 0.0.1
-# date      = 2018-12-01
+# date      = 2019-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
+
 import os
 import nuke
 import webbrowser
 
-import libLog
 from tank import Tank
 
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
-
-all_data      = Tank().data
-project_data  = all_data['project']
-software_data = all_data['software']
-wgObject = ''
 
 #*********************************************************************
-# FUNC
+# VARIABLE
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = Tank().log.init(script=TITLE)
+
+PROJECT_DATA  = Tank().data_project
+SOFTWARE_DATA = Tank().data_software
+
+
+#*********************************************************************
+# FUNCTIONS
 def add_gizmo_menu(menu):
     for paths in os.getenv('SOFTWARE_SUB_PATH').split(';'):
         for file in os.listdir(paths):
@@ -36,11 +38,11 @@ def add_write_node():
     for node in nuke.allNodes('arWrite'):
         write_node.create_node(node)
 
+
 #*********************************************************************
 # TOOLBAR
-
-menu_data    = software_data['NUKE']['MENU']
-menuNode     = nuke.menu('Nodes').addMenu(project_data['name'], icon = 'nuke.ico')
+menu_data = SOFTWARE_DATA['NUKE']['MENU']
+menuNode  = nuke.menu('Nodes').addMenu(PROJECT_DATA['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 
@@ -51,7 +53,7 @@ add_gizmo_menu(menuNode)
 
 
 #*********************************************************************
-# FUNC
+# ACTIONS
 def save():
     from utils import arSave
     arSave.start()

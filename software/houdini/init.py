@@ -9,15 +9,15 @@
 
 
 import os
-import libFunc
+import pipefunc
 
-import libLog
+import pipelog
 
 
 #*************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
 #*************************
@@ -28,9 +28,9 @@ def add_menu():
     try:
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
-            find_title = libFunc.find_inbetween(content, '<label>', '</label>')
+            find_title = pipefunc.find_inbetween(content, '<label>', '</label>')
             content = content.replace('<label>{}</label>'.format(find_title), '<label>{}</label>'.format(os.getenv('PROJECT_NAME')))
-            print content
+            print(content)
             # WRITE new XML
             outfile.seek(0)
             outfile.write(content)

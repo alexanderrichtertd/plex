@@ -12,12 +12,11 @@ import shutil
 
 import MaxPlus
 
-import libLog
-import libData
+import pipelog
 from tank import Tank
 
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 Tank().init_software()
 
@@ -31,7 +30,7 @@ def create_menu():
     delete_menu()
 
     if MaxPlus.MenuManager.MenuExists(menu_name):
-        print ('The menu ', menu_name, ' already exists')
+        print('The menu ', menu_name, ' already exists')
     else:
         menu = MaxPlus.MenuBuilder(menu_name)
         Tank().software.add_menu(menu)
@@ -42,7 +41,7 @@ def delete_menu():
 
 
 def copy_splash():
-    splash_path = libData.get_img_path("software/max/splash.bmp")
+    splash_path = Tank().get_img_path("software/max/splash.bmp")
     max_path    = os.path.dirname(Tank().software.data['path'])
 
     if not os.path.exists(max_path + '/splash.bmp'):

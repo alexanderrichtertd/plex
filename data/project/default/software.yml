@@ -27,6 +27,8 @@ EXTENSION:
   nuke:      nk
   houdini:   hipnc
   photoshop: psd
+  mari:      mrt
+  substance: spp
 
   texture: png
   render:  exr
@@ -35,7 +37,7 @@ EXTENSION:
 #*****************************************************************************************************************************
 # MAYA
 MAYA:
-  version: &MAYA_VERSION 2015
+  version: &MAYA_VERSION 2018
   path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
   # start command
@@ -72,8 +74,8 @@ MAYA:
 
   MENU:
     - Plex:
-        open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import libFunc; libFunc.open_folder(cmds.file(q=True, sceneName=True))')
-        open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import libFunc;import libData; libFunc.open_folder(libData.get_data("project")["path"])')
+        open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
+        open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
 
     - break:  menuItem(p="{}", d=True)
 
@@ -87,8 +89,8 @@ MAYA:
 
     - break:  menuItem(p="{}", d=True)
 
-    - Report: menuItem(p="{}", l='Report', c='import libFunc; libFunc.get_help("issues")')
-    - Help:   menuItem(p="{}", l='Help', c='import libFunc; libFunc.get_help()')
+    - Report: menuItem(p="{}", l='Report', c='import pipefunc; pipefunc.get_help("issues")')
+    - Help:   menuItem(p="{}", l='Help', c='import pipefunc; pipefunc.get_help()')
 
 
   # SPECIFIC settings
@@ -102,8 +104,6 @@ MAYA:
       60: ntscf
 
     unit: cm
-
-
 
 
 
@@ -141,8 +141,8 @@ NUKE:
 
   MENU:
     - Plex:
-        open_scene_folder:   addCommand('Open Scene Folder', 'import libFunc; libFunc.open_folder(nuke.root().knob("name").value())')
-        open_project_folder: addCommand('Open Project Folder', 'import libFunc;import libData; libFunc.open_folder(libData.get_data("project")["path"])')
+        open_scene_folder:   addCommand('Open Scene Folder', 'import pipefunc; pipefunc.open_folder(nuke.root().knob("name").value())')
+        open_project_folder: addCommand('Open Project Folder', 'import pipefunc;import tank; pipefunc.open_folder(Tank().data_project["path"])')
 
     - break:   addSeparator()
 
@@ -155,10 +155,11 @@ NUKE:
 
     - break:   addSeparator()
 
-    - Report:  addCommand('Report', 'import libFunc; libFunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
-    - Help:    addCommand('Help', 'import libFunc; libFunc.get_help()', 'ctrl+alt+h', 'help.ico')
+    - Report:  addCommand('Report', 'import pipefunc; pipefunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
+    - Help:    addCommand('Help', 'import pipefunc; pipefunc.get_help()', 'ctrl+alt+h', 'help.ico')
 
   SETTINGS:
+
 
 
 #*****************************************************************************************************************************
@@ -194,10 +195,11 @@ HOUDINI:
   SETTINGS:
 
 
+
 #*****************************************************************************************************************************
 # 3DsMax
 MAX:
-  version: &MAX_VERSION 2017
+  version: &MAX_VERSION 2019
   path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]
 
   start: *MAX_PATH
@@ -239,6 +241,17 @@ MAX:
   SETTINGS:
 
 
+
+#*****************************************************************************************************************************
+# RV
+RV:
+  version:
+  path: "C:/Program Files/Tweak/RV/bin/rv.exe"
+
+  start:
+
+
+
 #*****************************************************************************************************************************
 # DESKTOP
 DESKTOP:
@@ -248,12 +261,4 @@ DESKTOP:
   start:
 
 
-
-#*****************************************************************************************************************************
-# RV
-RV:
-  version:
-  path: "C:/Program Files/Tweak/RV/bin/rv.exe"
-
-  start:
 

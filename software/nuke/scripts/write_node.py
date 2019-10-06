@@ -1,11 +1,12 @@
 #*********************************************************************
 # content   = write node functions
 # version   = 1.0.0
-# date      = 2018-12-01
+# date      = 2019-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 import os
 import sys
@@ -15,13 +16,15 @@ import webbrowser
 
 import nuke
 
-import libLog
+import pipelog
 import arNotice
-import libFunc
+import pipefunc
 from tank import Tank
 
+
+#*********************************************************************
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
 #*********************************************************************
@@ -37,7 +40,7 @@ def create_node(this_node=''):
     this_node["resolutionY"].setValue(this_node.height())
 
     fileName   = os.path.basename(nuke.root().name()).split(".")[0]
-    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/{render}/{file}/exr/{file}.%04d.exr".format(render=Tank().data['rules']['STATUS']['render'], file=fileName)
+    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/{render}/{file}/exr/{file}.%04d.exr".format(render=Tank().data_templates['STATUS']['render'], file=fileName)
     renderPath = renderPath.replace('\\','/')
 
     # this_node["rootPath"].setValue(renderPath)
@@ -50,9 +53,10 @@ def openRV(path):
     if not os.path.exists(os.path.dirname(path)) or not os.listdir(os.path.dirname(path)):
         LOG.warning("FOLDER : NOT EXISTS : " + path)
     else:
-        os.system('start "" "' + Tank().data['software']['RV']['path'] + '" ' + path)
+        os.system('start "" "' + Tank().data_software['RV']['path'] + '" ' + path)
 
 
+# TODO: REPLACE with lib.pipefunc.openFolder(path)
 def openFolder(path):
     path = os.path.dirname(path).replace("/","\\")
     if not os.path.exists(path) or not os.listdir(path):
@@ -118,14 +122,14 @@ def publishRender(file_type):
         if part == "COMP": break
 
     fileName    = ("_").join(fileName)
-    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().data['rules']['STATUS']['publish'] + "/" + file_type
+    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().data_templates['STATUS']['publish'] + "/" + file_type
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)
 
     if not os.path.exists(publishPath): os.makedirs(publishPath)
 
-    oldFrames = libFunc.getFolderList(oldPath, fileType='*' + file_type, ex=True)
+    oldFrames = pipefunc.getFolderList(oldPath, fileType='*' + file_type, ex=True)
 
     for oldFrame in oldFrames:
         framePart    = oldFrame.split(".")

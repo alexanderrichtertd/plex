@@ -326,7 +326,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../img/img.qrc">
-                <normaloff>:/btn/btn/btnCamera48.png</normaloff>:/btn/btn/btnCamera48.png</iconset>
+                <normaloff>:/btn/btn/btn_camera.png</normaloff>:/btn/btn/btn_camera.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -361,7 +361,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../img/img.qrc">
-                <normaloff>:/shelf/software/maya/shelf/shelf_viewport35.png</normaloff>:/shelf/software/maya/shelf/shelf_viewport35.png</iconset>
+                <normaloff>:/shelf/software/maya/shelf/shelf_viewport.png</normaloff>:/shelf/software/maya/shelf/shelf_viewport.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -396,7 +396,7 @@
               </property>
               <property name="icon">
                <iconset resource="../../../img/img.qrc">
-                <normaloff>:/shelf/software/maya/shelf/shelf_renderHigh35.png</normaloff>:/shelf/software/maya/shelf/shelf_renderHigh35.png</iconset>
+                <normaloff>:/shelf/software/maya/shelf/shelf_render_high.png</normaloff>:/shelf/software/maya/shelf/shelf_render_high.png</iconset>
               </property>
               <property name="iconSize">
                <size>

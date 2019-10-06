@@ -1,11 +1,12 @@
 #*********************************************************************
-# content   = informs project members about changes
+# content   = informs artists about changes
 # version   = 0.1.0
-# date      = 2018-12-01
+# date      = 2019-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 import os
 import sys
@@ -18,15 +19,15 @@ from threading import Timer
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import libLog
-import libData
-import libFunc
+import pipelog
+import pipefunc
+from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
 #*********************************************************************
@@ -40,7 +41,7 @@ class Notice():
                  img      = 'lbl/default',
                  img_link = 'http://richteralexander.com',
                  func     = '',
-                 timer    = int(libData.get_data('script')[TITLE].get('timer', 0))):
+                 timer    = 7):
 
         self.title      = str(title)   #Pipeline Update
         self.msg        = str(msg)     #New Features for Pipeline
@@ -76,19 +77,19 @@ class ArNotice():
         self.wgNotice.edtTitle.setText(self.notice.title)
         self.wgNotice.edtMsg.setPlainText(self.notice.msg)
 
-        self.wgNotice.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path('user/' + self.notice.user))))
+        self.wgNotice.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + self.notice.user))))
         self.wgNotice.btnUser.setToolTip(('').join([self.notice.user, '\n', self.notice.time]))
-        self.wgNotice.btnUser.clicked.connect(libFunc.get_help)
+        self.wgNotice.btnUser.clicked.connect(pipefunc.get_help)
 
         self.wgNotice.edtTitle.setText(self.notice.title)
 
         self.open_link = self.notice.img_link
         self.wgNotice.btnPreviewImg.setToolTip(self.open_link)
 
-        # if not os.path.exists(self.notice.img): self.notice.img = libData.get_img_path(self.notice.img)
+        # if not os.path.exists(self.notice.img): self.notice.img = Tank().get_img_path(self.notice.img)
         self.wgNotice.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.notice.img)))
-        if self.notice.func: self.wgNotice.lblFunc.setText(self.notice.func)
-        else:                self.wgNotice.lblFunc.hide()
+        # if self.notice.func: self.wgNotice.lblFunc.setText(self.notice.func)
+        # else:                self.wgNotice.lblFunc.hide()
         if not self.notice.img_link: self.wgNotice.btnPreviewImg.setEnabled(False)
         # self.wgNotice.btnCancel.hide()
 
@@ -128,12 +129,12 @@ class ArNotice():
             webbrowser.open(os.path.realpath(self.notice.img_link))
 
 
-
+#*********************************************************************
 def create_default_notice(script_string, msg=""):
     root, script_name = script_string.split(":")
 
-    img_notice_path = libfunc.get_data_path("img_notice")
-    notice_path     = libfunc.get_data_path("notice")
+    img_notice_path = pipefunc.get_data_path("img_notice")
+    notice_path     = pipefunc.get_data_path("notice")
 
     # READ YAML file
     if not os.path.exists(notice_path):
@@ -205,7 +206,7 @@ def create_changelog_popup():
     if "user" in changelog_data and current_user in changelog_data["user"]: notice_msg = changelog_data["user"][current_user]
 
     img_name = notice_data["img"] if "img" in notice_data else "changelog"
-    img_path = "{}/notice_{}.png".format(libfunc.get_data_path("img_notice"), img_name)
+    img_path = "{}/notice_{}.png".format(pipefunc.get_data_path("img_notice"), img_name)
 
     note = Notice(title    = notice_data["title"].format(current_user.split(".")[0].title()),
                   msg      = notice_msg,

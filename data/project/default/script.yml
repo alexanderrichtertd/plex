@@ -9,7 +9,7 @@
 # seperate with comma: save,report
 
 # active:   True|False
-# software: os, maya,nuke,houdini,c4d,blender
+# software: os, maya, max, nuke, houdini, c4d, blender
 
 
 
@@ -61,9 +61,9 @@ arDesktop:
   style: "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
 
   SOFTWARE:
-    maya: self.press_btnOpenMaya
-    max: self.press_btnOpenMax
-    nuke: self.press_btnOpenNuke
+    maya:    self.press_btnOpenMaya
+    max:     self.press_btnOpenMax
+    nuke:    self.press_btnOpenNuke
     houdini: self.press_btnOpenHoudini
 
 
@@ -86,17 +86,17 @@ smartLoader:
 
   # priority order
   CONTENT:
-    SHOTS:  Tank().data['project']['PATH']['shots']
+    SHOTS:  Tank().data_project['PATH']['shots']
 
-    ASSETS: Tank().data['project']['PATH']['assets']
+    ASSETS: Tank().data_project['PATH']['assets']
 
     SCRIPTS:
       arSave: *arSave
-      Report: import libFunc; libFunc.get_help('issues')
-      Help:   import libFunc; libFunc.get_help()
+      Report: import pipefunc; pipefunc.get_help('issues')
+      Help:   import pipefunc; pipefunc.get_help()
 
     SOFTWARE:
-      maya:    Tank().data['software']['MAYA']['start']
-      nuke:    Tank().data['software']['NUKE']['start']
-      3ds max: Tank().data['software']['MAX']['start']
-      houdini: Tank().data['software']['HOUDINI']['start']
+      maya:    Tank().data_software['MAYA']['start']
+      nuke:    Tank().data_software['NUKE']['start']
+      max:     Tank().data_software['MAX']['start']
+      houdini: Tank().data_software['HOUDINI']['start']

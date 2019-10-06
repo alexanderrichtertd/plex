@@ -11,13 +11,13 @@ import os
 
 import MaxPlus
 
-import libFunc
+import pipefunc
 
 def open_scene_folder():
-    libFunc.open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
+    pipefunc.open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
 
 def open_project_folder():
-    libFunc.open_folder(os.getenv("PROJECT_PATH"))
+    pipefunc.open_folder(os.getenv("PROJECT_PATH"))
 
 def save():
     import arSave
@@ -28,7 +28,7 @@ def load():
     arLoad.start()
 
 def get_report():
-    libFunc.get_help('issues')
+    pipefunc.get_help('issues')
 
 def get_help():
-    libFunc.get_help()
+    pipefunc.get_help()

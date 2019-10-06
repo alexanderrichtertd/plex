@@ -13,30 +13,34 @@ import webbrowser
 
 from Qt import QtWidgets, QtGui, QtCore
 
-import libLog
-import libData
-import libFunc
+import pipelog
+import pipefunc
+
 from tank import Tank
 from software import Software
 
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
 
-#**********************
+#*********************************************************************
+# VARIABLE
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+LOG   = pipelog.init(script=TITLE)
+
+
+#*********************************************************************
 # CLASS
 class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     def __init__(self, parent=None):
         QtWidgets.QSystemTrayIcon.__init__(self, parent)
         # self.activated.connect(self.showMainWidget)
-        self.setIcon(QtGui.QIcon(libData.get_img_path('software/default')))
+        self.setIcon(QtGui.QIcon(Tank().get_img_path('software/default')))
 
         self.parent = parent
 
         Tank().init_os()
         self.data = Tank().data
         self.user = Tank().user
-        self.project_data = Tank().data['project']
+        self.project_data = Tank().data_project
 
         menu = QtWidgets.QMenu()
         menu.setStyleSheet(self.data['script'][TITLE]['style'])
@@ -47,17 +51,17 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             adminMenu.setStyleSheet(self.data['script'][TITLE]['style'])
             menu.addMenu(adminMenu)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnFolder48')), 'Open Project Data')
+            menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_folder')), 'Open Project Data')
             menuItem.triggered.connect(self.press_btnOpenProjectLog)
-            menuItem = adminMenu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnFolder48')), 'Open User Data')
+            menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_folder')), 'Open User Data')
             menuItem.triggered.connect(self.press_btnOpenLocalLog)
 
             menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('user/' + self.user.id)), self.user.id)
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('user/' + self.user.id)), self.user.id)
         menuItem.triggered.connect(self.press_btnShowUserData)
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('project/default')), self.data['project']['name'])
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('project/default')), Tank().data_project['name'])
         menuItem.triggered.connect(self.press_btnOpenProjectPath)
 
         menu.addSeparator()
@@ -67,25 +71,25 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         menu.addMenu(subMenu)
 
         for soft, soft_func in self.data['script'][TITLE]['SOFTWARE'].items():
-            menuItem = subMenu.addAction(QtGui.QIcon(libData.get_img_path('software/' + soft)), soft.title())
+            menuItem = subMenu.addAction(QtGui.QIcon(Tank().get_img_path('software/' + soft)), soft.title())
             menuItem.triggered.connect(eval(soft_func))
 
         menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnFolderSearchGet48')), 'Load')
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_folder_get')), 'Load')
         menuItem.triggered.connect(self.press_btnLoad)
 
         menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnReport48')), 'Report')
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_report')), 'Report')
         menuItem.triggered.connect(self.press_btnReport)
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnHelp48')), 'Help')
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_help')), 'Help')
         menuItem.triggered.connect(self.press_btnHelp)
 
         menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(libData.get_img_path('btn/btnDenial48')), 'Quit')
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_denial')), 'Quit')
         menuItem.triggered.connect(self.press_closeStartup)
 
         self.setContextMenu(menu)
@@ -94,10 +98,10 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        libFunc.open_folder(self.project_data['PATH']['user'] + '/' + os.getenv('username'))
+        pipefunc.open_folder(self.project_data['PATH']['sandbox'] + '/' + os.getenv('username'))
 
     def press_btnOpenProjectPath(self):
-        libFunc.open_folder(self.project_data['path'])
+        pipefunc.open_folder(self.project_data['path'])
     #------------------------------
     def press_btnLoad(self):
         import arLoad
@@ -116,16 +120,16 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         Software().start('max')
     #------------------------------
     def press_btnOpenProjectLog(self):
-        libFunc.open_folder(libData.get_env('DATA_PROJECT_PATH'))
+        pipefunc.open_folder(Tank().get_env('DATA_PROJECT_PATH'))
 
     def press_btnOpenLocalLog(self):
-        libFunc.open_folder(libData.get_env('DATA_USER_PATH'))
+        pipefunc.open_folder(Tank().get_env('DATA_USER_PATH'))
     #------------------------------
     def press_btnReport(self):
-        libFunc.get_help('issues')
+        pipefunc.get_help('issues')
 
     def press_btnHelp(self):
-        libFunc.get_help(TITLE)
+        pipefunc.get_help(TITLE)
     #------------------------------
     def press_closeStartup(self):
         self.parent.instance().quit()
@@ -137,7 +141,7 @@ def start():
 
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
-    trayIcon.setToolTip(trayIcon.data['project']['name'] + ' [right click]')
-    trayIcon.showMessage(trayIcon.data['project']['name'], '[right click]', QtWidgets.QSystemTrayIcon.Information , 20000)
+    trayIcon.setToolTip(Tank().data_project['name'] + ' [right click]')
+    trayIcon.showMessage(Tank().data_project['name'], '[right click]', QtWidgets.QSystemTrayIcon.Information , 20000)
 
     app.exec_()

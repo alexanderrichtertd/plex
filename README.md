@@ -1,6 +1,5 @@
 > ### "A feature can't be a bug"-Release
-> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases) and read the **[open letter](https://github.com/richteralexander/plex/wiki/Credits)**.
-
+> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases) and my **[YouTube Channel](https://youtube.com/alexanderrichtertd)**.
 > [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)
 
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)

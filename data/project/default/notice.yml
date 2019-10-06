@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = info for default notice
 # version   = 0.1.0
-# date      = 2018-12-01
+# date      = 2019-10-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -15,7 +15,6 @@ common:
                 Action was aborted.
         quote : NOP! Changed my mind!
         img   : fail
-
 
     unknown:
         title : UNKNOWN
@@ -119,7 +118,7 @@ rendersettings:
         img   : final
 
 
-shelf:
+apps:
     save:
         title : SAVE SHOT
         msg   : Version up your scene (to be save)
@@ -130,7 +129,6 @@ shelf:
         msg   : |
                 Submit to the farm.
         quote : They arent called slaves for nothing.
-
 
     light_linking:
         title : CHANGE LIGHT LINKING
@@ -153,3 +151,13 @@ shelf:
                 lgt workflow and lgt shelf
                 is a good source
         quote : Stop working! Start browsing (for help)!
+
+
+hints:
+    shortcut:
+        title : Shortcuts
+        msg   : |
+                Accept - RETURN
+                Cancel - ESC
+        quote : Use shortcuts!
+

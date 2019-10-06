@@ -13,20 +13,22 @@ import webbrowser
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import libLog
-import libFunc
-import libData
-import libSnapshot
+import pipelog
+import pipefunc
+import snapshot
 
+from tank import Tank
 from users import User
 
-#**********************
+
+
+#*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
-#**********************
+#*********************************************************************
 # CLASS
 class ArUtil(object):
 
@@ -42,18 +44,18 @@ class ArUtil(object):
         self.preview_img_path = ''
         User().create()
 
-        self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnProject48"))))
+        self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_project"))))
 
         # BUTTONS ICONS
-        self.wgHeader.btnReport.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnReport48"))))
-        self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/default"))))
-        self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnFolder48"))))
-        self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("user/default")))) # current user
+        self.wgHeader.btnReport.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_report"))))
+        self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/default"))))
+        self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_folder"))))
+        self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("user/default")))) # current user
         self.wgHeader.btnUser.setToolTip(("").join(['<html><head/><body><p><span style=" font-weight:600;">',
                                                     User().name, '</span><br>',
                                                     User().rights, '<br>[open user folder]</p></body></html>']))
 
-        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path('btn/btnProject48')))) # current user
+        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('btn/btn_project')))) # current user
         self.wgHeader.btnProject.setToolTip(os.environ['PROJECT_NAME'] + '\n[open project folder]')
 
         # SIGNAL
@@ -72,7 +74,7 @@ class ArUtil(object):
         self.set_status()
         self.set_open_folder()
         self.wgHeader.edtComment.setText('')
-        self.wgHeader.setWindowIcon(QtGui.QIcon(libData.get_img_path("btn/program")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/program")))
         #self.add_preview(self.wgHeader.layMain)
         #self.add_menu()
 
@@ -91,10 +93,10 @@ class ArUtil(object):
         self.wgPreview.btnSnapshotRender.clicked.connect(self.press_btnSnapshotRender)
         self.wgPreview.btnSnapshotViewport.clicked.connect(self.press_btnSnapshotViewport)
 
-        self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("lbl/default"))))
-        self.wgPreview.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("btn/btnCamera48"))))
-        self.wgPreview.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("software/maya/shelf/shelf_renderLow35"))))
-        self.wgPreview.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("software/maya/shelf/shelf_renderHigh35"))))
+        self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
+        self.wgPreview.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_camera"))))
+        self.wgPreview.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("software/maya/shelf/shelf_render_low"))))
+        self.wgPreview.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("software/maya/shelf/shelf_render_high"))))
 
 
     def add_menu(self):
@@ -102,7 +104,7 @@ class ArUtil(object):
         self.wgMenu = QtCompat.loadUi(path_ui)
         self.wgHeader.layMain.addWidget(self.wgMenu, 1, 1)
 
-        menu01_img   = ["btn/btnWrite48", "btn/btnArrowRight48", "btn/btnHoneypot48", "btn/btnLog48", "btn/btnInboxE48", "user/default"]
+        menu01_img   = ["btn/btn_write", "btn/btn_arrow_right", "btn/btn_honeypot", "btn/btn_log", "btn/btn_inbox_empty", "user/default"]
         menu01_items = [self.wgMenu.btnMenu01_item01, self.wgMenu.btnMenu01_item02, self.wgMenu.btnMenu01_item03,
                         self.wgMenu.btnMenu01_item04, self.wgMenu.btnMenu01_item05, self.wgMenu.btnMenu01_item06]
 
@@ -116,7 +118,7 @@ class ArUtil(object):
         }
 
         for index, each_item in enumerate(menu01_items):
-            each_item.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path(menu01_img[index]))))
+            each_item.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(menu01_img[index]))))
             # each_item.clicked.connect(lambda: self.press_btnMenu("settings"))
 
         self.wgMenu.btnMenu01_item01.clicked.connect(lambda: self.press_btnMenu("data"))
@@ -138,19 +140,19 @@ class ArUtil(object):
         pass
 
     def press_btnOpenFolder(self):
-        libFunc.open_folder(self.open_path)
+        pipefunc.open_folder(self.open_path)
 
     def press_btnUser(self):
-        libFunc.open_folder(User().user_path)
+        pipefunc.open_folder(User().user_path)
 
     def press_btnProject(self):
-        libFunc.open_folder(os.getenv('PROJECT_PATH'))
+        pipefunc.open_folder(os.getenv('PROJECT_PATH'))
 
     def press_btnReport(self):
-        libFunc.get_help('issues')
+        pipefunc.get_help('issues')
 
     def press_btnHelp(self, name=''):
-        libFunc.get_help(TITLE)
+        pipefunc.get_help(TITLE)
 
     # MENU
     def press_btnMenu(self, menu_tag):
@@ -166,7 +168,7 @@ class ArUtil(object):
         tmp_menu.setStyleSheet("background-color: rgb(51, 140, 188);")
 
         if menu_tag == 'data':
-            self.data = libData.get_data()
+            self.data = Tank().data
             for eachKey in self.data.keys():
                 addButton = QtGui.QPushButton(eachKey)
                 addButton.clicked.connect(lambda: self.press_btnSubMenu(eachKey))
@@ -189,13 +191,13 @@ class ArUtil(object):
         if os.path.exists(self.preview_img_path): webbrowser.open(os.path.realpath(self.preview_img_path))
 
     def press_btnScreenshot(self):
-        libSnapshot.create_screenshot(self.wgHeader, self.wgPreview.btnPreviewImg)
+        snapshot.create_screenshot(self.wgHeader, self.wgPreview.btnPreviewImg)
 
     def press_btnSnapshotRender(self):
-        libSnapshot.create_screenshot_render(self.wgHeader, self.wgPreview.btnPreviewImg)
+        snapshot.create_screenshot_render(self.wgHeader, self.wgPreview.btnPreviewImg)
 
     def press_btnSnapshotViewport(self):
-        libSnapshot.create_screenshot_viewport(self.wgHeader, self.wgPreview.btnPreviewImg)
+        snapshot.create_screenshot_viewport(self.wgHeader, self.wgPreview.btnPreviewImg)
 
 
     #*********************************************************************
@@ -207,7 +209,7 @@ class ArUtil(object):
         # 3 - failed  - red
 
         if msg: self.set_comment(msg)
-        self.wgHeader.lblCommentImg.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path(self.data['script'][TITLE]['progress_img'][msg_type]))))
+        self.wgHeader.lblCommentImg.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(self.data['script'][TITLE]['progress_img'][msg_type]))))
 
         if not msg_type:
             template_css = """QProgressBar::chunk { background: %s; }"""
@@ -234,7 +236,7 @@ class ArUtil(object):
             self.wgHeader.btnOpenFolder.setEnabled(False)
 
     def refresh_data(self):
-        self.data = libData.get_data()
+        self.data = Tank().data
 
     def resize_widget(self, widget):
         x = widget.frameGeometry().width()
@@ -243,7 +245,7 @@ class ArUtil(object):
         self.wgHeader.setMinimumSize(x, y)
 
 
-#**********************
+#*********************************************************************
 # START UI
 # def start():
 #     app = QtWidgets.QApplication(sys.argv)

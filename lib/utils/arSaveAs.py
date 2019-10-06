@@ -16,11 +16,10 @@ from threading import Thread
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import libLog
-import libData
-import libSnapshot
-import libFunc
+import pipelog
+import pipefunc
 import arNotice
+import snapshot
 
 from tank import Tank
 from users import User
@@ -30,7 +29,7 @@ from arUtil import ArUtil
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
 #*********************************************************************
@@ -46,13 +45,13 @@ class ArSaveAs(ArUtil):
 
         self.new_file  = new_file
         self.save_file = ''
-        self.save_dir  = self.data['project']['path']
+        self.save_dir  = Tank().data_project['path']
         self.software  = Tank().software.software
         self.inputs    = [self.wgSaveAs.cbxScene, self.wgSaveAs.cbxSet, self.wgSaveAs.cbxAsset, self.wgSaveAs.cbxTask]
 
         self.wgHeader.btnOption.hide()
         self.wgHeader.cbxAdd.hide()
-        self.wgHeader.setWindowIcon(QtGui.QIcon(libData.get_img_path("btn/btnSave48")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
 
         btn_title = TITLE if self.new_file else 'Create New Folder'
         self.wgHeader.setWindowTitle(btn_title)
@@ -83,7 +82,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.currentIndexChanged.connect(self.update_file)
         self.wgSaveAs.cbxAsset.editTextChanged.connect(self.update_file)
 
-        for keys, items in self.data['rules']['SCENES'].items():
+        for keys, items in Tank().data_templates['SCENES'].items():
             self.wgSaveAs.cbxScene.addItem(keys)
 
         self.update_file()
@@ -102,7 +101,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.clear()
         if not self.new_file: self.wgSaveAs.cbxTask.addItem(self.all_task)
 
-        self.scene_steps = len(self.data['rules']['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
+        self.scene_steps = len(Tank().data_templates['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
         if self.scene_steps < 5:
             self.wgSaveAs.cbxSet.hide()
             self.wgSaveAs.lblSet.hide()
@@ -113,7 +112,7 @@ class ArSaveAs(ArUtil):
 
         try:
             if self.wgSaveAs.cbxScene.currentText():
-                self.wgSaveAs.cbxTask.addItems(self.data['rules']['TASK'][self.wgSaveAs.cbxScene.currentText()])
+                self.wgSaveAs.cbxTask.addItems(Tank().data_templates['TASK'][self.wgSaveAs.cbxScene.currentText()])
         except: self.set_status('FAILED adding tasks items: data/project/$project/rules.yml : TASK', msg_type=3)
 
         if self.software == 'nuke':
@@ -121,9 +120,9 @@ class ArSaveAs(ArUtil):
             if index >= 0: self.wgSaveAs.cbxTask.setCurrentIndex(index)
 
         try:
-            self.save_dir = self.data['project']['PATH'][self.wgSaveAs.cbxScene.currentText()]
+            self.save_dir = Tank().data_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
             if self.wgSaveAs.cbxSet.isVisible():
-                self.wgSaveAs.cbxSet.addItems(libFunc.get_file_list(self.save_dir))
+                self.wgSaveAs.cbxSet.addItems(pipefunc.get_file_list(self.save_dir))
         except: LOG.error('FAILED adding PATH items: data/project/$project/project.yml : PATH', exc_info=True)
 
 
@@ -131,18 +130,18 @@ class ArSaveAs(ArUtil):
     # FUNC
     def update_file(self):
         if self.wgSaveAs.cbxScene.currentText():
-            status_text = '/' + self.data['rules']['STATUS']['work']
+            status_text = '/' + Tank().data_templates['STATUS']['work']
             if self.new_file: extension = Tank().software.extension
             else: extension = ''
-            new_item = self.data['rules']['SCENES'][self.wgSaveAs.cbxScene.currentText()]
+            new_item = Tank().data_templates['SCENES'][self.wgSaveAs.cbxScene.currentText()]
             new_item = new_item.format(set       = self.wgSaveAs.cbxSet.currentText(),
                                        asset     = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
-                                       status    = self.data['rules']['STATUS']['work'],
-                                       version   = self.data['rules']['FILE']['version'].replace(r'\d','0').replace('_',''),
+                                       status    = Tank().data_templates['STATUS']['work'],
+                                       version   = Tank().data_templates['FILE']['version'].replace(r'\d','0').replace('_',''),
                                        user      = getpass.getuser()[:2].lower(),
                                        extension = extension,
-                                       frame     = self.data['rules']['start_frame'])
+                                       frame     = Tank().data_templates['start_frame'])
 
             if self.new_file: status_text += '/' + os.path.basename(new_item)
             self.save_file = self.save_dir + '/' + new_item
@@ -168,18 +167,18 @@ class ArSaveAs(ArUtil):
         save_list = []
 
         if self.all_task in self.save_file:
-            for task in self.data['rules']['TASK'][self.wgSaveAs.cbxScene.currentText()]:
+            for task in Tank().data_templates['TASK'][self.wgSaveAs.cbxScene.currentText()]:
                 new_path = self.save_file.replace(self.all_task, task)
                 save_list.append(new_path)
         else: save_list.append(self.save_file)
 
         LOG.debug('Folder list {}'.format(save_list))
-        for folder in save_list: libFunc.create_folder(folder)
+        for folder in save_list: pipefunc.create_folder(folder)
 
         if self.new_file:
             Tank().software.scene_saveAs(self.save_file, setup_scene=True)
-            libSnapshot.create_any_screenshot(self.wgSaveAs)
-            tmp_img_path = libSnapshot.save_snapshot(self.save_file)
+            snapshot.create_any_screenshot(self.wgSaveAs)
+            tmp_img_path = snapshot.save_snapshot(self.save_file)
 
             tmp_title = os.path.basename(self.save_file).split('.')[0]
             tmp_func = 'SAVE AS'
@@ -190,7 +189,7 @@ class ArSaveAs(ArUtil):
             except: LOG.error('CANT set folder: {}'.format(save_list))
             self.set_status('Created new {}'.format(self.wgSaveAs.cbxScene.currentText()), msg_type=1)
 
-            tmp_img_path = 'lbl/lblCreate131'
+            tmp_img_path = 'lbl/lbl_create'
             tmp_title = self.wgSaveAs.cbxScene.currentText()
             tmp_func = 'CREATE'
 
@@ -204,10 +203,10 @@ class ArSaveAs(ArUtil):
         return True
 
     def set_meta_data(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + libData.META_INFO
+        meta_path    = os.path.dirname(save_path) + data.META_INFO
         comment_dict = {'user':    User().id,
                         'comment': 'new scene'}
-        libData.set_data(meta_path, os.path.basename(save_path), comment_dict)
+        data.set_data(meta_path, os.path.basename(save_path), comment_dict)
 
 
 def create():

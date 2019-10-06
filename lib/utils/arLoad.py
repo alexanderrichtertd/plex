@@ -18,9 +18,8 @@ import subprocess
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import libLog
-import libData
-import libFunc
+import pipelog
+import pipefunc
 import arNotice
 
 from tank import Tank
@@ -29,7 +28,7 @@ from arUtil import ArUtil
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
 #*********************************************************************
@@ -79,7 +78,7 @@ class ArLoad(ArUtil):
         self.wgHeader.setWindowTitle(TITLE)
         self.wgHeader.btnAccept.setText('Load')
         self.wgHeader.btnOption.setText('Create')
-        self.wgHeader.setWindowIcon(QtGui.QIcon(libData.get_img_path("btn/btnLoad48")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_load")))
 
         self.setup()
 
@@ -100,7 +99,7 @@ class ArLoad(ArUtil):
 
         self.clear_meta()
 
-        for keys, items in self.data['rules']['SCENES'].items():
+        for keys, items in self.data['templates']['SCENES'].items():
             self.wgLoad.lstScene.addItem(keys)
 
         self.wgLoad.lstScene.setCurrentRow(0)
@@ -165,9 +164,9 @@ class ArLoad(ArUtil):
     # CHANGE
     def change_lstScene(self):
         self.load_dir = self.data['project']['PATH'][self.wgLoad.lstScene.currentItem().text()]
-        tmp_content   = libFunc.get_file_list(self.load_dir)
+        tmp_content   = pipefunc.get_file_list(self.load_dir)
 
-        self.scene_steps = len(self.data['rules']['SCENES'][self.wgLoad.lstScene.currentItem().text()].split('/'))
+        self.scene_steps = len(self.data['templates']['SCENES'][self.wgLoad.lstScene.currentItem().text()].split('/'))
         if self.scene_steps < 5: self.wgLoad.lstAsset.hide()
         else:
             self.wgLoad.lstAsset.itemSelectionChanged.connect(self.change_lstAsset)
@@ -180,7 +179,7 @@ class ArLoad(ArUtil):
 
     def change_lstSet(self):
         new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text()
-        tmp_content = libFunc.get_file_list(new_path)
+        tmp_content = pipefunc.get_file_list(new_path)
 
         if self.scene_steps < 5:
             self.wgLoad.lstTask.clear()
@@ -195,7 +194,7 @@ class ArLoad(ArUtil):
 
     def change_lstAsset(self):
         new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + '/' + self.wgLoad.lstAsset.currentItem().text()
-        tmp_content = libFunc.get_file_list(new_path)
+        tmp_content = pipefunc.get_file_list(new_path)
 
         self.wgLoad.lstTask.clear()
         if tmp_content:
@@ -207,7 +206,7 @@ class ArLoad(ArUtil):
         else: asset_content = ''
 
         new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text()  + asset_content + '/' + self.wgLoad.lstTask.currentItem().text()
-        tmp_content = libFunc.get_file_list(new_path)
+        tmp_content = pipefunc.get_file_list(new_path)
 
         self.wgLoad.lstStatus.clear()
         if tmp_content:
@@ -221,7 +220,7 @@ class ArLoad(ArUtil):
         if not self.wgLoad.lstStatus.currentItem() or not self.wgLoad.lstTask.currentItem(): return
 
         self.file_dir = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + '/' + part_path + self.wgLoad.lstTask.currentItem().text() + '/' + self.wgLoad.lstStatus.currentItem().text()
-        tmp_content   = libFunc.get_file_list(self.file_dir, extension=True)
+        tmp_content   = pipefunc.get_file_list(self.file_dir, extension=True)
 
         self.wgLoad.lstFiles.clear()
         if not tmp_content: return
@@ -231,8 +230,8 @@ class ArLoad(ArUtil):
             if os.path.splitext(file)[1][1:] in self.software_keys: file_list.append(file)
 
         if file_list:
-            if os.path.exists(self.file_dir + libData.META_INFO):
-                self.file_data = libData.get_yml_file(self.file_dir + libData.META_INFO)
+            if os.path.exists(self.file_dir + data.META_INFO):
+                self.file_data = data.get_yml_file(self.file_dir + data.META_INFO)
             else: self.file_data = ''
 
             self.wgLoad.lstFiles.addItems(sorted(file_list, reverse=True))
@@ -245,12 +244,12 @@ class ArLoad(ArUtil):
         if self.extension in self.data['script'][TITLE]['img']:
             self.preview_img_path = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
         else:
-            self.preview_img_path = self.file_dir + '/' + libData.META_FOLDER + '/' + self.file_name + libData.THUMBS_FORMAT
+            self.preview_img_path = self.file_dir + '/' + data.META_FOLDER + '/' + self.file_name + data.THUMBS_FORMAT
 
         self.load_file = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
 
         if os.path.exists(self.preview_img_path): self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.preview_img_path)))
-        else: self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(libData.get_img_path("lbl/default"))))
+        else: self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
 
         self.set_open_folder(self.file_dir)
 
@@ -278,8 +277,8 @@ class ArLoad(ArUtil):
 
         self.wgPreview.edtComment.setPlainText(comment)
         self.wgPreview.lblUser.setText(user_id)
-        self.wgPreview.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path(software_img))))
-        self.wgPreview.lblUserIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(libData.get_img_path('user/' + user_id))))
+        self.wgPreview.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(software_img))))
+        self.wgPreview.lblUserIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + user_id))))
 
     def clear_meta(self):
         self.wgPreview.lblUser.setText('')

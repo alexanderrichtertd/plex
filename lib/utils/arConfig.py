@@ -23,8 +23,7 @@ pipeline.Setup()
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import libLog
-import libData
+import pipelog
 import arNotice
 
 from tank import Tank
@@ -35,7 +34,7 @@ from arUtil import ArUtil
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = pipelog.init(script=TITLE)
 
 
 #*********************************************************************
@@ -49,7 +48,7 @@ class ArConfig(ArUtil):
 
         self.wgHeader.btnOption.hide()
         self.wgHeader.cbxAdd.hide()
-        self.wgHeader.setWindowIcon(QtGui.QIcon(libData.get_img_path("btn/btnConfig48")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btnConfig48")))
 
         self.wgHeader.setWindowTitle(TITLE)
         self.wgHeader.btnAccept.setText('Save')

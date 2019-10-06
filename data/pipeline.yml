@@ -1,19 +1,23 @@
 #*********************************************************************
 # content   = pipeline data
-# version   = 0.0.4
+# version   = 0.1.0
 # date      = 2018-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-# USE this project settings
-# data/project/$project
+# SETS project path
+# in data/project/$project
 project: default
 
 
-# IMPORTANT: order
-# DEFAULT:   local, project, master
+PIPELINE:
+  name:    Plex
+  version: 2.0.0
+
+
+# IMPORTANT: order (local, project, master)
 # use $this for current location
 PATH:
     # 1.local (dev & debug)
@@ -25,11 +29,8 @@ PATH:
 
 
 # USER customize
-user_data: True
 # [True] - overwrite project with user data (if exists)
-# [False]- use just project data
+# [False]- use ONLY project data
+user_data: True
 
 
-PIPELINE:
-  name:    Plex
-  version: 1.0.4

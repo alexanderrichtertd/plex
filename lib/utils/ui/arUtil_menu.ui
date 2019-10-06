@@ -86,7 +86,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../img/img.qrc">
-            <normaloff>:/btn/btn/btnWrite48.png</normaloff>:/btn/btn/btnWrite48.png</iconset>
+            <normaloff>:/btn/btn/btn_write.png</normaloff>:/btn/btn/btn_write.png</iconset>
           </property>
          </widget>
         </item>
@@ -112,7 +112,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../img/img.qrc">
-            <normaloff>:/btn/btn/btnArrowRight48.png</normaloff>:/btn/btn/btnArrowRight48.png</iconset>
+            <normaloff>:/btn/btn/btn_arrow_on.png</normaloff>:/btn/btn/btn_arrow_on.png</iconset>
           </property>
          </widget>
         </item>
@@ -138,7 +138,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../img/img.qrc">
-            <normaloff>:/btn/btn/btnFile48.png</normaloff>:/btn/btn/btnFile48.png</iconset>
+            <normaloff>:/btn/btn/btn_file.png</normaloff>:/btn/btn/btn_file.png</iconset>
           </property>
          </widget>
         </item>
@@ -171,7 +171,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../img/img.qrc">
-            <normaloff>:/btn/btn/btnLog48.png</normaloff>:/btn/btn/btnLog48.png</iconset>
+            <normaloff>:/btn/btn/btn_log.png</normaloff>:/btn/btn/btn_log.png</iconset>
           </property>
          </widget>
         </item>
@@ -197,7 +197,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../img/img.qrc">
-            <normaloff>:/btn/btn/btnInboxE48.png</normaloff>:/btn/btn/btnInboxE48.png</iconset>
+            <normaloff>:/btn/btn/btn_inbox_empty.png</normaloff>:/btn/btn/btn_inbox_empty.png</iconset>
           </property>
          </widget>
         </item>

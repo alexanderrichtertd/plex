@@ -1,38 +1,37 @@
 #*********************************************************************
 # content   = init Nuke
 # version   = 0.0.1
-# date      = 2018-12-01
+# date      = 2019-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 import os
 import errno
 
 import nuke
 
-import libLog
-import libFunc
+import pipefunc
 from tank import Tank
 
+
+#*********************************************************************
+# VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = libLog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
+
+PROJECT_DATA = Tank().data_project
+RESOLUTION   = (' ').join([str(PROJECT_DATA['resolution'][0]),
+                            str(PROJECT_DATA['resolution'][1]),
+                            PROJECT_DATA['name'].replace(' ', '')])
 
 
-#************************
-# PIPELINE
-all_data      = Tank().data
-project_data  = all_data['project']
-software_data = all_data['software']
-RESOLUTION    = (' ').join([str(project_data['resolution'][0]),
-                            str(project_data['resolution'][1]),
-                            project_data['name'].replace(' ', '')])
 
-
-#************************
+#*********************************************************************
 # FOLDER CREATION
-def createWriteDir():
+def create_write_dir():
     file_name = nuke.filename(nuke.thisNode())
     file_path = os.path.dirname(file_name)
     os_path   = nuke.callbacks.filenameFilter(file_path)
@@ -47,7 +46,7 @@ def createWriteDir():
 def add_plugin_paths():
     # ADD all IMG paths
     for img in os.getenv('IMG_PATH').split(';'):
-        for img_sub in libFunc.get_deep_folder_list(path=img, add_path=True):
+        for img_sub in pipefunc.get_deep_folder_list(path=img, add_path=True):
             nuke.pluginAddPath(img_sub)
 
     # ADD sub software paths
@@ -55,11 +54,11 @@ def add_plugin_paths():
         nuke.pluginAddPath(paths)
 
 
-#************************
+
+#*********************************************************************
 # PIPELINE
 Tank().init_software()
 add_plugin_paths()
-
 
 try:    from scripts import write_node
 except: LOG.warning('FAILED loading write_node')
@@ -74,30 +73,30 @@ except:
 
 print('SETTINGS')
 
-# RESOLUTION ****************************
+# RESOLUTION *********************************************************************
 try:
     nuke.addFormat(RESOLUTION)
-    nuke.knobDefault('Root.format', project_data['name'].replace(' ', ''))
+    nuke.knobDefault('Root.format', PROJECT_DATA['name'].replace(' ', ''))
     print('  {} ON  - {}'.format(chr(254), RESOLUTION))
 except:
     LOG.error('  OFF - {}'.format(RESOLUTION), exc_info=True)
     print('  {} OFF - {}'.format(chr(254), RESOLUTION))
 
-# FPS ***********************************
+# FPS *********************************************************************
 try:
-    nuke.knobDefault("Root.fps", str(project_data['fps']))
-    print('  {} ON  - {} fps'.format(chr(254), project_data['fps']))
+    nuke.knobDefault("Root.fps", str(PROJECT_DATA['fps']))
+    print('  {} ON  - {} fps'.format(chr(254), PROJECT_DATA['fps']))
 except:
-    LOG.error('  OFF - {} fps'.format(project_data['fps']), exc_info=True)
-    print('  {} OFF - {} fps'.format(chr(254), project_data['fps']))
+    LOG.error('  OFF - {} fps'.format(PROJECT_DATA['fps']), exc_info=True)
+    print('  {} OFF - {} fps'.format(chr(254), PROJECT_DATA['fps']))
 
-# createFolder ****************************
+# createFolder *********************************************************************
 try:
-    nuke.addBeforeRender(createWriteDir)
-    print('  {} ON  - createWriteDir (before render)'.format(chr(254)))
+    nuke.addBeforeRender(create_write_dir)
+    print('  {} ON  - create_write_dir (before render)'.format(chr(254)))
 except:
-    LOG.error('  OFF - createWriteDir (before render)'.format(chr(254)), exc_info=True)
-    print('  {} OFF - createWriteDir (before render)'.format(chr(254)))
+    LOG.error('  OFF - create_write_dir (before render)'.format(chr(254)), exc_info=True)
+    print('  {} OFF - create_write_dir (before render)'.format(chr(254)))
 
+print('')
 
-print('') # ********************

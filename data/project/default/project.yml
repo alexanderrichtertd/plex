@@ -1,15 +1,17 @@
 #*********************************************************************
 # content = project data
 # version = 0.1.0
-# date    = 2017-08-01
+# date    = 2019-10-01
 
 # author  = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-name: Plex
 
+name: Plex
 path: &PROJECT C:\Users\arichter\project
 
+
+#*********************************************************************
 resolution:
   - 1920
   - 1080
@@ -17,15 +19,16 @@ resolution:
 fps: 24
 
 
+#*********************************************************************
 PATH:
-  user              : !join [*PROJECT, /05_user]
-  preproduction     : !join [*PROJECT, /10_pre]
+  sandbox           : !join [*PROJECT, /05_sandbox]
+  pre               : !join [*PROJECT, /20_pre]
 
-  footage           : &FOOTAGE !join [*PROJECT, /20_footage]
+  footage           : &FOOTAGE !join [*PROJECT, /25_footage]
   footage_hdri      : !join [*FOOTAGE, /hdri]
   footage_shader    : !join [*FOOTAGE, /shader]
   footage_scene     : !join [*FOOTAGE, /scene]
-  footage_textures  : !join [*FOOTAGE, /textures]
+  footage_textures  : !join [*FOOTAGE, /texture]
 
   assets            : !join [*PROJECT, /30_assets]
   shots             : &SHOTS !join [*PROJECT, /40_shots]
@@ -33,24 +36,20 @@ PATH:
   comp              : !join [*SHOTS, ]
 
   render            : !join [*PROJECT, /45_render]
+
   post              : &POST !join [*PROJECT, /50_post]
   post_edit         : &EDIT !join [*POST, /edit]
-  post_edit_cut     : !join [*EDIT, /_cut]
-  post_edit_music   : !join [*EDIT, /_music]
-  post_edit_sound   : !join [*EDIT, /_sound]
-  final             : !join [*POST, /final]
+  post_edit_cut     : !join [*EDIT, /cut]
+  post_edit_music   : !join [*EDIT, /music]
+  post_edit_sound   : !join [*EDIT, /sound]
+
   grade             : !join [*POST, /grade]
   mov               : !join [*POST, /mov]
+  deliver           : !join [*POST, /deliver]
 
 
-REPOSITORY:
-  username: guest
-  password:
 
-  owner: richteralexander
-  repository: plex
-
-
+#*********************************************************************
 HELP:
   main: &HELP https://github.com/richteralexander/plex/wiki
   arUtil:     !join [*HELP, /arUtil]
