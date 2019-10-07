@@ -45,6 +45,20 @@ common:
         quote : You want it? You get it!
         img   : open_folder
 
+    report:
+        title : REPORT
+        msg   : |
+                Write about issues and features.
+                Use labels, members and be precise.
+        quote : Bad reports lead to bad solutions.
+
+    help:
+        title : HELP
+        msg   : |
+                lgt workflow and lgt shelf
+                is a good source
+        quote : Stop working! Start browsing (for help)!
+
 
 error:
     no_open_scene:
@@ -137,20 +151,6 @@ apps:
                 Default State: Just lights selected
         quote : Put a spot on it
         img   : final
-
-    report:
-        title : REPORT
-        msg   : |
-                Write about issues and features.
-                Use labels, members and be precise.
-        quote : Bad reports lead to bad solutions.
-
-    help:
-        title : HELP
-        msg   : |
-                lgt workflow and lgt shelf
-                is a good source
-        quote : Stop working! Start browsing (for help)!
 
 
 hints:

@@ -8,7 +8,6 @@
 
 
 #*****************************************************************************************************************************
-#*****************************************************************************************************************************
 # DEFAULT
 EXTENSION_CODE:
   ma  : mayaAscii
@@ -107,8 +106,8 @@ MAYA:
 
     - break:  menuItem(p="{}", d=True)
 
-    - Report: menuItem(p="{}", l='Report', c='import pipefunc; pipefunc.get_help("issues")')
-    - Help:   menuItem(p="{}", l='Help', c='import pipefunc; pipefunc.get_help()')
+    - Report: menuItem(p="{}", l='Report', c='import pipefunc; pipefunc.help("issues")')
+    - Help:   menuItem(p="{}", l='Help', c='import pipefunc; pipefunc.help()')
 
 
   #*****************************************************************************************************************************
@@ -190,8 +189,8 @@ NUKE:
 
     - break:   addSeparator()
 
-    - Report:  addCommand('Report', 'import pipefunc; pipefunc.get_help("issues")', 'ctrl+alt+r', 'report.ico')
-    - Help:    addCommand('Help', 'import pipefunc; pipefunc.get_help()', 'ctrl+alt+h', 'help.ico')
+    - Report:  addCommand('Report', 'import pipefunc; pipefunc.help("issues")', 'ctrl+alt+r', 'report.ico')
+    - Help:    addCommand('Help', 'import pipefunc; pipefunc.help()', 'ctrl+alt+h', 'help.ico')
 
   SETTINGS:
 
@@ -271,8 +270,8 @@ MAX:
 
     - break:   AddSeparator()
 
-    - Report: "AddItem(MaxPlus.ActionFactory.Create('Report', 'Report', max_menu.get_report))"
-    - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help', 'Help', max_menu.get_help))"
+    - Report: "AddItem(MaxPlus.ActionFactory.Create('Report', 'Report', max_menu.help))"
+    - Help:   "AddItem(MaxPlus.ActionFactory.Create('Help', 'Help', max_menu.help))"
 
 
   SETTINGS:
