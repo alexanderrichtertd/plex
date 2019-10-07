@@ -83,7 +83,7 @@ class ArNotice():
 
         self.wgNotice.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + self.notice.user))))
         self.wgNotice.btnUser.setToolTip(('').join([self.notice.user, '\n', self.notice.time]))
-        self.wgNotice.btnUser.clicked.connect(pipefunc.get_help)
+        self.wgNotice.btnUser.clicked.connect(pipefunc.help)
 
         self.wgNotice.edtTitle.setText(self.notice.title)
 

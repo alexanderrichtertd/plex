@@ -38,7 +38,6 @@ class Singleton(object):
 
 #*********************************************************************
 class Tank(Singleton):
-
     def init_os(self):
         self.user.setup()
 
@@ -254,3 +253,4 @@ class Tank(Singleton):
             return os.environ[var].split(';')[0]
         self.log('ENV doesnt exist: {}'.format(var))
         return ''
+

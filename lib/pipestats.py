@@ -37,11 +37,6 @@ def notice(script_string, meta=False, notice=True):
             if check_ui(): note = notice
             else: note = True
 
-            root, script_name = script_string.split(":")
-
-            if meta: LOG.info("{} {} START".format(script_name, "#" * 50))
-            else: LOG.info("DONE - {}".format(script_name))
-
             start_time  = datetime.now()
             result_func = function(*args, **kwargs)
             result_time = (datetime.now() - start_time).total_seconds()
@@ -54,13 +49,19 @@ def notice(script_string, meta=False, notice=True):
                 else:
                     arNotice.create_default_notice(script_string)
 
-            try:    set_exe_file(root, script_name, USER_STATS_PATH, result_time)
-            except: LOG.error("STATS are broken: {} {} {} {}".format(root, script_name, ALL_STATS_PATH, result_time), exc_info=True)
+            root, script_name = script_string.split(":")
 
-            hours, remainder = divmod(result_time, 3600)
-            minutes, seconds = divmod(remainder, 60)
+            if ':' in script_string:
+                if meta: LOG.info("{} {} START".format(script_name, "#" * 50))
+                else: LOG.info("DONE - {}".format(script_name))
 
-            if meta: LOG.info("{} {} {:02}:{:02}:{:02} END".format(script_name, "#" * 37, int(hours), int(minutes), int(seconds)))
+                try:    set_exe_file(root, script_name, USER_STATS_PATH, result_time)
+                except: LOG.error("STATS are broken: {} {} {} {}".format(root, script_name, ALL_STATS_PATH, result_time), exc_info=True)
+
+                hours, remainder = divmod(result_time, 3600)
+                minutes, seconds = divmod(remainder, 60)
+
+                if meta: LOG.info("{} {} {:02}:{:02}:{:02} END".format(script_name, "#" * 37, int(hours), int(minutes), int(seconds)))
 
             return result_func
         return wrapper

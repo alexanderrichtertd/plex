@@ -125,10 +125,10 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         pipefunc.open_folder(Tank().get_env('DATA_USER_PATH'))
     #------------------------------
     def press_btnReport(self):
-        pipefunc.get_help('issues')
+        pipefunc.help('issues')
 
     def press_btnHelp(self):
-        pipefunc.get_help(TITLE)
+        pipefunc.help(TITLE)
     #------------------------------
     def press_closeStartup(self):
         self.parent.instance().quit()

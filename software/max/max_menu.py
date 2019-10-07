@@ -30,7 +30,7 @@ def load():
     arLoad.start()
 
 def get_report():
-    pipefunc.get_help('issues')
+    pipefunc.help('issues')
 
 def get_help():
-    pipefunc.get_help()
+    pipefunc.help()

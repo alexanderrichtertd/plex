@@ -10,32 +10,25 @@
 
 import os
 import glob
+import json
 import time
 import webbrowser
 
 # NO logging since it will break the init
 
 
+
 #*********************************************************************
 # FUNCTIONS
-def get_help(name=''):
-    from tank import Tank
-    import arNotice
+def help(name=''):
+    if not name and os.getenv('SOFTWARE'):
+        name = os.getenv('SOFTWARE').lower()
 
-    project_data = Tank().data_project['HELP']
-    if not name: name = os.getenv('SOFTWARE').lower()
-
-    note = arNotice.Notice(title = name,
-                           msg   = 'get help & solve issues here',
-                           func  = 'HELP',
-                           img   = 'lbl/lbl{}131'.format(name.title()),
-                           img_link = '')
-    arNotice.ArNotice(note)
-
-    if name in project_data:
-        webbrowser.open(project_data[name])
+    project_help = Tank().data_project['HELP']
+    if name in project_help:
+        webbrowser.open(project_help[name])
     else:
-        webbrowser.open(project_data['default'])
+        webbrowser.open(project_help['default'])
 
 
 # GET all (sub) keys in dict
@@ -71,7 +64,7 @@ def find_inbetween(text, first, last):
     return text[start:end]
 
 
-#************************
+#*********************************************************************
 # FOLDER
 # @BRIEF  creates a folder, checks if it already exists,
 #         creates the folder above if the path is a file
@@ -91,7 +84,7 @@ def open_folder(path):
     return path
 
 
-#************************
+#*********************************************************************
 # FILES
 # @BRIEF  get a file/folder list with specifics
 #
@@ -123,3 +116,42 @@ def get_deep_folder_list(path, add_path=False):
     except: print('CANT pop file. Path: {}'.format(path))
 
     return getFile
+
+
+
+#*********************************************************************
+# REPOSITORY
+def make_github_issue(title, body=None, assignee='', milestone=None, labels=None):
+    import requests
+    from tank import Tank
+
+    REPO_DATA = Tank().user.data_user_path
+    if not assignee: assignee = REPO_DATA['username']
+
+    # Our url to create issues via POST
+    url = 'https://api.github.com/repos/%s/%s/issues' % (REPO_DATA['owner'], REPO_DATA['repository'])
+
+    # Create an authenticated session to create the issue
+    session = requests.Session()
+    session.auth = (REPO_DATA['username'], REPO_DATA['password'])
+
+    issue = {'title': title,
+             'body': body,
+             'assignee': assignee,
+             'milestone': milestone,
+             'labels': labels}
+
+    # Add the issue to our repository
+    repo = session.post(url, json.dumps(issue))
+
+    if repo.status_code == 201:
+        LOG.info('Successfully created Issue {}'.format(title))
+    else:
+        LOG.warning('Could not create Issue {}.\nResponse:{}'.format(title, repo.content))
+
+
+#*********************************************************************
+# TEST
+# make_github_issue(title='Login Test', body='Body text', milestone=None, labels=['bug'])
+
+

@@ -149,10 +149,10 @@ class ArUtil(object):
         pipefunc.open_folder(os.getenv('PROJECT_PATH'))
 
     def press_btnReport(self):
-        pipefunc.get_help('issues')
+        pipefunc.help('issues')
 
     def press_btnHelp(self, name=''):
-        pipefunc.get_help(TITLE)
+        pipefunc.help(TITLE)
 
     # MENU
     def press_btnMenu(self, menu_tag):

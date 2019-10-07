@@ -106,7 +106,7 @@ class ArSave(ArUtil):
         snapshot.create_screenshot_viewport(self.wgSave, self.wgSave.btnPreviewImg)
 
     def press_btnHelp(self, name=''):
-        pipefunc.get_help(TITLE)
+        pipefunc.help(TITLE)
 
 
     #*********************************************************************
