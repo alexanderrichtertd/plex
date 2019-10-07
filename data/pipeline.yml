@@ -3,7 +3,7 @@
 # version   = 0.1.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -18,13 +18,16 @@ PIPELINE:
   version: 2.0.0
 
 
-# IMPORTANT: order (local, project, master)
+# ORDER: top to bottom (local, project, master)
+# if top doesnt exist: next
 # use $this for current location
 PATH:
     # 1.local (dev & debug)
     - sandbox: C:\sandbox
+
     # 2.project (production)
     - project: D:\project
+
     # 3.pipeline (master)
     - master:  $this # D:\plex
 

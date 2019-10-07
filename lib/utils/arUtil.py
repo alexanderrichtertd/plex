@@ -1,11 +1,12 @@
 #*********************************************************************
 # content   = parent widget
-# version   = 0.0.1
-# date      = 2018-12-01
+# version   = 0.1.0
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 import os
 import sys
@@ -13,7 +14,6 @@ import webbrowser
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipelog
 import pipefunc
 import snapshot
 
@@ -25,7 +25,7 @@ from users import User
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************

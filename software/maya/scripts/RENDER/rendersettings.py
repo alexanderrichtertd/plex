@@ -1,7 +1,7 @@
 # ****************************************************
 # content = setup render settings in maya scene
 # version = 1.0.0
-# date    = 2019-08-01
+# date    = 2019-10-06
 #
 # license = MIT
 # author  = Alexander Richter <alexanderrichtertd.com>
@@ -12,13 +12,13 @@ import os
 
 import maya.cmds as cmds
 
-import pipelog
+from tank import Tank
 
 
 #*********************************************************************
 # VAR
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************
@@ -29,22 +29,22 @@ class Rendersettings(object):
         self.states = ["work", "preview", "publish", "custom"]
 
     def default(self):
-        pass
+        LOG.debug('default')
 
     def work(self):
-        pass
+        LOG.debug('work')
 
 
     def preview(self):
-        pass
+        LOG.debug('preview')
 
 
     def publish(self):
-       pass
+        LOG.debug('publish')
 
 
     def custom(self):
-        pass
+        LOG.debug('custom')
 
 
     #*********************************************************************

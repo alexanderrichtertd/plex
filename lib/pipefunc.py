@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = common functions
-# version   = 0.0.1
+# version   = 0.1.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -35,7 +35,7 @@ def get_help(name=''):
     if name in project_data:
         webbrowser.open(project_data[name])
     else:
-        webbrowser.open(project_data['main'])
+        webbrowser.open(project_data['default'])
 
 
 # GET all (sub) keys in dict

@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = Maya
-# version   = 0.0.1
+# version   = 0.1.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -12,14 +12,13 @@ import os
 import sys
 import getpass
 import subprocess
-from subclass import Singleton
 
 import maya.mel as mel
 import pymel.core as pm
 
-import pipelog
 import pipefunc
 
+import tank
 from tank import Tank
 from classes import software
 
@@ -28,13 +27,13 @@ from classes import software
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 
 #*********************************************************************
 # CLASS
-class Maya(software, Singleton):
+class Maya(software, tank.Singleton):
 
     @property
     def scene_path(self):

@@ -3,7 +3,7 @@
 # version   = 0.1.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -14,12 +14,11 @@ import glob
 import time
 import webbrowser
 
-from datetime import datetime
 from threading import Timer
+from datetime import datetime
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipelog
 import pipefunc
 from tank import Tank
 
@@ -27,7 +26,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************
@@ -37,6 +36,7 @@ class Notice():
     def __init__(self,
                  title    = 'Notice',
                  msg      = 'This is just a Notice Test',
+                 quote    = 'Quote Test',
                  user     = os.getenv('username'),
                  img      = 'lbl/default',
                  img_link = 'http://richteralexander.com',
@@ -45,6 +45,7 @@ class Notice():
 
         self.title      = str(title)   #Pipeline Update
         self.msg        = str(msg)     #New Features for Pipeline
+        self.quote      = str(quote)  #New Features for Pipeline
         self.img        = img         # lbl/lblPreview131
         self.img_link   = img_link    # path
         self.time       = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
@@ -58,6 +59,7 @@ class Notice():
                     'func:     ' + self.func + '\n\n' +\
                     'title:    ' + self.title + '\n' +\
                     'msg:      ' + self.msg + '\n' +\
+                    'quote:    ' + self.quote + '\n' +\
                     'img_link: ' + self.img_link)
 
 
@@ -76,6 +78,8 @@ class ArNotice():
 
         self.wgNotice.edtTitle.setText(self.notice.title)
         self.wgNotice.edtMsg.setPlainText(self.notice.msg)
+        if self.notice.quote: self.notice.quote = '"{}"'.format(self.notice.quote)
+        self.wgNotice.edtQuote.setPlainText(self.notice.quote)
 
         self.wgNotice.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + self.notice.user))))
         self.wgNotice.btnUser.setToolTip(('').join([self.notice.user, '\n', self.notice.time]))
@@ -98,7 +102,7 @@ class ArNotice():
 
         # WIDGET : move to right low corner
         resolution = QtWidgets.QDesktopWidget().screenGeometry()
-        self.wgNotice.move(resolution.width() - self.wgNotice.width() - 5, resolution.height() - self.wgNotice.height() - 45)
+        self.wgNotice.move(resolution.width() - self.wgNotice.width() - 10, resolution.height() - self.wgNotice.height() - 75)
         self.wgNotice.setWindowOpacity(0.9)
 
         # round edges
@@ -133,16 +137,8 @@ class ArNotice():
 def create_default_notice(script_string, msg=""):
     root, script_name = script_string.split(":")
 
-    img_notice_path = pipefunc.get_data_path("img_notice")
-    notice_path     = pipefunc.get_data_path("notice")
+    notice_data = Tank().data_notice
 
-    # READ YAML file
-    if not os.path.exists(notice_path):
-        LOG.warning("notice.yml path doesnt exist")
-        return
-
-    with open(notice_path, 'r') as stream:
-        notice_data = yaml.load(stream)
     if root in notice_data and script_name in notice_data[root]:
         notice_data = notice_data[root][script_name]
     else:
@@ -156,7 +152,7 @@ def create_default_notice(script_string, msg=""):
 
     img_name = [lambda: script_name, lambda: notice_data["img"]]["img" in notice_data]()
     img_link = [lambda: "", lambda: notice_data["img_link"]]["img_link" in notice_data]()
-    img_path = "{}/notice_{}.png".format(img_notice_path, img_name)
+    img_path = Tank().get_img_path("lbl/notice_" + img_name)
     img_path = [lambda: "{}/notice_default.png".format(img_notice_path), lambda: img_path][os.path.exists(img_path)]()
 
     note = Notice(title = notice_data["title"],
@@ -176,7 +172,7 @@ def create_changelog_popup():
 
     if changelog_list: last_changelog = changelog_list[-1]
     else:
-        print("NO changelog exists at: {}".format(CHANGELOG_PATH))
+        LOG.warning("NO changelog exists at: {}".format(CHANGELOG_PATH))
         return
 
     current_date   = ("{}_{:02}_{:02}".format(datetime.now().year, datetime.now().month, datetime.now().day))
@@ -185,7 +181,7 @@ def create_changelog_popup():
     if current_date != changelog_date:
         last_changelog = CHANGELOG_PATH + "/welcome"
         if not os.path.exists(last_changelog):
-            print("NO current and welcome changelog exists at: {}".format(CHANGELOG_PATH))
+            LOG.warning("NO current and welcome changelog exists at: {}".format(CHANGELOG_PATH))
             return
 
     # READ YAML file

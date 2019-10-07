@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = set und get user data
-# version   = 0.0.1
-# date      = 2018-12-01
+# version   = 0.1.0
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -12,24 +12,21 @@
 import os
 import sys
 
-import pipelog
 import pipefunc
 
+import tank
 from tank import Tank
-from subclass import Singleton
-
 
 
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
-
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************
 # USER
-class User(Singleton):
+class User(tank.Singleton):
     def setup(self, user_id=os.getenv('username')):
         self.create()
 
@@ -81,6 +78,13 @@ class User(Singleton):
     @property
     def data_path(self):
         return os.getenv('DATA_USER_PATH')
+
+    @property
+    def data_user_path(self):
+        data_user_path = '{}/{}.yml'.format(self.data_path, self.name)
+        if not os.path.exists(data_user_path):
+            data_user_path = ''
+        return data_user_path
 
     @property
     def user_path(self):

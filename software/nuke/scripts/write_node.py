@@ -3,7 +3,7 @@
 # version   = 1.0.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -16,7 +16,6 @@ import webbrowser
 
 import nuke
 
-import pipelog
 import arNotice
 import pipefunc
 from tank import Tank
@@ -24,7 +23,7 @@ from tank import Tank
 
 #*********************************************************************
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************

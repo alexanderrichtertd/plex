@@ -3,7 +3,7 @@
 # version   = 0.1.0
 # date      = 2019-12-26
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 

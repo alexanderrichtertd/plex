@@ -22,19 +22,19 @@ fps: 24
 #*********************************************************************
 PATH:
   sandbox           : !join [*PROJECT, /05_sandbox]
+  planning          : !join [*PROJECT, /10_planning]
   pre               : !join [*PROJECT, /20_pre]
 
   footage           : &FOOTAGE !join [*PROJECT, /25_footage]
   footage_hdri      : !join [*FOOTAGE, /hdri]
-  footage_shader    : !join [*FOOTAGE, /shader]
   footage_scene     : !join [*FOOTAGE, /scene]
+  footage_shader    : !join [*FOOTAGE, /shader]
   footage_textures  : !join [*FOOTAGE, /texture]
 
   assets            : !join [*PROJECT, /30_assets]
   shots             : &SHOTS !join [*PROJECT, /40_shots]
 
   comp              : !join [*SHOTS, ]
-
   render            : !join [*PROJECT, /45_render]
 
   post              : &POST !join [*PROJECT, /50_post]
@@ -51,14 +51,15 @@ PATH:
 
 #*********************************************************************
 HELP:
-  main: &HELP https://github.com/richteralexander/plex/wiki
-  arUtil:     !join [*HELP, /arUtil]
-  arSave:     !join [*HELP, /arSave]
-  arReporter: !join [*HELP, /arReporter]
-  arDesktop:  !join [*HELP, /arDesktop]
-  arNotificator: !join [*HELP, /arNotificator]
+  repo:          &REPO https://github.com/alexanderrichtertd/plex
 
-  shelf:  !join [*HELP, /shelf]
-  issues: https://github.com/richteralexander/plex/issues
+  default:       &WIKI !join [*REPO, /wiki]
+  arUtil:        !join [*WIKI, /arUtil]
+  arSave:        !join [*WIKI, /arSave]
+  arReporter:    !join [*WIKI, /arReporter]
+  arDesktop:     !join [*WIKI, /arDesktop]
+  arNotificator: !join [*WIKI, /arNotificator]
 
+  shelf:         !join [*WIKI, /shelf]
+  issues:        !join [*REPO, /issues]
 

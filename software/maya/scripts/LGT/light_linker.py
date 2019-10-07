@@ -3,18 +3,21 @@
 # version   = 0.1.0
 # date      = 2019-08-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 
 import maya.cmds as cmds
 
+import pipestats
+
 
 #*********************************************************************
 # LIGHT LINKER
+@pipestats.notice('apps:light_linker')
 def start():
-    cmds.window(title='Light & Shadow Linking')
+    cmds.window(title='Light & Shadow Linker')
     cmds.columnLayout()
     cmds.rowLayout(numberOfColumns=2)
     cmds.text(label='Light', width=250,)
@@ -47,6 +50,7 @@ def start():
     cmds.showWindow()
 
 
+@pipestats.notice('apps:light_linker', meta=False)
 def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
     selection = cmds.ls(dag=1,o=1,s=1,sl=1)
     lights    = cmds.ls(selection, type=["light"] + cmds.listNodeTypes("light"))
@@ -77,6 +81,7 @@ def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
     LOG.info("LightLinking - break:{} - shadow:{}: {} with {}".format(break_light, shadow_link, lights, meshes))
 
 
+@pipestats.notice('apps:light_linker', meta=False)
 def select_attached(shadow_link=False):
     selection = cmds.ls(dag=1,o=1,s=1,sl=1)
     if not selection or not lights: return "error:no_light_selection"

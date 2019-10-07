@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = OS startup file
 # version   = 0.6.0
-# date      = 2018-12-01
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -13,7 +13,6 @@ import webbrowser
 
 from Qt import QtWidgets, QtGui, QtCore
 
-import pipelog
 import pipefunc
 
 from tank import Tank
@@ -23,7 +22,7 @@ from software import Software
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************

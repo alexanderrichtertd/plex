@@ -1,29 +1,32 @@
 #*********************************************************************
 # content   = startup 3Ds Max
-# version   = 0.0.1
-# date      = 2018-12-01
+# version   = 0.1.0
+# date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 import os
 import shutil
 
 import MaxPlus
 
-import pipelog
 from tank import Tank
 
+
+#*********************************************************************
+# VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 Tank().init_software()
 
 menu_name = os.getenv('PROJECT_NAME')
 
 
-#************************
+#*********************************************************************
 # MENU
 def create_menu():
     # copy_splash()

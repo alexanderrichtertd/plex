@@ -3,7 +3,7 @@
 # version   = 0.1.0
 # date      = 2019-10-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -130,8 +130,8 @@ apps:
                 Submit to the farm.
         quote : They arent called slaves for nothing.
 
-    light_linking:
-        title : CHANGE LIGHT LINKING
+    light_linker:
+        title : LIGHT LINKING
         msg   : |
                 Selected lights and objects are linked/unlinked.
                 Default State: Just lights selected

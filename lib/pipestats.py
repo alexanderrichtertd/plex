@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = write statistic loggings
 # version   = 0.1.0
-# date      = 2018-12-01
+# date      = 2019-12-01
 #
-# license   = MIT (PLEX)
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -14,18 +14,17 @@ import yaml
 import time
 from datetime import datetime
 
-import pipelog
-from utils import arNotice
+import arNotice
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 # TODO: Replace with data
-USER_STATS_PATH = "{}/{}.stats".format(os.getenv('DATA_USER_PATH'), pipelog.USER)
+USER_STATS_PATH = "{}/{}.stats".format(os.getenv('DATA_USER_PATH'), Tank().log.USER)
 
 
 #*********************************************************************
@@ -33,14 +32,15 @@ USER_STATS_PATH = "{}/{}.stats".format(os.getenv('DATA_USER_PATH'), pipelog.USER
 def notice(script_string, meta=False, notice=True):
     def decorator(function):
         def wrapper(*args, **kwargs):
+
             # NO QT on the FARM
-            if    check_ui(): note = notice
-            else: note = False
+            if check_ui(): note = notice
+            else: note = True
 
             root, script_name = script_string.split(":")
 
             if meta: LOG.info("{} {} START".format(script_name, "#" * 50))
-            else: LOG.info("DONE    - {}".format(script_string))
+            else: LOG.info("DONE - {}".format(script_name))
 
             start_time  = datetime.now()
             result_func = function(*args, **kwargs)
@@ -127,4 +127,4 @@ def example():
 
     echo('123456')
 
-example()
+# example()

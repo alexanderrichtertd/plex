@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = setup software attributes
-# version   = 0.0.1
+# version   = 0.1.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -12,22 +12,21 @@ import sys
 import getpass
 import subprocess
 
-import pipelog
 import pipefunc
 
+import tank
 from tank import Tank
-from subclass import Singleton
 
 
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************
 # CLASS
-class Software(Singleton):
+class Software(tank.Singleton):
 
     def setup(self, software=os.getenv('SOFTWARE')):
         if not software: raise OSError ('STOP PROCESS', 'SOFTWARE couldnt be found.')
@@ -226,6 +225,7 @@ class Software(Singleton):
     # MENU
     def add_menu(self, menu_node):
         self.add_sub_menu = []
+        self._software_data = Tank().data_software[self._software.upper()]
 
         for menu_item in self._software_data['MENU']:
             try:    self.add_menu_item(menu_node, menu_item)
@@ -247,7 +247,8 @@ class Software(Singleton):
         sub_menu = ''
 
         for keys, item in new_command.iteritems():
-            if isinstance(item, dict):
+
+            if isinstance(item, dict) or isinstance(item, list):
                 if self._software == 'maya':
                     sub_menu = cmds.menuItem(p=menu_node, l=keys, sm=True)
                 elif self._software == 'max':
@@ -257,10 +258,13 @@ class Software(Singleton):
                 elif self._software == 'nuke':
                     sub_menu = menu_node.addMenu(keys)
 
-                # ADD sub_menu
-                if sub_menu: self.add_menu_item(sub_menu, item)
+                if sub_menu and isinstance(item, list):
+                    for it in item:
+                        self.add_menu_item(sub_menu, it)
+                elif sub_menu: self.add_menu_item(sub_menu, item)
 
             else:
+                LOG.info('{} - {} - {}'.format(menu_node, keys, item))
                 if self._software == 'maya':
                     eval('cmds.{}'.format(item).format(menu_node))
                 elif self._software == 'max':

@@ -1,12 +1,13 @@
 #*********************************************************************
 # content = software data
 # version = 0.1.0
-# date    = 2018-12-01
+# date    = 2019-12-01
 
 # author  = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 
+#*****************************************************************************************************************************
 #*****************************************************************************************************************************
 # DEFAULT
 EXTENSION_CODE:
@@ -30,10 +31,12 @@ EXTENSION:
   mari:      mrt
   substance: spp
 
-  texture: png
+  playblast: mov
+  texture: exr
   render:  exr
 
 
+#*****************************************************************************************************************************
 #*****************************************************************************************************************************
 # MAYA
 MAYA:
@@ -47,7 +50,8 @@ MAYA:
   renderer_path:
 
 
-  ENV: # Added BEFORE software start
+  # Added BEFORE software starts
+  ENV:
     PYTHONPATH:
       - !env [SOFTWARE_PATH]
       - !env [SOFTWARE_PATH, /scripts]
@@ -72,10 +76,13 @@ MAYA:
     MAYA_DISABLE_CER: 1
 
 
+  #*****************************************************************************************************************************
   MENU:
     - Plex:
-        open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
-        open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
+        - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
+        - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
+        - sub_break:           menuItem(p="{}", d=True)
+        - reload_pipeline:     menuItem(p="{}", l='Reload Pipeline', c='import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menu()")')
 
     - break:  menuItem(p="{}", d=True)
 
@@ -83,6 +90,17 @@ MAYA:
     - Load: menuItem(p="{}", l='Load', c='import arLoad; arLoad.start()')
 
     - break:  menuItem(p="{}", d=True)
+
+    - Animation:
+        playblast: menuItem(p="{}", l='Playblast', c='from ANIM import playblast;playblast.start()')
+
+    - Light:
+        light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;light_linker.start()')
+
+    - Render:
+        rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("work")')
+        rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("preview")')
+        rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("publish")')
 
     - Utils:
         position_selected: menuItem(p="{}", l='Position to First Selection', c='import maya_utils; maya_utils.position_selected()')
@@ -93,6 +111,7 @@ MAYA:
     - Help:   menuItem(p="{}", l='Help', c='import pipefunc; pipefunc.get_help()')
 
 
+  #*****************************************************************************************************************************
   # SPECIFIC settings
   SETTINGS:
     FPS:
@@ -106,7 +125,23 @@ MAYA:
     unit: cm
 
 
+  SCENE:
+      ANIM:
+        - char
+        - props
+        - fx
+      LAYOUT:
+        - props
+        - sets
+      CAM:
+        - ''
+      REVIEW:
+        - proxy
+        - playblast
 
+
+
+#*****************************************************************************************************************************
 #*****************************************************************************************************************************
 # NUKE
 NUKE:
@@ -163,6 +198,7 @@ NUKE:
 
 
 #*****************************************************************************************************************************
+#*****************************************************************************************************************************
 # HOUDINI
 HOUDINI:
   version: &HOUDINI_VERSION 16.0.633
@@ -197,7 +233,8 @@ HOUDINI:
 
 
 #*****************************************************************************************************************************
-# 3DsMax
+#*****************************************************************************************************************************
+# 3Ds Max
 MAX:
   version: &MAX_VERSION 2019
   path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]
@@ -224,8 +261,8 @@ MAX:
 
   MENU:
     - plex:
-        open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder', 'Open Scene Folder', max_menu.open_scene_folder))
-        open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder', 'Open Project Folder', max_menu.open_project_folder))
+        - open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder', 'Open Scene Folder', max_menu.open_scene_folder))
+        - open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder', 'Open Project Folder', max_menu.open_project_folder))
 
     - break: AddSeparator()
 
@@ -243,6 +280,7 @@ MAX:
 
 
 #*****************************************************************************************************************************
+#*****************************************************************************************************************************
 # RV
 RV:
   version:
@@ -252,6 +290,7 @@ RV:
 
 
 
+#*****************************************************************************************************************************
 #*****************************************************************************************************************************
 # DESKTOP
 DESKTOP:

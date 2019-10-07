@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = repository
-# version   = 0.0.1
-# date      = 2018-12-01
+# version   = 0.1.0
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -12,36 +12,27 @@ import os
 import json
 import requests
 
-import pipelog
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
-repo_data = Tank().data_repository
+REPO_DATA = Tank().user.data_user_path
 
-# Authentication for user filing issue
-# (read/write access to repository)
-USERNAME = repo_data['username']
-PASSWORD = repo_data['password']
-
-# repository to add this issue
-REPO_OWNER = repo_data['owner']
-REPO_NAME  = repo_data['repository']
 
 
 #*********************************************************************
 # GIT
-def make_github_issue(title, body=None, assignee=USERNAME, milestone=None, labels=None):
+def make_github_issue(title, body=None, assignee=REPO_DATA['username'], milestone=None, labels=None):
     # Our url to create issues via POST
-    url = 'https://api.github.com/repos/%s/%s/issues' % (REPO_OWNER, REPO_NAME)
+    url = 'https://api.github.com/repos/%s/%s/issues' % (REPO_DATA['owner'], REPO_DATA['repository'])
 
     # Create an authenticated session to create the issue
     session = requests.Session()
-    session.auth = (USERNAME, PASSWORD)
+    session.auth = (REPO_DATA['username'], REPO_DATA['password'])
 
     issue = {'title': title,
              'body': body,

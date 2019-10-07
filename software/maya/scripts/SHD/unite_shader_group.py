@@ -3,7 +3,7 @@
 # version   = 0.1.0
 # date      = 2019-12-01
 
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -14,13 +14,13 @@ import maya.mel as mel
 import maya.cmds as cmds
 from pymel.core import *
 
-import pipelog
+from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************

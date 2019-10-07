@@ -3,7 +3,7 @@
 # version   = 1.0.0
 # date      = 2019-12-01
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -22,7 +22,6 @@ class Setup(object):
         this_path = os.path.normpath(os.path.dirname(__file__))
         self.data_pipeline_path = []
         self.data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
-        print self.data_project_path
 
         self.pipeline_env  = SmartDict()
         self.this_pipeline = os.path.normpath(os.path.dirname(this_path))
@@ -41,8 +40,8 @@ class Setup(object):
                 # REPLACE $this with current_path
                 if path == '$this': path = self.this_pipeline
 
-                if self.this_pipeline == path or self.data_pipeline_path:
-                    if path and os.path.exists(path):
+                if path and self.this_pipeline == path or self.data_pipeline_path:
+                    if os.path.exists(path):
                         self.data_pipeline_path.append(path)
                         self.pipeline_status = status
                     else: print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(path, self.data_project_path))

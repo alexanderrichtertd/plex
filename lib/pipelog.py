@@ -3,7 +3,7 @@
 # version   = 0.1.0
 # date      = 2018-12-26
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -13,6 +13,7 @@ import logging
 import logging.config
 
 USER = os.getenv('username')
+
 
 #*********************************************************************
 # CLASS

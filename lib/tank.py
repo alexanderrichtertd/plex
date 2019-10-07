@@ -1,9 +1,9 @@
 #*********************************************************************
 # content   = main hub
-# version   = 0.0.1
-# date      = 2018-12-01
+# version   = 0.1.0
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -11,16 +11,29 @@ import os
 import sys
 
 from extern import yaml
-from subclass import Singleton
 
 import pipefunc
-
 
 
 #*********************************************************************
 # VARIABLES
 DATA_FORMAT = '.yml'
 IMG_FORMAT  = '.png'
+
+
+#*********************************************************************
+class Singleton(object):
+    def __new__(cls, *args, **kwds):
+
+        self = "__self__"
+        if not hasattr(cls, self):
+            instance = object.__new__(cls)
+            instance.init(*args, **kwds)
+            setattr(cls, self, instance)
+        return getattr(cls, self)
+
+    def init(self, *args, **kwds):
+        pass
 
 
 #*********************************************************************
@@ -32,7 +45,6 @@ class Tank(Singleton):
     def init_software(self):
         self.software.setup()
         self.software.print_header()
-
         self.user.setup()
 
     @property

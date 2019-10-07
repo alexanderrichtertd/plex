@@ -2,9 +2,9 @@
 # content   = saves work and publishes files
 #             executes other scripts on PUBLISH (task in file name)
 # version   = 0.1.1
-# date      = 2018-12-01
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -18,17 +18,17 @@ import subprocess
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipelog
 import pipefunc
 import arNotice
 
 from tank import Tank
 from arUtil import ArUtil
 
+
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 
 #*********************************************************************

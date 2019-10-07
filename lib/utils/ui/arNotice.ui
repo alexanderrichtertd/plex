@@ -10,13 +10,13 @@
     <x>0</x>
     <y>0</y>
     <width>453</width>
-    <height>100</height>
+    <height>110</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>356</width>
-    <height>100</height>
+    <height>110</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -54,16 +54,7 @@ QToolTip {
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -88,7 +79,7 @@ QToolTip {
       <string/>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../../../img/img.qrc">
        <normaloff>:/lbl/lbl/default.png</normaloff>:/lbl/lbl/default.png</iconset>
      </property>
      <property name="iconSize">
@@ -96,6 +87,12 @@ QToolTip {
        <width>140</width>
        <height>100</height>
       </size>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
      </property>
      <property name="flat">
       <bool>true</bool>
@@ -119,9 +116,9 @@ QToolTip {
     </spacer>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,4,1">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
      <property name="spacing">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="leftMargin">
       <number>8</number>
@@ -130,7 +127,7 @@ QToolTip {
       <number>10</number>
      </property>
      <property name="bottomMargin">
-      <number>0</number>
+      <number>5</number>
      </property>
      <item>
       <widget class="QLineEdit" name="edtTitle">
@@ -146,7 +143,7 @@ QToolTip {
        <property name="font">
         <font>
          <family>Calibri</family>
-         <pointsize>10</pointsize>
+         <pointsize>9</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -247,7 +244,7 @@ QToolTip {
         <bool>true</bool>
        </property>
        <property name="plainText">
-        <string></string>
+        <string/>
        </property>
        <property name="tabStopWidth">
         <number>10</number>
@@ -258,23 +255,29 @@ QToolTip {
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <property name="topMargin">
-      <number>8</number>
+      <number>6</number>
      </property>
      <property name="rightMargin">
-      <number>4</number>
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>5</number>
      </property>
      <item>
       <widget class="QPushButton" name="btnCancel">
        <property name="maximumSize">
         <size>
-         <width>16</width>
-         <height>16</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <pointsize>8</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -287,6 +290,12 @@ QToolTip {
        </property>
        <property name="text">
         <string>X</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
        </property>
        <property name="shortcut">
         <string>Esc</string>
@@ -313,16 +322,22 @@ QToolTip {
       <widget class="QPushButton" name="btnUser">
        <property name="maximumSize">
         <size>
-         <width>16</width>
-         <height>16</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="../../../img/img.qrc">
          <normaloff>:/user/user/default.png</normaloff>:/user/user/default.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
        </property>
        <property name="flat">
         <bool>true</bool>

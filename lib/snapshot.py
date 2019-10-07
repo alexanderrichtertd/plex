@@ -1,10 +1,10 @@
 #*********************************************************************
 # content   = snapshot
 #             executes other scripts on PUBLISH (on task in file name)
-# version   = 0.0.1
-# date      = 2018-12-01
+# version   = 0.1.0
+# date      = 2019-10-06
 #
-# license   = MIT
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -13,7 +13,6 @@ import time
 
 from Qt import QtWidgets, QtGui, QtCore, __binding__
 
-import pipelog
 import pipefunc
 
 from tank import Tank
@@ -22,7 +21,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = pipelog.init(script=TITLE)
+LOG   = Tank().log.init(script=TITLE)
 
 DEFAULT_PATH = os.path.normpath(os.getenv('DATA_USER_PATH').split(';')[0] + '/tmp_img.jpg')
 
