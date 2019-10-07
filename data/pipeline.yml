@@ -1,11 +1,12 @@
 #*********************************************************************
 # content   = pipeline data
 # version   = 0.1.0
-# date      = 2018-12-01
+# date      = 2019-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 # SETS project path
 # in data/project/$project
@@ -21,11 +22,11 @@ PIPELINE:
 # use $this for current location
 PATH:
     # 1.local (dev & debug)
-    - C:\sandbox
+    - sandbox: C:\sandbox
     # 2.project (production)
-    - D:\project
+    - project: D:\project
     # 3.pipeline (master)
-    - $this # D:\plex
+    - master:  $this # D:\plex
 
 
 # USER customize

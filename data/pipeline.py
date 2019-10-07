@@ -1,20 +1,18 @@
 #*********************************************************************
 # content   = SET default environment paths
-# version   = 0.7.0
+# version   = 1.0.0
 # date      = 2019-12-01
 #
 # license   = MIT
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
+
 import os
 import sys
 
 import yaml
 
-
-#*********************************************************************
-PIPELINE_STATUS = ['master', 'project', 'user']
 
 
 #*********************************************************************
@@ -37,13 +35,17 @@ class Setup(object):
         else: raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
 
         # SEARCH and ADD current and sub paths
-        for paths in self.pipeline_data['PATH']:
-            # REPLACE $this with current_path
-            if paths == '$this': paths = self.this_pipeline
+        for pipe in self.pipeline_data['PATH']:
 
-            if self.this_pipeline == paths or self.data_pipeline_path:
-                if    os.path.exists(paths): self.data_pipeline_path.append(paths)
-                else: print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(paths, self.data_project_path))
+            for status, path in pipe.items():
+                # REPLACE $this with current_path
+                if path == '$this': path = self.this_pipeline
+
+                if self.this_pipeline == path or self.data_pipeline_path:
+                    if path and os.path.exists(path):
+                        self.data_pipeline_path.append(path)
+                        self.pipeline_status = status
+                    else: print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(path, self.data_project_path))
 
         if not self.data_pipeline_path:
             raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
@@ -55,19 +57,18 @@ class Setup(object):
     def set_pipeline_env(self):
 
         # SET STATUS
-        try:    os.environ['PIPELINE_STATUS'] = PIPELINE_STATUS[len(self.data_pipeline_path) - 1]
-        except: os.environ['PIPELINE_STATUS'] = 'sandbox{}'.format(len(self.data_pipeline_path) - 1)
+        os.environ['PIPELINE_STATUS'] = self.pipeline_status
 
         # ADD sub ENV
         for eachPath in self.data_pipeline_path:
             self.pipeline_env.add('PIPELINE_PATH', eachPath)
 
-            if os.path.exists(eachPath + '/img'):         self.pipeline_env.add('IMG_PATH', eachPath + '/img')
-            if os.path.exists(eachPath + '/software'):    self.pipeline_env.add('SOFTWARE_PATH', eachPath + '/software')
-            if os.path.exists(eachPath + '/lib'):         self.pipeline_env.add('LIB_PATH', eachPath + '/lib')
-            if os.path.exists(eachPath + '/lib/dcc'): self.pipeline_env.add('DCC_PATH', eachPath + '/lib/dcc')
-            if os.path.exists(eachPath + '/lib/utils'):   self.pipeline_env.add('UTILS_PATH', eachPath + '/lib/utils')
-            if os.path.exists(eachPath + '/lib/extern'):   self.pipeline_env.add('EXTERN_PATH', eachPath + '/lib/extern')
+            if os.path.exists(eachPath + '/img'):        self.pipeline_env.add('IMG_PATH', eachPath + '/img')
+            if os.path.exists(eachPath + '/software'):   self.pipeline_env.add('SOFTWARE_PATH', eachPath + '/software')
+            if os.path.exists(eachPath + '/lib'):        self.pipeline_env.add('LIB_PATH', eachPath + '/lib')
+            if os.path.exists(eachPath + '/lib/dcc'):    self.pipeline_env.add('DCC_PATH', eachPath + '/lib/dcc')
+            if os.path.exists(eachPath + '/lib/utils'):  self.pipeline_env.add('UTILS_PATH', eachPath + '/lib/utils')
+            if os.path.exists(eachPath + '/lib/extern'): self.pipeline_env.add('EXTERN_PATH', eachPath + '/lib/extern')
 
         os.environ['DATA_PATH'] = self.data_pipeline_path[0] + '/data'
         os.environ['DATA_PROJECT_PATH'] = self.data_pipeline_path[0] + '/data/project/' + self.pipeline_data['project']
@@ -80,6 +81,7 @@ class Setup(object):
             self.add_env('UTILS_PATH',        (';').join(self.pipeline_env['UTILS_PATH']))
             self.add_env('DCC_PATH',          (';').join(self.pipeline_env['DCC_PATH']))
             self.add_env('EXTERN_PATH',       (';').join(self.pipeline_env['EXTERN_PATH']))
+
             self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
             self.add_env('SOFTWARE_SRC_PATH', (';').join(self.pipeline_env['SOFTWARE_PATH']))
         except: raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
@@ -105,10 +107,7 @@ class Setup(object):
         sys.path.append(os.environ['DATA_USER_PATH'])
 
         # SET project Data
-        try:    from tank import Tank
-        except Exception,e:
-            print str(e)
-            raise OSError ('STOP PROCESS', 'Pipeline PATH is missing. See pipeline.yml')
+        from tank import Tank
 
         self.project_data = Tank().data_project
         os.environ['PROJECT_NAME'] = self.project_data['name']
@@ -131,9 +130,9 @@ class Setup(object):
 
 
     def __call__(self):
-        import pipelog
+        from tank import Tank
         TITLE = os.path.splitext(os.path.basename(__file__))[0]
-        LOG   = pipelog.init(script=TITLE)
+        LOG   = Tank().log.init(script=TITLE)
 
         LOG.debug('____________________________________________________________')
         LOG.debug('PIPELINE: {} [{}, {}, {}] {}'.format(self.pipeline_data['PIPELINE']['name'],
