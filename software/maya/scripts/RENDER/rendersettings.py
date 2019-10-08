@@ -29,22 +29,22 @@ class Rendersettings(object):
         self.states = ["work", "preview", "publish", "custom"]
 
     def default(self):
-        LOG.debug('default')
+        LOG.info('default')
 
     def work(self):
-        LOG.debug('work')
+        LOG.info('work')
 
 
     def preview(self):
-        LOG.debug('preview')
+        LOG.info('preview')
 
 
     def publish(self):
-        LOG.debug('publish')
+        LOG.info('publish')
 
 
     def custom(self):
-        LOG.debug('custom')
+        LOG.info('custom')
 
 
     #*********************************************************************

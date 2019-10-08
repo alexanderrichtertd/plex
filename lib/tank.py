@@ -17,8 +17,9 @@ import pipefunc
 
 #*********************************************************************
 # VARIABLES
+TITLE = os.path.splitext(os.path.basename(__file__))[0]
+
 DATA_FORMAT = '.yml'
-IMG_FORMAT  = '.png'
 
 
 #*********************************************************************
@@ -78,7 +79,7 @@ class Tank(Singleton):
 
     @property
     def data_software(self):
-        return self.get_data('software')
+        return self.get_data('dcc/{}'.format(self.software.software))
 
     @property
     def data_script(self):
@@ -91,10 +92,6 @@ class Tank(Singleton):
     @property
     def data_notice(self):
         return self.get_data('notice')
-
-    @property
-    def data_achievement(self):
-        return self.get_data('achievement')
 
 
     #*********************************************************************
@@ -113,6 +110,7 @@ class Tank(Singleton):
         if not file_name: return get_all_data()
 
         file_name = file_name.split('.')[0]
+        file_name = file_name.lower()
         file_path = ''
 
         if user_id and self.get_env('DATA_USER_OVERWRITE') == 'True':
@@ -125,7 +123,7 @@ class Tank(Singleton):
         if os.path.exists(file_path):
             return self.get_yml_file(file_path)
 
-        else: self.log('CANT find file: {}'.format(file_path))
+        else: print('CANT find file: {}'.format(file_path))
         return ''
 
 
@@ -157,11 +155,11 @@ class Tank(Singleton):
 
     def get_img_path(self, end_path='btn/default'):
         if '.' in end_path: img_format = ''
-        else: img_format = IMG_FORMAT
+        else: img_format = self.data_templates['EXTENSION']['icons']
 
-        path = self.get_pipeline_path('img/{}{}'.format(end_path, img_format))
-        if not path: path = self.get_pipeline_path('img/{}/default{}'.format(os.path.dirname(end_path), IMG_FORMAT))
-        if not path: path = self.get_pipeline_path('img/btn/default{}'.format(IMG_FORMAT))
+        path = self.get_pipeline_path('img/{}.{}'.format(end_path, img_format))
+        if not path: path = self.get_pipeline_path('img/{}/default.{}'.format(os.path.dirname(end_path), img_format))
+        if not path: path = self.get_pipeline_path('img/btn/default.{}'.format(img_format))
         return path
 
 
@@ -172,7 +170,7 @@ class Tank(Singleton):
             try:
                 yaml.dump(content, outfile, default_flow_style=False)
             except yaml.YAMLError as exc:
-                self.log(exc)
+                print(exc)
 
 
     def get_yml_file(self, path):
@@ -182,9 +180,9 @@ class Tank(Singleton):
                 yml_content = yaml.load(stream)
                 if yml_content: return yml_content
                 else:
-                    self.log('CANT load file: {}'.format(path))
+                    print('CANT load file: {}'.format(path))
         except yaml.YAMLError as exc:
-            self.log(exc)
+            print(exc)
 
     # define & register custom tag handler
     # combine var with strings
@@ -251,6 +249,6 @@ class Tank(Singleton):
     def get_env(self, var):
         if os.environ.__contains__(var):
             return os.environ[var].split(';')[0]
-        self.log('ENV doesnt exist: {}'.format(var))
+        print('ENV doesnt exist: {}'.format(var))
         return ''
 

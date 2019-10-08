@@ -44,7 +44,7 @@ class ArLoad(ArUtil):
         self.load_dir  = ''
         self.load_file = ''
 
-        self.software_format = {y:x.upper() for x,y in self.data['software']['EXTENSION'].items()}
+        self.software_format = {y:x.upper() for x, y in self.data['templates']['EXTENSION'].items()}
         self.software_keys   = list(self.software_format.keys())
 
         self.wgLoad.lstScene.itemSelectionChanged.connect(self.change_lstScene)
@@ -230,8 +230,8 @@ class ArLoad(ArUtil):
             if os.path.splitext(file)[1][1:] in self.software_keys: file_list.append(file)
 
         if file_list:
-            if os.path.exists(self.file_dir + data.META_INFO):
-                self.file_data = data.get_yml_file(self.file_dir + data.META_INFO)
+            if os.path.exists(self.file_dir + Tank().data_templates['META']['file']):
+                self.file_data = Tank().get_yml_file(self.file_dir + Tank().data_templates['META']['file'])
             else: self.file_data = ''
 
             self.wgLoad.lstFiles.addItems(sorted(file_list, reverse=True))
@@ -244,7 +244,7 @@ class ArLoad(ArUtil):
         if self.extension in self.data['script'][TITLE]['img']:
             self.preview_img_path = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
         else:
-            self.preview_img_path = self.file_dir + '/' + data.META_FOLDER + '/' + self.file_name + data.THUMBS_FORMAT
+            self.preview_img_path = self.file_dir + '/' + Tank().data_templates['META']['dir'] + '/' + self.file_name + '.' + self.data['templates']['EXTENSION']['thumbnail']
 
         self.load_file = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
 

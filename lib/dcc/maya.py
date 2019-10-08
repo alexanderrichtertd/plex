@@ -23,12 +23,10 @@ from tank import Tank
 from classes import software
 
 
-
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = Tank().log.init(script=TITLE)
-
 
 
 #*********************************************************************
@@ -59,6 +57,6 @@ class Maya(software, tank.Singleton):
         #     mel.eval('file -r -type "' + s.FILE_FORMAT_CODE["." + self.save_dir.split(".")[-1]] + '" -ignoreVersion -gl -mergeNamespacesOnClash false "' + self.save_dir.replace("\\", "/") + '"')
 
     def scene_setup(self, file):
-        import maya_settings
-        maya_settings.setup_scene(file)
+        import maya_utils
+        maya_utils.setup_scene(file)
 

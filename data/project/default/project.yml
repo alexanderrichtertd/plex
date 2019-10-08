@@ -8,15 +8,7 @@
 
 
 name: Plex
-path: &PROJECT C:\Users\arichter\project
-
-
-#*********************************************************************
-resolution:
-  - 1920
-  - 1080
-
-fps: 24
+path: &PROJECT C:\Users\alexa\new_project
 
 
 #*********************************************************************
@@ -61,5 +53,5 @@ HELP:
   arNotificator: !join [*WIKI, /arNotificator]
 
   shelf:         !join [*WIKI, /shelf]
-  issues:        !join [*REPO, /issues]
+  report:        !join [*REPO, /issues]
 

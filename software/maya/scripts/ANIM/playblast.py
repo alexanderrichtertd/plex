@@ -35,7 +35,7 @@ def start():
         LOG.warning("No Save Path")
         return
 
-    save_path = os.path.dirname(file_path) + "/" + "animatic" + "/" + os.path.basename(file_path).split(".")[0] + '.' + Tank().data_software['EXTENSION']['playblast']
+    save_path = os.path.dirname(file_path) + "/" + "animatic" + "/" + os.path.basename(file_path).split(".")[0] + '.' + Tank().data_templates['EXTENSION']['playblast']
     mel.eval ('playblast  -format qt' + ' -filename "' + save_path + '" -forceOverwrite  -sequenceTime 0 -clearCache 1 -viewer 1 -showOrnaments 1 -fp 4 -percent 100 -compression "H.264" -quality 100;')
 
     startfile(os.path.normpath(save_path))

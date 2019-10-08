@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>62</height>
+    <height>71</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,7 +26,7 @@
    <string>Project</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../img/img.qrc">
+   <iconset>
     <normaloff>:/btn/btn/btnProject48.png</normaloff>:/btn/btn/btnProject48.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -155,7 +155,7 @@ QToolTip {
            <property name="styleSheet">
             <string notr="true">
 QWidget{
-    background-color: rgb(26, 30, 33); 
+    background-color: rgb(40, 43, 50); 
 }
 QPushButton { 
 	border:0px;
@@ -193,31 +193,6 @@ QPushButton:pressed{
                <number>0</number>
               </property>
               <item>
-               <widget class="QLabel" name="lblCommentImg">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16</width>
-                  <height>16</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>CommentImg</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap resource="../../../img/img.qrc">:/btn/btn/btnWrite48.png</pixmap>
-                </property>
-                <property name="scaledContents">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QLineEdit" name="edtComment">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(170, 170, 170);</string>
@@ -240,7 +215,7 @@ QPushButton:pressed{
                <widget class="QCheckBox" name="cbxAdd">
                 <property name="font">
                  <font>
-                  <pointsize>10</pointsize>
+                  <pointsize>7</pointsize>
                   <weight>75</weight>
                   <bold>true</bold>
                  </font>
@@ -335,7 +310,7 @@ QPushButton:pressed{
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
-                <pointsize>11</pointsize>
+                <pointsize>10</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
                 <underline>false</underline>
@@ -385,33 +360,30 @@ QPushButton:pressed{
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>24</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16</height>
+          <height>24</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QWidget{
-	background-color: rgb(55, 80, 209);
-	color: rgb(255, 255, 255);
+         <string notr="true">
+QWidget{
+    background-color: rgb(26, 30, 33); 
 }
-
 QPushButton { 
 	border:0px;
 }
 
-QPushButton:hover {
-	background-color: rgb(20, 60, 140);
-}
+QPushButton:hover {background-color: rgb(80, 80, 80); }
 
 QPushButton:pressed{ 
 	 border: 0px solid green;
-	 background-color: rgb(52, 158, 158);
-}</string>
+}
+</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
@@ -439,14 +411,14 @@ QPushButton:pressed{
            </property>
            <property name="font">
             <font>
-             <pointsize>7</pointsize>
+             <pointsize>6</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(190, 190, 190);</string>
            </property>
            <property name="text">
-            <string/>
+            <string>ycycyxcxycxycxycxycxycxycxycxycxycxycyx</string>
            </property>
            <property name="frame">
             <bool>false</bool>
@@ -486,7 +458,7 @@ QPushButton:pressed{
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../img/img.qrc">
+            <iconset>
              <normaloff>:/btn/btn/btnFolder48.png</normaloff>:/btn/btn/btnFolder48.png</iconset>
            </property>
            <property name="iconSize">
@@ -528,7 +500,7 @@ QPushButton:pressed{
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../img/img.qrc">
+            <iconset>
              <normaloff>:/btn/btn/btnProject48.png</normaloff>:/btn/btn/btnProject48.png</iconset>
            </property>
            <property name="iconSize">
@@ -580,7 +552,7 @@ QPushButton:pressed{
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../img/img.qrc">
+            <iconset>
              <normaloff>:/btn/btn/btnReport48.png</normaloff>:/btn/btn/btnReport48.png</iconset>
            </property>
            <property name="iconSize">

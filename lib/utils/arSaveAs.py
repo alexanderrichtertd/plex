@@ -134,8 +134,8 @@ class ArSaveAs(ArUtil):
             if self.new_file: extension = Tank().software.extension
             else: extension = ''
             new_item = Tank().data_templates['SCENES'][self.wgSaveAs.cbxScene.currentText()]
-            new_item = new_item.format(set       = self.wgSaveAs.cbxSet.currentText(),
-                                       asset     = self.wgSaveAs.cbxAsset.currentText(),
+            new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
+                                       entity    = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
                                        status    = Tank().data_templates['STATUS']['work'],
                                        version   = Tank().data_templates['FILE']['version'].replace(r'\d','0').replace('_',''),
@@ -176,7 +176,7 @@ class ArSaveAs(ArUtil):
         for folder in save_list: pipefunc.create_folder(folder)
 
         if self.new_file:
-            Tank().software.scene_saveAs(self.save_file, setup_scene=True)
+            Tank().software.scene_save_as(self.save_file, setup_scene=True)
             snapshot.create_any_screenshot(self.wgSaveAs)
             tmp_img_path = snapshot.save_snapshot(self.save_file)
 
@@ -203,10 +203,10 @@ class ArSaveAs(ArUtil):
         return True
 
     def set_meta_data(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + data.META_INFO
+        meta_path    = os.path.dirname(save_path) + Tank().data_templates['META']['file']
         comment_dict = {'user':    User().id,
                         'comment': 'new scene'}
-        data.set_data(meta_path, os.path.basename(save_path), comment_dict)
+        Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
 
 
 def create():

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>232</width>
-    <height>397</height>
+    <width>241</width>
+    <height>440</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>241</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -395,7 +401,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../img/img.qrc">
+               <iconset>
                 <normaloff>:/shelf/software/maya/shelf/shelf_render_high.png</normaloff>:/shelf/software/maya/shelf/shelf_render_high.png</iconset>
               </property>
               <property name="iconSize">

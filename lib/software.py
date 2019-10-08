@@ -32,7 +32,7 @@ class Software(tank.Singleton):
         if not software: raise OSError ('STOP PROCESS', 'SOFTWARE couldnt be found.')
 
         self._software = software.lower()
-        self._software_data = Tank().data_software[self._software.upper()]
+        self._software_data = Tank().data_software
 
         self._version = self._software_data['version']
         self._path    = self._software_data['path']
@@ -61,7 +61,7 @@ class Software(tank.Singleton):
         LOG.debug("SOFTWARE_PATH: {}".format(os.environ['SOFTWARE_PATH']))
 
         # GET data
-        self._software_data = Tank().data_software[self._software.upper()]
+        self._software_data = Tank().data_software
         self._env = self._software_data.get('ENV', '')
 
         # ADD software ENV
@@ -126,7 +126,7 @@ class Software(tank.Singleton):
 
     @property
     def extension(self):
-        return Tank().data_software['EXTENSION'][self._software]
+        return Tank().data_templates['EXTENSION'][self._software]
 
     @property
     def menu(self):
@@ -216,8 +216,8 @@ class Software(tank.Singleton):
 
     def scene_setup(self, file):
         if self._software == "maya":
-            import maya_settings
-            maya_settings.setup_scene(file)
+            import maya_utils
+            maya_utils.setup_scene(file)
         else: LOG.warning('NO scene returned: No software cmd found')
 
 
@@ -225,7 +225,7 @@ class Software(tank.Singleton):
     # MENU
     def add_menu(self, menu_node):
         self.add_sub_menu = []
-        self._software_data = Tank().data_software[self._software.upper()]
+        self._software_data = Tank().data_software
 
         for menu_item in self._software_data['MENU']:
             try:    self.add_menu_item(menu_node, menu_item)

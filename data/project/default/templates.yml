@@ -7,9 +7,53 @@
 #*********************************************************************
 
 
+#*********************************************************************
+# SETTINGS
 start_frame: 1001
 
+resolution:
+  - 1920
+  - 1080
 
+fps: 24
+
+
+
+#*****************************************************************************************************************************
+# FORMATS
+EXTENSION_CODE:
+  ma  : mayaAscii
+  mb  : mayaBinary
+  obj : OBJ
+  abc : Alembic
+  nk  : nuke
+  tif : tiff
+  exr : openExr
+  avi : avi
+  jpg : jpeg
+
+
+EXTENSION:
+  maya:      ma
+  max :      max
+  nuke:      nk
+  houdini:   hipnc
+  photoshop: psd
+  mari:      mrt
+  substance: spp
+
+  playblast: mov
+  texture:   exr
+  render:    exr
+  thumbnail: jpg
+
+  icons:     png
+
+
+
+
+#*********************************************************************
+# STRUCTURE
 STATUS:
   work:    WORK
   publish: PUBLISH
@@ -29,6 +73,11 @@ SCENES:
   asset:  "{entity}/{status}/{task}/{entity}_{task}_{version}.{extension}"
   shots : "{sequence}/{entity}/{status}/{task}/{entity}_{task}_{version}.{extension}"
   render: "{sequence}/{entity}/{status}/{task}/{entity}_{task}_{version}.{frame}.{extension}"
+
+
+META:
+ dir:  &META '/meta/'
+ file: !join [*META, 'info.yml']
 
 
 rights:

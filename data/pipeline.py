@@ -141,8 +141,8 @@ class Setup(object):
                            self.data_pipeline_path))
 
         LOG.debug('PROJECT:  {} [{}, {}] [{}{}]'.format(self.project_data['name'],
-                            '{} x {}'.format(self.project_data['resolution'][0], self.project_data['resolution'][1]),
-                            self.project_data['fps'],
+                            '{} x {}'.format(Tank().data_templates['resolution'][0], Tank().data_templates['resolution'][1]),
+                            Tank().data_templates['fps'],
                             '' if os.path.exists(self.project_data['path']) else 'NOT existing: ',
                             os.path.normpath(self.project_data['path'])))
 

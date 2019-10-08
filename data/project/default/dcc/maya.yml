@@ -1,0 +1,111 @@
+#*********************************************************************
+# content = maya data
+# version = 0.1.0
+# date    = 2019-10-06
+#
+# license = MIT <https://github.com/alexanderrichtertd>
+# author  = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+
+#*****************************************************************************************************************************
+# MAYA
+
+version: &MAYA_VERSION 2018
+path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
+
+# start command
+start: !join ['start "" "', *MAYA_PATH, '"'] # {} replaced by open_file
+
+renderer:
+renderer_path:
+
+
+# Added BEFORE software starts
+ENV:
+  PYTHONPATH:
+    - !env [SOFTWARE_PATH]
+    - !env [SOFTWARE_PATH, /scripts]
+    - !env [SOFTWARE_PATH, /plugins]
+    - !env [SOFTWARE_PATH, /shelf]
+
+  MAYA_SCRIPT_PATH: #[SOFTWARE_PATH, /scripts]
+
+  MAYA_PLUG_IN_PATH:
+    - !env [SOFTWARE_PATH, /plugins]
+
+  MAYA_SHELF_PATH:
+    - !env [SOFTWARE_PATH, /shelf]
+
+  # SPLASHSCREEN & IMG PATH
+  XBMLANGPATH:
+    - !env [IMG_PATH, /software/maya]
+    - !env [IMG_PATH, /software/maya/shelf]
+
+  # DISABLE close reports
+  MAYA_DISABLE_CIP: 1
+  MAYA_DISABLE_CER: 1
+
+
+#*****************************************************************************************************************************
+MENU:
+  - Plex:
+      - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
+      - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
+      - sub_break:           menuItem(p="{}", d=True)
+      - reload_pipeline:     menuItem(p="{}", l='Reload Pipeline', c='import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menu()")')
+
+  - break:  menuItem(p="{}", d=True)
+
+  - Save: menuItem(p="{}", l='Save', c='import arSave; arSave.start()')
+  - Load: menuItem(p="{}", l='Load', c='import arLoad; arLoad.start()')
+
+  - break:  menuItem(p="{}", d=True)
+
+  - Animation:
+      playblast: menuItem(p="{}", l='Playblast', c='from ANIM import playblast;playblast.start()')
+
+  - Light:
+      light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;light_linker.start()')
+
+  - Render:
+      rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("work")')
+      rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("preview")')
+      rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("publish")')
+
+  - Utils:
+      position_selected: menuItem(p="{}", l='Position to First Selection', c='import maya_utils; maya_utils.position_selected()')
+
+  - break:  menuItem(p="{}", d=True)
+
+  - Report: menuItem(p="{}", l='Report', c='import pipefunc; pipefunc.help("issues")')
+  - Help:   menuItem(p="{}", l='Help', c='import pipefunc; pipefunc.help()')
+
+
+#*****************************************************************************************************************************
+# SPECIFIC settings
+SETTINGS:
+  FPS:
+    24: film
+    25: pal
+    30: ntsc
+    48: show
+    50: palf
+    60: ntscf
+
+  unit: cm
+
+
+SCENE:
+    ANIM:
+      - char
+      - props
+      - fx
+    LAYOUT:
+      - props
+      - sets
+    CAM:
+      - ''
+    REVIEW:
+      - proxy
+      - playblast

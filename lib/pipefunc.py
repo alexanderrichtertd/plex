@@ -21,6 +21,8 @@ import webbrowser
 #*********************************************************************
 # FUNCTIONS
 def help(name=''):
+    from tank import Tank
+
     if not name and os.getenv('SOFTWARE'):
         name = os.getenv('SOFTWARE').lower()
 

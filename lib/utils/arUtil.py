@@ -149,11 +149,12 @@ class ArUtil(object):
         pipefunc.open_folder(os.getenv('PROJECT_PATH'))
 
     def press_btnReport(self):
-        pipefunc.help('issues')
+        pipefunc.help('report')
 
     def press_btnHelp(self, name=''):
-        pipefunc.help(TITLE)
+        pipefunc.help()
 
+    #*********************************************************************
     # MENU
     def press_btnMenu(self, menu_tag):
         tmp_menu = self.select_menu[menu_tag]
@@ -209,7 +210,6 @@ class ArUtil(object):
         # 3 - failed  - red
 
         if msg: self.set_comment(msg)
-        self.wgHeader.lblCommentImg.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(self.data['script'][TITLE]['progress_img'][msg_type]))))
 
         if not msg_type:
             template_css = """QProgressBar::chunk { background: %s; }"""

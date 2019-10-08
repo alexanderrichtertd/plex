@@ -149,7 +149,7 @@ class ArSave(ArUtil):
         if self.wgHeader.cbxAdd.isChecked(): self.update_version()
 
         try:
-            Tank().software.scene_saveAs(self.save_file)
+            Tank().software.scene_save_as(self.save_file)
             self.set_meta_data()
             LOG.info("SAVE : " + self.save_file)
         except:
@@ -198,11 +198,11 @@ class ArSave(ArUtil):
 
     def set_meta_data(self, save_path=''):
         if not save_path: save_path = self.save_file
-        meta_path = os.path.dirname(save_path) + data.META_INFO
+        meta_path = os.path.dirname(save_path) + Tank().data_templates['META']['file']
         # LOG.info(meta_path)
         comment_dict = {'user':   User().id,
                         'comment': str(self.wgSave.edtComment.text())}
-        data.set_data(meta_path, os.path.basename(save_path), comment_dict)
+        Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
 
     def folder_msg_box(self, bpS, dataFilter, title = "Choose file to open", path = ""): #dataFilter = "Maya Files (*.mb *.ma)"
         result = QtGui.QFileDialog().getOpenFileName(bpS, title, path, dataFilter)

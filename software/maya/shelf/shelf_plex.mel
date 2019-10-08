@@ -255,8 +255,8 @@ global proc shelf_plex () {
     shelfButton
         -enableCommandRepeat 1
         -enable 1
-        -width 34
-        -height 34
+        -width 12
+        -height 35
         -manage 1
         -visible 1
         -preventOverride 0
@@ -280,6 +280,68 @@ global proc shelf_plex () {
         -marginHeight 1
         -command "// Dont touch me, pervert!" 
         -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "report" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "import pipefunc\npipefunc.help('report')" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/alexa/Dropbox/github/plex/img/software/maya/shelf/shelf_report.png" 
+        -image1 "C:/Users/alexa/Dropbox/github/plex/img/software/maya/shelf/shelf_report.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import pipefunc\npipefunc.help('report')" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Help" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "import pipefunc\npipefunc.help()" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/alexa/Dropbox/github/plex/img/software/maya/shelf/shelf_help.png" 
+        -image1 "C:/Users/alexa/Dropbox/github/plex/img/software/maya/shelf/shelf_help.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import pipefunc\npipefunc.help()" 
+        -sourceType "python" 
         -commandRepeatable 1
         -flat 1
     ;

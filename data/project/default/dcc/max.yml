@@ -1,0 +1,54 @@
+#*********************************************************************
+# content = 3Ds Max data
+# version = 0.1.0
+# date    = 2019-10-06
+#
+# license = MIT <https://github.com/alexanderrichtertd>
+# author  = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+
+
+#*****************************************************************************************************************************
+# 3Ds Max
+
+version: &MAX_VERSION 2019
+path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]
+
+start: *MAX_PATH
+
+renderer:
+renderer_path:
+
+ENV:
+PATH:
+  - !env [SOFTWARE_PATH]
+  - !env [SOFTWARE_PATH, /scripts]
+  - !env [SOFTWARE_PATH, /plugins]
+  - !env [IMG_PATH, /software/max]
+
+PYTHONPATH:
+  - !env [SOFTWARE_PATH]
+  - !env [SOFTWARE_PATH, /scripts]
+  - !env [SOFTWARE_PATH, /plugins]
+  - !env [IMG_PATH, /software/max]
+
+# ADSKFLEX_LICENSE_FILE:
+
+MENU:
+- plex:
+    - open_scene_folder:   AddItem(MaxPlus.ActionFactory.Create('Open Scene Folder', 'Open Scene Folder', max_menu.open_scene_folder))
+    - open_project_folder: AddItem(MaxPlus.ActionFactory.Create('Open Project Folder', 'Open Project Folder', max_menu.open_project_folder))
+
+- break: AddSeparator()
+
+- Save:    AddItem(MaxPlus.ActionFactory.Create('Save', 'Save', max_menu.save))
+- Load:    AddItem(MaxPlus.ActionFactory.Create('Load', 'Load', max_menu.load))
+
+- break:   AddSeparator()
+
+- Report: "AddItem(MaxPlus.ActionFactory.Create('Report', 'Report', max_menu.help))"
+- Help:   "AddItem(MaxPlus.ActionFactory.Create('Help', 'Help', max_menu.help))"
+
+
+SETTINGS:
