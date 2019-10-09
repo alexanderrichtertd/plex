@@ -20,9 +20,6 @@ from tank import Tank
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = Tank().log.init(script=TITLE)
 
-PROJECT_DATA  = Tank().data_project
-SOFTWARE_DATA = Tank().data_software
-
 
 #*********************************************************************
 # FUNCTIONS
@@ -41,8 +38,8 @@ def add_write_node():
 
 #*********************************************************************
 # TOOLBAR
-menu_data = SOFTWARE_DATA['NUKE']['MENU']
-menuNode  = nuke.menu('Nodes').addMenu(PROJECT_DATA['name'], icon = 'nuke.ico')
+menu_data = Tank().data_software['MENU']
+menuNode  = nuke.menu('Nodes').addMenu(Tank().data_project['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 
@@ -55,12 +52,12 @@ add_gizmo_menu(menuNode)
 #*********************************************************************
 # ACTIONS
 def save():
-    from utils import arSave
+    import arSave
     arSave.start()
 
 
 def load():
-    from utils import arLoad
+    import arLoad
     arLoad.start()
 
 

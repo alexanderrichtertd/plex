@@ -92,7 +92,7 @@ smartLoader:
 
     SCRIPTS:
       arSave: *arSave
-      Report: import pipefunc; pipefunc.help('issues')
+      Report: import pipefunc; pipefunc.help('report')
       Help:   import pipefunc; pipefunc.help()
 
     SOFTWARE:

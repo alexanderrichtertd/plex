@@ -46,11 +46,12 @@ HELP:
   repo:          &REPO https://github.com/alexanderrichtertd/plex
 
   default:       &WIKI !join [*REPO, /wiki]
+
   arUtil:        !join [*WIKI, /arUtil]
   arSave:        !join [*WIKI, /arSave]
   arReporter:    !join [*WIKI, /arReporter]
   arDesktop:     !join [*WIKI, /arDesktop]
-  arNotificator: !join [*WIKI, /arNotificator]
+  arNotice:      !join [*WIKI, /arNotice]
 
   shelf:         !join [*WIKI, /shelf]
   report:        !join [*REPO, /issues]

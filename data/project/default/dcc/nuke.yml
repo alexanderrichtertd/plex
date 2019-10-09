@@ -57,7 +57,7 @@ MENU:
 
   - break:   addSeparator()
 
-  - Report:  addCommand('Report', 'import pipefunc; pipefunc.help("issues")', 'ctrl+alt+r', 'report.ico')
+  - Report:  addCommand('Report', 'import pipefunc; pipefunc.help("report")', 'ctrl+alt+r', 'report.ico')
   - Help:    addCommand('Help', 'import pipefunc; pipefunc.help()', 'ctrl+alt+h', 'help.ico')
 
 SETTINGS:

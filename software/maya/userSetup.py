@@ -31,23 +31,9 @@ Tank().init_software()
 SOFTWARE_DATA = Tank().software.data
 
 
-print("SETUP")
-try:
-    cmds.evalDeferred("maya_utils.load_menu()")
-    print("  ON  - menu")
-except: print("  OFF - menu")
-
-print("  ON  - shelf")
-
-# try:
-#     cmds.evalDeferred("maya_utils.setup_scene()")
-#     print("  ON  - scene setup")
-# except: print("  OFF - scene setup")
-
-try:
-    cmds.evalDeferred("from RENDER. rendersettings import Rendersettings;Rendersettings().setup()")
-    print("  ON  - default rendersettings")
-except: print("  OFF - default rendersettings")
+Tank().software.print_checked_header('menu', func=cmds.evalDeferred("maya_utils.load_menu()"))
+Tank().software.print_checked_header('setup')
+Tank().software.print_checked_header('rendersettings')
 
 print("")
 

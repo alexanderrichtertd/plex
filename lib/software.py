@@ -41,6 +41,7 @@ class Software(tank.Singleton):
         self._renderer      = self._software_data.get('renderer', '')
         self._renderer_path = self._software_data.get('renderer_path', '')
 
+
     def setup_env(self):
         LOG.debug('- {} -----------------------------------------------------'.format(self._software.upper()))
 
@@ -276,10 +277,10 @@ class Software(tank.Singleton):
 
     #*********************************************************************
     # SETUP
-    def set_scene(self):
+    def scene_setup(self):
         pass
 
-    def set_rendersettings(self, status):
+    def rendersettings(self, status):
         pass
 
 
@@ -292,46 +293,47 @@ class Software(tank.Singleton):
 
         # project name
         print('')
-        print(chr(218) + chr(196)*38 + chr(191))
-        print(chr(179) + ' '*space + os.getenv('PROJECT_NAME') + ' '*space + chr(179))
-        print(chr(192) + chr(196)*38 + chr(217))
+        print(chr(124) + chr(151)*38 + chr(124))
+        print(chr(124) + ' ' * space + os.getenv('PROJECT_NAME') + ' ' * space + chr(124))
+        print(chr(124) + chr(151)*38 + chr(124))
 
         # user name
         print ('\n' + ' '*12 + 'Welcome ' + getpass.getuser() + '\n')
 
-        print('PATHS')
-        print('  {} ON  - img'.format(chr(254)))
-        print('  {} ON  - lib'.format(chr(254)))
-        print('  {} ON  - data'.format(chr(254)))
-        print('  {} ON  - lib/utils'.format(chr(254)))
-        print('  {} ON  - lib/classes'.format(chr(254)))
-        print('  {} ON  - software/{}'.format(chr(254), self._software))
-        print('  {} ON  - software/{}/scripts'.format(chr(254), self._software))
-        print('  {} ON  - software/{}/plugins'.format(chr(254), self._software))
+        print('PATH')
+
+        self.print_checked_header('img')
+        self.print_checked_header('data')
+        self.print_checked_header('lib')
+        self.print_checked_header('lib/apps')
+        self.print_checked_header('software/{}'.format(self._software))
+        self.print_checked_header('software/{}/scripts'.format(self._software))
+        self.print_checked_header('software/{}/plugins'.format(self._software))
+
         if self._software == 'maya':
-            print('  {} ON  - software/{}/shelf'.format(chr(254), self._software))
+            self.print_checked_header('software/{}/shelf'.format(self._software))
         if self._software == 'nuke':
-            print('  {} ON  - software/{}/gizmos'.format(chr(254), self._software))
+            self.print_checked_header('software/{}/gizmos'.format(self._software))
 
         print('') # ********************
 
-        print('SCRIPTS')
+        print('SCENE')
         # scripts from software/MENU
         for menu_item in self._software_data['MENU']:
             for key in menu_item:
                 if key == 'break': continue
-                print('  {} ON  - {}'.format(chr(254), key))
+                self.print_checked_header(key)
 
         print('') # ********************
 
 
-    def print_checked_header(self, text, content, func):
+    def print_checked_header(self, content, func=''):
         try:
             func
-            print('  {} ON  - {}: {}'.format(chr(254), text, content))
+            print('  {} ON  - {}'.format(chr(149), content))
         except:
-            LOG.debug('  OFF - {}: {}'.format(content))
-            print('  {} OFF - {}: {}'.format(chr(254), text, content))
+            LOG.debug('  OFF - {}'.format(content))
+            print('  {} OFF - {}'.format(chr(149), content))
 
 
 

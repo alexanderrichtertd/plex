@@ -20,7 +20,6 @@ import pipefunc
 
 import tank
 from tank import Tank
-from classes import software
 
 
 #*********************************************************************
