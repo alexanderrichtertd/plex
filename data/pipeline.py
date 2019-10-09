@@ -65,8 +65,7 @@ class Setup(object):
             if os.path.exists(eachPath + '/img'):        self.pipeline_env.add('IMG_PATH', eachPath + '/img')
             if os.path.exists(eachPath + '/software'):   self.pipeline_env.add('SOFTWARE_PATH', eachPath + '/software')
             if os.path.exists(eachPath + '/lib'):        self.pipeline_env.add('LIB_PATH', eachPath + '/lib')
-            if os.path.exists(eachPath + '/lib/dcc'):    self.pipeline_env.add('DCC_PATH', eachPath + '/lib/dcc')
-            if os.path.exists(eachPath + '/lib/utils'):  self.pipeline_env.add('UTILS_PATH', eachPath + '/lib/utils')
+            if os.path.exists(eachPath + '/lib/apps'):  self.pipeline_env.add('APPS_PATH', eachPath + '/lib/apps')
             if os.path.exists(eachPath + '/lib/extern'): self.pipeline_env.add('EXTERN_PATH', eachPath + '/lib/extern')
 
         os.environ['DATA_PATH'] = self.data_pipeline_path[0] + '/data'
@@ -77,8 +76,7 @@ class Setup(object):
         try:
             self.add_env('IMG_PATH',          (';').join(self.pipeline_env['IMG_PATH']))
             self.add_env('LIB_PATH',          (';').join(self.pipeline_env['LIB_PATH']))
-            self.add_env('UTILS_PATH',        (';').join(self.pipeline_env['UTILS_PATH']))
-            self.add_env('DCC_PATH',          (';').join(self.pipeline_env['DCC_PATH']))
+            self.add_env('APPS_PATH',        (';').join(self.pipeline_env['APPS_PATH']))
             self.add_env('EXTERN_PATH',       (';').join(self.pipeline_env['EXTERN_PATH']))
 
             self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
@@ -88,7 +86,7 @@ class Setup(object):
         sys.path.append(os.environ['PIPELINE_PATH'])
         sys.path.append(os.environ['IMG_PATH'] )
         sys.path.append(os.environ['LIB_PATH'])
-        sys.path.append(os.environ['UTILS_PATH'])
+        sys.path.append(os.environ['APPS_PATH'])
         sys.path.append(os.environ['DCC_PATH'])
         sys.path.append(os.environ['SOFTWARE_PATH'] )
         sys.path.append(os.environ['DATA_PATH'])
@@ -96,9 +94,8 @@ class Setup(object):
 
         self.add_env('PYTHONPATH', os.environ['IMG_PATH'])
         self.add_env('PYTHONPATH', os.environ['LIB_PATH'])
-        self.add_env('PYTHONPATH', os.environ['UTILS_PATH'])
+        self.add_env('PYTHONPATH', os.environ['APPS_PATH'])
         self.add_env('PYTHONPATH', os.environ['EXTERN_PATH'])
-        # self.add_env('PYTHONPATH', os.environ['DCC_PATH'])
 
         # DATA ENV
         os.environ['DATA_USER_PATH']      = self.data_pipeline_path[0] + '/data/user/' + os.getenv('username')
