@@ -65,6 +65,7 @@ class Setup(object):
             if os.path.exists(eachPath + '/img'):        self.pipeline_env.add('IMG_PATH', eachPath + '/img')
             if os.path.exists(eachPath + '/software'):   self.pipeline_env.add('SOFTWARE_PATH', eachPath + '/software')
             if os.path.exists(eachPath + '/lib'):        self.pipeline_env.add('LIB_PATH', eachPath + '/lib')
+
             if os.path.exists(eachPath + '/lib/apps'):  self.pipeline_env.add('APPS_PATH', eachPath + '/lib/apps')
             if os.path.exists(eachPath + '/lib/extern'): self.pipeline_env.add('EXTERN_PATH', eachPath + '/lib/extern')
 
@@ -87,7 +88,6 @@ class Setup(object):
         sys.path.append(os.environ['IMG_PATH'] )
         sys.path.append(os.environ['LIB_PATH'])
         sys.path.append(os.environ['APPS_PATH'])
-        sys.path.append(os.environ['DCC_PATH'])
         sys.path.append(os.environ['SOFTWARE_PATH'] )
         sys.path.append(os.environ['DATA_PATH'])
         sys.path.append(os.environ['DATA_PROJECT_PATH'])
