@@ -11,7 +11,6 @@
 
 import os
 from os import startfile
-import sys
 
 import maya.mel as mel
 import maya.cmds as cmds
@@ -27,19 +26,17 @@ LOG   = Tank().log.init(script=TITLE)
 
 #*********************************************************************
 def start():
-    LOG.info("createPlayblast")
-    import maya.cmds as cmds
-    file_path = cmds.file(q = True , sn = True)
+    LOG.info("CREATE playblast")
+    file_path = cmds.file(q=True, sn=True)
 
     if not file_path:
         LOG.warning("No Save Path")
         return
 
-    save_path = os.path.dirname(file_path) + "/" + "animatic" + "/" + os.path.basename(file_path).split(".")[0] + '.' + Tank().data_templates['EXTENSION']['playblast']
-    mel.eval ('playblast  -format qt' + ' -filename "' + save_path + '" -forceOverwrite  -sequenceTime 0 -clearCache 1 -viewer 1 -showOrnaments 1 -fp 4 -percent 100 -compression "H.264" -quality 100;')
+    save_path = os.path.dirname(file_path) + "/" + "playblast" + "/" + os.path.basename(file_path).split(".")[0] + '.' + Tank().data_templates['EXTENSION']['playblast']
+    mel.eval('playblast -format avi -filename "{}" -forceOverwrite -sequenceTime 0 -clearCache 1 -viewer 1 -showOrnaments 1 -fp 4 -percent 100 -compression "none" -quality 100;'.format(save_path))
 
     startfile(os.path.normpath(save_path))
-
 
 
 def turntable():
