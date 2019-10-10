@@ -325,6 +325,8 @@ class Software(tank.Singleton):
             new_settings += Tank().data_software['RENDERSETTINGS']['default']
         new_settings += Tank().data_software['RENDERSETTINGS'][status]
 
+        LOG.debug(new_settings)
+
         for setting in new_settings:
             for key, item in setting.items():
                 render = "cmds.setAttr('{}', {})".format(key, item)
