@@ -127,46 +127,50 @@ RENDER:
 
   DEFAULT:
     # - defaultArnoldRenderOptions.AASamples: 2
-    - empty: 0
 
   WORK:
-    - emtpy: 0
+
 
   PREVIEW:
-    - emtpy: 0
+
 
   DELIVER:
-    - emtpy: 0
+
 
   CUSTOM:
-    - emtpy: 0
+
 
 
 
 # #*****************************************************************************************************************************
 # #*****************************************************************************************************************************
-SCENE:
+SETUP:
 
   DEFAULT:
-    - empty: 0
+    - defaultResolution.width  : Tank().data_project['resolution'][0]
+    - defaultResolution.height : Tank().data_project['resolution'][1]
+
+    - defaultRenderGlobals.animation : 1
+    - defaultRenderGlobals.putFrameBeforeExt : 1
+    - defaultRenderGlobals.extensionPadding : 4
 
   GEO:
-    - emtpy: 0
+
 
   SHD:
-    - emtpy: 0
+
 
   RIG:
-    - emtpy: 0
+
 
   LAY:
-    - emtpy: 0
+
 
   ANIM:
-    - emtpy: 0
+
 
   LIGHT:
-    - emtpy: 0
+
 
 
 
@@ -184,7 +188,7 @@ SETTINGS:
   unit: cm
 
 
-SCENE_GROUPS:
+GROUPS:
     ANIM:
       - char
       - props
