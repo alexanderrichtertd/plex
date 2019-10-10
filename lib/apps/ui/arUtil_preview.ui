@@ -401,8 +401,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>:/shelf/software/maya/shelf/shelf_render_high.png</normaloff>:/shelf/software/maya/shelf/shelf_render_high.png</iconset>
+               <iconset resource="../../../img/img.qrc">
+                <normaloff>:/shelf/software/maya/shelf/shelf_default.png</normaloff>:/shelf/software/maya/shelf/shelf_default.png</iconset>
               </property>
               <property name="iconSize">
                <size>

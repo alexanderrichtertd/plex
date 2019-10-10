@@ -8,12 +8,12 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
+
 import os
 import sys
 import getpass
 import datetime
 from threading import Thread
-
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
@@ -62,6 +62,8 @@ class ArConfig(ArUtil):
         print""
 
 
+#*********************************************************************
+# START
 def start():
     global main_widget
     app = QtWidgets.QApplication(sys.argv)

@@ -458,8 +458,8 @@ QPushButton:pressed{
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/btn/btn/btnFolder48.png</normaloff>:/btn/btn/btnFolder48.png</iconset>
+            <iconset resource="../../../img/img.qrc">
+             <normaloff>:/btn/btn/btn_folder.png</normaloff>:/btn/btn/btn_folder.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -500,8 +500,8 @@ QPushButton:pressed{
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/btn/btn/btnProject48.png</normaloff>:/btn/btn/btnProject48.png</iconset>
+            <iconset resource="../../../img/img.qrc">
+             <normaloff>:/btn/btn/btn_project.png</normaloff>:/btn/btn/btn_project.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -552,8 +552,8 @@ QPushButton:pressed{
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/btn/btn/btnReport48.png</normaloff>:/btn/btn/btnReport48.png</iconset>
+            <iconset resource="../../../img/img.qrc">
+             <normaloff>:/btn/btn/btn_report.png</normaloff>:/btn/btn/btn_report.png</iconset>
            </property>
            <property name="iconSize">
             <size>

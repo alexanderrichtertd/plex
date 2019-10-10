@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>90</height>
+    <width>544</width>
+    <height>103</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -216,7 +216,16 @@
    <property name="spacing">
     <number>6</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>10</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>10</number>
+   </property>
+   <property name="bottomMargin">
     <number>6</number>
    </property>
    <item>
@@ -340,7 +349,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../img/img.qrc">
+          <iconset>
            <normaloff>:/shelf/software/maya/shelf/shelf_render_low.png</normaloff>:/shelf/software/maya/shelf/shelf_render_low.png</iconset>
          </property>
          <property name="iconSize">

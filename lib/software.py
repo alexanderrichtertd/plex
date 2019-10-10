@@ -19,10 +19,12 @@ import tank
 from tank import Tank
 
 
+
 #*********************************************************************
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = Tank().log.init(script=TITLE)
+
 
 
 #*********************************************************************
@@ -76,6 +78,7 @@ class Software(tank.Singleton):
             LOG.debug('{}_ENV: {}'.format(self._software.upper(), self._env))
 
 
+
     #*********************************************************************
     # SOFTWARE
     def start(self, software, open_file=''):
@@ -102,6 +105,7 @@ class Software(tank.Singleton):
     def __call__(self):
         LOG.info('SOFTWARE: {} {} - {}\n\
                   ENV: {}'.format(self._software, self._version, self._path, self._env))
+
 
 
     #*********************************************************************
@@ -145,6 +149,7 @@ class Software(tank.Singleton):
     @property
     def renderer_path(self):
         return self._renderer_path
+
 
 
     #*********************************************************************
@@ -223,6 +228,7 @@ class Software(tank.Singleton):
         else: LOG.warning('NO scene returned: No software cmd found')
 
 
+
     #*********************************************************************
     # MENU
     def add_menu(self, menu_node):
@@ -276,6 +282,9 @@ class Software(tank.Singleton):
                     eval('menu_node.{}'.format(item))
 
 
+
+    #*********************************************************************
+    # SHELF
     def add_shelf(self, shelf_name='', header_footer=True):
         import maya.cmds as cmds
         import maya.mel as mel
@@ -319,7 +328,6 @@ class Software(tank.Singleton):
 
     #*********************************************************************
     # SETUP
-    # TODO: Work in progress
     def scene_setup(self, setup_type, status='', default=True):
         import maya.cmds as cmds
 

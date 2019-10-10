@@ -94,7 +94,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="3,1">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,10">
      <item>
       <widget class="QListWidget" name="lstTask">
        <property name="styleSheet">
@@ -110,6 +110,12 @@
      </item>
      <item>
       <widget class="QListWidget" name="lstStatus">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(230, 230, 230);</string>
        </property>

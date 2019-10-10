@@ -52,7 +52,7 @@ MENU:
       - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
       - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
       - sub_break:           menuItem(p="{}", d=True)
-      - reload_pipeline:     menuItem(p="{}", l='Reload Pipeline', c='import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menu()")')
+      - reload_pipeline:     menuItem(p="{}", l='Reload Pipeline', c='import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menus()")')
 
   - break:  menuItem(p="{}", d=True)
 
@@ -167,6 +167,7 @@ SCENE:
 
   LIGHT:
     - emtpy: 0
+
 
 
 #*****************************************************************************************************************************
