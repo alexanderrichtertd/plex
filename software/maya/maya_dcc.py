@@ -9,16 +9,14 @@
 
 
 import os
-import sys
-import getpass
-import subprocess
 
 import maya.mel as mel
 import pymel.core as pm
 
-import pipefunc
+import maya_utils
 
-import tank
+from software import Software
+
 from tank import Tank
 
 
@@ -30,7 +28,7 @@ LOG   = Tank().log.init(script=TITLE)
 
 #*********************************************************************
 # CLASS
-class Maya(software, tank.Singleton):
+class Maya(Software):
 
     @property
     def scene_path(self):
@@ -56,6 +54,5 @@ class Maya(software, tank.Singleton):
         #     mel.eval('file -r -type "' + s.FILE_FORMAT_CODE["." + self.save_dir.split(".")[-1]] + '" -ignoreVersion -gl -mergeNamespacesOnClash false "' + self.save_dir.replace("\\", "/") + '"')
 
     def scene_setup(self, file):
-        import maya_utils
         maya_utils.setup_scene(file)
 

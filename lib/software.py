@@ -278,6 +278,7 @@ class Software(tank.Singleton):
 
     def add_shelf(self, shelf_name='', header_footer=True):
         import maya.cmds as cmds
+        import maya.mel as mel
 
         new_shelf = []
 
@@ -297,8 +298,10 @@ class Software(tank.Singleton):
         if not shelf_name: shelf_name = os.getenv('PROJECT_NAME')
 
         # DELETE old and CREATE shelf tab
-        if cmds.shelfLayout(shelf_name, ex=1):
-            cmds.deleteUI(shelf_name)
+        remove_shelfs = Tank().data_software['SHELF'].keys() + [shelf_name, os.getenv('PROJECT_NAME')]
+        for shelf in remove_shelfs:
+            if cmds.shelfLayout(shelf, ex=1):
+                cmds.deleteUI(shelf)
 
         cmds.shelfLayout(shelf_name, p="ShelfLayout")
         cmds.setParent(shelf_name)
@@ -309,6 +312,8 @@ class Software(tank.Singleton):
                 shelf_btn = 'cmds.shelfButton({})'.format(item)
                 eval(shelf_btn)
 
+        shelf_nr = len(mel.eval('layout -q -ca ShelfLayout;'))
+        mel.eval('shelfTabLayout -edit -selectTabIndex {} ShelfLayout;'.format(shelf_nr))
 
 
 
@@ -319,6 +324,8 @@ class Software(tank.Singleton):
 
 
     def rendersettings(self, status, default=True):
+        import maya.cmds as cmds
+
         new_settings = []
 
         if default and not status == 'custom':

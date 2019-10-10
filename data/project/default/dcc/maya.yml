@@ -85,7 +85,6 @@ MENU:
 #*****************************************************************************************************************************
 #*****************************************************************************************************************************
 SHELF:
-
   HEADER:
     - save:    l='Save', command='import arSave; arSave.start()', dcc='', image='shelf_save.png'
     - load:    l='Load', command='import arLoad; arLoad.start()', dcc='', image='shelf_load.png'
@@ -97,22 +96,28 @@ SHELF:
     - help:    l='Help', command='import pipefunc;pipefunc.help()', dcc='', image='shelf_help.png'
 
   GEO:
-    geo: 'geo'
+    - geo: 'geo'
 
   SHD:
-    shd: 'shd'
+    - shd: 'shd'
 
   RIG:
-    rig: 'rig'
+    - rig: 'rig'
 
   LAY:
-    lay: 'lay'
+    - snap:      l='Snap to first selection', command='import maya_utils; maya_utils.position_selected()', dcc='', image='shelf_snap.png'
+    - playblast: l='Playblast', command='from ANIM import playblast; playblast.start()', dcc='', image='shelf_playblast.png'
 
   ANIM:
-    anim: 'anim'
+    - snap:  l='Snap to first selection', command='import maya_utils; maya_utils.position_selected()', dcc='', image='shelf_snap.png'
+    - playblast: l='Playblast', command='from ANIM import playblast; playblast.start()', dcc='', image='shelf_playblast.png'
 
   LIGHT:
-    - light_linker: l='Light Linker', command='from LGT import light_linker;reload(light_linker);light_linker.start()', dcc='', image='shelf_light.png'
+    - render_work:    l='Rendersettings - Work', command='Tank().software.rendersettings("work")', dcc='', image='shelf_rendersettings_work.png'
+    - render_preview: l='Rendersettings - Work', command='Tank().software.rendersettings("preview")', dcc='', image='shelf_rendersettings_preview.png'
+    - render_deliver: l='Rendersettings - Work', command='Tank().software.rendersettings("deliver")', dcc='', image='shelf_rendersettings_deliver.png'
+    - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+    - light_linker: l='Light Linker', command='from LGT import light_linker;reload(light_linker);light_linker.start()', dcc='', image='shelf_light_linker.png'
 
 
 
@@ -121,8 +126,8 @@ SHELF:
 RENDERSETTINGS:
 
   default:
-    - empty: 0
     # - defaultArnoldRenderOptions.AASamples: 2
+    - empty: 0
 
   work:
     - emtpy: 0

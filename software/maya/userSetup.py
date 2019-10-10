@@ -31,9 +31,8 @@ Tank().init_software()
 SOFTWARE_DATA = Tank().software.data
 
 
-Tank().software.print_checked_header('menu', func=cmds.evalDeferred("maya_utils.load_menu()"))
+Tank().software.print_checked_header('menu', func=cmds.evalDeferred("maya_utils.load_menus()"))
 Tank().software.print_checked_header('shelf')
-cmds.evalDeferred("Tank().software.add_shelf()")
 Tank().software.print_checked_header('setup')
 Tank().software.print_checked_header('rendersettings')
 

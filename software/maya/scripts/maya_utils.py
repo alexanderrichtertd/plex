@@ -27,18 +27,15 @@ LOG   = Tank().log.init(script=TITLE)
 #*********************************************************************
 # MENU
 # TODO: delete and reload shelf
-def load_menu():
-    delete_menu()
+def load_menus():
+    if cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), query = True, exists = True):
+        cmds.deleteUI(os.getenv('PROJECT_NAME').replace(' ',''), menu = True)
 
     menu = cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), hm = 1, p = 'MayaWindow',
                      l = os.getenv('PROJECT_NAME').replace(' ',''), to = 1, )
 
     Tank().software.add_menu(menu)
-
-
-def delete_menu():
-    if cmds.menu(os.getenv('PROJECT_NAME').replace(' ',''), query = True, exists = True):
-        cmds.deleteUI(os.getenv('PROJECT_NAME').replace(' ',''), menu = True)
+    Tank().software.add_shelf()
 
 
 
