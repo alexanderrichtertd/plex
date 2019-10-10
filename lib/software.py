@@ -319,27 +319,28 @@ class Software(tank.Singleton):
 
     #*********************************************************************
     # SETUP
-    def scene_setup(self):
-        pass
-
-
-    def rendersettings(self, status, default=True):
+    # TODO: Work in progress
+    def scene_setup(self, setup_type, status='', default=True):
         import maya.cmds as cmds
 
-        new_settings = []
+        data_setup = Tank().data_software[setup_type]
+        new_setup  = []
 
-        if default and not status == 'custom':
-            new_settings += Tank().data_software['RENDERSETTINGS']['default']
-        new_settings += Tank().data_software['RENDERSETTINGS'][status]
+        if default:
+            new_setup += data_setup['DEFAULT']
 
-        LOG.debug(new_settings)
+        if status in data_setup:
+            new_setup += data_setup[status]
 
-        for setting in new_settings:
+        LOG.debug(new_setup)
+
+        for setting in new_setup:
             for key, item in setting.items():
+                # TODO: Maybe needs optVar option - will see
                 render = "cmds.setAttr('{}', {})".format(key, item)
 
-                try: eval(render)
-                except: LOG.error('Rendersetting is not executable: {}'.format(render), exc_info=True)
+                try:    eval(render)
+                except: LOG.error('Scene Setup is not executable: {}'.format(render), exc_info=True)
 
 
 

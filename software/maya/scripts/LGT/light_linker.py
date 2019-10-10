@@ -10,12 +10,12 @@
 
 import maya.cmds as cmds
 
-import pipestats
+from pipestats import notice
 
 
 #*********************************************************************
 # LIGHT LINKER
-@pipestats.notice('apps:light_linker')
+@notice('apps:light_linker')
 def start():
     cmds.window(title='Light & Shadow Linker')
     cmds.columnLayout()
@@ -24,33 +24,33 @@ def start():
     cmds.text(label='Shadow', width=250, height=30)
     cmds.setParent('..')
     cmds.rowLayout(numberOfColumns=2)
-    cmds.button(label="Add Link", annotation="Add light linking between objects and lights", width=250, c="light_linker.selection_light_linking()")
-    cmds.button(label="Add Link", annotation="Add light linking between objects and lights", width=250, c="light_linker.selection_light_linking(shadow_link=True)")
+    cmds.button(label="Add Lights", annotation="Add link between objects and lights", width=250, c="light_linker.selection_light_linking()")
+    cmds.button(label="Add Shadows", annotation="Add link between objects and shadows", width=250, c="light_linker.selection_light_linking(shadow_link=True)")
     cmds.setParent('..')
     cmds.rowLayout(numberOfColumns=2)
-    cmds.button(label="Break Link", annotation="Break light linking between objects and lights", width=250, c="light_linker.selection_light_linking(break_light=True)")
-    cmds.button(label="Break Link", annotation="Break light linking between objects and lights", width=250, c="light_linker.selection_light_linking(break_light=True, shadow_link=True)")
+    cmds.button(label="Break Lights", annotation="Break link between objects and lights", width=250, c="light_linker.selection_light_linking(break_light=True)")
+    cmds.button(label="Break Shadows", annotation="Break link between objects and shadows", width=250, c="light_linker.selection_light_linking(break_light=True, shadow_link=True)")
     cmds.setParent('..')
     cmds.separator(height=10)
     cmds.rowLayout(numberOfColumns=2)
     cmds.button(label="Link (Light Exclusive)", annotation="Objects will only linked to this lights", width=250, c="light_linker.selection_light_linking(exclusive='lights')")
-    cmds.button(label="Link (Light Exclusive)", annotation="Objects will only linked to this lights", width=250, c="light_linker.selection_light_linking(exclusive='lights', shadow_link=True)")
+    cmds.button(label="Link (Shadow Exclusive)", annotation="Objects will only linked to this shadows", width=250, c="light_linker.selection_light_linking(exclusive='lights', shadow_link=True)")
     cmds.setParent('..')
     cmds.rowLayout(numberOfColumns=2)
     cmds.button(label="Link (Object Exclusive)", annotation="Lights will only be linked to this objects", width=250, c="light_linker.selection_light_linking(exclusive='meshes')")
-    cmds.button(label="Link (Object Exclusive)", annotation="Lights will only be linked to this objects", width=250, c="light_linker.selection_light_linking(exclusive='meshes', shadow_link=True)")
+    cmds.button(label="Link (Object Exclusive)", annotation="Shadows will only be linked to this objects", width=250, c="light_linker.selection_light_linking(exclusive='meshes', shadow_link=True)")
     cmds.setParent('..')
     cmds.separator(height=10)
     cmds.rowLayout(numberOfColumns=2)
-    cmds.button(label="Select Linking", annotation="Select the linked lights/meshes", width=250, c="light_linker.select_attached()")
-    cmds.button(label="Select Linking", annotation="Select the linked lights/meshes", width=250, c="light_linker.select_attached(shadow_link=True)")
+    cmds.button(label="Select Linked Lights", annotation="Select the linked lights/meshes", width=250, c="light_linker.select_attached()")
+    cmds.button(label="Select Linked Shadows", annotation="Select the linked lights/meshes", width=250, c="light_linker.select_attached(shadow_link=True)")
     cmds.setParent('..')
     cmds.columnLayout()
 
     cmds.showWindow()
 
 
-@pipestats.notice('apps:light_linker', meta=False)
+@notice('apps:light_linker', meta=False)
 def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
     selection = cmds.ls(dag=1,o=1,s=1,sl=1)
     lights    = cmds.ls(selection, type=["light"] + cmds.listNodeTypes("light"))

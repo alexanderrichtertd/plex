@@ -48,7 +48,7 @@ ENV:
 #*****************************************************************************************************************************
 #*****************************************************************************************************************************
 MENU:
-  - Plex:
+  - !env [PROJECT_NAME]:
       - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
       - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
       - sub_break:           menuItem(p="{}", d=True)
@@ -68,9 +68,9 @@ MENU:
       light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;light_linker.start()')
 
   - Render:
-      rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("work")')
-      rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("preview")')
-      rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("publish")')
+      rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='Tank().software.scene_setup("RENDER", "WORK")'')
+      rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='Tank().software.scene_setup("RENDER", "PREVIEW")'')
+      rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='Tank().software.scene_setup("RENDER", "DELIVER")'')
 
   - Utils:
       position_selected: menuItem(p="{}", l='Snap to First Selection', c='import maya_utils; maya_utils.position_selected()')
@@ -96,51 +96,77 @@ SHELF:
     - help:    l='Help', command='import pipefunc;pipefunc.help()', dcc='', image='shelf_help.png'
 
   GEO:
-    - geo: 'geo'
+    - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
 
   SHD:
-    - shd: 'shd'
+    - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
 
   RIG:
-    - rig: 'rig'
+    - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
 
   LAY:
-    - snap:      l='Snap to first selection', command='import maya_utils; maya_utils.position_selected()', dcc='', image='shelf_snap.png'
-    - playblast: l='Playblast', command='from ANIM import playblast; playblast.start()', dcc='', image='shelf_playblast.png'
+    - snap:      l='Snap to first selection', command='import maya_utils;reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
+    - playblast: l='Playblast', command='from ANIM import playblast;reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
 
   ANIM:
-    - snap:  l='Snap to first selection', command='import maya_utils; maya_utils.position_selected()', dcc='', image='shelf_snap.png'
-    - playblast: l='Playblast', command='from ANIM import playblast; playblast.start()', dcc='', image='shelf_playblast.png'
+    - snap:      l='Snap to first selection', command='import maya_utils;reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
+    - playblast: l='Playblast', command='from ANIM import playblast;reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
 
   LIGHT:
-    - render_work:    l='Rendersettings - Work', command='Tank().software.rendersettings("work")', dcc='', image='shelf_rendersettings_work.png'
-    - render_preview: l='Rendersettings - Work', command='Tank().software.rendersettings("preview")', dcc='', image='shelf_rendersettings_preview.png'
-    - render_deliver: l='Rendersettings - Work', command='Tank().software.rendersettings("deliver")', dcc='', image='shelf_rendersettings_deliver.png'
-    - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
-    - light_linker: l='Light Linker', command='from LGT import light_linker;reload(light_linker);light_linker.start()', dcc='', image='shelf_light_linker.png'
+    - render_work:    l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", WORK")', dcc='', image='shelf_render_work.png'
+    - render_preview: l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", "PREVIEW")', dcc='', image='shelf_render_preview.png'
+    - render_deliver: l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", "DELIVER")', dcc='', image='shelf_render_deliver.png'
+    - break:          width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+    - light_linker:   l='Light Linker', command='from LGT import light_linker;reload(light_linker);light_linker.start()', dcc='', image='shelf_light_linker.png'
 
 
 
 # #*****************************************************************************************************************************
 # #*****************************************************************************************************************************
-RENDERSETTINGS:
+RENDER:
 
-  default:
+  DEFAULT:
     # - defaultArnoldRenderOptions.AASamples: 2
     - empty: 0
 
-  work:
+  WORK:
     - emtpy: 0
 
-  preview:
+  PREVIEW:
     - emtpy: 0
 
-  deliver:
+  DELIVER:
     - emtpy: 0
 
-  custom:
+  CUSTOM:
     - emtpy: 0
 
+
+
+# #*****************************************************************************************************************************
+# #*****************************************************************************************************************************
+SCENE:
+
+  DEFAULT:
+    - empty: 0
+
+  GEO:
+    - emtpy: 0
+
+  SHD:
+    - emtpy: 0
+
+  RIG:
+    - emtpy: 0
+
+  LAY:
+    - emtpy: 0
+
+  ANIM:
+    - emtpy: 0
+
+  LIGHT:
+    - emtpy: 0
 
 
 #*****************************************************************************************************************************
@@ -157,7 +183,7 @@ SETTINGS:
   unit: cm
 
 
-SCENE:
+SCENE_GROUPS:
     ANIM:
       - char
       - props

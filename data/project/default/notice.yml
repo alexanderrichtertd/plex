@@ -106,27 +106,27 @@ error:
 
 
 
-rendersettings:
+render:
     lgt:
-        title : LGT - RENDERSETTINGS
+        title : LGT - RENDER SETUP
         msg   : |
                 It doesnt look pretty but it is great to work with.
         quote : Welcome to the Age of Fire.
 
     preview:
-        title : PREVIEW - RENDERSETTINGS
+        title : PREVIEW - RENDER SETUP
         msg   : A close to final stage.
         quote : Lets have a look.
 
     final:
-        title : FINAL - RENDERSETTINGS
+        title : FINAL - RENDER SETUP
         msg   : |
                 Great finisher but customize it if needed
                 and use "custom" on submit.
         quote : The client is expecting it to be ... pretty.
 
     custom:
-        title : CUSTOM - RENDERSETTINGS
+        title : CUSTOM - RENDER SETUP
         msg   : Will use your scene settings.
         quote : Do your own thing.
         img   : final
