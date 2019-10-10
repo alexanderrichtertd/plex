@@ -73,7 +73,7 @@ MENU:
       rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='from RENDER.rendersettings import Rendersettings;Rendersettings().setup("publish")')
 
   - Utils:
-      position_selected: menuItem(p="{}", l='Position to First Selection', c='import maya_utils; maya_utils.position_selected()')
+      position_selected: menuItem(p="{}", l='Snap to First Selection', c='import maya_utils; maya_utils.position_selected()')
 
   - break:  menuItem(p="{}", d=True)
 
@@ -87,15 +87,14 @@ MENU:
 SHELF:
 
   HEADER:
-    - save:    'save'
-    - load:    'load'
-    - publish: 'publish'
-    - break:   '-'
+    - save:    l='Save', command='import arSave; arSave.start()', dcc='', image='shelf_save.png'
+    - load:    l='Load', command='import arLoad; arLoad.start()', dcc='', image='shelf_load.png'
+    - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
 
   FOOTER:
-    - break:   '-'
-    - report: 'report'
-    - help:   'help'
+    - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+    - report:  l='Report', command='import pipefunc;pipefunc.help("report")', dcc='', image='shelf_report.png'
+    - help:    l='Help', command='import pipefunc;pipefunc.help()', dcc='', image='shelf_help.png'
 
   GEO:
     geo: 'geo'
@@ -113,7 +112,7 @@ SHELF:
     anim: 'anim'
 
   LIGHT:
-    light: 'light'
+    - light_linker: l='Light Linker', command='from LGT import light_linker;reload(light_linker);light_linker.start()', dcc='', image='shelf_light.png'
 
 
 
@@ -122,20 +121,20 @@ SHELF:
 RENDERSETTINGS:
 
   default:
-    - 'default_settings'
-    - 'default_settings2'
+    - empty: 0
+    # - defaultArnoldRenderOptions.AASamples: 2
 
   work:
-    - 'work_settings'
+    - emtpy: 0
 
   preview:
-    - 'preview_settings'
+    - emtpy: 0
 
   deliver:
-    - 'deliver_settings'
+    - emtpy: 0
 
   custom:
-    - 'custom_settings'
+    - emtpy: 0
 
 
 

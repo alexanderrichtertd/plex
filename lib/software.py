@@ -1,11 +1,12 @@
 #*********************************************************************
 # content   = setup software attributes
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2019-06-06
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
 
 import os
 import sys
@@ -29,7 +30,7 @@ LOG   = Tank().log.init(script=TITLE)
 class Software(tank.Singleton):
 
     def setup(self, software=os.getenv('SOFTWARE')):
-        if not software: raise OSError ('STOP PROCESS', 'SOFTWARE couldnt be found.')
+        if not software:  raise OSError ('STOP PROCESS', 'SOFTWARE couldnt be found.')
 
         self._software = software.lower()
         self._software_data = Tank().data_software
@@ -275,13 +276,62 @@ class Software(tank.Singleton):
                     eval('menu_node.{}'.format(item))
 
 
+    def add_shelf(self, shelf_name='', header_footer=True):
+        import maya.cmds as cmds
+
+        new_shelf = []
+
+        # GET header scripts
+        if header_footer: new_shelf += Tank().data_software['SHELF']['HEADER']
+
+        # GET main scripts
+        if shelf_name in Tank().data_software['SHELF']:
+            new_shelf += Tank().data_software['SHELF'][shelf_name]
+        else:
+            LOG.warning('shelf {} doesnt exist'.format(shelf_name))
+
+        # GET footer scripts
+        if header_footer: new_shelf += Tank().data_software['SHELF']['FOOTER']
+
+        LOG.debug('{} - {}'.format(shelf_name, new_shelf))
+        if not shelf_name: shelf_name = os.getenv('PROJECT_NAME')
+
+        # DELETE old and CREATE shelf tab
+        if cmds.shelfLayout(shelf_name, ex=1):
+            cmds.deleteUI(shelf_name)
+
+        cmds.shelfLayout(shelf_name, p="ShelfLayout")
+        cmds.setParent(shelf_name)
+
+        # ADD shelf btn
+        for btn in new_shelf:
+            for key, item in btn.items():
+                shelf_btn = 'cmds.shelfButton({})'.format(item)
+                eval(shelf_btn)
+
+
+
+
     #*********************************************************************
     # SETUP
     def scene_setup(self):
         pass
 
-    def rendersettings(self, status):
-        pass
+
+    def rendersettings(self, status, default=True):
+        new_settings = []
+
+        if default and not status == 'custom':
+            new_settings += Tank().data_software['RENDERSETTINGS']['default']
+        new_settings += Tank().data_software['RENDERSETTINGS'][status]
+
+        for setting in new_settings:
+            for key, item in setting.items():
+                render = "cmds.setAttr('{}', {})".format(key, item)
+
+                try: eval(render)
+                except: LOG.error('Rendersetting is not executable: {}'.format(render), exc_info=True)
+
 
 
     #*********************************************************************
