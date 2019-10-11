@@ -317,7 +317,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../img/img.qrc">
+          <iconset>
            <normaloff>:/shelf/software/maya/shelf/shelf_viewport.png</normaloff>:/shelf/software/maya/shelf/shelf_viewport.png</iconset>
          </property>
          <property name="iconSize">
@@ -349,8 +349,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/shelf/software/maya/shelf/shelf_render_low.png</normaloff>:/shelf/software/maya/shelf/shelf_render_low.png</iconset>
+          <iconset resource="../../../img/img.qrc">
+           <normaloff>:/btn/btn/shelf_viewport.png</normaloff>:/btn/btn/shelf_viewport.png</iconset>
          </property>
          <property name="iconSize">
           <size>

@@ -36,8 +36,8 @@ ENV:
 
   # SPLASHSCREEN & IMG PATH
   XBMLANGPATH:
-    - !env [IMG_PATH, /software/maya]
-    - !env [IMG_PATH, /software/maya/shelf]
+    - !env [SOFTWARE_PATH, /icons]
+    - !env [SOFTWARE_PATH, /icons/shelf]
 
   # DISABLE close reports
   MAYA_DISABLE_CIP: 1

@@ -42,11 +42,13 @@ def load_menus():
 #*********************************************************************
 # START SETUP
 def setup_scene(file_path=''):
+    project_data = Tank().data_project
+
     # RESOLUTION
     try:
-        cmds.setAttr("defaultResolution.width", Tank().data_project['resolution'][0])
-        cmds.setAttr("defaultResolution.height", Tank().data_project['resolution'][1])
-        cmds.setAttr('defaultResolution.deviceAspectRatio', (( Tank().data_project['resolution'][0]) / (Tank().data_project['resolution'][1])))
+        cmds.setAttr("defaultResolution.width", project_data['resolution'][0])
+        cmds.setAttr("defaultResolution.height", project_data['resolution'][1])
+        cmds.setAttr('defaultResolution.deviceAspectRatio', (( project_data['resolution'][0]) / (project_data['resolution'][1])))
     except: LOG.error('FAIL load resolution.', exc_info=True)
 
     # IMG FORMAT
@@ -56,7 +58,7 @@ def setup_scene(file_path=''):
 
     # FPS
     try:
-        fps = SOFTWARE_DATA['SETTINGS']['FPS'][Tank().data_project['fps']]
+        fps = SOFTWARE_DATA['SETTINGS']['FPS'][project_data['fps']]
         cmds.currentUnit(time=fps)
         cmds.optionVar(sv = ("workingUnitTime", fps))
         cmds.optionVar(sv = ("workingUnitTimeDefault", fps))
@@ -96,6 +98,7 @@ def setup_scene(file_path=''):
     # cmd = 'python "from scripts import save;save.start()"'
     # cmds.nameCommand( 'save', annotation="Save", sourceType="mel" ,c=cmd)
     # cmds.hotkey( k='s', alt=True, name='save' )
+    # import maya.OpenMaya as api
 
     # FIX renderLayer
     # def fixRenderLayer(*args):

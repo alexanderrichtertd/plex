@@ -95,7 +95,6 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['LIB_PATH'])
         self.add_env('PYTHONPATH', os.environ['APPS_PATH'])
         self.add_env('PYTHONPATH', os.environ['EXTERN_PATH'])
-        self.add_env('PYTHONPATH', os.environ['EXTERN_PATH'])
 
         # DATA ENV
         os.environ['DATA_USER_PATH']      = self.data_pipeline_path[0] + '/data/user/' + os.getenv('username')
