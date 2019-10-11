@@ -26,7 +26,7 @@ LOG   = Tank().log.init(script=TITLE)
 # CLASS
 class Max(Software):
 
-    NAME = 'max'
+    _NAME = 'max'
 
     @property
     def scene_path(self):

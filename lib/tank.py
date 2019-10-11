@@ -64,12 +64,12 @@ class Tank(Singleton):
         return self._software
 
 
-    def start_software(self, software):
+    def start_software(self, software, open_file=''):
         from software import Software
         self._software = Software()
         self._software.setup()
         self.user.setup()
-        self._software.start(software)
+        self._software.start(software, open_file)
         self._software.print_header()
 
 

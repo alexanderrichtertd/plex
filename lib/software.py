@@ -29,10 +29,10 @@ LOG   = Tank().log.init(script=TITLE)
 # CLASS
 class Software(tank.Singleton):
 
-    NAME = 'software'
+    _NAME = 'software'
 
     def setup(self):
-        os.environ['SOFTWARE'] = self.NAME
+        os.environ['SOFTWARE'] = self._NAME
         self._software_data = Tank().data_software
         self._version = self._software_data['version']
         self._path    = self._software_data['path']
@@ -43,14 +43,14 @@ class Software(tank.Singleton):
 
 
     def setup_env(self):
-        LOG.debug('- {} -----------------------------------------------------'.format(self.NAME.upper()))
+        LOG.debug('- {} -----------------------------------------------------'.format(self._NAME.upper()))
 
         sub_path = []
         software_path = []
 
         for each_path in os.environ['SOFTWARE_SRC_PATH'].split(';'):
             # if not each_path.endswith('software'): each_path = os.path.dirname(each_path)
-            tmp_paths  = ('/').join([each_path, self.NAME])
+            tmp_paths  = ('/').join([each_path, self._NAME])
             software_path.append(tmp_paths)
             tmp_folder = pipefunc.get_file_list(path=tmp_paths, exclude='.py', add_path=True)
             if not tmp_folder: continue
@@ -71,14 +71,14 @@ class Software(tank.Singleton):
                     for each in content: Tank().add_env(env, each)
                 else: Tank().add_env(env, content)
 
-            LOG.debug('{}_ENV: {}'.format(self.NAME.upper(), self._env))
+            LOG.debug('{}_ENV: {}'.format(self._NAME.upper(), self._env))
 
 
 
     #*********************************************************************
     # SOFTWARE
     def start(self, software, open_file=''):
-        self.NAME = software
+        self._NAME = software
 
         self.setup()
         self.setup_env()
@@ -86,9 +86,9 @@ class Software(tank.Singleton):
         cmd = self._software_data['start'].format(open_file)
 
         if open_file:
-            if self.NAME == 'maya':
+            if self._NAME == 'maya':
                 cmd = '{} -file "{}"'.format(cmd, open_file)
-            if self.NAME == 'max' or self.NAME == 'houdini':
+            if self._NAME == 'max' or self._NAME == 'houdini':
                 cmd = '"{}" "{}"'.format(cmd, open_file)
 
         LOG.debug(cmd)
@@ -98,7 +98,7 @@ class Software(tank.Singleton):
 
     def __call__(self):
         LOG.info('SOFTWARE: {} {} - {}\n\
-                  ENV: {}'.format(self.NAME, self._version, self._path, self._env))
+                  ENV: {}'.format(self._NAME, self._version, self._path, self._env))
 
 
 
@@ -110,7 +110,7 @@ class Software(tank.Singleton):
 
     @property
     def software(self):
-        return self.NAME
+        return self._NAME
 
     @property
     def version(self):
@@ -126,7 +126,7 @@ class Software(tank.Singleton):
 
     @property
     def extension(self):
-        return Tank().data_templates['EXTENSION'][self.NAME]
+        return Tank().data_templates['EXTENSION'][self._NAME]
 
     @property
     def menu(self):
@@ -175,17 +175,16 @@ class Software(tank.Singleton):
             try:    self.add_menu_item(menu_node, menu_item)
             except: LOG.error('SOFTWARE Menu couldnt be created', exc_info=True)
 
-        if self.NAME == 'max':
+        if self._NAME == 'max':
             import MaxPlus
             main_menu = menu_node.Create(MaxPlus.MenuManager.GetMainMenu())
             for sub in self.add_sub_menu: sub.Create(main_menu, 0)
 
     def add_menu_item(self, menu_node, new_command):
-        if   self.NAME == 'maya': import maya.cmds as cmds
-        elif self.NAME == 'max' : import MaxPlus
-        elif self.NAME == 'nuke': pass
+        if   self._NAME == 'maya': import maya.cmds as cmds
+        elif self._NAME == 'max' : import MaxPlus
         else:
-            LOG.debug('CANT find software: {}'.format(self.NAME))
+            LOG.debug('CANT find software: {}'.format(self._NAME))
             return
 
         sub_menu = ''
@@ -193,13 +192,13 @@ class Software(tank.Singleton):
         for keys, item in new_command.iteritems():
 
             if isinstance(item, dict) or isinstance(item, list):
-                if self.NAME == 'maya':
+                if self._NAME == 'maya':
                     sub_menu = cmds.menuItem(p=menu_node, l=keys, sm=True)
-                elif self.NAME == 'max':
+                elif self._NAME == 'max':
                     MaxPlus.MenuManager.UnregisterMenu(unicode(keys))
                     sub_menu = MaxPlus.MenuBuilder(keys)
                     self.add_sub_menu.append(sub_menu)
-                elif self.NAME == 'nuke':
+                elif self._NAME == 'nuke':
                     sub_menu = menu_node.addMenu(keys)
 
                 if sub_menu and isinstance(item, list):
@@ -208,18 +207,19 @@ class Software(tank.Singleton):
                 elif sub_menu: self.add_menu_item(sub_menu, item)
 
             else:
-                if self.NAME == 'maya':
+                if self._NAME == 'maya':
                     eval('cmds.{}'.format(item).format(menu_node))
-                elif self.NAME == 'max':
+                elif self._NAME == 'max':
                     import max_menu
                     eval('menu_node.{}'.format(item))
-                elif self.NAME == 'nuke':
+                elif self._NAME == 'nuke':
                     eval('menu_node.{}'.format(item))
 
 
 
     #*********************************************************************
     # SETUP
+    # TODO: NEEDS to be DCC independent
     def scene_setup(self, setup_type, status='', default=True):
         import maya.cmds as cmds
 
@@ -247,7 +247,7 @@ class Software(tank.Singleton):
     #*********************************************************************
     # PRINT
     def print_header(self):
-        if self.NAME == 'max': return
+        if self._NAME == 'max': return
 
         space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1
 
@@ -266,14 +266,14 @@ class Software(tank.Singleton):
         self.print_checked_header('data')
         self.print_checked_header('lib')
         self.print_checked_header('lib/apps')
-        self.print_checked_header('software/{}'.format(self.NAME))
-        self.print_checked_header('software/{}/scripts'.format(self.NAME))
-        self.print_checked_header('software/{}/plugins'.format(self.NAME))
+        self.print_checked_header('software/{}'.format(self._NAME))
+        self.print_checked_header('software/{}/scripts'.format(self._NAME))
+        self.print_checked_header('software/{}/plugins'.format(self._NAME))
 
-        if self.NAME == 'maya':
-            self.print_checked_header('software/{}/shelf'.format(self.NAME))
-        if self.NAME == 'nuke':
-            self.print_checked_header('software/{}/gizmos'.format(self.NAME))
+        if self._NAME == 'maya':
+            self.print_checked_header('software/{}/shelf'.format(self._NAME))
+        if self._NAME == 'nuke':
+            self.print_checked_header('software/{}/gizmos'.format(self._NAME))
 
         print('') # ********************
 

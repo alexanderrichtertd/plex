@@ -29,7 +29,7 @@ LOG   = Tank().log.init(script=TITLE)
 # CLASS
 class Maya(Software):
 
-    NAME = 'maya'
+    _NAME = 'maya'
 
     @property
     def scene_path(self):

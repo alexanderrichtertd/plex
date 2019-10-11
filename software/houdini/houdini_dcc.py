@@ -24,4 +24,4 @@ LOG   = Tank().log.init(script=TITLE)
 # CLASS
 class Houdini(Software):
 
-    NAME = 'houdini'
+    _NAME = 'houdini'

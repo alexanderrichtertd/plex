@@ -104,6 +104,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     #------------------------------
     def press_btnLoad(self):
         import arLoad
+        reload(arLoad)
         self.arLoad = arLoad.ArLoad()
     #------------------------------
     def press_btnOpenMaya(self):

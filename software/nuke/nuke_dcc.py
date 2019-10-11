@@ -26,7 +26,7 @@ LOG   = Tank().log.init(script=TITLE)
 # CLASS
 class Nuke(Software):
 
-    NAME = 'nuke'
+    _NAME = 'nuke'
 
     @property
     def scene_path(self):

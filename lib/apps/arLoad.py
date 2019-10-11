@@ -112,17 +112,17 @@ class ArLoad(ArUtil):
             self.set_status('FAILED LOADING : Path doesnt exists: {}'.format(self.load_file), msg_type=3)
             return False
 
-        open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]].upper()
+        open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]]
 
         # OPEN in current software
         try:
-            if open_software.lower() == Tank().software.software.lower():
+            if open_software == Tank().software.software:
                 Tank().software.scene_open(self.load_file)
                 self.wgHeader.close()
-            elif open_software in self.data['software'].keys():
-                try:    Tank().software.start(open_software, self.load_file)
+            else:
+                try:    Tank().start_software(open_software, self.load_file)
                 except: LOG.error('FAILED to open software', exc_info=True)
-            else: subprocess.Popen(self.load_file, shell=True)
+            # else: subprocess.Popen(self.load_file, shell=True)
         except: LOG.warning("No Software setup")
 
         note = arNotice.Notice(title = os.path.basename(self.load_file).split('.')[0],
