@@ -128,7 +128,6 @@ class ArLoad(ArUtil):
         note = arNotice.Notice(title = os.path.basename(self.load_file).split('.')[0],
                                msg   = self.wgPreview.edtComment.toPlainText(),
                                user  = self.wgPreview.lblUser.text(),
-                               func  = 'LOAD',
                                img   = self.preview_img_path if os.path.exists(self.preview_img_path) else 'lbl/lbl{}131'.format(Tank().software.software.lower().title()),
                                img_link = os.path.dirname(self.load_file))
         arNotice.ArNotice(note)

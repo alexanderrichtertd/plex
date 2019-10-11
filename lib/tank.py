@@ -42,15 +42,40 @@ class Tank(Singleton):
     def init_os(self):
         self.user.setup()
 
-    def init_software(self):
-        self.software.setup()
-        self.software.print_header()
+    def init_software(self, software=''):
+        if not software: software = os.getenv('SOFTWARE')
+
+        if software == 'maya':
+            from maya_dcc import Maya
+            self._software = Maya()
+        elif software == 'max':
+            from max_dcc import Max
+            self._software = Max()
+        elif software == 'nuke':
+            from nuke_dcc import Nuke
+            self._software = Nuke()
+        elif software == 'houdini':
+            from houdini_dcc import Houdini
+            self._software = Houdini()
+        else:
+            from software import Software
+            self._software = Software()
+
+        return self._software
+
+
+    def start_software(self, software):
+        from software import Software
+        self._software = Software()
+        self._software.setup()
         self.user.setup()
+        self._software.start(software)
+        self._software.print_header()
+
 
     @property
     def software(self):
-        from software import Software
-        return Software()
+        return self.init_software()
 
     @property
     def user(self):
@@ -79,7 +104,7 @@ class Tank(Singleton):
 
     @property
     def data_software(self):
-        return self.get_data('dcc/{}'.format(self.software.software))
+        return self.get_data('dcc/{}'.format(os.getenv('SOFTWARE')))
 
     @property
     def data_script(self):

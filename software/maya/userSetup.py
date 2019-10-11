@@ -27,8 +27,10 @@ LOG   = Tank().log.init(script=TITLE)
 
 #*********************************************************************
 # INIT AND PRINT CONSOLE
-Tank().init_software()
-SOFTWARE_DATA = Tank().software.data
+
+
+Tank().init_software(os.getenv('SOFTWARE'))
+# cmds.evalDeferred('Tank().init_software(os.getenv("SOFTWARE").lower)')
 
 
 Tank().software.print_checked_header('menu', func=cmds.evalDeferred("maya_utils.load_menus()"))

@@ -24,7 +24,7 @@ def help(name=''):
     from tank import Tank
 
     if not name and os.getenv('SOFTWARE'):
-        name = os.getenv('SOFTWARE').lower()
+        name = os.getenv('SOFTWARE')
 
     project_help = Tank().data_project['HELP']
     if name in project_help:

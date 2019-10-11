@@ -1,5 +1,5 @@
 #*********************************************************************
-# content = software
+# content = software data
 # version = 0.1.0
 # date    = 2019-10-06
 #
@@ -8,4 +8,12 @@
 #*********************************************************************
 
 
-# DEFAULT ENVIRONMENTS that should be in all DCCs
+
+version: 10
+path:    ''
+
+# start command
+start: ''
+
+renderer:
+renderer_path:

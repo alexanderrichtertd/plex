@@ -65,12 +65,12 @@ MENU:
       playblast: menuItem(p="{}", l='Playblast', c='from ANIM import playblast;playblast.start()')
 
   - Light:
-      light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;light_linker.start()')
+      light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;reload(light_linker);light_linker.start()')
 
   - Render:
-      rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='Tank().software.scene_setup("RENDER", "WORK")'')
-      rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='Tank().software.scene_setup("RENDER", "PREVIEW")'')
-      rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='Tank().software.scene_setup("RENDER", "DELIVER")'')
+      rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='Tank().software.scene_setup("RENDER", "WORK")')
+      rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='Tank().software.scene_setup("RENDER", "PREVIEW")')
+      rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='Tank().software.scene_setup("RENDER", "DELIVER")')
 
   - Utils:
       position_selected: menuItem(p="{}", l='Snap to First Selection', c='import maya_utils; maya_utils.position_selected()')
@@ -127,17 +127,22 @@ RENDER:
 
   DEFAULT:
     # - defaultArnoldRenderOptions.AASamples: 2
+    - '' : ''
 
   WORK:
+    - '' : ''
 
 
   PREVIEW:
+    - '' : ''
 
 
   DELIVER:
+    - '' : ''
 
 
   CUSTOM:
+    - '' : ''
 
 
 
