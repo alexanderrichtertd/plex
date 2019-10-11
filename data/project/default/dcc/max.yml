@@ -25,13 +25,13 @@ PATH:
   - !env [SOFTWARE_PATH]
   - !env [SOFTWARE_PATH, /scripts]
   - !env [SOFTWARE_PATH, /plugins]
-  - !env [IMG_PATH, /software/max]
+  - !env [SOFTWARE_PATH, /icons]
 
 PYTHONPATH:
   - !env [SOFTWARE_PATH]
   - !env [SOFTWARE_PATH, /scripts]
   - !env [SOFTWARE_PATH, /plugins]
-  - !env [IMG_PATH, /software/max]
+  - !env [SOFTWARE_PATH, /icons]
 
 # ADSKFLEX_LICENSE_FILE:
 
