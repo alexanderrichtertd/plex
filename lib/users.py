@@ -30,8 +30,8 @@ class User(tank.Singleton):
     def setup(self, user_id=os.getenv('username')):
         self.create()
 
-        if os.path.exists(os.path.dirname(self.user_path)):
-            pipefunc.create_folder(self.user_path)
+        if os.path.exists(os.path.dirname(self.sandbox_path)):
+            pipefunc.create_folder(self.sandbox_path)
 
     def create(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
         self._id       = user_id         # arichter
@@ -87,7 +87,15 @@ class User(tank.Singleton):
         return data_user_path
 
     @property
-    def user_path(self):
+    def stats_path(self):
+        return '{}/{}.stats'.format(self.data_path, self.name)
+
+    @property
+    def log_path(self):
+        return '{}/{}.log'.format(self.data_path, self.name)
+
+    @property
+    def sandbox_path(self):
         return Tank().data_project['PATH']['sandbox'] + '/' + self._id
 
 

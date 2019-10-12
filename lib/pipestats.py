@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = write statistic loggings
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2019-10-06
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -22,9 +22,6 @@ from tank import Tank
 # VARIABLE
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = Tank().log.init(script=TITLE)
-
-# TODO: Replace with data
-USER_STATS_PATH = "{}/{}.stats".format(os.getenv('DATA_USER_PATH'), Tank().log.USER)
 
 
 #*********************************************************************
@@ -55,7 +52,7 @@ def notice(script_string, meta=False, notice=True):
                 if meta: LOG.info("{} {} START".format(script_name, "#" * 50))
                 else: LOG.info("DONE - {}".format(script_name))
 
-                try:    set_exe_file(root, script_name, USER_STATS_PATH, result_time)
+                try:    set_exe_file(root, script_name, Tank().user.sandbox_path, result_time)
                 except: LOG.error("STATS are broken: {} {} {} {}".format(root, script_name, ALL_STATS_PATH, result_time), exc_info=True)
 
                 hours, remainder = divmod(result_time, 3600)

@@ -18,8 +18,6 @@ import pipefunc
 import snapshot
 
 from tank import Tank
-from users import User
-
 
 
 #*********************************************************************
@@ -42,7 +40,7 @@ class ArUtil(object):
 
         self.open_path = ""
         self.preview_img_path = ''
-        User().create()
+        Tank().user.create()
 
         self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_project"))))
 
@@ -52,8 +50,8 @@ class ArUtil(object):
         self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_folder"))))
         self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("user/default")))) # current user
         self.wgHeader.btnUser.setToolTip(("").join(['<html><head/><body><p><span style=" font-weight:600;">',
-                                                    User().name, '</span><br>',
-                                                    User().rights, '<br>[open user folder]</p></body></html>']))
+                                                    Tank().user.name,   '</span><br>',
+                                                    Tank().user.rights, '<br>[open user folder]</p></body></html>']))
 
         self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('btn/btn_project')))) # current user
         self.wgHeader.btnProject.setToolTip(os.environ['PROJECT_NAME'] + '\n[open project folder]')
@@ -143,7 +141,7 @@ class ArUtil(object):
         pipefunc.open_folder(self.open_path)
 
     def press_btnUser(self):
-        pipefunc.open_folder(User().user_path)
+        pipefunc.open_folder(Tank().user.sandbox_path)
 
     def press_btnProject(self):
         pipefunc.open_folder(os.getenv('PROJECT_PATH'))
@@ -153,6 +151,7 @@ class ArUtil(object):
 
     def press_btnHelp(self, name=''):
         pipefunc.help()
+
 
     #*********************************************************************
     # MENU
@@ -216,7 +215,6 @@ class ArUtil(object):
             css = template_css % self.data['script'][TITLE]['progress_color'][msg_type]
             self.wgHeader.prbStatus.setStyleSheet(css)
             self.set_progress(100)
-
 
     def set_progress(self, count = 0):
         self.wgHeader.prbStatus.setValue(count)
