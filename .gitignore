@@ -4,8 +4,10 @@ test.py
 
 *.bak
 *.pyc
-*.log
 *.qrc
+*.log
+*.stats
+
 
 *_DEBUG.bat
 

@@ -24,10 +24,10 @@ arUtil:
     - red         # 3-failed
 
   progress_img:
-    - btn/btnWrite48
-    - btn/btnAccept48
-    - btn/btnWarning48
-    - btn/btnDenial48
+    - btn/btn_write
+    - btn/btn_accept
+    - btn/btn_warning
+    - btn/btn_denial
 
 
 #*********************************************************************

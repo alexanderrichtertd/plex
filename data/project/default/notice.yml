@@ -1,11 +1,22 @@
 #*********************************************************************
 # content   = info for default notice
 # version   = 0.1.0
-# date      = 2019-10-01
+# date      = 2019-10-06
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
+
+# HOW to use it:
+
+# template:
+#     name:
+#         title : BIG WORDS
+#         msg   : |
+#                 What did happen
+#         quote : some wise words
+#         img   : image_name
 
 
 common:
@@ -14,7 +25,7 @@ common:
         msg   : |
                 Action was aborted.
         quote : NOP! Changed my mind!
-        img   : fail
+        # img   : renderlayer
 
     unknown:
         title : UNKNOWN
@@ -37,13 +48,11 @@ common:
         msg   : |
                 Everything has the newest version.
         quote : What are the kids up to today?
-        img   : renderlayer
 
     open_folder:
         title : OPEN FOLDER
         msg   : Open current scene/render folder
         quote : You want it? You get it!
-        img   : open_folder
 
     report:
         title : REPORT
@@ -55,8 +64,7 @@ common:
     help:
         title : HELP
         msg   : |
-                lgt workflow and lgt shelf
-                is a good source
+                Open the Wiki
         quote : Stop working! Start browsing (for help)!
 
 
@@ -107,8 +115,8 @@ error:
 
 
 render:
-    lgt:
-        title : LGT - RENDER SETUP
+    work:
+        title : WORK - RENDER SETUP
         msg   : |
                 It doesnt look pretty but it is great to work with.
         quote : Welcome to the Age of Fire.
@@ -118,18 +126,16 @@ render:
         msg   : A close to final stage.
         quote : Lets have a look.
 
-    final:
-        title : FINAL - RENDER SETUP
+    deliver:
+        title : DELIVER - RENDER SETUP
         msg   : |
-                Great finisher but customize it if needed
-                and use "custom" on submit.
+                Lets finish it up
         quote : The client is expecting it to be ... pretty.
 
     custom:
         title : CUSTOM - RENDER SETUP
         msg   : Will use your scene settings.
         quote : Do your own thing.
-        img   : final
 
 
 apps:
@@ -150,7 +156,6 @@ apps:
                 Selected lights and objects are linked/unlinked.
                 Default State: Just lights selected
         quote : Put a spot on it
-        img   : final
 
 
 hints:
@@ -159,5 +164,5 @@ hints:
         msg   : |
                 Accept - RETURN
                 Cancel - ESC
-        quote : Use shortcuts!
+        quote : Use a short cut for faster travel!
 

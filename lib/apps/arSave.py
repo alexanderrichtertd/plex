@@ -120,8 +120,8 @@ class ArSave(ArUtil):
 
         self.update_version()
 
-        if(self.data['templates']['STATUS']['publish'] in self.save_dir):
-            self.save_dir = self.save_dir.replace(self.data['templates']['STATUS']['publish'], self.data['templates']['STATUS']['work'])
+        if(self.data['project']['STATUS']['publish'] in self.save_dir):
+            self.save_dir = self.save_dir.replace(self.data['project']['STATUS']['publish'], self.data['project']['STATUS']['work'])
 
         if self.data['script'][TITLE]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
         else: snapshot.create_any_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
@@ -129,7 +129,7 @@ class ArSave(ArUtil):
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(self.data['templates']['FILE']['version'], os.path.basename(self.save_file))
+        found_version = re.search(self.data['project']['FILE']['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
@@ -158,19 +158,19 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmpCopyWork = self.save_file.replace('.', '_{}.'.format(self.data['templates']['STATUS']['publish']))
+            tmpCopyWork = self.save_file.replace('.', '_{}.'.format(self.data['project']['STATUS']['publish']))
             snapshot.save_snapshot(tmpCopyWork)
             self.set_meta_data(tmpCopyWork)
 
-            found_version = re.search(self.data['templates']['FILE']['version'], os.path.basename(self.save_file))
+            found_version = re.search(self.data['project']['FILE']['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Tank().software.extension
 
-            if self.data['templates']['STATUS']['work'] in self.save_file:
-                self.save_publish_file = self.save_publish_file.replace(self.data['templates']['STATUS']['work'], self.data['templates']['STATUS']['publish'])
+            if self.data['project']['STATUS']['work'] in self.save_file:
+                self.save_publish_file = self.save_publish_file.replace(self.data['project']['STATUS']['work'], self.data['project']['STATUS']['publish'])
             else:
-                LOG.error("FAIL : NO {} in path : {}".format(self.data['templates']['STATUS']['work'], self.save_publish_file), exc_info=True)
+                LOG.error("FAIL : NO {} in path : {}".format(self.data['project']['STATUS']['work'], self.save_publish_file), exc_info=True)
                 return False
 
             pipefunc.create_folder(os.path.dirname(self.save_publish_file))
@@ -198,7 +198,7 @@ class ArSave(ArUtil):
 
     def set_meta_data(self, save_path=''):
         if not save_path: save_path = self.save_file
-        meta_path = os.path.dirname(save_path) + Tank().data_templates['META']['file']
+        meta_path = os.path.dirname(save_path) + Tank().data_project['META']['file']
         # LOG.info(meta_path)
         comment_dict = {'user':   User().id,
                         'comment': str(self.wgSave.edtComment.text())}

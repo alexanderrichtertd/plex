@@ -126,7 +126,7 @@ class Software(tank.Singleton):
 
     @property
     def extension(self):
-        return Tank().data_templates['EXTENSION'][self._NAME]
+        return Tank().data_project['EXTENSION'][self._NAME]
 
     @property
     def menu(self):
@@ -267,8 +267,9 @@ class Software(tank.Singleton):
         self.print_checked_header('lib')
         self.print_checked_header('lib/apps')
         self.print_checked_header('software/{}'.format(self._NAME))
-        self.print_checked_header('software/{}/scripts'.format(self._NAME))
+        self.print_checked_header('software/{}/icons'.format(self._NAME))
         self.print_checked_header('software/{}/plugins'.format(self._NAME))
+        self.print_checked_header('software/{}/scripts'.format(self._NAME))
 
         if self._NAME == 'maya':
             self.print_checked_header('software/{}/shelf'.format(self._NAME))

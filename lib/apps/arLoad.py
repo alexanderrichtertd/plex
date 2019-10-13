@@ -44,7 +44,7 @@ class ArLoad(ArUtil):
         self.load_dir  = ''
         self.load_file = ''
 
-        self.software_format = {y:x.upper() for x, y in self.data['templates']['EXTENSION'].items()}
+        self.software_format = {y:x.upper() for x, y in self.data['project']['EXTENSION'].items()}
         self.software_keys   = list(self.software_format.keys())
 
         self.wgLoad.lstScene.itemSelectionChanged.connect(self.change_lstScene)
@@ -99,7 +99,7 @@ class ArLoad(ArUtil):
 
         self.clear_meta()
 
-        for keys, items in self.data['templates']['SCENES'].items():
+        for keys, items in self.data['project']['SCENES'].items():
             self.wgLoad.lstScene.addItem(keys)
 
         self.wgLoad.lstScene.setCurrentRow(0)
@@ -165,7 +165,7 @@ class ArLoad(ArUtil):
         self.load_dir = self.data['project']['PATH'][self.wgLoad.lstScene.currentItem().text()]
         tmp_content   = pipefunc.get_file_list(self.load_dir)
 
-        self.scene_steps = len(self.data['templates']['SCENES'][self.wgLoad.lstScene.currentItem().text()].split('/'))
+        self.scene_steps = len(self.data['project']['SCENES'][self.wgLoad.lstScene.currentItem().text()].split('/'))
         if self.scene_steps < 5: self.wgLoad.lstAsset.hide()
         else:
             self.wgLoad.lstAsset.itemSelectionChanged.connect(self.change_lstAsset)
@@ -229,8 +229,8 @@ class ArLoad(ArUtil):
             if os.path.splitext(file)[1][1:] in self.software_keys: file_list.append(file)
 
         if file_list:
-            if os.path.exists(self.file_dir + Tank().data_templates['META']['file']):
-                self.file_data = Tank().get_yml_file(self.file_dir + Tank().data_templates['META']['file'])
+            if os.path.exists(self.file_dir + Tank().data_project['META']['file']):
+                self.file_data = Tank().get_yml_file(self.file_dir + Tank().data_project['META']['file'])
             else: self.file_data = ''
 
             self.wgLoad.lstFiles.addItems(sorted(file_list, reverse=True))
@@ -243,7 +243,7 @@ class ArLoad(ArUtil):
         if self.extension in self.data['script'][TITLE]['img']:
             self.preview_img_path = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
         else:
-            self.preview_img_path = self.file_dir + '/' + Tank().data_templates['META']['dir'] + '/' + self.file_name + '.' + self.data['templates']['EXTENSION']['thumbnail']
+            self.preview_img_path = self.file_dir + '/' + Tank().data_project['META']['dir'] + '/' + self.file_name + '.' + self.data['project']['EXTENSION']['thumbnail']
 
         self.load_file = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
 

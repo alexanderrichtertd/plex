@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = write statistic loggings
+# content   = popups and statistic loggings
 # version   = 0.1.0
 # date      = 2019-10-06
 #

@@ -39,27 +39,32 @@ class Singleton(object):
 
 #*********************************************************************
 class Tank(Singleton):
+
+    _software = ''
+
     def init_os(self):
         self.user.setup()
+
 
     def init_software(self, software=''):
         if not software: software = os.getenv('SOFTWARE')
 
-        if software == 'maya':
-            from maya_dcc import Maya
-            self._software = Maya()
-        elif software == 'max':
-            from max_dcc import Max
-            self._software = Max()
-        elif software == 'nuke':
-            from nuke_dcc import Nuke
-            self._software = Nuke()
-        elif software == 'houdini':
-            from houdini_dcc import Houdini
-            self._software = Houdini()
-        else:
-            from software import Software
-            self._software = Software()
+        if not self._software:
+            if software == 'maya':
+                from maya_dcc import Maya
+                self._software = Maya()
+            elif software == 'max':
+                from max_dcc import Max
+                self._software = Max()
+            elif software == 'nuke':
+                from nuke_dcc import Nuke
+                self._software = Nuke()
+            elif software == 'houdini':
+                from houdini_dcc import Houdini
+                self._software = Houdini()
+            else:
+                from software import Software
+                self._software = Software()
 
         return self._software
 
@@ -109,10 +114,6 @@ class Tank(Singleton):
     @property
     def data_script(self):
         return self.get_data('script')
-
-    @property
-    def data_templates(self):
-        return self.get_data('templates')
 
     @property
     def data_notice(self):
@@ -180,7 +181,7 @@ class Tank(Singleton):
 
     def get_img_path(self, end_path='btn/default'):
         if '.' in end_path: img_format = ''
-        else: img_format = self.data_templates['EXTENSION']['icons']
+        else: img_format = self.data_project['EXTENSION']['icons']
 
         path = self.get_pipeline_path('img/{}.{}'.format(end_path, img_format))
         if not path: path = self.get_pipeline_path('img/{}/default.{}'.format(os.path.dirname(end_path), img_format))

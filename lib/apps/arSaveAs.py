@@ -82,7 +82,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.currentIndexChanged.connect(self.update_file)
         self.wgSaveAs.cbxAsset.editTextChanged.connect(self.update_file)
 
-        for keys, items in Tank().data_templates['SCENES'].items():
+        for keys, items in Tank().data_project['SCENES'].items():
             self.wgSaveAs.cbxScene.addItem(keys)
 
         self.update_file()
@@ -101,7 +101,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.clear()
         if not self.new_file: self.wgSaveAs.cbxTask.addItem(self.all_task)
 
-        self.scene_steps = len(Tank().data_templates['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
+        self.scene_steps = len(Tank().data_project['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
         if self.scene_steps < 5:
             self.wgSaveAs.cbxSet.hide()
             self.wgSaveAs.lblSet.hide()
@@ -112,7 +112,7 @@ class ArSaveAs(ArUtil):
 
         try:
             if self.wgSaveAs.cbxScene.currentText():
-                self.wgSaveAs.cbxTask.addItems(Tank().data_templates['TASK'][self.wgSaveAs.cbxScene.currentText()])
+                self.wgSaveAs.cbxTask.addItems(Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
         except: self.set_status('FAILED adding tasks items: data/project/$project/rules.yml : TASK', msg_type=3)
 
         if self.software == 'nuke':
@@ -130,18 +130,18 @@ class ArSaveAs(ArUtil):
     # FUNC
     def update_file(self):
         if self.wgSaveAs.cbxScene.currentText():
-            status_text = '/' + Tank().data_templates['STATUS']['work']
+            status_text = '/' + Tank().data_project['STATUS']['work']
             if self.new_file: extension = Tank().software.extension
             else: extension = ''
-            new_item = Tank().data_templates['SCENES'][self.wgSaveAs.cbxScene.currentText()]
+            new_item = Tank().data_project['SCENES'][self.wgSaveAs.cbxScene.currentText()]
             new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
                                        entity    = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
-                                       status    = Tank().data_templates['STATUS']['work'],
-                                       version   = Tank().data_templates['FILE']['version'].replace(r'\d','0').replace('_',''),
+                                       status    = Tank().data_project['STATUS']['work'],
+                                       version   = Tank().data_project['FILE']['version'].replace(r'\d','0').replace('_',''),
                                        user      = getpass.getuser()[:2].lower(),
                                        extension = extension,
-                                       frame     = Tank().data_templates['start_frame'])
+                                       frame     = Tank().data_project['start_frame'])
 
             if self.new_file: status_text += '/' + os.path.basename(new_item)
             self.save_file = self.save_dir + '/' + new_item
@@ -167,7 +167,7 @@ class ArSaveAs(ArUtil):
         save_list = []
 
         if self.all_task in self.save_file:
-            for task in Tank().data_templates['TASK'][self.wgSaveAs.cbxScene.currentText()]:
+            for task in Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()]:
                 new_path = self.save_file.replace(self.all_task, task)
                 save_list.append(new_path)
         else: save_list.append(self.save_file)
@@ -203,7 +203,7 @@ class ArSaveAs(ArUtil):
         return True
 
     def set_meta_data(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + Tank().data_templates['META']['file']
+        meta_path    = os.path.dirname(save_path) + Tank().data_project['META']['file']
         comment_dict = {'user':    User().id,
                         'comment': 'new scene'}
         Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)

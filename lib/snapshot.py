@@ -111,7 +111,7 @@ def nuke_viewerSnapshot(img_path=DEFAULT_PATH):
     topName ="[file tail [knob [topnode].file]]"
 
     # create writes and define render format
-    write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=Tank().data_templates['EXTENSION']['thumnail'])
+    write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=Tank().data_project['EXTENSION']['thumnail'])
     write1.setInput(0, selInput)
 
     # look up current frame
@@ -152,9 +152,9 @@ def houdini_renderSnapshot(img_path=DEFAULT_PATH):
 def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img = QtGui.QImage()
     img.load(src_path)
-    thumbnail_extension = '.' + Tank().data_templates['EXTENSION']['thumbnail']
+    thumbnail_extension = '.' + Tank().data_project['EXTENSION']['thumbnail']
 
-    tmpDir   = os.path.dirname(rlt_path) + '/' + Tank().data_templates['META']['dir']
+    tmpDir   = os.path.dirname(rlt_path) + '/' + Tank().data_project['META']['dir']
     rlt_path = tmpDir + "/" + os.path.basename(rlt_path).split(".")[0] + thumbnail_extension
 
     pipefunc.create_folder(rlt_path)

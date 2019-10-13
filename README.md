@@ -1,25 +1,22 @@
-> ### "A feature can't be a bug"-Release
-> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases) and my **[YouTube Channel](https://youtube.com/alexanderrichtertd)**.
-> [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)
+> ### "Version 2.0"- NEW Release
+> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases), my **[YouTube Channel](https://youtube.com/alexanderrichtertd)** and the [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)
 
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
 
 ## **Introduction**
 **Plex** is an **Animation, VFX and Games pipeline** managing important workflows during production.
 Its core is a flexible and independent system for small to mid-sized projects and companies.
-The basic idea is to handle the file and folder structure work, setups basic rules and guides the workflow to allow a collaborated working.
+The basic idea is to handle the file and folder structure, setup basic rules and guide the workflow to allow collaboration in a complex production environment. Plug and play.
 
 > Intuitively guiding the input and output of users to overcome problems and achieve goals.
 > Now you have a good game ... or pipeline.
-
-The main idea is to have an overall system which lays the **foundation for the modular scripts** that are plugged into the pipeline and add to its functionality and overall awesomeness.
 
 [![plex_00_introduction](https://user-images.githubusercontent.com/9514022/29458175-179be8ba-841e-11e7-8be7-a83b0a37b28e.PNG)](https://youtu.be/gqRailvSmtw)
 
 ## Environment [in development]
 - [x] **OS**: Windows (| Linux | Mac)
-- [x] **Software**: Nuke 9+ | Maya 2015+ | Houdini 15+ | 3ds Max 2015+
-- [x] **Renderer**: Arnold | RenderMan | Mantra | V-Ray
+- [x] **Software**: Maya 2018+ | Houdini 15+ | 3ds Max 2018+ | Nuke 12+ | ...
+- [x] **Renderer**: Arnold | RenderMan | Mantra | V-Ray | ...
 
 ## Project Features
 - [x] vfx, animation & game production management system
@@ -34,15 +31,15 @@ The main idea is to have an overall system which lays the **foundation for the m
 
 ## Pipeline Features
 - [x] **Layered Pipeline**
- - master (main pipeline)
- - commercial | film
- - project (production)
- - local (development & debug)
- - personal (user)
-- [x] **Basic scripts**
+ - create a company pipeline
+ - add a project pipeline
+ - test and develop in a personal environment
+- [x] **scripts**
+ - desktop app
  - save (+ publish) | load | create | render
  - get, set and handle data | img | scripts
- - arUtils (user, report, help, accept, comment, color code)
+ - template UI (user, report, help, accept, comment, color code)
+ - setup menu, shelf, toolbar, ...
 - [x] **Workflows and Charts**
  - naming conventions
  - software pipeline
@@ -59,7 +56,7 @@ The main idea is to have an overall system which lays the **foundation for the m
 
 ![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
 
-## **Projects [realized with]**
+## **Projects**
 - [Breaking Point](https://vimeo.com/178452618) \[VFX short film 2016\]
 [Winner VES Award 2017](https://www.visualeffectssociety.com/post/15th-annual-ves-awards-nominees) and [Winner Siggraph Asia 2016](https://sa2016.siggraph.org/en)
 - Elemental (Nuke) \[VFX short film 2016\]
@@ -68,4 +65,4 @@ The main idea is to have an overall system which lays the **foundation for the m
 
 
 ## **License**
-Plex is available under the **MIT License**. You can use it for commercial or non-commercial projects. Please include the attributes and a credit in your docs.
+Plex is available under the **MIT License**. You can use it for commercial or non-commercial projects. Be sure to credit me in the project and documentation.

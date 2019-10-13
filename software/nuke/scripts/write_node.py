@@ -39,7 +39,7 @@ def create_node(this_node=''):
     this_node["resolutionY"].setValue(this_node.height())
 
     fileName   = os.path.basename(nuke.root().name()).split(".")[0]
-    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/{render}/{file}/exr/{file}.%04d.exr".format(render=Tank().data_templates['STATUS']['render'], file=fileName)
+    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/{render}/{file}/exr/{file}.%04d.exr".format(render=Tank().data_project['STATUS']['render'], file=fileName)
     renderPath = renderPath.replace('\\','/')
 
     # this_node["rootPath"].setValue(renderPath)
@@ -121,7 +121,7 @@ def publishRender(file_type):
         if part == "COMP": break
 
     fileName    = ("_").join(fileName)
-    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().data_templates['STATUS']['publish'] + "/" + file_type
+    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().data_project['STATUS']['publish'] + "/" + file_type
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)
