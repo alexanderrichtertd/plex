@@ -141,11 +141,13 @@ def create_default_notice(script_string, msg=""):
 
     if root in notice_data and script_name in notice_data[root]:
         notice_data = notice_data[root][script_name]
+        notice_msg = [lambda: notice_data["msg"], lambda: msg][msg != ""]()
     else:
-        LOG.warning("notice.yml data doesnt exist: {}".format(script_name))
-        return
+        notice_data['title'] = root
+        notice_msg  = script_name
+        # LOG.warning("notice.yml data doesnt exist: {}".format(script_name))
+        # return
 
-    notice_msg = [lambda: notice_data["msg"], lambda: msg][msg != ""]()
 
     if "quote" in notice_data: notice_quote = notice_data["quote"]
     else: notice_quote = ""

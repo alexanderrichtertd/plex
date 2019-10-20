@@ -53,7 +53,7 @@ def notice(script_string, meta=False, notice=True):
                 else: LOG.info("DONE - {}".format(script_name))
 
                 try:    set_exe_file(root, script_name, Tank().user.sandbox_path, result_time)
-                except: LOG.error("STATS are broken: {} {} {} {}".format(root, script_name, ALL_STATS_PATH, result_time), exc_info=True)
+                except: LOG.error("STATS are broken: {} {} {} {}".format(root, script_name, Tank().user.sandbox_path, result_time), exc_info=True)
 
                 hours, remainder = divmod(result_time, 3600)
                 minutes, seconds = divmod(remainder, 60)

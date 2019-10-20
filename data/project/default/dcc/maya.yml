@@ -158,6 +158,8 @@ SETUP:
     - defaultRenderGlobals.animation : 1
     - defaultRenderGlobals.putFrameBeforeExt : 1
     - defaultRenderGlobals.extensionPadding : 4
+    # - FPS : 24: film
+    # - unit : cm
 
   GEO:
 
@@ -181,28 +183,18 @@ SETUP:
 
 #*****************************************************************************************************************************
 # SPECIFIC settings
-SETTINGS:
-  FPS:
-    24: film
-    25: pal
-    30: ntsc
-    48: show
-    50: palf
-    60: ntscf
-
-  unit: cm
 
 
 GROUPS:
-    ANIM:
-      - char
-      - props
-      - fx
+    ANIM_GRP:
+      - char_GRP
+      - props_GRP
+      - fx_GRP
     LAYOUT:
-      - props
-      - sets
-    CAM:
+      - props_GRP
+      - sets_GRP
+    CAM_GRP:
       - ''
-    REVIEW:
-      - proxy
-      - playblast
+    REVIEW_GRP:
+      - proxy_GRP
+      - playblast_GRP

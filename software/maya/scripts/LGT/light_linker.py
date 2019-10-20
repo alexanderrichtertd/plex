@@ -89,7 +89,7 @@ def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
     LOG.debug("LightLinking - break:{} - shadow:{}: {} with {}".format(break_light, shadow_link, lights, meshes))
 
 
-@notice('apps:light_linker', meta=False)
+@notice('Select Attached:See all the attached files', meta=False)
 def select_attached(shadow_link=False):
     selection = cmds.ls(dag=1,o=1,s=1,sl=1)
     lights    = cmds.ls(selection, type=["light"] + cmds.listNodeTypes("light"))
