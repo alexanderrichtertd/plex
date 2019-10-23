@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = SET default environment paths
 # version   = 1.0.0
-# date      = 2019-12-01
+# date      = 2019-10-06
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -10,6 +10,7 @@
 
 import os
 import sys
+import getpass
 
 import yaml
 
@@ -97,7 +98,7 @@ class Setup(object):
         self.add_env('PYTHONPATH', os.environ['EXTERN_PATH'])
 
         # DATA ENV
-        os.environ['DATA_USER_PATH']      = self.data_pipeline_path[0] + '/data/user/' + os.getenv('username')
+        os.environ['DATA_USER_PATH']      = self.data_pipeline_path[0] + '/data/user/' + getpass.getuser()
         os.environ['DATA_USER_OVERWRITE'] = str(self.pipeline_data['user_data'])
         sys.path.append(os.environ['DATA_USER_PATH'])
 

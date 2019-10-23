@@ -9,10 +9,11 @@
 
 import os
 import sys
+import getpass
 import logging
 import logging.config
 
-USER = os.getenv('username')
+USER = getpass.getuser()
 
 
 #*********************************************************************

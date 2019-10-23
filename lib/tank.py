@@ -9,6 +9,7 @@
 
 import os
 import sys
+import getpass
 
 from extern import yaml
 
@@ -122,7 +123,7 @@ class Tank(Singleton):
 
     #*********************************************************************
     # GET AND SET DATA
-    def get_data(self, file_name='', user_id=os.getenv('username')):
+    def get_data(self, file_name='', user_id=getpass.getuser()):
 
         def get_all_data():
             config_data = {}

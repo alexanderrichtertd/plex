@@ -9,6 +9,7 @@
 
 import os
 import sys
+import getpass
 import webbrowser
 
 from Qt import QtWidgets, QtGui, QtCore
@@ -97,7 +98,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     #**********************
     # PRESS_TRIGGER
     def press_btnShowUserData(self):
-        pipefunc.open_folder(self.project_data['PATH']['sandbox'] + '/' + os.getenv('username'))
+        pipefunc.open_folder(self.project_data['PATH']['sandbox'] + '/' + getpass.getuser())
 
     def press_btnOpenProjectPath(self):
         pipefunc.open_folder(self.project_data['path'])

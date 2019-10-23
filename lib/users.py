@@ -11,6 +11,7 @@
 
 import os
 import sys
+import getpass
 
 import pipefunc
 
@@ -23,19 +24,20 @@ from tank import Tank
 TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = Tank().log.init(script=TITLE)
 
+USER = getpass.getuser()
+
 
 #*********************************************************************
 # USER
 class User(tank.Singleton):
-    def setup(self, user_id=os.getenv('username')):
+    def setup(self, user_id=USER):
         self.create()
 
         if os.path.exists(os.path.dirname(self.sandbox_path)):
             pipefunc.create_folder(self.sandbox_path)
 
-    def create(self, user_id=os.getenv('username'), name=os.getenv('username'), settings = {}, rights = 'artist'):
+    def create(self, user_id=USER, name=USER, settings = {}, rights = 'artist'):
         self._id       = user_id         # arichter
-        self._initial  = self.id[0:2]    # ar
         self._name     = name            # Alexander Richter
 
         self._settings = settings        # {'arLoad': []}
@@ -58,10 +60,6 @@ class User(tank.Singleton):
     @property
     def id(self):
         return self._id
-
-    @property
-    def initial(self):
-        return self._initial
 
     @property
     def name(self):

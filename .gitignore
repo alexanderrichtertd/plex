@@ -9,6 +9,7 @@ test.py
 *.stats
 
 
+*_DEBUG.sh
 *_DEBUG.bat
 
 data/user/alexa

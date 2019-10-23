@@ -11,7 +11,7 @@
 
 import os
 import sys
-import getpass
+
 import datetime
 from threading import Thread
 

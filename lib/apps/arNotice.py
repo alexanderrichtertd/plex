@@ -12,6 +12,7 @@ import os
 import sys
 import glob
 import time
+import getpass
 import webbrowser
 
 from threading import Timer
@@ -37,7 +38,7 @@ class Notice():
                  title    = 'Notice',
                  msg      = 'This is just a Notice Test',
                  quote    = 'Quote Test',
-                 user     = os.getenv('username'),
+                 user     = getpass.getuser(),
                  img      = 'lbl/default',
                  img_link = 'http://richteralexander.com',
                  func     = '',

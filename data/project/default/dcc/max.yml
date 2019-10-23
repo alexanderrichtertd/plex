@@ -12,7 +12,7 @@
 #*****************************************************************************************************************************
 # 3Ds Max
 
-version: &MAX_VERSION 2019
+version: &MAX_VERSION 2018
 path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]
 
 start: *MAX_PATH
