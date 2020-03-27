@@ -12,7 +12,13 @@ import os
 import sys
 import getpass
 
-import yaml
+try:
+    import yaml
+except:
+    # if yaml is not installed
+    plex_path = os.path.dirname(os.path.dirname(__file__))
+    sys.path.append(plex_path + "/lib/extern")
+    import yaml
 
 
 #*********************************************************************
@@ -28,7 +34,7 @@ class Setup(object):
 
         # LOAD pipeline data
         if os.path.exists(self.data_project_path):
-            with open(self.data_project_path , 'r') as stream:
+            with open(self.data_project_path, 'r') as stream:
                 try:   self.pipeline_data = yaml.load(stream)
                 except yaml.YAMLError as exc: raise OSError ('STOP PROCESS', 'DATA file is corrupted', exc)
         else: raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
