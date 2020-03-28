@@ -86,8 +86,8 @@ MENU:
 #*****************************************************************************************************************************
 SHELF:
   HEADER:
-    - save:    l='Save', command='import arSave; arSave.start()', dcc='', image='shelf_save.png'
-    - load:    l='Load', command='import arLoad; arLoad.start()', dcc='', image='shelf_load.png'
+    - save:    l='Save', command='import arSave; reload(arSave); arSave.start()', dcc='', image='shelf_save.png'
+    - load:    l='Load', command='import arLoad; reload(arLoad); arLoad.start()', dcc='', image='shelf_load.png'
     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
 
   FOOTER:

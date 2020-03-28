@@ -194,8 +194,8 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cbxAsset</tabstop>
   <tabstop>cbxSet</tabstop>
+  <tabstop>cbxAsset</tabstop>
   <tabstop>cbxTask</tabstop>
   <tabstop>cbxScene</tabstop>
  </tabstops>

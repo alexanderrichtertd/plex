@@ -78,8 +78,8 @@ def create_screenshot_render(WIDGET, ui=''):
 def create_screenshot_viewport(WIDGET, ui=''):
     # WIDGET.hide()
     try:
-        if   os.getenv("SOFTWARE") == "MAYA":    create_screenshot(WIDGET, ui) # maya_viewportSnapshot(DEFAULT_PATH)
-        elif os.getenv("SOFTWARE") == "NUKE":    nuke_viewerSnapshot(DEFAULT_PATH)
+        if   os.getenv("SOFTWARE") == "MAYA":    maya_viewportSnapshot() # maya_viewportSnapshot(DEFAULT_PATH)
+        elif os.getenv("SOFTWARE") == "NUKE":    nuke_viewerSnapshot()
         elif os.getenv("SOFTWARE") == "HOUDINI": create_screenshot(WIDGET, ui) # houdini_viewportSnapshot(DEFAULT_PATH)
         elif os.getenv("SOFTWARE") == "MAX":     create_screenshot(WIDGET, ui)
         else: return False

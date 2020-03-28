@@ -56,8 +56,8 @@ class ArSave(ArUtil):
 
         self.wgSave.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
         self.wgSave.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_camera"))))
-        self.wgSave.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("software/maya/shelf/shelf_render_high"))))
-        self.wgSave.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("software/maya/shelf/shelf_viewport"))))
+        self.wgSave.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_viewport"))))
+        self.wgSave.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_render"))))
 
         self.resize_widget(self.wgSave)
 
@@ -69,7 +69,7 @@ class ArSave(ArUtil):
         # self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.wgHeader.setWindowTitle(TITLE)
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn-save")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
 
         self.wgHeader.btnOption.setText('SaveAs')
         self.wgSave.btnSnapshotRender.hide()

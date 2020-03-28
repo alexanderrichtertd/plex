@@ -113,7 +113,7 @@ class ArSaveAs(ArUtil):
         try:
             if self.wgSaveAs.cbxScene.currentText():
                 self.wgSaveAs.cbxTask.addItems(Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
-        except: self.set_status('FAILED adding tasks items: data/project/$project/rules.yml : TASK', msg_type=3)
+        except: self.set_status('FAILED adding tasks items: data/project/$project/project.yml : TASK', msg_type=3)
 
         if self.software == 'nuke':
             index = self.wgSaveAs.cbxTask.findText('COMP', QtCore.Qt.MatchContains)

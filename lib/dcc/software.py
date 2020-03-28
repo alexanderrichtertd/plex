@@ -223,7 +223,8 @@ class Software(tank.Singleton):
     def scene_setup(self, setup_type, status='', default=True):
         import maya.cmds as cmds
 
-        data_setup = Tank().data_software[setup_type]
+        data_setup = Tank().data_software['SETUP']
+        LOG.info(data_setup)
         new_setup  = []
 
         if default:
