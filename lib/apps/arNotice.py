@@ -37,7 +37,7 @@ class Notice():
     def __init__(self,
                  title    = 'Notice',
                  msg      = 'This is just a Notice Test',
-                 quote    = 'Quote Test',
+                 quote    = 'plex it out',
                  user     = getpass.getuser(),
                  img      = 'lbl/default',
                  img_link = 'http://richteralexander.com',
@@ -114,6 +114,7 @@ class ArNotice():
         self.wgNotice.show()
 
         self.start_timer()
+        LOG.info(notice)
 
 
     def start_timer(self):
@@ -148,7 +149,6 @@ def create_default_notice(script_string, msg=""):
         notice_msg  = script_name
         # LOG.warning("notice.yml data doesnt exist: {}".format(script_name))
         # return
-
 
     if "quote" in notice_data: notice_quote = notice_data["quote"]
     else: notice_quote = ""

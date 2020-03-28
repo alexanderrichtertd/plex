@@ -112,11 +112,12 @@ class ArLoad(ArUtil):
             self.set_status('FAILED LOADING : Path doesnt exists: {}'.format(self.load_file), msg_type=3)
             return False
 
-        open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]]
+        open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]].lower()
 
         # OPEN in current software
         try:
             if open_software == Tank().software.software:
+                LOG.info(self.load_file)
                 Tank().software.scene_open(self.load_file)
                 self.wgHeader.close()
             else:
@@ -131,6 +132,7 @@ class ArLoad(ArUtil):
                                img   = self.preview_img_path if os.path.exists(self.preview_img_path) else 'lbl/lbl{}131'.format(Tank().software.software.lower().title()),
                                img_link = os.path.dirname(self.load_file))
         arNotice.ArNotice(note)
+
 
     def press_openMenu(self, list_widget):
         self.listMenu = QtGui.QMenu()

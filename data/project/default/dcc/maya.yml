@@ -90,10 +90,24 @@ SHELF:
     - load:    l='Load', command='import arLoad; reload(arLoad); arLoad.start()', dcc='', image='shelf_load.png'
     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
 
+    - folder:  l='Project Folder', command='import webbrowser; webbrowser.open(os.path.dirname(Tank().software.scene_path))', dcc='', image='shelf_open_folder.png'
+    - folder:  l='Project Folder', command='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])', dcc='', image='shelf_open_folder_project.png'
+
+    - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+
   FOOTER:
     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+
+    - rs_publish:  l='Rendersetting - Work', command='Tank().software.scene_setup("RENDER", "WORK")', dcc='', image='shelf_render_work.png'
+    - rs_publish:  l='Rendersetting - Preview', command='Tank().software.scene_setup("RENDER", "PREVIEW")', dcc='', image='shelf_render_preview.png'
+    - rs_publish:  l='Rendersetting - Publish', command='Tank().software.scene_setup("RENDER", "DELIVER")', dcc='', image='shelf_render_deliver.png'
+
+    - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+
     - report:  l='Report', command='import pipefunc;pipefunc.help("report")', dcc='', image='shelf_report.png'
     - help:    l='Help', command='import pipefunc;pipefunc.help()', dcc='', image='shelf_help.png'
+
+#*****************************************************************************************************************************
 
   GEO:
     - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
@@ -152,8 +166,8 @@ RENDER:
 SETUP:
 
   DEFAULT:
-    - defaultResolution.width  : Tank().data_project['resolution'][0]
-    - defaultResolution.height : Tank().data_project['resolution'][1]
+    # - defaultResolution.width  : Tank().data_project['resolution'][0]
+    # - defaultResolution.height : Tank().data_project['resolution'][1]
 
     - defaultRenderGlobals.animation : 1
     - defaultRenderGlobals.putFrameBeforeExt : 1

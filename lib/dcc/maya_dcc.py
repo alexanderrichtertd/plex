@@ -36,18 +36,17 @@ class Maya(Software):
     def scene_path(self):
         return pm.sceneName()
 
-    def scene_save(self):
-        return pm.saveFile(file)
+    def scene_save(self, file_path):
+        return pm.saveFile(file_path)
 
+    def scene_save_as(self, file_path, setup_scene=False):
+        if setup_scene: self.scene_setup(file_path)
+        return pm.saveAs(file_path)
 
-    def scene_save_as(self, file, setup_scene=False):
-        if setup_scene: self.scene_setup(file)
-        return pm.saveAs(file)
+    def scene_open(self, file_path):
+        return pm.openFile(file_path, force=True)
 
-    def scene_open(self, file):
-        return pm.openFile(file, force=True)
-
-    def scene_import(self, file):
+    def scene_import(self, file_path):
         pass
 
         # # reference or open
@@ -59,8 +58,6 @@ class Maya(Software):
     #*********************************************************************
     # SHELF
     def add_shelf(self, shelf_name='', header_footer=True):
-
-
         new_shelf  = []
         shelf_data = Tank().data_software['SHELF']
 

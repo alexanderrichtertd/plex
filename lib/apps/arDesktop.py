@@ -61,7 +61,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('user/' + self.user.id)), self.user.id)
         menuItem.triggered.connect(self.press_btnShowUserData)
 
-        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('project/default')), Tank().data_project['name'])
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_folder')), Tank().data_project['name'])
         menuItem.triggered.connect(self.press_btnOpenProjectPath)
 
         menu.addSeparator()

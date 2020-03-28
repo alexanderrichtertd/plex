@@ -88,7 +88,7 @@ class Software(tank.Singleton):
         if open_file:
             if self._NAME == 'maya':
                 cmd = '{} -file "{}"'.format(cmd, open_file)
-            if self._NAME == 'max' or self._NAME == 'houdini':
+            elif self._NAME == 'max' or self._NAME == 'houdini':
                 cmd = '"{}" "{}"'.format(cmd, open_file)
 
         LOG.debug(cmd)
