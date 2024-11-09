@@ -242,7 +242,13 @@ class Software(tank.Singleton):
                 try:    eval(render)
                 except: LOG.error('Scene Setup is not executable: {}'.format(render), exc_info=True)
 
+    #******************************************************************************
+    # SNAPSHOT
+    def viewport_snapshot(img_path=DEFAULT_PATH):
+        LOG.info("viewport_snapshot")
 
+    def render_snapshot(img_path=DEFAULT_PATH):
+        LOG.info("render_snapshot")
 
     #*********************************************************************
     # PRINT

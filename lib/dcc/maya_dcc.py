@@ -91,3 +91,25 @@ class Maya(Software):
 
         shelf_nr = len(mel.eval('layout -q -ca ShelfLayout;'))
         mel.eval('shelfTabLayout -edit -selectTabIndex {} ShelfLayout;'.format(shelf_nr))
+
+
+    #******************************************************************************
+    # SNAPSHOT
+    def viewport_snapshot(img_path=DEFAULT_PATH):
+        mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
+
+        # playblast one frame to a specific file
+        currentFrame = str(cmds.currentTime(q=1))
+        snapshotStr = 'playblast -frame ' + currentFrame + ' -format "image" -cf "' + img_path + '" -v 0 -wh 1024 576 -p 100;'
+        mel.eval(snapshotStr)
+
+        # restore the old format
+        mel.eval('setAttr "defaultRenderGlobals.imageFormat" `getAttr "defaultRenderGlobals.imageFormat"`;')
+        LOG.info("maya_viewport_snapshot")
+
+
+    def render_snapshot(img_path=DEFAULT_PATH):
+        mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
+
+        LOG.info("maya_render_snapshot")
+        return cmds.renderWindowEditor('renderView', e=True, writeImage=img_path)
