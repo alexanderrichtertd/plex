@@ -2,7 +2,7 @@
 # content   = saves as
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -28,8 +28,7 @@ from arUtil import ArUtil
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -38,7 +37,7 @@ class ArSaveAs(ArUtil):
     def __init__(self, new_file=True):
         super(ArSaveAs, self).__init__()
 
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
+        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgSaveAs = QtCompat.loadUi(path_ui)
 
         self.all_task = '<all tasks>'
@@ -46,18 +45,17 @@ class ArSaveAs(ArUtil):
         self.new_file  = new_file
         self.save_file = ''
         self.save_dir  = Tank().data_project['path']
-        self.software  = Tank().software.software
         self.inputs    = [self.wgSaveAs.cbxScene, self.wgSaveAs.cbxSet, self.wgSaveAs.cbxAsset, self.wgSaveAs.cbxTask]
 
         self.wgHeader.btnOption.hide()
         self.wgHeader.cbxAdd.hide()
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
 
-        btn_title = TITLE if self.new_file else 'Create New Folder'
+        btn_title = __name__ if self.new_file else 'Create New Folder'
         self.wgHeader.setWindowTitle(btn_title)
         btn_title = 'Save As' if self.new_file else 'Create'
         self.wgHeader.btnAccept.setText(btn_title)
-        self.wgHeader.layMain.addWidget(self.wgSaveAs, 0, 0)
+        self.wgHeader.layMain.addWidget(self.wgSaveAs, 0)
         self.resize_widget(self.wgSaveAs)
 
         # self.wgSaveAs : always on top
@@ -115,7 +113,7 @@ class ArSaveAs(ArUtil):
                 self.wgSaveAs.cbxTask.addItems(Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
         except: self.set_status('FAILED adding tasks items: data/project/$project/project.yml : TASK', msg_type=3)
 
-        if self.software == 'nuke':
+        if Tank().software.is_nuke:
             index = self.wgSaveAs.cbxTask.findText('COMP', QtCore.Qt.MatchContains)
             if index >= 0: self.wgSaveAs.cbxTask.setCurrentIndex(index)
 
@@ -131,8 +129,10 @@ class ArSaveAs(ArUtil):
     def update_file(self):
         if self.wgSaveAs.cbxScene.currentText():
             status_text = '/' + Tank().data_project['STATUS']['work']
+
             if self.new_file: extension = Tank().software.extension
             else: extension = ''
+
             new_item = Tank().data_project['SCENES'][self.wgSaveAs.cbxScene.currentText()]
             new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
                                        entity    = self.wgSaveAs.cbxAsset.currentText(),
@@ -170,7 +170,8 @@ class ArSaveAs(ArUtil):
             for task in Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()]:
                 new_path = self.save_file.replace(self.all_task, task)
                 save_list.append(new_path)
-        else: save_list.append(self.save_file)
+        else:
+            save_list.append(self.save_file)
 
         LOG.debug('Folder list {}'.format(save_list))
         for folder in save_list: pipefunc.create_folder(folder)
@@ -187,6 +188,7 @@ class ArSaveAs(ArUtil):
         else:
             try:    self.set_open_folder(save_list[0])
             except: LOG.error('CANT set folder: {}'.format(save_list))
+
             self.set_status('Created new {}'.format(self.wgSaveAs.cbxScene.currentText()), msg_type=1)
 
             tmp_img_path = 'lbl/lbl_create'
@@ -202,6 +204,7 @@ class ArSaveAs(ArUtil):
 
         return True
 
+
     def set_meta_data(self, save_path=''):
         meta_path    = os.path.dirname(save_path) + Tank().data_project['META']['file']
         comment_dict = {'user':    User().id,
@@ -209,6 +212,9 @@ class ArSaveAs(ArUtil):
         Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
 
 
+
+#******************************************************************************
+# START
 def create():
     app = QtWidgets.QApplication(sys.argv)
     main_window = ArSaveAs()

@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = write node functions
 # version   = 1.0.0
-# date      = 2019-12-01
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -22,8 +21,7 @@ from tank import Tank
 
 
 #*********************************************************************
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -60,7 +58,8 @@ def openFolder(path):
     path = os.path.dirname(path).replace("/","\\")
     if not os.path.exists(path) or not os.listdir(path):
         LOG.warning("FOLDER : NOT EXISTS : " + path)
-    else: webbrowser.open(path)
+    else:
+        webbrowser.open(path)
 
 
 def render():
@@ -138,4 +137,3 @@ def publishRender(file_type):
         oldFrame = oldPath + "/" + oldFrame
 
         shutil.copyfile(oldFrame, newFrame)
-

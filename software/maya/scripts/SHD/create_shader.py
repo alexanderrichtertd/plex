@@ -1,17 +1,17 @@
 #*********************************************************************
 # content   = shader
 # version   = 0.1.0
-# date      = 2019-12-26
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
 import maya.cmds as cmds
 
 
 #*********************************************************************
+# FUNCTIONS
 def create_simple_shd(name="BLACK_SHD", color=[0,0,0]):
     if cmds.objExists(name):
         print("CREATED - {}".format(name))

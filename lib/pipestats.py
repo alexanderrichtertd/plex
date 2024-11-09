@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = popups and statistic loggings
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import io
@@ -20,8 +19,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -30,7 +28,7 @@ def notice(script_string, meta=False, notice=True):
     def decorator(function):
         def wrapper(*args, **kwargs):
 
-            # NO QT on the FARM
+            # NO Qt on the FARM
             if check_ui(): note = notice
             else: note = True
 
@@ -71,7 +69,6 @@ def check_ui():
         return maya.OpenMaya.MGlobal.mayaState() != maya.OpenMaya.MGlobal.kBatch
     except:
         return os.getenv("UID")
-
 
 
 def set_exe_file(root, script_name, stats_path, result_time):

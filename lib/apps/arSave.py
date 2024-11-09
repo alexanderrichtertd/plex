@@ -2,12 +2,11 @@
 # content   = saves work and publish files
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import re
@@ -27,8 +26,7 @@ from arUtil import ArUtil
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -37,14 +35,12 @@ class ArSave(ArUtil):
     def __init__(self, parent=None):
         super(ArSave, self).__init__()
 
-        path_ui     = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
+        path_ui     = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgSave = QtCompat.loadUi(path_ui)
 
         self.save_dir  = os.getenv('PROJECT_PATH')
         self.save_file = ''
-        self.comment   = "Comment"
         self.img_path  = snapshot.DEFAULT_PATH
-        self.software  = Tank().software.software
 
         self.wgSave.btnVersionUp.clicked.connect(self.update_version)
         self.wgSave.btnVersionDown.clicked.connect(lambda: self.update_version(add=-1))
@@ -68,14 +64,16 @@ class ArSave(ArUtil):
         # self.wgSave : always on top
         # self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
-        self.wgHeader.setWindowTitle(TITLE)
+        self.wgHeader.setWindowTitle(__name__)
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
 
         self.wgHeader.btnOption.setText('SaveAs')
         self.wgSave.btnSnapshotRender.hide()
-        if self.software == 'nuke': self.wgSave.btnSnapshotRender.hide()
 
-        self.wgHeader.layMain.addWidget(self.wgSave, 0, 0)
+        if Tank().software.is_nuke:
+            self.wgSave.btnSnapshotRender.hide()
+
+        self.wgHeader.layMain.addWidget(self.wgSave, 0)
 
         self.wgSave.show()
         LOG.info('START : arSave')
@@ -106,7 +104,7 @@ class ArSave(ArUtil):
         snapshot.create_screenshot_viewport(self.wgSave, self.wgSave.btnPreviewImg)
 
     def press_btnHelp(self, name=''):
-        pipefunc.help(TITLE)
+        pipefunc.help(__name__)
 
 
     #*********************************************************************
@@ -120,10 +118,10 @@ class ArSave(ArUtil):
 
         self.update_version()
 
-        if(self.data['project']['STATUS']['publish'] in self.save_dir):
+        if self.data['project']['STATUS']['publish'] in self.save_dir:
             self.save_dir = self.save_dir.replace(self.data['project']['STATUS']['publish'], self.data['project']['STATUS']['work'])
 
-        if self.data['script'][TITLE]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
+        if self.data['script'][__name__]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
         else: snapshot.create_any_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
 
         return True
@@ -133,9 +131,11 @@ class ArSave(ArUtil):
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
+
             if new_version < 0:
                 self.set_comment('CANT be smaller than 0')
                 return
+
             new_version = ('{:0%sd}' % len(old_version)).format(new_version)
             new_version = found_version.group().replace(old_version, new_version)
             self.save_file = os.path.dirname(self.save_file) + '/' + os.path.basename(self.save_file).replace(found_version.group(), new_version)
@@ -147,13 +147,13 @@ class ArSave(ArUtil):
     def save_file_path(self):
         # USE ADDITIONAL PUBLISH SCRIPTS
         if self.wgHeader.cbxAdd.isChecked(): self.update_version()
-
+        
         try:
             Tank().software.scene_save_as(self.save_file)
             self.set_meta_data()
             LOG.info("SAVE : " + self.save_file)
         except:
-            LOG.error("FAIL : Couldnt save file : {}".format(self.save_file), exc_info=True)
+            LOG.error("FAIL : Couldn't save file : {}".format(self.save_file), exc_info=True)
             return False
 
         if self.wgHeader.cbxAdd.isChecked():
@@ -196,19 +196,25 @@ class ArSave(ArUtil):
         snapshot.save_snapshot(self.save_file)
         return True
 
+
     def set_meta_data(self, save_path=''):
         if not save_path: save_path = self.save_file
+
         meta_path = os.path.dirname(save_path) + Tank().data_project['META']['file']
         # LOG.info(meta_path)
         comment_dict = {'user':   User().id,
                         'comment': str(self.wgSave.edtComment.text())}
         Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
 
+
     def folder_msg_box(self, bpS, dataFilter, title = "Choose file to open", path = ""): #dataFilter = "Maya Files (*.mb *.ma)"
         result = QtGui.QFileDialog().getOpenFileName(bpS, title, path, dataFilter)
         return str(result[0])
 
 
+
+#*********************************************************************
+# START
 def create():
     app = QtWidgets.QApplication(sys.argv)
     main_widget = ArSave()

@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = setup maya
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -25,6 +24,8 @@ LOG   = Tank().log.init(script=TITLE)
 
 #*********************************************************************
 # INIT AND PRINT CONSOLE
+cmds.evalDeferred("print('START PLEX -------------------------------------')")
+
 Tank().init_software(os.getenv('SOFTWARE'))
 
 Tank().software.print_checked_header('menu', func=cmds.evalDeferred("maya_utils.load_menus()"))
@@ -32,6 +33,6 @@ Tank().software.print_checked_header('shelf')
 Tank().software.print_checked_header('scene setup')
 Tank().software.print_checked_header('render setup')
 
-print("")
+cmds.evalDeferred("print('------------------------------------- FINISH')")
 
 

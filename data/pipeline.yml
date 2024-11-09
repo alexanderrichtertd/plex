@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = pipeline data
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 # SETS project path
 # in data/project/$project
@@ -15,7 +14,7 @@ project: default
 
 PIPELINE:
   name:    Plex
-  version: 2.0.0
+  version: 2.1.0
 
 
 # ORDER: top to bottom (local, project, master)

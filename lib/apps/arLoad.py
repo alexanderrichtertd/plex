@@ -2,7 +2,7 @@
 # content   = saves work and publishes files
 #             executes other scripts on PUBLISH (task in file name)
 # version   = 0.1.1
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -27,8 +27,7 @@ from arUtil import ArUtil
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -38,7 +37,7 @@ class ArLoad(ArUtil):
     def __init__(self):
         super(ArLoad, self).__init__()
 
-        path_ui     = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
+        path_ui     = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgLoad = QtCompat.loadUi(path_ui)
 
         self.load_dir  = ''
@@ -72,10 +71,10 @@ class ArLoad(ArUtil):
         self.wgHeader.cbxAdd.hide()
 
         self.add_preview(self.wgLoad.layMeta)
-        self.wgHeader.layMain.addWidget(self.wgLoad, 0, 0)
+        self.wgHeader.layMain.addWidget(self.wgLoad, 0)
 
         self.wgPreview.wgSnapshot.hide()
-        self.wgHeader.setWindowTitle(TITLE)
+        self.wgHeader.setWindowTitle(__name__)
         self.wgHeader.btnAccept.setText('Load')
         self.wgHeader.btnOption.setText('Create')
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_load")))
@@ -109,7 +108,7 @@ class ArLoad(ArUtil):
     # PRESS
     def press_btnAccept(self):
         if not os.path.exists(self.load_file):
-            self.set_status('FAILED LOADING : Path doesnt exists: {}'.format(self.load_file), msg_type=3)
+            self.set_status('FAILED LOADING : Path doesn\'t exists: {}'.format(self.load_file), msg_type=3)
             return False
 
         open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]].lower()
@@ -129,14 +128,16 @@ class ArLoad(ArUtil):
         note = arNotice.Notice(title = os.path.basename(self.load_file).split('.')[0],
                                msg   = self.wgPreview.edtComment.toPlainText(),
                                user  = self.wgPreview.lblUser.text(),
-                               img   = self.preview_img_path if os.path.exists(self.preview_img_path) else 'lbl/lbl{}131'.format(Tank().software.software.lower().title()),
+                               img   = self.preview_img_path if os.path.exists(self.preview_img_path)
+                                       else 'lbl/lbl{}131'.format(Tank().software.software.lower().title()),
                                img_link = os.path.dirname(self.load_file))
         arNotice.ArNotice(note)
 
 
     def press_openMenu(self, list_widget):
         self.listMenu = QtGui.QMenu()
-        self.listMenu.setStyleSheet(self.data['script'][TITLE]['style'])
+        self.listMenu.setStyleSheet(self.data['script'][__name__]['style'])
+
         menu_item = self.listMenu.addAction("Add " + self.wgLoad.lstScene.currentItem().text())
         self.wgLoad.triggered.connect(self.press_menuItemAddFolder)
         menu_item = self.listMenu.addSeparator()
@@ -149,14 +150,23 @@ class ArLoad(ArUtil):
         self.listMenu.move(QtGui.QCursor().pos())
         self.listMenu.show()
 
+
     def press_menuItemAddFolder(self):
         import arSaveAs
         self.save_as = arSaveAs.start(new_file=False)
 
+
     def press_menuSort(self, list_widget, reverse=False):
+        """ This press function sorts the menu
+
+        Args:
+            list_widget ([type]): list of given widgets
+            reverse (bool, optional): Sorted in reverse. Defaults to False.
+        """        
         file_list = []
         for index in xrange(list_widget.count()):
              file_list.append(list_widget.item(index).text())
+
         list_widget.clear()
         list_widget.addItems(sorted(file_list, reverse=reverse))
 
@@ -178,6 +188,7 @@ class ArLoad(ArUtil):
             self.wgLoad.lstSet.addItems(sorted(tmp_content))
             self.wgLoad.lstSet.setCurrentRow(0)
 
+
     def change_lstSet(self):
         new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text()
         tmp_content = pipefunc.get_file_list(new_path)
@@ -193,6 +204,7 @@ class ArLoad(ArUtil):
                 self.wgLoad.lstAsset.addItems(sorted(tmp_content))
                 self.wgLoad.lstAsset.setCurrentRow(0)
 
+
     def change_lstAsset(self):
         new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + '/' + self.wgLoad.lstAsset.currentItem().text()
         tmp_content = pipefunc.get_file_list(new_path)
@@ -202,17 +214,19 @@ class ArLoad(ArUtil):
             self.wgLoad.lstTask.addItems(sorted(tmp_content))
             self.wgLoad.lstTask.setCurrentRow(0)
 
+
     def change_lstTask(self):
         if self.scene_steps > 4: asset_content = '/' + self.wgLoad.lstAsset.currentItem().text()
         else: asset_content = ''
 
-        new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text()  + asset_content + '/' + self.wgLoad.lstTask.currentItem().text()
+        new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + asset_content + '/' + self.wgLoad.lstTask.currentItem().text()
         tmp_content = pipefunc.get_file_list(new_path)
 
         self.wgLoad.lstStatus.clear()
         if tmp_content:
             self.wgLoad.lstStatus.addItems(sorted(tmp_content, reverse=True))
             self.wgLoad.lstStatus.setCurrentRow(0)
+
 
     def change_lstStatus(self):
         if self.scene_steps < 5: part_path = ''
@@ -238,19 +252,22 @@ class ArLoad(ArUtil):
             self.wgLoad.lstFiles.addItems(sorted(file_list, reverse=True))
             self.wgLoad.lstFiles.setCurrentRow(0)
 
+
     def change_lstFiles(self):
         self.extension = self.wgLoad.lstFiles.currentItem().text().split('.')[-1]
         self.file_name = self.wgLoad.lstFiles.currentItem().text().split('.')[0]
 
-        if self.extension in self.data['script'][TITLE]['img']:
+        if self.extension in self.data['script'][__name__]['img']:
             self.preview_img_path = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
         else:
             self.preview_img_path = self.file_dir + '/' + Tank().data_project['META']['dir'] + '/' + self.file_name + '.' + self.data['project']['EXTENSION']['thumbnail']
 
         self.load_file = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
 
-        if os.path.exists(self.preview_img_path): self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.preview_img_path)))
-        else: self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
+        if os.path.exists(self.preview_img_path):
+            self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.preview_img_path)))
+        else:
+            self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
 
         self.set_open_folder(self.file_dir)
 
@@ -266,8 +283,9 @@ class ArLoad(ArUtil):
         self.wgPreview.lblSize.setText(str("{0:.2f}".format(os.path.getsize(self.load_file)/(1024*1024.0)) + " MB"))
 
         self.extension = self.wgLoad.lstFiles.currentItem().text().split('.')[-1]
-        if self.extension in self.data['script'][TITLE].get('img'): software_img = "software/img"
+        if self.extension in self.data['script'][__name__].get('img'): software_img = "software/img"
         else: software_img = "software/" + self.software_format[self.extension]
+
         if self.file_data and self.file_data.has_key(self.wgLoad.lstFiles.currentItem().text()):
             current_file = self.file_data[self.wgLoad.lstFiles.currentItem().text()]
             comment = current_file.get('comment')
@@ -281,6 +299,7 @@ class ArLoad(ArUtil):
         self.wgPreview.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(software_img))))
         self.wgPreview.lblUserIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + user_id))))
 
+
     def clear_meta(self):
         self.wgPreview.lblUser.setText('')
         self.wgPreview.lblTitle.setText('')
@@ -292,6 +311,9 @@ class ArLoad(ArUtil):
         self.wgPreview.lblUserIcon.setPixmap(QtGui.QPixmap(QtGui.QImage('')))
 
 
+
+#******************************************************************************
+# START
 def create():
     app = QtWidgets.QApplication(sys.argv)
     main_widget = ArLoad()

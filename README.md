@@ -4,7 +4,7 @@
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
 
 ## **Introduction**
-**Plex** is an **Animation, VFX and Games pipeline** managing important workflows during production.
+**Plex** is an **VFX, Animation and Games pipeline** managing important workflows during production.
 Its core is a flexible and independent system for small to mid-sized projects and companies.
 The basic idea is to handle the file and folder structure, setup basic rules and guide the workflow to allow collaboration in a complex production environment. Plug and play.
 
@@ -13,9 +13,9 @@ The basic idea is to handle the file and folder structure, setup basic rules and
 
 [![plex_00_introduction](https://user-images.githubusercontent.com/9514022/29458175-179be8ba-841e-11e7-8be7-a83b0a37b28e.PNG)](https://youtu.be/gqRailvSmtw)
 
-## Environment [in development]
-- [x] **OS**: Windows (| Linux | Mac)
-- [x] **Software**: Maya 2018+ | Houdini 15+ | 3ds Max 2018+ | Nuke 12+ | ...
+## Environment
+- [x] **OS**: Windows | Linux
+- [x] **Software**: Maya 2023+ | Houdini 19+ | 3ds Max 2023+ | Nuke 15+ | ...
 - [x] **Renderer**: Arnold | RenderMan | Mantra | V-Ray | ...
 
 ## Project Features

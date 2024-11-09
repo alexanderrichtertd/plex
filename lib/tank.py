@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = main hub
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -12,18 +12,18 @@ import sys
 import getpass
 
 from extern import yaml
+from Qt import QtGui
 
 import pipefunc
 
 
 #*********************************************************************
 # VARIABLES
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-
 DATA_FORMAT = '.yml'
 
 
 #*********************************************************************
+# SINGLETON
 class Singleton(object):
     def __new__(cls, *args, **kwds):
 
@@ -39,6 +39,7 @@ class Singleton(object):
 
 
 #*********************************************************************
+# CLASS
 class Tank(Singleton):
 
     _software = ''
@@ -48,7 +49,8 @@ class Tank(Singleton):
 
 
     def init_software(self, software=''):
-        if not software: software = os.getenv('SOFTWARE')
+        if not software:
+            software = os.getenv('SOFTWARE')
 
         if not self._software:
             if software == 'maya':
@@ -72,6 +74,7 @@ class Tank(Singleton):
 
     def start_software(self, software, open_file=''):
         from software import Software
+
         self._software = Software()
         self._software.setup()
         self.user.setup()
@@ -160,6 +163,7 @@ class Tank(Singleton):
         else:
             tmp_content = {}
             pipefunc.create_folder(path)
+
         tmp_content[key] = value
         self.set_yml_file(path, tmp_content)
 
@@ -180,13 +184,24 @@ class Tank(Singleton):
 
         return ''
 
-    def get_img_path(self, end_path='btn/default'):
-        if '.' in end_path: img_format = ''
-        else: img_format = self.data_project['EXTENSION']['icons']
+
+    def get_img_path(self, end_path='btn/default', format=''):
+        if '.' in end_path: 
+            img_format = ''
+        else: 
+            img_format = self.data_project['EXTENSION']['icons']
 
         path = self.get_pipeline_path('img/{}.{}'.format(end_path, img_format))
-        if not path: path = self.get_pipeline_path('img/{}/default.{}'.format(os.path.dirname(end_path), img_format))
-        if not path: path = self.get_pipeline_path('img/btn/default.{}'.format(img_format))
+        if not path: 
+            path = self.get_pipeline_path('img/{}/default.{}'.format(os.path.dirname(end_path), img_format))
+            if not path: 
+                path = self.get_pipeline_path('img/btn/default.{}'.format(img_format))
+
+        if format == 'pixmap':
+            return QtGui.QPixmap(QtGui.QImage(path))
+        elif format == 'icon':
+            return QtGui.QIcon(path)
+        
         return path
 
 
@@ -204,18 +219,22 @@ class Tank(Singleton):
         try:
             with open(path, 'r') as stream:
                 # STRING into DICT
-                yml_content = yaml.load(stream)
-                if yml_content: return yml_content
+                yml_content = yaml.load(stream, Loader=yaml.Loader)
+                if yml_content:
+                    return yml_content
                 else:
                     print('CANT load file: {}'.format(path))
+
         except yaml.YAMLError as exc:
             print(exc)
+
 
     # define & register custom tag handler
     # combine var with strings
     def join(loader, node):
         seq = loader.construct_sequence(node)
         return ''.join([str(i) for i in seq])
+
 
     # replace (multiple) ENV var
     def env(loader, node):
@@ -231,7 +250,9 @@ class Tank(Singleton):
             if new_env: new_env += ';'
             new_env += env
             if seq: new_env += ''.join([str(os.path.normpath(i)) for i in seq])
+
         return new_env
+
 
     # replace (multiple) with first ENV var
     def env_first(loader, node):
@@ -270,12 +291,15 @@ class Tank(Singleton):
                 os.environ[var] += ('').join([';', content])
             else:
                 os.environ[var] = ('').join([content])
+
             return os.environ[var]
+
 
     # GET env or empty str & WARNING
     def get_env(self, var):
         if os.environ.__contains__(var):
             return os.environ[var].split(';')[0]
         print('ENV doesnt exist: {}'.format(var))
+
         return ''
 

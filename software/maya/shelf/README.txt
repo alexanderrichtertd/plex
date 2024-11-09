@@ -1,4 +1,5 @@
-ALL shelves which are place here will be added to Maya.
-READ-ONLY is recommended to avoid overwrites.
+ALL shelves placed here will be added to Maya.
+Setting them to READ-ONLY is recommended to avoid overwrites.
 
-For custom and flexible shelves see data/project/$project/dcc/maya.yml - SHELF.
+For custom and generated shelves see:
+data/project/$project/dcc/maya.yml - SHELF.

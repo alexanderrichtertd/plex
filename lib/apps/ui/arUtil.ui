@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>664</width>
-    <height>71</height>
+    <width>922</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -23,11 +23,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Project</string>
+   <string>arUtil</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/btn/btn/btnProject48.png</normaloff>:/btn/btn/btnProject48.png</iconset>
+   <iconset resource="../../../img/img.qrc">
+    <normaloff>:/btn/btn/btn_write.png</normaloff>:/btn/btn/btn_write.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <property name="spacing">
@@ -418,7 +418,7 @@ QPushButton:pressed{
             <string notr="true">color: rgb(190, 190, 190);</string>
            </property>
            <property name="text">
-            <string>ycycyxcxycxycxycxycxycxycxycxycxycxycyx</string>
+            <string>path</string>
            </property>
            <property name="frame">
             <bool>false</bool>

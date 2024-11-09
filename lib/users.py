@@ -1,13 +1,14 @@
 #*********************************************************************
 # content   = set und get user data
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-# why users? because user is already taken by python
+# WHY 'users' and not 'user'?
+# 'user' is already taken by Python
 
 import os
 import sys
@@ -21,9 +22,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
-
+LOG = Tank().log.init(script=__name__)
 USER = getpass.getuser()
 
 
@@ -105,9 +104,9 @@ class User(tank.Singleton):
         setUser(currentChange)
 
     def delete_data(self):
-        deletePath = os.path.join(DATA.PATH['data_user'], self.id)
+        deletePath = os.path.join(Tank.PATH['data_user'], self.id)
         if os.path.exists(deletePath):
             LOG.info("DONE : " + self.id + " removed")
             os.remove(deletePath)
         else:
-            LOG.info("FAIL : " + self.id + " - user doesnt exists")
+            LOG.info("FAIL : " + self.id + " - user doesn\'t exists")

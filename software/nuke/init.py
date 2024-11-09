@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = init Nuke
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import errno
@@ -19,14 +18,12 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 PROJECT_DATA = Tank().data_project
 RESOLUTION   = (' ').join([str(PROJECT_DATA['resolution'][0]),
                             str(PROJECT_DATA['resolution'][1]),
                             PROJECT_DATA['name'].replace(' ', '')])
-
 
 
 #*********************************************************************
@@ -37,8 +34,9 @@ def create_write_dir():
     os_path   = nuke.callbacks.filenameFilter(file_path)
 
     # cope with the directory existing already by ignoring that exception
-    try: os.makedirs(os_path)
-    except OSError, e:
+    try:
+        os.makedirs(os_path)
+    except OSError(e):
       if e.errno != errno.EEXIST:
         raise
 
@@ -69,6 +67,7 @@ try:
         nuke.pluginAddPath(paths)
 except:
     LOG.warning('FAILED loading SOFTWARE_SUB_PATH')
+
 
 
 print('SETTINGS')

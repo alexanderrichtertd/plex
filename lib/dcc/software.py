@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = setup software attributes
 # version   = 0.1.0
-# date      = 2019-06-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -21,8 +20,8 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
+DEFAULT_PATH = os.path.normpath(os.getenv('DATA_USER_PATH').split(';')[0] + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -66,7 +65,7 @@ class Software(tank.Singleton):
 
         # ADD software ENV
         if(self._env):
-            for env, content in self._env.iteritems():
+            for env, content in self._env.items():
                 if isinstance(content, list):
                     for each in content: Tank().add_env(env, each)
                 else: Tank().add_env(env, content)
@@ -145,6 +144,24 @@ class Software(tank.Singleton):
         return self._renderer_path
 
 
+    #*********************************************************************
+    # IS DCC
+    @property
+    def is_maya(self):
+        return self.software == 'maya'
+
+    @property
+    def is_nuke(self):
+        return self.software == 'nuke'
+
+    @property
+    def is_houdini(self):
+        return self.software == 'houdini'
+
+    @property
+    def is_max(self):
+        return self.software == 'max'
+
 
     #*********************************************************************
     # FUNCTION
@@ -189,7 +206,7 @@ class Software(tank.Singleton):
 
         sub_menu = ''
 
-        for keys, item in new_command.iteritems():
+        for keys, item in new_command.items():
 
             if isinstance(item, dict) or isinstance(item, list):
                 if self._NAME == 'maya':
@@ -214,7 +231,6 @@ class Software(tank.Singleton):
                     eval('menu_node.{}'.format(item))
                 elif self._NAME == 'nuke':
                     eval('menu_node.{}'.format(item))
-
 
 
     #*********************************************************************
@@ -243,7 +259,13 @@ class Software(tank.Singleton):
                 try:    eval(render)
                 except: LOG.error('Scene Setup is not executable: {}'.format(render), exc_info=True)
 
+    #******************************************************************************
+    # SNAPSHOT
+    def viewport_snapshot(img_path=DEFAULT_PATH):
+        LOG.info("viewport_snapshot")
 
+    def render_snapshot(img_path=DEFAULT_PATH):
+        LOG.info("render_snapshot")
 
     #*********************************************************************
     # PRINT

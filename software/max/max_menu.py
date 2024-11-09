@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = menu 3Ds Max
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 

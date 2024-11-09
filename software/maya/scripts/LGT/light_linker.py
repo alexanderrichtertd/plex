@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = Maya: Light Linker
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 
@@ -18,8 +17,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -73,7 +71,6 @@ def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
         cmds.lightlink(light=exclude_lights, object=meshes, shadow=shadow_link, b=True)
 
         LOG.info("exclude_lights: {}".format(exclude_lights))
-
     elif exclusive == "meshes":
         exclude_meshes = list(set(cmds.ls(dag=1,o=1,s=1)) - set(meshes))
         cmds.lightlink(light=lights, object=exclude_meshes, shadow=shadow_link, b=True)
@@ -95,7 +92,8 @@ def select_attached(shadow_link=False):
     lights    = cmds.ls(selection, type=["light"] + cmds.listNodeTypes("light"))
     selection = cmds.pickWalk(direction='down')
 
-    if not selection and not lights: return "error:no_light_selection"
+    if not selection and not lights:
+        return "error:no_light_selection"
 
     attached_objs = []
 
@@ -109,6 +107,7 @@ def select_attached(shadow_link=False):
         select_nodes = cmds.ls(attached_objs, type=["light"] + cmds.listNodeTypes("light"))
 
     if not select_nodes: return
+
     cmds.select(select_nodes)
     cmds.pickWalk(direction='up')
 
