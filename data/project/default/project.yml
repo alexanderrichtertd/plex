@@ -1,16 +1,16 @@
 #*********************************************************************
-# content = project data
-# version = 0.1.0
-# date    = 2019-10-01
-
-# author  = Alexander Richter <alexanderrichtertd.com>
+# content   = project data
+# version   = 0.1.0
+# date      = 2024-11-09
+#
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 name: Plex
 
 # 3D project path
-path: &PROJECT C:\Users\alexa\Dropbox\plex\project
+path: &PROJECT C:\project
 
 
 #*********************************************************************
@@ -61,9 +61,8 @@ HELP:
   default:       &WIKI !join [*REPO, /wiki]
 
   arUtil:        !join [*WIKI, /arUtil]
-  arSave:        !join [*WIKI, /arSave]
-  arReporter:    !join [*WIKI, /arReporter]
   arDesktop:     !join [*WIKI, /arDesktop]
+  arSave:        !join [*WIKI, /arSave]
   arNotice:      !join [*WIKI, /arNotice]
 
   shelf:         !join [*WIKI, /shelf]

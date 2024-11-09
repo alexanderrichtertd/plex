@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = maya utils
 # version   = 0.6.0
-# date      = 2019-10-06
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd> <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import maya.mel as mel
 import maya.cmds as cmds
@@ -23,7 +22,6 @@ TITLE = os.path.splitext(os.path.basename(__file__))[0]
 LOG   = Tank().log.init(script=TITLE)
 
 
-
 #*********************************************************************
 # MENU
 # TODO: delete and reload shelf
@@ -34,11 +32,10 @@ def load_menus():
         cmds.deleteUI(project_path, menu=True)
 
     menu = cmds.menu(project_path, hm=True, parent='MayaWindow',
-                     l=project_path, to=True, )
+                     l=project_path, to=True,)
 
     Tank().software.add_menu(menu)
     Tank().software.add_shelf()
-
 
 
 #*********************************************************************
@@ -106,7 +103,6 @@ def setup_scene(file_path=''):
     # def fixRenderLayer(*args):
     #     mel.eval("fixRenderLayerOutAdjustmentErrors;")
     # api.MSceneMessage.addCallback(api.MSceneMessage.kAfterOpen, fixRenderLayer)
-
 
 
 #*********************************************************************

@@ -2,12 +2,11 @@
 # content   = saves as
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -45,7 +44,7 @@ class ArConfig(ArUtil):
 
         self.wgHeader.setWindowTitle(TITLE)
         self.wgHeader.btnAccept.setText('Save')
-        self.wgHeader.layMain.addWidget(self.wgArConfig, 0, 0)
+        self.wgHeader.layMain.addWidget(self.wgArConfig, 0)
         self.resize_widget(self.wgArConfig)
 
         # self.wgArConfig : always on top
@@ -56,10 +55,8 @@ class ArConfig(ArUtil):
         LOG.info('START : ArConfig')
 
     def setup(self):
-
         self.set_open_folder(os.getenv('DATA_PROJECT_PATH'))
-
-        print""
+        print("")
 
 
 #*********************************************************************

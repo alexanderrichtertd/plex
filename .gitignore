@@ -1,6 +1,7 @@
 !__init__.py
 
 test.py
+.vscode
 
 *.bak
 *.pyc

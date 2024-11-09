@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = informs artists about changes
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -44,15 +43,15 @@ class Notice():
                  func     = '',
                  timer    = 7):
 
-        self.title      = str(title)   #Pipeline Update
-        self.msg        = str(msg)     #New Features for Pipeline
-        self.quote      = str(quote)  #New Features for Pipeline
-        self.img        = img         # lbl/lblPreview131
-        self.img_link   = img_link    # path
-        self.time       = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
-        self.user       = user
-        self.func       = func
-        self.timer      = timer
+        self.title    = str(title)   #Pipeline Update
+        self.msg      = str(msg)     #New Features for Pipeline
+        self.quote    = str(quote)  #New Features for Pipeline
+        self.img      = img         # lbl/lblPreview131
+        self.img_link = img_link    # path
+        self.time     = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
+        self.user     = user
+        self.func     = func
+        self.timer    = timer
 
     def __call__(self):
         LOG.debug(  'time:     ' + self.time + '\n' +\
@@ -112,9 +111,7 @@ class ArNotice():
         self.wgNotice.setMask(QtGui.QRegion(path.toFillPolygon().toPolygon()))
 
         self.wgNotice.show()
-
         self.start_timer()
-        LOG.info(notice)
 
 
     def start_timer(self):
@@ -147,7 +144,7 @@ def create_default_notice(script_string, msg=""):
     else:
         notice_data['title'] = root
         notice_msg  = script_name
-        # LOG.warning("notice.yml data doesnt exist: {}".format(script_name))
+        # LOG.warning("notice.yml data doesn't exist: {}".format(script_name))
         # return
 
     if "quote" in notice_data: notice_quote = notice_data["quote"]
@@ -156,7 +153,7 @@ def create_default_notice(script_string, msg=""):
     img_name = [lambda: script_name, lambda: notice_data["img"]]["img" in notice_data]()
     img_link = [lambda: "", lambda: notice_data["img_link"]]["img_link" in notice_data]()
     img_path = Tank().get_img_path("lbl/notice_" + img_name)
-    img_path = [lambda: "{}/notice_default.png".format(img_notice_path), lambda: img_path][os.path.exists(img_path)]()
+    img_path = [lambda: "{}/notice_default.png".format(img_path), lambda: img_path][os.path.exists(img_path)]()
 
     note = Notice(title = notice_data["title"],
                     msg = notice_msg,
@@ -170,26 +167,31 @@ def create_default_notice(script_string, msg=""):
 
 def create_changelog_popup():
     import pwd
-    current_user = pwd.getpwuid(os.getuid()).pw_name or ""
-    changelog_list = glob.glob(CHANGELOG_PATH + "/*.changelog")
+    import yaml 
 
-    if changelog_list: last_changelog = changelog_list[-1]
+    # TODO: changelog_path undefined
+
+    current_user = pwd.getpwuid(os.getuid()).pw_name or ""
+    changelog_list = glob.glob(changelog_path + "/*.changelog")
+
+    if changelog_list:
+        last_changelog = changelog_list[-1]
     else:
-        LOG.warning("NO changelog exists at: {}".format(CHANGELOG_PATH))
+        LOG.warning("NO changelog exists at: {}".format(changelog_path))
         return
 
     current_date   = ("{}_{:02}_{:02}".format(datetime.now().year, datetime.now().month, datetime.now().day))
     changelog_date = os.path.basename(last_changelog).split(".")[0]
 
     if current_date != changelog_date:
-        last_changelog = CHANGELOG_PATH + "/welcome"
+        last_changelog = changelog_path + "/welcome"
         if not os.path.exists(last_changelog):
-            LOG.warning("NO current and welcome changelog exists at: {}".format(CHANGELOG_PATH))
+            LOG.warning("NO current and welcome changelog exists at: {}".format(changelog_path))
             return
 
     # READ YAML file
     with open(last_changelog, 'r') as stream:
-        changelog_data = yaml.load(stream)
+        changelog_data = yaml.load(stream, Loader=yaml.Loader)
 
     notice_data = changelog_data["notice"]
     popup_func  = ""
@@ -213,9 +215,13 @@ def create_changelog_popup():
                   img      = img_path,
                   quote    = notice_data["quote"],
                   img_link = notice_data["img_link"])
+                  
     ArNotice(note)
 
 
+
+#******************************************************************************
+# START
 def start(note = Notice()):
     app = QtWidgets.QApplication(sys.argv)
     classVar = ArNotice(note)
