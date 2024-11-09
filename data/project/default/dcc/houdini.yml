@@ -1,17 +1,13 @@
 #*********************************************************************
-# content = houdini data
-# version = 0.1.0
-# date    = 2019-10-06
+# content   = Houdini data
+# version   = 0.1.0
+# date      = 2024-11-08
 #
-# license = MIT <https://github.com/alexanderrichtertd>
-# author  = Alexander Richter <alexanderrichtertd.com>
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
-#*****************************************************************************************************************************
-# HOUDINI
-
-version: &HOUDINI_VERSION 16.0.633
+version: &HOUDINI_VERSION 19.5.773
 path:    &HOUDINI_PATH !join ["C:/Program Files/Side Effects Software/Houdini ", *HOUDINI_VERSION, /bin/houdini.exe]
 
 start: *HOUDINI_PATH

@@ -1,14 +1,13 @@
 #*********************************************************************
-# content = maya data
-# version = 0.1.0
-# date    = 2019-10-06
+# content   = Maya data
+# version   = 0.1.0
+# date      = 2024-11-09
 #
-# license = MIT <https://github.com/alexanderrichtertd>
-# author  = Alexander Richter <alexanderrichtertd.com>
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
-version: &MAYA_VERSION 2018
+version: &MAYA_VERSION 2023
 path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin/maya.exe]
 
 # start command
@@ -45,8 +44,9 @@ ENV:
 
 
 
-#*****************************************************************************************************************************
-#*****************************************************************************************************************************
+#*********************************************************************
+# MENU
+#*********************************************************************
 MENU:
   - !env [PROJECT_NAME]:
       - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
@@ -65,7 +65,7 @@ MENU:
       playblast: menuItem(p="{}", l='Playblast', c='from ANIM import playblast;playblast.start()')
 
   - Light:
-      light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;reload(light_linker);light_linker.start()')
+      light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()')
 
   - Render:
       rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='Tank().software.scene_setup("RENDER", "WORK")')
@@ -82,12 +82,13 @@ MENU:
 
 
 
-#*****************************************************************************************************************************
-#*****************************************************************************************************************************
+#*********************************************************************
+# SHELF
+#*********************************************************************
 SHELF:
   HEADER:
-    - save:    l='Save', command='import arSave; reload(arSave); arSave.start()', dcc='', image='shelf_save.png'
-    - load:    l='Load', command='import arLoad; reload(arLoad); arLoad.start()', dcc='', image='shelf_load.png'
+    - save:    l='Save', command='import arSave; import importlib;importlib.reload(arSave); arSave.start()', dcc='', image='shelf_save.png'
+    - load:    l='Load', command='import arLoad; import importlib;importlib.reload(arLoad); arLoad.start()', dcc='', image='shelf_load.png'
     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
 
     - folder:  l='Project Folder', command='import webbrowser; webbrowser.open(os.path.dirname(Tank().software.scene_path))', dcc='', image='shelf_open_folder.png'
@@ -119,24 +120,25 @@ SHELF:
     - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
 
   LAY:
-    - snap:      l='Snap to first selection', command='import maya_utils;reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
-    - playblast: l='Playblast', command='from ANIM import playblast;reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
+    - snap:      l='Snap to first selection', command='import maya_utils;import importlib;importlib.reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
+    - playblast: l='Playblast', command='from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
 
   ANIM:
-    - snap:      l='Snap to first selection', command='import maya_utils;reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
-    - playblast: l='Playblast', command='from ANIM import playblast;reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
+    - snap:      l='Snap to first selection', command='import maya_utils;import importlib;importlib.reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
+    - playblast: l='Playblast', command='from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
 
   LIGHT:
     - render_work:    l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", WORK")', dcc='', image='shelf_render_work.png'
     - render_preview: l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", "PREVIEW")', dcc='', image='shelf_render_preview.png'
     - render_deliver: l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", "DELIVER")', dcc='', image='shelf_render_deliver.png'
     - break:          width=1, l='break', command='print("empty")', dcc='', image='separator.png'
-    - light_linker:   l='Light Linker', command='from LGT import light_linker;reload(light_linker);light_linker.start()', dcc='', image='shelf_light_linker.png'
+    - light_linker:   l='Light Linker', command='from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()', dcc='', image='shelf_light_linker.png'
 
 
 
-# #*****************************************************************************************************************************
-# #*****************************************************************************************************************************
+#*********************************************************************
+# RENDER
+#*********************************************************************
 RENDER:
 
   DEFAULT:
@@ -160,9 +162,9 @@ RENDER:
 
 
 
-
-# #*****************************************************************************************************************************
-# #*****************************************************************************************************************************
+#*********************************************************************
+# SETUP
+#*********************************************************************
 SETUP:
 
   DEFAULT:
@@ -194,10 +196,9 @@ SETUP:
 
 
 
-
-#*****************************************************************************************************************************
-# SPECIFIC settings
-
+#*********************************************************************
+# EXTRAS
+#*********************************************************************
 GROUPS:
     ANIM_GRP:
       - char_GRP

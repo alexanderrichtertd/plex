@@ -1,18 +1,13 @@
 #*********************************************************************
-# content = nuke data
-# version = 0.1.0
-# date    = 2019-10-06
+# content   = Nuke data
+# version   = 0.1.0
+# date      = 2024-11-09
 #
-# license = MIT <https://github.com/alexanderrichtertd>
-# author  = Alexander Richter <alexanderrichtertd.com>
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
-
-#*****************************************************************************************************************************
-# NUKE
-
-version:      &NUKE_VERSION 11.0                                # SET version
+version:      &NUKE_VERSION 15.1                                # SET version
 version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      # SET versiom
 
 start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
@@ -41,6 +36,9 @@ ENV:
   PATH: *NUKE_DIR
 
 
+#*********************************************************************
+# MENU
+#*********************************************************************
 MENU:
   - Plex:
       open_scene_folder:   addCommand('Open Scene Folder', 'import pipefunc; pipefunc.open_folder(nuke.root().knob("name").value())')

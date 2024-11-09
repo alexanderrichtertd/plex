@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = SET default environment paths
 # version   = 1.0.0
-# date      = 2019-10-06
+# date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -35,9 +34,9 @@ class Setup(object):
         # LOAD pipeline data
         if os.path.exists(self.data_project_path):
             with open(self.data_project_path, 'r') as stream:
-                try:   self.pipeline_data = yaml.load(stream)
+                try:   self.pipeline_data = yaml.load(stream, Loader=yaml.Loader)
                 except yaml.YAMLError as exc: raise OSError ('STOP PROCESS', 'DATA file is corrupted', exc)
-        else: raise OSError ('STOP PROCESS', 'PATH doesnt exist', self.data_project_path)
+        else: raise OSError ('STOP PROCESS', 'PATH doesn\'t exist', self.data_project_path)
 
         # SEARCH and ADD current and sub paths
         for pipe in self.pipeline_data['PATH']:
@@ -50,17 +49,16 @@ class Setup(object):
                     if os.path.exists(path):
                         self.data_pipeline_path.append(path)
                         self.pipeline_status = status
-                    else: print('PIPELINE_PATH doesnt exist: {}\nSOURCE[PATH]: {}'.format(path, self.data_project_path))
+                    else: print('PIPELINE_PATH doesn\'t exist: {}\nSOURCE[PATH]: {}'.format(path, self.data_project_path))
 
         if not self.data_pipeline_path:
-            raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
+            raise OSError ('STOP PROCESS', 'PATH doesn\'t exist in data/pipeline.yml', self.this_pipeline)
 
         self.set_pipeline_env()
         self.__call__()
 
 
     def set_pipeline_env(self):
-
         # SET STATUS
         os.environ['PIPELINE_STATUS'] = self.pipeline_status
 
@@ -90,7 +88,7 @@ class Setup(object):
 
             self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
             self.add_env('SOFTWARE_SRC_PATH', (';').join(self.pipeline_env['SOFTWARE_PATH']))
-        except: raise OSError ('STOP PROCESS', 'PATH doesnt exist in data/pipeline.yml', self.this_pipeline)
+        except: raise OSError ('STOP PROCESS', 'PATH doesn\'t exist in data/pipeline.yml', self.this_pipeline)
 
         sys.path.append(os.environ['PIPELINE_PATH'])
         sys.path.append(os.environ['IMG_PATH'] )
@@ -130,13 +128,16 @@ class Setup(object):
 
     def add_env(self, var, content):
         content = os.path.normpath(content)
-        if     os.environ.__contains__(var): os.environ[var] += ('').join([';', content])
-        else:  os.environ[var] = content
+        if os.environ.__contains__(var):
+              os.environ[var] += ('').join([';', content])
+        else: os.environ[var] = content
+
         return os.getenv(var)
 
 
     def __call__(self):
         from tank import Tank
+
         TITLE = os.path.splitext(os.path.basename(__file__))[0]
         LOG   = Tank().log.init(script=TITLE)
 
@@ -159,7 +160,6 @@ class Setup(object):
 
 
 
-
 #*********************************************************************
 # CLASS
 class SmartDict(dict):
@@ -169,7 +169,7 @@ class SmartDict(dict):
 
     def add(self, key, value):
         value = os.path.normpath(value)
-        if self.has_key(key): self[key].append(value)
+        if key in self: self[key].append(value)
         else:                 self[key] = [value]
 
     def __missing__(self, key):
@@ -197,4 +197,3 @@ if args.software:
         arDesktop.start()
     else:
         Tank().start_software(args.software)
-

@@ -1,15 +1,15 @@
-#*********************************************************************
+# 07 Week *********************************************************************
 # content   = menu Nuke
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
 import os
 import nuke
+import importlib
 import webbrowser
 
 from tank import Tank
@@ -63,5 +63,5 @@ def load():
 
 #*********************************************************************
 def arWrite():
-    reload(write_node)
+    importlib.reload(write_node)
     nuke.createNode('arWrite')

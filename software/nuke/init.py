@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = init Nuke
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2022-01-01
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import errno
@@ -28,7 +27,6 @@ RESOLUTION   = (' ').join([str(PROJECT_DATA['resolution'][0]),
                             PROJECT_DATA['name'].replace(' ', '')])
 
 
-
 #*********************************************************************
 # FOLDER CREATION
 def create_write_dir():
@@ -37,8 +35,9 @@ def create_write_dir():
     os_path   = nuke.callbacks.filenameFilter(file_path)
 
     # cope with the directory existing already by ignoring that exception
-    try: os.makedirs(os_path)
-    except OSError, e:
+    try:
+        os.makedirs(os_path)
+    except OSError(e):
       if e.errno != errno.EEXIST:
         raise
 
@@ -69,6 +68,7 @@ try:
         nuke.pluginAddPath(paths)
 except:
     LOG.warning('FAILED loading SOFTWARE_SUB_PATH')
+
 
 
 print('SETTINGS')
