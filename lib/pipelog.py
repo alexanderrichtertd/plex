@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = write loggings into console and files
 # version   = 0.1.0
-# date      = 2018-12-26
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -28,12 +28,15 @@ class ContextFilter(logging.Filter):
 
 #*********************************************************************
 # LOGGING
-def init(software="default", script="default", level=logging.DEBUG, path="", debug_console=False, multi_threads=False, *args, **kwargs):
+def init(software="default", script="default", level=logging.DEBUG, path="", 
+         debug_console=False, multi_threads=False, *args, **kwargs):
 
-    if not path: path = ("/").join([os.getenv('DATA_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
+    if not path: 
+        path = ("/").join([os.getenv('DATA_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
+
     create_folder(path)
 
-    # OPTIONAL: seperate levels into different files
+    # OPTIONAL: separate levels into different files
     info_path, error_path, debug_path = path, path, path
 
     logging_config = dict(
@@ -84,7 +87,7 @@ def init(software="default", script="default", level=logging.DEBUG, path="", deb
             logger.addHandler(debug_handler)
 
         # INFO, WARNING, ERROR
-        else: #level == logging.INFO:
+        else: # level == logging.INFO:
             info_handler = logging.handlers.RotatingFileHandler(info_path, mode='a', maxBytes=10485760, backupCount=20, encoding="utf8")
             formatter    = logging.Formatter(logging_config["formatters"]["simpleInfo"]["format"], logging_config["formatters"]["simple"]["datefmt"])
             info_handler.setFormatter(formatter)
@@ -99,7 +102,9 @@ def init(software="default", script="default", level=logging.DEBUG, path="", deb
 
 #*********************************************************************
 def create_folder(path):
-    if len(path.split('.')) > 1: path = os.path.dirname(path)
+    if len(path.split('.')) > 1: 
+        path = os.path.dirname(path)
+
     if not os.path.exists(path):
         try:    os.makedirs(path)
-        except: print('CANT create folder: {}'.format(path))
+        except: print('CAN\'T create folder: {}'.format(path))

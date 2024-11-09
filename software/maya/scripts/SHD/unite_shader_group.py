@@ -30,10 +30,9 @@ def start(shader_types=["alSurface", "alLayer"]):
         shaders += cmds.ls(type = shader_type)
 
     for shader in shaders:
-        shader_groups = sg_from_material(shader)
+        shader_groups = PyNode(shader).shadingGroups()
 
-        if len(shader_groups) == 0:
-            continue
+        if len(shader_groups) == 0: continue
 
         #START: ADDING
         shader_group = shader_groups[0]
@@ -48,8 +47,7 @@ def start(shader_types=["alSurface", "alLayer"]):
             else:
                 own_shader_roups.append(str(connNode))
 
-        if not (shader_group in own_shader_roups):
-            continue
+        if not (shader_group in own_shader_roups): continue
         # END: ADDING
 
         if (shader_group != shader + "SG"):

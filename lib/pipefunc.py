@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = common functions
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import glob
@@ -15,7 +14,6 @@ import time
 import webbrowser
 
 # NO logging since it will break the init
-
 
 
 #*********************************************************************
@@ -35,7 +33,7 @@ def help(name=''):
 
 # GET all (sub) keys in dict
 def get_all_keys(key_list, dictonary=[]):
-    for key, items in key_list.iteritems():
+    for key, items in key_list.items():
         dictonary.append(key)
         if isinstance(items, dict):
             get_all_keys(items, dictonary)
@@ -62,8 +60,9 @@ def find_inbetween(text, first, last):
     try:
         start = text.index(first) + len(first)
         end   = text.index(last, start)
-    except ValueError: return ""
-    return text[start:end]
+        return text[start:end]
+    except ValueError:
+        return ""
 
 
 #*********************************************************************
@@ -74,7 +73,7 @@ def create_folder(path):
     if len(path.split('.')) > 1: path = os.path.dirname(path)
     if not os.path.exists(path):
         try:    os.makedirs(path)
-        except: print('CANT create folder: {}'.format(path))
+        except: print('CAN\'T create folder: {}'.format(path))
 
 # @BRIEF  opens folder even if file is given
 def open_folder(path):
@@ -82,7 +81,7 @@ def open_folder(path):
     if os.path.exists(path):
         if len(path.split('.')) > 1: path = os.path.dirname(path)
         webbrowser.open(path)
-    else: print('UNVALID path: {}'.format(path))
+    else: print('INVALID path: {}'.format(path))
     return path
 
 
@@ -98,26 +97,29 @@ def open_folder(path):
 # @RETURN strint[].
 def get_file_list(path, file_type='*', extension=False, exclude='*', add_path=False):
     if(os.path.exists(path)):
-        getFile = []
+        get_file = []
         try:    os.chdir(path)
         except: print('Invalid dir: {}'.format(path))
+
         for file_name in glob.glob(file_type):
             if exclude in file_name: continue
             if add_path:  file_name = os.path.normpath(('/').join([path,file_name]))
-            if extension: getFile.append(file_name)
-            else:         getFile.append((file_name.split('.')[0]))
-        return getFile
+
+            if extension: get_file.append(file_name)
+            else:         get_file.append((file_name.split('.')[0]))
+
+        return get_file
 
 ##
 # @BRIEF  GET ALL subfolders in the path
 def get_deep_folder_list(path, add_path=False):
-    if add_path: getFile = map(lambda x: x[0], os.walk(path))
-    else:        getFile = map(lambda x: os.path.basename(x[0]), os.walk(path))
+    if add_path: get_file = map(lambda x: x[0], os.walk(path))
+    else:        get_file = map(lambda x: os.path.basename(x[0]), os.walk(path))
 
-    try:    getFile.pop(0)
+    try:    get_file.pop(0)
     except: print('CANT pop file. Path: {}'.format(path))
 
-    return getFile
+    return get_file
 
 
 
@@ -143,7 +145,7 @@ def make_github_issue(title, body=None, assignee='', milestone=None, labels=None
              'milestone': milestone,
              'labels': labels}
 
-    # Add the issue to our repository
+    # ADD issue to repository
     repo = session.post(url, json.dumps(issue))
 
     if repo.status_code == 201:
@@ -155,5 +157,3 @@ def make_github_issue(title, body=None, assignee='', milestone=None, labels=None
 #*********************************************************************
 # TEST
 # make_github_issue(title='Login Test', body='Body text', milestone=None, labels=['bug'])
-
-

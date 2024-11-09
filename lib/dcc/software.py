@@ -65,7 +65,7 @@ class Software(tank.Singleton):
 
         # ADD software ENV
         if(self._env):
-            for env, content in self._env.iteritems():
+            for env, content in self._env.items():
                 if isinstance(content, list):
                     for each in content: Tank().add_env(env, each)
                 else: Tank().add_env(env, content)
@@ -144,6 +144,24 @@ class Software(tank.Singleton):
         return self._renderer_path
 
 
+    #*********************************************************************
+    # IS DCC
+    @property
+    def is_maya(self):
+        return self.software == 'maya'
+
+    @property
+    def is_nuke(self):
+        return self.software == 'nuke'
+
+    @property
+    def is_houdini(self):
+        return self.software == 'houdini'
+
+    @property
+    def is_max(self):
+        return self.software == 'max'
+
 
     #*********************************************************************
     # FUNCTION
@@ -188,7 +206,7 @@ class Software(tank.Singleton):
 
         sub_menu = ''
 
-        for keys, item in new_command.iteritems():
+        for keys, item in new_command.items():
 
             if isinstance(item, dict) or isinstance(item, list):
                 if self._NAME == 'maya':
@@ -213,7 +231,6 @@ class Software(tank.Singleton):
                     eval('menu_node.{}'.format(item))
                 elif self._NAME == 'nuke':
                     eval('menu_node.{}'.format(item))
-
 
 
     #*********************************************************************
