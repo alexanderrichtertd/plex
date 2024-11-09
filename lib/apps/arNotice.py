@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = informs artists about changes
 # version   = 0.1.0
-# date      = 2020-06-19
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -25,8 +25,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -69,7 +68,7 @@ class Notice():
 class ArNotice():
 
     def __init__(self, notice):
-        ui_path = ('/').join([os.path.dirname(__file__), 'ui', TITLE + '.ui'])
+        ui_path = ('/').join([os.path.dirname(__file__), 'ui', __name__ + '.ui'])
         self.wgNotice = QtCompat.loadUi(ui_path)
         self.notice   = notice
 

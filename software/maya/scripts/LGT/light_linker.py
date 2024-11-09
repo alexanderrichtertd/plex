@@ -17,8 +17,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************

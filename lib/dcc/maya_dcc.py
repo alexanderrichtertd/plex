@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = Maya
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 
@@ -22,8 +21,7 @@ from software import Software
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************

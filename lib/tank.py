@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = main hub
 # version   = 0.1.0
-# date      = 2024-11-08
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -19,7 +19,6 @@ import pipefunc
 
 #*********************************************************************
 # VARIABLES
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
 DATA_FORMAT = '.yml'
 
 

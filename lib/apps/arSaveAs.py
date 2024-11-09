@@ -2,7 +2,7 @@
 # content   = saves as
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2020-06-19
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -28,8 +28,7 @@ from arUtil import ArUtil
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -38,7 +37,7 @@ class ArSaveAs(ArUtil):
     def __init__(self, new_file=True):
         super(ArSaveAs, self).__init__()
 
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
+        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgSaveAs = QtCompat.loadUi(path_ui)
 
         self.all_task = '<all tasks>'
@@ -52,7 +51,7 @@ class ArSaveAs(ArUtil):
         self.wgHeader.cbxAdd.hide()
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
 
-        btn_title = TITLE if self.new_file else 'Create New Folder'
+        btn_title = __name__ if self.new_file else 'Create New Folder'
         self.wgHeader.setWindowTitle(btn_title)
         btn_title = 'Save As' if self.new_file else 'Create'
         self.wgHeader.btnAccept.setText(btn_title)

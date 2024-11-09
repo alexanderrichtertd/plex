@@ -1,12 +1,11 @@
 #*********************************************************************
 # content   = parent widget
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 import os
 import sys
@@ -22,8 +21,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -31,7 +29,7 @@ LOG   = Tank().log.init(script=TITLE)
 class ArUtil(object):
 
     def __init__(self):
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
+        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgHeader = QtCompat.loadUi(path_ui)
 
         # VAR
@@ -82,9 +80,9 @@ class ArUtil(object):
 
 
     def add_preview(self, layout):
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", TITLE + "_preview.ui"])
+        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + "_preview.ui"])
         self.wgPreview = QtCompat.loadUi(path_ui)
-        layout.addWidget(self.wgPreview, 0, 0)
+        layout.addWidget(self.wgPreview, 0)
 
         self.wgPreview.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
         self.wgPreview.btnScreenshot.clicked.connect(self.press_btnScreenshot)
@@ -98,9 +96,9 @@ class ArUtil(object):
 
 
     def add_menu(self):
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", TITLE + "_menu.ui"])
+        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + "_menu.ui"])
         self.wgMenu = QtCompat.loadUi(path_ui)
-        self.wgHeader.layMain.addWidget(self.wgMenu, 1, 1)
+        self.wgHeader.layMain.addWidget(self.wgMenu, 1)
 
         menu01_img   = ["btn/btn_write", "btn/btn_arrow_right", "btn/btn_honeypot", "btn/btn_log", "btn/btn_inbox_empty", "user/default"]
         menu01_items = [self.wgMenu.btnMenu01_item01, self.wgMenu.btnMenu01_item02, self.wgMenu.btnMenu01_item03,
@@ -161,7 +159,7 @@ class ArUtil(object):
         for eachMenu in self.select_menu.values():
             eachMenu.setStyleSheet('')
 
-        for i in range(self.wgMenu.layMenu02.count()):
+        for count in range(self.wgMenu.layMenu02.count()):
             self.wgMenu.layMenu02.itemAt(0).widget().close()
             self.wgMenu.layMenu02.takeAt(0)
 
@@ -177,6 +175,7 @@ class ArUtil(object):
         try:    self.wgMenu.layMenu02.itemAt(0).widget().click()
         except: pass
 
+
     def press_btnSubMenu(self, key):
         for button_index in range(self.wgMenu.layMenu02.count()):
             btn_tmp  = self.wgMenu.layMenu02.itemAt(button_index).widget()
@@ -187,14 +186,19 @@ class ArUtil(object):
 
             btn_tmp.setFont(btn_font)
 
+
     def press_btnPreviewImg(self):
-        if os.path.exists(self.preview_img_path): webbrowser.open(os.path.realpath(self.preview_img_path))
+        if os.path.exists(self.preview_img_path):
+            webbrowser.open(os.path.realpath(self.preview_img_path))
+
 
     def press_btnScreenshot(self):
         snapshot.create_screenshot(self.wgHeader, self.wgPreview.btnPreviewImg)
 
+
     def press_btnSnapshotRender(self):
         snapshot.create_screenshot_render(self.wgHeader, self.wgPreview.btnPreviewImg)
+
 
     def press_btnSnapshotViewport(self):
         snapshot.create_screenshot_viewport(self.wgHeader, self.wgPreview.btnPreviewImg)
@@ -212,19 +216,24 @@ class ArUtil(object):
 
         if not msg_type:
             template_css = """QProgressBar::chunk { background: %s; }"""
-            css = template_css % self.data['script'][TITLE]['progress_color'][msg_type]
+            css = template_css % self.data['script'][__name__]['progress_color'][msg_type]
             self.wgHeader.prbStatus.setStyleSheet(css)
             self.set_progress(100)
 
+
     def set_progress(self, count = 0):
         self.wgHeader.prbStatus.setValue(count)
+
 
     def set_comment(self, comment):
         self.wgHeader.edtComment.setText(comment)
         LOG.info(comment)
 
+
     def set_open_folder(self, path=''):
-        if len(path.split('.')) > 1: path = os.path.dirname(path)
+        if len(path.split('.')) > 1:
+            path = os.path.dirname(path)
+
         if os.path.exists(path):
             self.wgHeader.btnOpenFolder.setEnabled(True)
             self.open_path = os.path.normpath(path)
@@ -233,8 +242,10 @@ class ArUtil(object):
             self.wgHeader.edtPath.setText('')
             self.wgHeader.btnOpenFolder.setEnabled(False)
 
+
     def refresh_data(self):
         self.data = Tank().data
+
 
     def resize_widget(self, widget):
         x = widget.frameGeometry().width()
@@ -243,11 +254,12 @@ class ArUtil(object):
         self.wgHeader.setMinimumSize(x, y)
 
 
+
 #*********************************************************************
 # START UI
-# def start():
-#     app = QtWidgets.QApplication(sys.argv)
-#     util = ArUtil()
-#     app.exec_()
+def start():
+    app = QtWidgets.QApplication(sys.argv)
+    util = ArUtil()
+    app.exec_()
 
 # start()

@@ -2,7 +2,7 @@
 # content   = context
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2019-12-01
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -15,8 +15,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************

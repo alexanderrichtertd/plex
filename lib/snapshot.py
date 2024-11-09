@@ -2,7 +2,7 @@
 # content   = snapshot
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2019-10-06
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -14,25 +14,23 @@ import time
 from Qt import QtWidgets, QtGui, QtCore, __binding__
 
 import pipefunc
-
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
-
+LOG = Tank().log.init(script=__name__)
 DEFAULT_PATH = os.path.normpath(os.getenv('DATA_USER_PATH').split(';')[0] + '/tmp_img.jpg')
 
 
 #*********************************************************************
 # SCREENSHOT
-# creats a screenshot of the main screen and saves it
+# creates a screenshot of the main screen and saves it
 def create_any_screenshot(WIDGET, ui=''):
     # if not create_screenshot_render(WIDGET, ui):
     if not create_screenshot_viewport(WIDGET, ui):
         create_screenshot(WIDGET, ui)
+
 
 def create_screenshot(WIDGET, ui=''):
     print("SCREENSHOT")

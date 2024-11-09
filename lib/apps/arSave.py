@@ -2,7 +2,7 @@
 # content   = saves work and publish files
 #             executes other scripts on PUBLISH (on task in file name)
 # version   = 0.1.0
-# date      = 2020-06-19
+# date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -26,8 +26,7 @@ from arUtil import ArUtil
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -36,7 +35,7 @@ class ArSave(ArUtil):
     def __init__(self, parent=None):
         super(ArSave, self).__init__()
 
-        path_ui     = ("/").join([os.path.dirname(__file__), "ui", TITLE + ".ui"])
+        path_ui     = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgSave = QtCompat.loadUi(path_ui)
 
         self.save_dir  = os.getenv('PROJECT_PATH')
@@ -65,7 +64,7 @@ class ArSave(ArUtil):
         # self.wgSave : always on top
         # self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
-        self.wgHeader.setWindowTitle(TITLE)
+        self.wgHeader.setWindowTitle(__name__)
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
 
         self.wgHeader.btnOption.setText('SaveAs')
@@ -105,7 +104,7 @@ class ArSave(ArUtil):
         snapshot.create_screenshot_viewport(self.wgSave, self.wgSave.btnPreviewImg)
 
     def press_btnHelp(self, name=''):
-        pipefunc.help(TITLE)
+        pipefunc.help(__name__)
 
 
     #*********************************************************************
@@ -122,7 +121,7 @@ class ArSave(ArUtil):
         if self.data['project']['STATUS']['publish'] in self.save_dir:
             self.save_dir = self.save_dir.replace(self.data['project']['STATUS']['publish'], self.data['project']['STATUS']['work'])
 
-        if self.data['script'][TITLE]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
+        if self.data['script'][__name__]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
         else: snapshot.create_any_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
 
         return True

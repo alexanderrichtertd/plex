@@ -21,8 +21,7 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-TITLE = os.path.splitext(os.path.basename(__file__))[0]
-LOG   = Tank().log.init(script=TITLE)
+LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
@@ -39,12 +38,12 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         Tank().init_os()
 
         menu = QtWidgets.QMenu()
-        menu.setStyleSheet(Tank().data['script'][TITLE]['style'])
+        menu.setStyleSheet(Tank().data['script'][__name__]['style'])
 
         # ADMIN UI
         if True: # Tank().user.is_admin:
             adminMenu = QtWidgets.QMenu('Admin')
-            adminMenu.setStyleSheet(Tank().data['script'][TITLE]['style'])
+            adminMenu.setStyleSheet(Tank().data['script'][__name__]['style'])
             menu.addMenu(adminMenu)
 
             menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('btn/btn_folder')), 'Open Project Data')
@@ -64,10 +63,10 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
         # SUBMENU: software
         subMenu = QtWidgets.QMenu('Software')
-        subMenu.setStyleSheet(Tank().data['script'][TITLE]['style'])
+        subMenu.setStyleSheet(Tank().data['script'][__name__]['style'])
         menu.addMenu(subMenu)
 
-        for soft, soft_func in Tank().data['script'][TITLE]['SOFTWARE'].items():
+        for soft, soft_func in Tank().data['script'][__name__]['SOFTWARE'].items():
             menuItem = subMenu.addAction(QtGui.QIcon(Tank().get_img_path('software/' + soft)), soft.title())
             menuItem.triggered.connect(eval(soft_func))
 
@@ -127,7 +126,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         pipefunc.help('report')
 
     def press_btnHelp(self):
-        pipefunc.help(TITLE)
+        pipefunc.help(__name__)
     #------------------------------
     def press_closeStartup(self):
         self.parent.instance().quit()

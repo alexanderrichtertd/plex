@@ -138,8 +138,7 @@ class Setup(object):
     def __call__(self):
         from tank import Tank
 
-        TITLE = os.path.splitext(os.path.basename(__file__))[0]
-        LOG   = Tank().log.init(script=TITLE)
+        LOG = Tank().log.init(script=__name__)
 
         LOG.debug('____________________________________________________________')
         LOG.debug('PIPELINE: {} [{}, {}, {}] {}'.format(self.pipeline_data['PIPELINE']['name'],
