@@ -134,7 +134,9 @@ class Tank(Singleton):
             data_project_files = pipefunc.get_file_list(path=self.get_env('DATA_PROJECT_PATH'), file_type='*' + DATA_FORMAT)
 
             data_project_files = list(set(data_user_files)|set(data_project_files))
-            for each_file in data_project_files: config_data.update({each_file : self.get_data(each_file, user_id)})
+            for each_file in data_project_files:
+                config_data.update({each_file : self.get_data(each_file, user_id)})
+                
             return config_data
 
         if not file_name: return get_all_data()
@@ -186,22 +188,22 @@ class Tank(Singleton):
 
 
     def get_img_path(self, end_path='btn/default', format=''):
-        if '.' in end_path: 
+        if '.' in end_path:
             img_format = ''
-        else: 
+        else:
             img_format = self.data_project['EXTENSION']['icons']
 
         path = self.get_pipeline_path('img/{}.{}'.format(end_path, img_format))
-        if not path: 
+        if not path:
             path = self.get_pipeline_path('img/{}/default.{}'.format(os.path.dirname(end_path), img_format))
-            if not path: 
+            if not path:
                 path = self.get_pipeline_path('img/btn/default.{}'.format(img_format))
 
         if format == 'pixmap':
             return QtGui.QPixmap(QtGui.QImage(path))
         elif format == 'icon':
             return QtGui.QIcon(path)
-        
+
         return path
 
 
@@ -302,4 +304,3 @@ class Tank(Singleton):
         print('ENV doesnt exist: {}'.format(var))
 
         return ''
-

@@ -1,14 +1,13 @@
 #*********************************************************************
 # content   = info for default notice
 # version   = 0.1.0
-# date      = 2020-06-19
+# date      = 2024-11-13
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
 # HOW TO:
-
 # template:
 #     name:
 #         title : BIG WORDS
@@ -112,7 +111,6 @@ error:
         quote : Where is my guiding light, man?!
 
 
-
 render:
     work:
         title : WORK - RENDER SETUP
@@ -164,4 +162,3 @@ hints:
                 Accept - RETURN
                 Cancel - ESC
         quote : Use a short cut for faster travel!
-

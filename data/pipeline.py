@@ -88,7 +88,8 @@ class Setup(object):
 
             self.add_env('SOFTWARE_PATH',     (';').join(self.pipeline_env['SOFTWARE_PATH']))
             self.add_env('SOFTWARE_SRC_PATH', (';').join(self.pipeline_env['SOFTWARE_PATH']))
-        except: raise OSError ('STOP PROCESS', 'PATH doesn\'t exist in data/pipeline.yml', self.this_pipeline)
+        except:
+            raise OSError ('STOP PROCESS', 'PATH doesn\'t exist in data/pipeline.yml', self.this_pipeline)
 
         sys.path.append(os.environ['PIPELINE_PATH'])
         sys.path.append(os.environ['IMG_PATH'] )
@@ -181,7 +182,7 @@ class SmartDict(dict):
 import argparse
 
 parser = argparse.ArgumentParser(description='Setup your pipeline and start scripts.')
-parser.add_argument('-so','--software', help='add software: nuke')
+parser.add_argument('-so','--software', help='add software: nuke/max/maya/houdini')
 parser.add_argument('-p', '--proxy', action='store_true')
 
 args = parser.parse_args()

@@ -1,11 +1,13 @@
 #*********************************************************************
 # content   = maya utils
 # version   = 0.6.0
-# date      = 2020-06-19
+# date      = 2024-11-10
 #
 # license   = MIT <https://github.com/alexanderrichtertd> <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
+
+import os
 
 import maya.mel as mel
 import maya.cmds as cmds
@@ -106,7 +108,7 @@ def setup_scene(file_path=''):
 
 #*********************************************************************
 def position_selected():
-	selected = ls( selection=True )
+	selected = ls(selection=True)
 
 	if len(selected) > 1:
 	    origin = selected[0]
@@ -140,6 +142,3 @@ def viewport_off(func):
             mel.eval("paneLayout -e -manage true $gMainPane")
 
     return viewport
-
-
-

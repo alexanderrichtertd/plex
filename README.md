@@ -1,12 +1,11 @@
-> ### "Version 2.0"- NEW Release
-> Check out the [**documentary**](https://github.com/richteralexander/plex/wiki), [**releases**](https://github.com/richteralexander/plex/releases), my **[YouTube Channel](https://youtube.com/alexanderrichtertd)** and the [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw)
+> See the [**documentation**](https://github.com/alexanderrichtertd/plex/wiki),the [FMX 2017 Talk - Open Source Pipeline](https://www.youtube.com/watch?v=_JC0AMYX_Bw) and my **[YouTube Channel](https://youtube.com/alexanderrichtertd)**.
 
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
 
 ## **Introduction**
-**Plex** is an **VFX, Animation and Games pipeline** managing important workflows during production.
-Its core is a flexible and independent system for small to mid-sized projects and companies.
-The basic idea is to handle the file and folder structure, setup basic rules and guide the workflow to allow collaboration in a complex production environment. Plug and play.
+**Plex** is an **Visual Effects, Animation and Games pipeline** that manages critical workflows during production.
+Its core is a flexible and self-contained system for small to medium sized projects and companies.
+The basic idea is to manage the file and folder structure, set the ground rules and manage the workflow to allow collaboration in a complex production environment. Plug and play.
 
 > Intuitively guiding the input and output of users to overcome problems and achieve goals.
 > Now you have a good game ... or pipeline.
@@ -19,7 +18,7 @@ The basic idea is to handle the file and folder structure, setup basic rules and
 - [x] **Renderer**: Arnold | RenderMan | Mantra | V-Ray | ...
 
 ## Project Features
-- [x] vfx, animation & game production management system
+- [x] visual effects, animation & game production management system
 - [x] file & folder management (settings | create | save | load | publish)
 - [x] flexible, portable, multi functional project environment
 - [x] additional libraries (api | img | user | shot)

@@ -1,5 +1,6 @@
 !__init__.py
 
+_src
 test.py
 .vscode
 
@@ -9,13 +10,11 @@ test.py
 *.log
 *.stats
 
-
 *_DEBUG.sh
 *_DEBUG.bat
 
-data/user/alexa
+data/user/*
 
-img/_src
 img/img_rc.py
 
 lib/ideas

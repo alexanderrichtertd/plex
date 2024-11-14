@@ -1,8 +1,9 @@
 #*********************************************************************
 # content   = scripts
 # version   = 0.1.0
-# date      = 2020-06-19
-
+# date      = 2024-11-12
+#
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -32,32 +33,28 @@ arUtil:
 #*********************************************************************
 arNotice:
   active: True
-
-  timer: 7
+  timer:  7
 
 
 #*********************************************************************
 arSave:
   active: True
-
-  start: &arSave import arSave; arSave.start()
-  img: &arSave_img png, jpg, tiff
-
+  start:  &arSave import arSave; arSave.start()
+  img:    &arSave_img png, jpg, tiff
   just_screenshot: True
 
 
 #*********************************************************************
 arLoad:
   active: True
-  img: *arSave_img
+  img:    *arSave_img
 
 
 #*********************************************************************
 arDesktop:
-  active: True
+  active:     True
   auto_start: True
-
-  style: "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
+  style:      "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
 
   SOFTWARE:
     maya:    self.press_btnOpenMaya
@@ -75,18 +72,14 @@ arWrite:
 #*********************************************************************
 smartLoader:
   active:   True
-
-  start: &smartLoader import arSave; arSave.start()
-
+  start:    &smartLoader import arSave; arSave.start()
   shortcut: F1
-
   ignore:
   favourite:
 
   # priority order
   CONTENT:
     SHOTS:  Tank().data_project['PATH']['shots']
-
     ASSETS: Tank().data_project['PATH']['assets']
 
     SCRIPTS:

@@ -31,7 +31,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     def __init__(self, parent=None):
         QtWidgets.QSystemTrayIcon.__init__(self, parent)
         # self.activated.connect(self.showMainWidget)
-        self.setIcon(QtGui.QIcon(Tank().get_img_path('software/default')))
+        self.setIcon(QtGui.QIcon(Tank().get_img_path('software/icons/default')))
 
         self.parent = parent
 
@@ -67,7 +67,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         menu.addMenu(subMenu)
 
         for soft, soft_func in Tank().data['script'][__name__]['SOFTWARE'].items():
-            menuItem = subMenu.addAction(QtGui.QIcon(Tank().get_img_path('software/' + soft)), soft.title())
+            menuItem = subMenu.addAction(QtGui.QIcon(Tank().get_img_path('software/icons/' + soft)), soft.title())
             menuItem.triggered.connect(eval(soft_func))
 
         menu.addSeparator()
@@ -92,7 +92,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
 
     #**********************
-    # PRESS_TRIGGER
+    # PRESS
     def press_btnShowUserData(self):
         pipefunc.open_folder(Tank().data_project['PATH']['sandbox'] + '/' + getpass.getuser())
 
@@ -103,6 +103,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         import arLoad
         importlib.reload(arLoad)
         self.arLoad = arLoad.ArLoad()
+
     #------------------------------
     def press_btnOpenMaya(self):
         Tank().software.start('maya')
@@ -115,18 +116,21 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     def press_btnOpenMax(self):
         Tank().software.start('max')
+
     #------------------------------
     def press_btnOpenProjectLog(self):
         pipefunc.open_folder(Tank().get_env('DATA_PROJECT_PATH'))
 
     def press_btnOpenLocalLog(self):
         pipefunc.open_folder(Tank().get_env('DATA_USER_PATH'))
+
     #------------------------------
     def press_btnReport(self):
         pipefunc.help('report')
 
     def press_btnHelp(self):
         pipefunc.help(__name__)
+
     #------------------------------
     def press_closeStartup(self):
         self.parent.instance().quit()
