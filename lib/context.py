@@ -23,18 +23,19 @@ LOG = Tank().log.init(script=__name__)
 class Context():
     def setup(self):
         self.project_name = project_name   # project
-        self.project_path = project_path   # //awesome/project
+        self.project_path = project_path   # /awesome/project
 
-        self.path       = path             # D:/project/asset/file.format
+        self.path       = path             # D:/project/asset/mike_RIG_v012.mb
 
-        self.step       = step             # shot or asset
+        self.step       = step             # shots or assets or renders
+        self.scene      = scene            # s010 or mike
         self.task       = task             # ANIMATION
 
         self.resolution = resolution       # [1920, 1080]
-        self.fps        = fps              # 25
+        self.fps        = fps              # 24
 
         self.artist     = artist           # arichter
-        self.comment    = comment          # "Broken scene"
+        self.comment    = comment          # Broken scene
 
 
     #*********************************************************************
@@ -79,4 +80,4 @@ class Context():
     #*********************************************************************
     # FUNCTIONS
     def open_path(self):
-        return pipefunc.openFolder(self.file_path)
+        return pipefunc.open_folder(self.file_path)

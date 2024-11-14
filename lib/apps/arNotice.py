@@ -1,7 +1,7 @@
 #*********************************************************************
 # content   = informs artists about changes
 # version   = 0.1.0
-# date      = 2024-11-09
+# date      = 2024-11-13
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -36,25 +36,22 @@ class Notice():
                  title    = 'Notice',
                  msg      = 'This is just a Notice Test',
                  quote    = 'plex it out',
-                 user     = getpass.getuser(),
                  img      = 'lbl/default',
-                 img_link = 'http://richteralexander.com',
+                 img_link = 'https://www.alexanderrichtertd.com',
                  func     = '',
                  timer    = 7):
 
-        self.title    = str(title)   #Pipeline Update
-        self.msg      = str(msg)     #New Features for Pipeline
-        self.quote    = str(quote)  #New Features for Pipeline
-        self.img      = img         # lbl/lblPreview131
-        self.img_link = img_link    # path
+        self.title    = str(title)   # Pipeline Update
+        self.msg      = str(msg)     # New Features for Pipeline
+        self.quote    = str(quote)   # New Features for Pipeline
+        self.img      = img          # lbl/lblPreview131
+        self.img_link = img_link     # path
         self.time     = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
-        self.user     = user
         self.func     = func
         self.timer    = timer
 
     def __call__(self):
         LOG.debug(  'time:     ' + self.time + '\n' +\
-                    'user:     ' + self.user + '\n\n' +\
                     'func:     ' + self.func + '\n\n' +\
                     'title:    ' + self.title + '\n' +\
                     'msg:      ' + self.msg + '\n' +\
@@ -79,10 +76,6 @@ class ArNotice():
         self.wgNotice.edtMsg.setPlainText(self.notice.msg)
         if self.notice.quote: self.notice.quote = '"{}"'.format(self.notice.quote)
         self.wgNotice.edtQuote.setPlainText(self.notice.quote)
-
-        self.wgNotice.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + self.notice.user))))
-        self.wgNotice.btnUser.setToolTip(('').join([self.notice.user, '\n', self.notice.time]))
-        self.wgNotice.btnUser.clicked.connect(pipefunc.help)
 
         self.wgNotice.edtTitle.setText(self.notice.title)
 
@@ -166,11 +159,10 @@ def create_default_notice(script_string, msg=""):
 
 def create_changelog_popup():
     import pwd
-    import yaml 
+    import yaml
 
     # TODO: changelog_path undefined
 
-    current_user = pwd.getpwuid(os.getuid()).pw_name or ""
     changelog_list = glob.glob(changelog_path + "/*.changelog")
 
     if changelog_list:
@@ -203,18 +195,17 @@ def create_changelog_popup():
                         widget.show()""".format(notice_data["title"], changelog_data["changelog"])
 
     notice_msg = notice_data["msg"]
-    if "user" in changelog_data and current_user in changelog_data["user"]: notice_msg = changelog_data["user"][current_user]
 
     img_name = notice_data["img"] if "img" in notice_data else "changelog"
     img_path = "{}/notice_{}.png".format(pipefunc.get_data_path("img_notice"), img_name)
 
-    note = Notice(title    = notice_data["title"].format(current_user.split(".")[0].title()),
+    note = Notice(title    = notice_data["title"],
                   msg      = notice_msg,
                   # func   = popup_func,
                   img      = img_path,
                   quote    = notice_data["quote"],
                   img_link = notice_data["img_link"])
-                  
+
     ArNotice(note)
 
 
