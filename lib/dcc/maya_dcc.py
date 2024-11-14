@@ -1,6 +1,5 @@
 #*********************************************************************
 # content   = Maya
-# version   = 0.1.0
 # date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>

@@ -1,6 +1,5 @@
 #*********************************************************************
 # content   = maya utils
-# version   = 0.6.0
 # date      = 2024-11-10
 #
 # license   = MIT <https://github.com/alexanderrichtertd> <https://github.com/alexanderrichtertd>

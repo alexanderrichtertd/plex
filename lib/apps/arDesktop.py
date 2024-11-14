@@ -1,6 +1,5 @@
 #*********************************************************************
 # content   = OS startup file
-# version   = 0.6.0
 # date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>

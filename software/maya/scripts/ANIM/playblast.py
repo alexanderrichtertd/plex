@@ -1,7 +1,6 @@
 #*********************************************************************
 # content   = create playblast
 #             executes other scripts on PUBLISH (on task in file name)
-# version   = 0.1.0
 # date      = 2020-06-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>

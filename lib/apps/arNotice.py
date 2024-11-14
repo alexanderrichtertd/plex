@@ -1,6 +1,5 @@
 #*********************************************************************
 # content   = informs artists about changes
-# version   = 0.1.0
 # date      = 2024-11-13
 #
 # license   = MIT <https://github.com/alexanderrichtertd>

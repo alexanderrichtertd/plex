@@ -1,7 +1,6 @@
 #*********************************************************************
 # content   = snapshot
 #             executes other scripts on PUBLISH (on task in file name)
-# version   = 0.1.0
 # date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>

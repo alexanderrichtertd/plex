@@ -1,6 +1,5 @@
 #*********************************************************************
 # content   = SET default environment paths
-# version   = 1.0.0
 # date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>

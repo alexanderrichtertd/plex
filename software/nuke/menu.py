@@ -1,6 +1,5 @@
 # 07 Week *********************************************************************
 # content   = menu Nuke
-# version   = 0.1.0
 # date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
