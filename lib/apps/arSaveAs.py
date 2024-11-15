@@ -11,7 +11,6 @@
 import os
 import sys
 import getpass
-import datetime
 from threading import Thread
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat

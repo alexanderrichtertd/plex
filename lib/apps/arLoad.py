@@ -1,7 +1,5 @@
 #*********************************************************************
-# content   = saves work and publishes files
-#             executes other scripts on PUBLISH (task in file name)
-# version   = 0.1.1
+# content   = load work and publishes files
 # date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
@@ -9,12 +7,9 @@
 #*********************************************************************
 
 import os
-import re
 import sys
-import shutil
 
 import datetime
-import subprocess
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 

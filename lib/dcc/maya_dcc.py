@@ -12,8 +12,6 @@ import maya.cmds as cmds
 import maya.mel as mel
 import pymel.core as pm
 
-import maya_utils
-
 from tank import Tank
 from software import Software
 
@@ -94,7 +92,7 @@ class Maya(Software):
 
     #******************************************************************************
     # SNAPSHOT
-    def viewport_snapshot(img_path=DEFAULT_PATH):
+    def viewport_snapshot(img_path):
         mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
 
         # playblast one frame to a specific file
@@ -107,7 +105,7 @@ class Maya(Software):
         LOG.info("maya_viewport_snapshot")
 
 
-    def render_snapshot(img_path=DEFAULT_PATH):
+    def render_snapshot(img_path):
         mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
 
         LOG.info("maya_render_snapshot")
