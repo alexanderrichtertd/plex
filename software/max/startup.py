@@ -47,7 +47,7 @@ def copy_splash():
         try:
             shutil.copy(splash_path, max_path)
         except:
-            LOG.error('FAILED to copy splash: '.format(max_path), exc_info=True)
+            LOG.error(f'FAILED to copy splash: {max_path}', exc_info=True)
 
 
 create_menu()

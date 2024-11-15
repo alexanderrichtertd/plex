@@ -72,7 +72,7 @@ def create_folder(path):
     if len(path.split('.')) > 1: path = os.path.dirname(path)
     if not os.path.exists(path):
         try:    os.makedirs(path)
-        except: print('CAN\'T create folder: {}'.format(path))
+        except: print(f'CAN\'T create folder: {path}')
 
 # @BRIEF  opens folder even if file is given
 def open_folder(path):
@@ -80,7 +80,7 @@ def open_folder(path):
     if os.path.exists(path):
         if len(path.split('.')) > 1: path = os.path.dirname(path)
         webbrowser.open(path)
-    else: print('INVALID path: {}'.format(path))
+    else: print(f'INVALID path: {path}')
     return path
 
 
@@ -98,7 +98,7 @@ def get_file_list(path, file_type='*', extension=False, exclude='*', add_path=Fa
     if(os.path.exists(path)):
         get_file = []
         try:    os.chdir(path)
-        except: print('Invalid dir: {}'.format(path))
+        except: print(f'Invalid dir: {path}')
 
         for file_name in glob.glob(file_type):
             if exclude in file_name: continue
@@ -116,7 +116,7 @@ def get_deep_folder_list(path, add_path=False):
     else:        get_file = map(lambda x: os.path.basename(x[0]), os.walk(path))
 
     try:    get_file.pop(0)
-    except: print('CANT pop file. Path: {}'.format(path))
+    except: print(f'CAN\'T pop file. Path: {path}')
 
     return get_file
 
@@ -148,9 +148,9 @@ def make_github_issue(title, body=None, assignee='', milestone=None, labels=None
     repo = session.post(url, json.dumps(issue))
 
     if repo.status_code == 201:
-        LOG.info('Successfully created Issue {}'.format(title))
+        LOG.info(f'Successfully created Issue {title}')
     else:
-        LOG.warning('Could not create Issue {}.\nResponse:{}'.format(title, repo.content))
+        LOG.warning(f'Couldn\'t create Issue {title}.\nResponse:{repo.content}')
 
 
 #*********************************************************************

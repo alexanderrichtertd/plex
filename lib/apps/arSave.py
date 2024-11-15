@@ -34,7 +34,7 @@ class ArSave(ArUtil):
     def __init__(self, parent=None):
         super(ArSave, self).__init__()
 
-        path_ui     = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui     = ('/').join([os.path.dirname(__file__), 'ui', __name__ + '.ui'])
         self.wgSave = QtCompat.loadUi(path_ui)
 
         self.save_dir  = os.getenv('PROJECT_PATH')
@@ -44,7 +44,7 @@ class ArSave(ArUtil):
         self.wgSave.btnVersionUp.clicked.connect(self.update_version)
         self.wgSave.btnVersionDown.clicked.connect(lambda: self.update_version(add=-1))
 
-        # self.wgSave.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
+        self.wgSave.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
         self.wgSave.btnScreenshot.clicked.connect(self.press_btnScreenshot)
         self.wgSave.btnSnapshotViewport.clicked.connect(self.press_btnSnapshotViewport)
         self.wgSave.btnSnapshotRender.clicked.connect(self.press_btnSnapshotRender)
@@ -140,7 +140,7 @@ class ArSave(ArUtil):
             self.save_file = os.path.dirname(self.save_file) + '/' + os.path.basename(self.save_file).replace(found_version.group(), new_version)
             self.wgSave.edtSaveFile.setText(os.path.basename(self.save_file))
         else:
-            self.set_status('CANT find version: {}'.format(os.path.basename(self.save_file)), 3)
+            self.set_status(f'CAN\'T find version: {os.path.basename(self.save_file)}', 3)
 
 
     def save_file_path(self):
@@ -150,14 +150,14 @@ class ArSave(ArUtil):
         try:
             Tank().software.scene_save_as(self.save_file)
             self.set_meta_data()
-            LOG.info("SAVE : " + self.save_file)
+            LOG.info(f'SAVE : {self.save_file}')
         except:
-            LOG.error("FAIL : Couldn't save file : {}".format(self.save_file), exc_info=True)
+            LOG.error(f'FAIL : Couldn\'t save file : {self.save_file}', exc_info=True)
             return False
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmpCopyWork = self.save_file.replace('.', '_{}.'.format(self.data['project']['STATUS']['publish']))
+            tmpCopyWork = self.save_file.replace('.', f'_{self.data["project"]["STATUS"]["publish"]}.')
             snapshot.save_snapshot(tmpCopyWork)
             self.set_meta_data(tmpCopyWork)
 
@@ -169,7 +169,7 @@ class ArSave(ArUtil):
             if self.data['project']['STATUS']['work'] in self.save_file:
                 self.save_publish_file = self.save_publish_file.replace(self.data['project']['STATUS']['work'], self.data['project']['STATUS']['publish'])
             else:
-                LOG.error("FAIL : NO {} in path : {}".format(self.data['project']['STATUS']['work'], self.save_publish_file), exc_info=True)
+                LOG.error(f'FAIL : NO {self.data["project"]["STATUS"]["work"]} in path : {self.save_publish_file}', exc_info=True)
                 return False
 
             pipefunc.create_folder(os.path.dirname(self.save_publish_file))
@@ -178,10 +178,10 @@ class ArSave(ArUtil):
                 shutil.copy(self.save_file, tmpCopyWork)
                 shutil.copy(tmpCopyWork, self.save_publish_file)
             except:
-                LOG.error("FAIL : Copying publish file : {}".format(self.save_publish_file), exc_info=True)
+                LOG.error(f"FAIL : Copying publish file : {self.save_publish_file}", exc_info=True)
                 return False
 
-            LOG.info("PUBLISH : " + self.save_publish_file)
+            LOG.info(f"PUBLISH : {self.save_publish_file}")
             snapshot.save_snapshot(self.save_publish_file)
             self.set_meta_data(self.save_publish_file)
 
@@ -206,7 +206,7 @@ class ArSave(ArUtil):
         Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
 
 
-    def folder_msg_box(self, bpS, dataFilter, title = "Choose file to open", path = ""): #dataFilter = "Maya Files (*.mb *.ma)"
+    def folder_msg_box(self, bpS, dataFilter, title = 'Choose file to open', path = ''): #dataFilter = "Maya Files (*.mb *.ma)"
         result = QtGui.QFileDialog().getOpenFileName(bpS, title, path, dataFilter)
         return str(result[0])
 

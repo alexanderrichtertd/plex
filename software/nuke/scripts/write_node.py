@@ -36,7 +36,7 @@ def create_node(this_node=''):
     this_node["resolutionY"].setValue(this_node.height())
 
     fileName   = os.path.basename(nuke.root().name()).split(".")[0]
-    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/{render}/{file}/exr/{file}.%04d.exr".format(render=Tank().data_project['STATUS']['render'], file=fileName)
+    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + f"/{Tank().data_project['STATUS']['render']}/{fileName}/exr/{fileName}.%04d.exr"
     renderPath = renderPath.replace('\\','/')
 
     # this_node["rootPath"].setValue(renderPath)
@@ -67,7 +67,7 @@ def render():
     frameStart = int(this_node["frameStart"].getValue())
     frameEnd   = int(this_node["frameEnd"].getValue())
 
-    LOG.info('{}-{}'.format(frameStart, frameEnd))
+    LOG.info(f'{frameStart}-{frameEnd}')
 
     notice_status = {'RENDERTHREADS': 'multi process rendering is started',
                     'RR SUBMIT': 'scene was submit to RR',

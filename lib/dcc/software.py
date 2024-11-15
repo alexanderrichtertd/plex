@@ -41,7 +41,7 @@ class Software(tank.Singleton):
 
 
     def setup_env(self):
-        LOG.debug('- {} -----------------------------------------------------'.format(self._NAME.upper()))
+        LOG.debug(f'- {self._NAME.upper()} -----------------------------------------------------')
 
         sub_path = []
         software_path = []
@@ -56,7 +56,7 @@ class Software(tank.Singleton):
 
         os.environ['SOFTWARE_PATH']     = (';').join(software_path)
         os.environ['SOFTWARE_SUB_PATH'] = (';').join(sub_path)
-        LOG.debug("SOFTWARE_PATH: {}".format(os.environ['SOFTWARE_PATH']))
+        LOG.debug(f'SOFTWARE_PATH: {os.environ["SOFTWARE_PATH"]}')
 
         # GET data
         self._software_data = Tank().data_software
@@ -69,7 +69,7 @@ class Software(tank.Singleton):
                     for each in content: Tank().add_env(env, each)
                 else: Tank().add_env(env, content)
 
-            LOG.debug('{}_ENV: {}'.format(self._NAME.upper(), self._env))
+            LOG.debug(f'{self._NAME.upper()}_ENV: {self._env}')
 
 
 
@@ -85,9 +85,9 @@ class Software(tank.Singleton):
 
         if open_file:
             if self._NAME == 'maya':
-                cmd = '{} -file "{}"'.format(cmd, open_file)
+                cmd = f'{cmd} -file "{open_file}"'
             elif self._NAME == 'max' or self._NAME == 'houdini':
-                cmd = '"{}" "{}"'.format(cmd, open_file)
+                cmd = f'"{cmd}" "{open_file}"'
 
         LOG.debug(cmd)
         subprocess.Popen(cmd, shell=True, env=os.environ)
@@ -95,8 +95,7 @@ class Software(tank.Singleton):
 
 
     def __call__(self):
-        LOG.info('SOFTWARE: {} {} - {}\n\
-                  ENV: {}'.format(self._NAME, self._version, self._path, self._env))
+        LOG.info(f'SOFTWARE: {self._NAME} {self._version} - {self._path}\nENV: {self._env}')
 
 
 
@@ -200,7 +199,7 @@ class Software(tank.Singleton):
         if   self._NAME == 'maya': import maya.cmds as cmds
         elif self._NAME == 'max' : import MaxPlus
         else:
-            LOG.debug('CANT find software: {}'.format(self._NAME))
+            LOG.debug(f'CAN\'T find software: {self._NAME}')
             return
 
         sub_menu = ''
@@ -224,12 +223,12 @@ class Software(tank.Singleton):
 
             else:
                 if self._NAME == 'maya':
-                    eval('cmds.{}'.format(item).format(menu_node))
+                    eval(f'cmds.{item}'.format(menu_node))
                 elif self._NAME == 'max':
                     import max_menu
-                    eval('menu_node.{}'.format(item))
+                    eval(f'menu_node.{item}')
                 elif self._NAME == 'nuke':
-                    eval('menu_node.{}'.format(item))
+                    eval(f'menu_node.{item}')
 
 
     #*********************************************************************
@@ -253,10 +252,10 @@ class Software(tank.Singleton):
         for setting in new_setup:
             for key, item in setting.items():
                 # TODO: Maybe needs optVar option - will see
-                render = "cmds.setAttr('{}', {})".format(key, item)
+                render = f'cmds.setAttr(\'{key}\', {item})'
 
                 try:    eval(render)
-                except: LOG.error('Scene Setup is not executable: {}'.format(render), exc_info=True)
+                except: LOG.error(f'Scene Setup is not executable: {render}', exc_info=True)
 
     #******************************************************************************
     # SNAPSHOT
@@ -288,15 +287,15 @@ class Software(tank.Singleton):
         self.print_checked_header('data')
         self.print_checked_header('lib')
         self.print_checked_header('lib/apps')
-        self.print_checked_header('software/{}'.format(self._NAME))
-        self.print_checked_header('software/{}/icons'.format(self._NAME))
-        self.print_checked_header('software/{}/plugins'.format(self._NAME))
-        self.print_checked_header('software/{}/scripts'.format(self._NAME))
+        self.print_checked_header(f'software/{self._NAME}')
+        self.print_checked_header(f'software/{self._NAME}/icons')
+        self.print_checked_header(f'software/{self._NAME}/plugins')
+        self.print_checked_header(f'software/{self._NAME}/scripts')
 
         if self._NAME == 'maya':
-            self.print_checked_header('software/{}/shelf'.format(self._NAME))
+            self.print_checked_header(f'software/{self._NAME}/shelf')
         if self._NAME == 'nuke':
-            self.print_checked_header('software/{}/gizmos'.format(self._NAME))
+            self.print_checked_header(f'software/{self._NAME}/gizmos')
 
         print('') # ********************
 
@@ -313,10 +312,10 @@ class Software(tank.Singleton):
     def print_checked_header(self, content, func=''):
         try:
             func
-            print('  {} ON  - {}'.format(chr(149), content))
+            print(f'  {chr(149)} ON  - {content}')
         except:
-            LOG.debug('  OFF - {}'.format(content))
-            print('  {} OFF - {}'.format(chr(149), content))
+            LOG.debug(f'  OFF - {content}')
+            print(f'  {chr(149)} OFF - {content}')
 
 
 

@@ -65,12 +65,12 @@ class Maya(Software):
         if shelf_name in shelf_data:
             new_shelf += shelf_data[shelf_name]
         else:
-            LOG.warning('shelf {} doesnt exist'.format(shelf_name))
+            LOG.warning(f'shelf {shelf_name} doesnt exist')
 
         # GET footer scripts
         if header_footer: new_shelf += shelf_data['FOOTER']
 
-        LOG.debug('{} - {}'.format(shelf_name, new_shelf))
+        LOG.debug(f'{shelf_name} - {new_shelf}')
         if not shelf_name: shelf_name = os.getenv('PROJECT_NAME')
 
         # DELETE old and CREATE shelf tab
@@ -85,11 +85,11 @@ class Maya(Software):
         # ADD shelf btn
         for btn in new_shelf:
             for key, item in btn.items():
-                shelf_btn = 'pm.shelfButton({})'.format(item)
+                shelf_btn = f'pm.shelfButton({item})'
                 eval(shelf_btn)
 
         shelf_nr = len(mel.eval('layout -q -ca ShelfLayout;'))
-        mel.eval('shelfTabLayout -edit -selectTabIndex {} ShelfLayout;'.format(shelf_nr))
+        mel.eval(f'shelfTabLayout -edit -selectTabIndex {shelf_nr} ShelfLayout;')
 
 
     #******************************************************************************

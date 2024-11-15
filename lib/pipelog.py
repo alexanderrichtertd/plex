@@ -106,4 +106,4 @@ def create_folder(path):
 
     if not os.path.exists(path):
         try:    os.makedirs(path)
-        except: print('CAN\'T create folder: {}'.format(path))
+        except: print(f'CAN\'T create folder: {path}')

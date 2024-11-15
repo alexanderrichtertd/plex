@@ -13,10 +13,10 @@ import maya.cmds as cmds
 # FUNCTIONS
 def create_simple_shd(name="BLACK_SHD", color=[0,0,0]):
     if cmds.objExists(name):
-        print("CREATED - {}".format(name))
+        print(f"CREATED - {name}")
     else:
         shader = cmds.shadingNode("surfaceShader", name=name, asShader=True)
         cmds.setAttr(shader + '.outColor', color[0], color[1], color[2])
-        print("EXISTS  - {}".format(name))
+        print(f"EXISTS  - {name}")
 
         return shader

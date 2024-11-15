@@ -69,20 +69,20 @@ def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
         exclude_lights = list(set(scene_lights) - set(lights))
         cmds.lightlink(light=exclude_lights, object=meshes, shadow=shadow_link, b=True)
 
-        LOG.info("exclude_lights: {}".format(exclude_lights))
+        LOG.info(f"exclude_lights: {exclude_lights}")
     elif exclusive == "meshes":
         exclude_meshes = list(set(cmds.ls(dag=1,o=1,s=1)) - set(meshes))
         cmds.lightlink(light=lights, object=exclude_meshes, shadow=shadow_link, b=True)
 
-        LOG.info("exclude_meshes: {}".format(exclude_meshes))
+        LOG.info(f"exclude_meshes: {exclude_meshes}")
 
     if not meshes:
         cmds.lightlink(light=lights, object=cmds.ls(dag=1,o=1,s=1), shadow=shadow_link)
-        LOG.info("LightLinking: Default for {}".format(lights))
+        LOG.info(f"LightLinking: Default for {lights}")
         return
 
     cmds.lightlink(light=lights, object=meshes, shadow=shadow_link, b=break_light)
-    LOG.debug("LightLinking - break:{} - shadow:{}: {} with {}".format(break_light, shadow_link, lights, meshes))
+    LOG.debug(f"LightLinking - break:{break_light} - shadow:{shadow_link}: {lights} with {meshes}")
 
 
 @notice('Select Attached:See all the attached files', meta=False)

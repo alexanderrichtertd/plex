@@ -153,14 +153,14 @@ class ArSaveAs(ArUtil):
         for inputs in self.inputs:
             if not inputs.currentText():
                 if self.scene_steps < 5 and self.wgSaveAs.cbxSet == inputs: continue
-                self.set_status('Missing input: {}'.format(inputs.objectName().replace('cbx', '')), msg_type=2)
+                self.set_status(f'Missing input: {inputs.objectName().replace("cbx", "")}', msg_type=2)
                 return False
 
         self.update_file()
 
         # CHECK FILE
         if os.path.exists(self.save_file):
-            self.set_status('PATH already exists: {}'.format(self.save_file), msg_type=2)
+            self.set_status(f'PATH already exists: {self.save_file}', msg_type=2)
             return False
 
         save_list = []
@@ -172,7 +172,7 @@ class ArSaveAs(ArUtil):
         else:
             save_list.append(self.save_file)
 
-        LOG.debug('Folder list {}'.format(save_list))
+        LOG.debug(f'Folder list {save_list}')
         for folder in save_list: pipefunc.create_folder(folder)
 
         if self.new_file:
@@ -186,16 +186,16 @@ class ArSaveAs(ArUtil):
             self.set_meta_data(self.save_file)
         else:
             try:    self.set_open_folder(save_list[0])
-            except: LOG.error('CANT set folder: {}'.format(save_list))
+            except: LOG.error(f'CAN\'T set folder: {save_list}')
 
-            self.set_status('Created new {}'.format(self.wgSaveAs.cbxScene.currentText()), msg_type=1)
+            self.set_status(f'Created new {self.wgSaveAs.cbxScene.currentText()}', msg_type=1)
 
             tmp_img_path = 'lbl/lbl_create'
             tmp_title = self.wgSaveAs.cbxScene.currentText()
             tmp_func = 'CREATE'
 
         note = arNotice.Notice(title  = tmp_title,
-                               msg    = 'CREATED a new {} with folders'.format(self.wgSaveAs.cbxScene.currentText()),
+                               msg    = f'CREATED a new {self.wgSaveAs.cbxScene.currentText()} with folders',
                                func   = tmp_func,
                                img    = tmp_img_path,
                                img_link = os.path.dirname(self.save_file))

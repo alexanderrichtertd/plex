@@ -26,7 +26,7 @@ def add_gizmo_menu(menu):
         for file in os.listdir(paths):
             if file.endswith('.gizmo'):
                 gizmo = file.replace('.gizmo', '')
-                menu.addCommand('Gizmos/' + gizmo, 'nuke.tcl("{}")'.format(gizmo))
+                menu.addCommand('Gizmos/' + gizmo, f'nuke.tcl("{gizmo}")')
 
 def add_write_node():
     import write_node

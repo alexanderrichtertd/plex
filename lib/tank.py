@@ -112,7 +112,7 @@ class Tank(Singleton):
 
     @property
     def data_software(self):
-        return self.get_data('dcc/{}'.format(os.getenv('SOFTWARE')))
+        return self.get_data(f'dcc/{os.getenv("SOFTWARE")}')
 
     @property
     def data_script(self):
@@ -154,7 +154,7 @@ class Tank(Singleton):
         if os.path.exists(file_path):
             return self.get_yml_file(file_path)
 
-        else: print('CANT find file: {}'.format(file_path))
+        else: print(f'CANT find file: {file_path}')
         return ''
 
 
@@ -192,11 +192,11 @@ class Tank(Singleton):
         else:
             img_format = self.data_project['EXTENSION']['icons']
 
-        path = self.get_pipeline_path('img/{}.{}'.format(end_path, img_format))
+        path = self.get_pipeline_path(f'img/{end_path}.{img_format}')
         if not path:
-            path = self.get_pipeline_path('img/{}/default.{}'.format(os.path.dirname(end_path), img_format))
+            path = self.get_pipeline_path(f'img/{os.path.dirname(end_path)}/default.{img_format}')
             if not path:
-                path = self.get_pipeline_path('img/btn/default.{}'.format(img_format))
+                path = self.get_pipeline_path(f'img/btn/default.{img_format}')
 
         if format == 'pixmap':
             return QtGui.QPixmap(QtGui.QImage(path))
@@ -224,7 +224,7 @@ class Tank(Singleton):
                 if yml_content:
                     return yml_content
                 else:
-                    print('CANT load file: {}'.format(path))
+                    print(f'CANT load file: {path}')
 
         except yaml.YAMLError as exc:
             print(exc)
@@ -300,6 +300,6 @@ class Tank(Singleton):
     def get_env(self, var):
         if os.environ.__contains__(var):
             return os.environ[var].split(';')[0]
-        print('ENV doesnt exist: {}'.format(var))
+        print(f'ENV doesnt exist: {var}')
 
         return ''

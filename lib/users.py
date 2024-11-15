@@ -77,18 +77,18 @@ class User(tank.Singleton):
 
     @property
     def data_user_path(self):
-        data_user_path = '{}/{}.yml'.format(self.data_path, self.name)
+        data_user_path = f'{self.data_path}/{self.name}.yml'
         if not os.path.exists(data_user_path):
             data_user_path = ''
         return data_user_path
 
     @property
     def stats_path(self):
-        return '{}/{}.stats'.format(self.data_path, self.name)
+        return f'{self.data_path}/{self.name}.stats'
 
     @property
     def log_path(self):
-        return '{}/{}.log'.format(self.data_path, self.name)
+        return f'{self.data_path}/{self.name}.log'
 
     @property
     def sandbox_path(self):

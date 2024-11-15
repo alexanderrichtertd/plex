@@ -12,8 +12,7 @@ import getpass
 
 try:
     import yaml
-except:
-    # if yaml is not installed
+except: # use included yaml: plex/lib/extern/yaml
     plex_path = os.path.dirname(os.path.dirname(__file__))
     sys.path.append(plex_path + "/lib/extern")
     import yaml
@@ -23,12 +22,12 @@ except:
 class Setup(object):
 
     def __init__(self):
-        this_path = os.path.normpath(os.path.dirname(__file__))
         self.data_pipeline_path = []
-        self.data_project_path  = os.path.normpath(('/').join([this_path, 'pipeline.yml']))
+        self.pipeline_env = SmartDict()
 
-        self.pipeline_env  = SmartDict()
-        self.this_pipeline = os.path.normpath(os.path.dirname(this_path))
+        this_path = os.path.dirname(__file__)
+        self.data_project_path = '/'.join([this_path, 'pipeline.yml'])
+        self.this_pipeline = os.path.dirname(this_path)
 
         # LOAD pipeline data
         if os.path.exists(self.data_project_path):
@@ -39,7 +38,6 @@ class Setup(object):
 
         # SEARCH and ADD current and sub paths
         for pipe in self.pipeline_data['PATH']:
-
             for status, path in pipe.items():
                 # REPLACE $this with current_path
                 if path == '$this': path = self.this_pipeline
@@ -48,7 +46,7 @@ class Setup(object):
                     if os.path.exists(path):
                         self.data_pipeline_path.append(path)
                         self.pipeline_status = status
-                    else: print('PIPELINE_PATH doesn\'t exist: {}\nSOURCE[PATH]: {}'.format(path, self.data_project_path))
+                    else: print(f'PIPELINE_PATH doesn\'t exist: {path}\nSOURCE[PATH]: {self.data_project_path}')
 
         if not self.data_pipeline_path:
             raise OSError ('STOP PROCESS', 'PATH doesn\'t exist in data/pipeline.yml', self.this_pipeline)
@@ -118,7 +116,7 @@ class Setup(object):
 
         # ADD project path
         if os.path.exists(self.project_data['path']):
-            os.environ['PROJECT_PATH'] = os.path.normpath(self.project_data['path'])
+            os.environ['PROJECT_PATH'] = self.project_data['path']
         else: os.environ['PROJECT_PATH'] = ''
 
         # OS & PYTHON_VERSION
@@ -141,21 +139,17 @@ class Setup(object):
         LOG = Tank().log.init(script=__name__)
 
         LOG.debug('____________________________________________________________')
-        LOG.debug('PIPELINE: {} [{}, {}, {}] {}'.format(self.pipeline_data['PIPELINE']['name'],
-                           self.pipeline_data['PIPELINE']['version'],
-                           os.environ['PIPELINE_STATUS'],
-                           'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite',
-                           self.data_pipeline_path))
+        LOG.debug(f"PIPELINE: {self.pipeline_data['PIPELINE']['name']} [{self.pipeline_data['PIPELINE']['version']}, \
+                  {os.environ['PIPELINE_STATUS']}, {'user overwrite' if os.environ['DATA_USER_PATH'] else 'NO user overwrite'}] \
+                  {self.data_pipeline_path}")
 
-        LOG.debug('PROJECT:  {} [{}, {}] [{}{}]'.format(self.project_data['name'],
-                            '{} x {}'.format(Tank().data_project['resolution'][0], Tank().data_project['resolution'][1]),
-                            Tank().data_project['fps'],
-                            '' if os.path.exists(self.project_data['path']) else 'NOT existing: ',
-                            os.path.normpath(self.project_data['path'])))
+        LOG.debug(f"PROJECT: {self.project_data['name']} \
+                  [{Tank().data_project['resolution'][0]} x {Tank().data_project['resolution'][1]}, {Tank().data_project['fps']}] \
+                  [{self.project_data['path'] if os.path.exists else 'NOT existing: '}{os.path.normpath(self.project_data['path'])}]")
 
         LOG.debug('------------------------------------------------------------')
-        LOG.debug('SYS_PATH: {}'.format('[%s]' % ', '.join(map(str, sys.path))))
-        LOG.debug('ADD_ENV:  {}'.format(self.pipeline_env))
+        LOG.debug(f"SYS_PATH: {'[%s]' % ', '.join(map(str, sys.path))}")
+        LOG.debug(f"ADD_ENV:  {self.pipeline_env}")
 
 
 
@@ -191,7 +185,6 @@ if args.software:
 
     from tank import Tank
     if args.software == 'desktop':
-        # Tank().start_software(args.software)
         import arDesktop
         arDesktop.start()
     else:

@@ -73,7 +73,7 @@ class ArNotice():
 
         self.wgNotice.edtTitle.setText(self.notice.title)
         self.wgNotice.edtMsg.setPlainText(self.notice.msg)
-        if self.notice.quote: self.notice.quote = '"{}"'.format(self.notice.quote)
+        if self.notice.quote: self.notice.quote = f'"{self.notice.quote}"'
         self.wgNotice.edtQuote.setPlainText(self.notice.quote)
 
         self.wgNotice.edtTitle.setText(self.notice.title)
@@ -135,18 +135,18 @@ def create_default_notice(script_string, msg=""):
     else:
         notice_data['title'] = root
         notice_msg  = script_name
-        # LOG.warning("notice.yml data doesn't exist: {}".format(script_name))
+        # LOG.warning(f"notice.yml data doesn't exist: {script_name}")
         # return
 
     if "quote" in notice_data: notice_quote = notice_data["quote"]
-    else: notice_quote = ""
+    else: notice_quote = ''
 
     img_name = [lambda: script_name, lambda: notice_data["img"]]["img" in notice_data]()
     img_link = [lambda: "", lambda: notice_data["img_link"]]["img_link" in notice_data]()
     img_path = Tank().get_img_path("lbl/notice_" + img_name)
-    img_path = [lambda: "{}/notice_default.png".format(img_path), lambda: img_path][os.path.exists(img_path)]()
+    img_path = [lambda: f'{img_path}/notice_default.png', lambda: img_path][os.path.exists(img_path)]()
 
-    note = Notice(title = notice_data["title"],
+    note = Notice(title = notice_data['title'],
                     msg = notice_msg,
                   quote = notice_quote,
                     img = img_path,
@@ -162,21 +162,21 @@ def create_changelog_popup():
 
     # TODO: changelog_path undefined
 
-    changelog_list = glob.glob(changelog_path + "/*.changelog")
+    changelog_list = glob.glob(changelog_path + '/*.changelog')
 
     if changelog_list:
         last_changelog = changelog_list[-1]
     else:
-        LOG.warning("NO changelog exists at: {}".format(changelog_path))
+        LOG.warning(f'NO changelog exists at: {changelog_path}')
         return
 
     current_date   = ("{}_{:02}_{:02}".format(datetime.now().year, datetime.now().month, datetime.now().day))
     changelog_date = os.path.basename(last_changelog).split(".")[0]
 
     if current_date != changelog_date:
-        last_changelog = changelog_path + "/welcome"
+        last_changelog = changelog_path + '/welcome'
         if not os.path.exists(last_changelog):
-            LOG.warning("NO current and welcome changelog exists at: {}".format(changelog_path))
+            LOG.warning(f'NO current and welcome changelog exists at: {changelog_path}')
             return
 
     # READ YAML file
@@ -184,19 +184,19 @@ def create_changelog_popup():
         changelog_data = yaml.load(stream, Loader=yaml.Loader)
 
     notice_data = changelog_data["notice"]
-    popup_func  = ""
+    popup_func  = ''
 
-    if "changelog" in changelog_data:
-        popup_func  = """from Qt import QtWidgets, QtGui, QtCore, QtCompat
+    if 'changelog' in changelog_data:
+        popup_func  = f"""from Qt import QtWidgets, QtGui, QtCore, QtCompat
                         widget = QtGui.QMessageBox()
-                        widget.setWindowTitle('{}')
-                        widget.setText({})
-                        widget.show()""".format(notice_data["title"], changelog_data["changelog"])
+                        widget.setWindowTitle('{notice_data["title"]}')
+                        widget.setText({changelog_data["changelog"]})
+                        widget.show()"""
 
     notice_msg = notice_data["msg"]
 
     img_name = notice_data["img"] if "img" in notice_data else "changelog"
-    img_path = "{}/notice_{}.png".format(pipefunc.get_data_path("img_notice"), img_name)
+    img_path = f'{pipefunc.get_data_path("img_notice")}/notice_{img_name}.png'
 
     note = Notice(title    = notice_data["title"],
                   msg      = notice_msg,

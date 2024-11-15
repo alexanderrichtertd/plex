@@ -20,19 +20,19 @@ LOG = Tank().log.init(script=__name__)
 #*********************************************************************
 # MENU
 def add_menu():
-    menu_path = '{}/houdini/MainMenuMaster.xml'.format(os.getenv('DATA_PROJECT_PATH'))
+    menu_path = f'{os.getenv("DATA_PROJECT_PATH")}/houdini/MainMenuMaster.xml'
 
     try:
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
             find_title = pipefunc.find_inbetween(content, '<label>', '</label>')
-            content = content.replace('<label>{}</label>'.format(find_title), '<label>{}</label>'.format(os.getenv('PROJECT_NAME')))
+            content = content.replace(f'<label>{find_title}</label>', f'<label>{os.getenv("PROJECT_NAME")}</label>')
             print(content)
             # WRITE new XML
             outfile.seek(0)
             outfile.write(content)
             outfile.truncate()
-    except: LOG.error('FILE not found: '.format(menu_path), exc_info=True)
+    except: LOG.error(f'FILE not found: {menu_path}', exc_info=True)
 
 
 add_menu()

@@ -46,11 +46,11 @@ def notice(script_string, meta=False, notice=True):
             root, script_name = script_string.split(":")
 
             if ':' in script_string:
-                if meta: LOG.info("{} {} START".format(script_name, "#" * 50))
-                else: LOG.info("DONE - {}".format(script_name))
+                if meta: LOG.info(f'{script_name} {"#" * 50} START')
+                else: LOG.info(f'DONE - {script_name}')
 
                 try:    set_exe_file(root, script_name, Tank().user.sandbox_path, result_time)
-                except: LOG.error("STATS are broken: {} {} {} {}".format(root, script_name, Tank().user.sandbox_path, result_time), exc_info=True)
+                except: LOG.error(f'STATS are broken: {root} {script_name} {Tank().user.sandbox_path} {result_time}', exc_info=True)
 
                 hours, remainder = divmod(result_time, 3600)
                 minutes, seconds = divmod(remainder, 60)
@@ -107,7 +107,7 @@ def set_exe_file(root, script_name, stats_path, result_time):
         with io.open(stats_path, 'w', encoding='utf8') as outfile:
             yaml.dump(user_data, outfile, default_flow_style=False, allow_unicode=True)
     except:
-        LOG.error("CANT write stats info into: {}".format(stats_path), exc_info=True)
+        LOG.error(f'CAN\'T write stats info into: {stats_path}', exc_info=True)
 
 
 
