@@ -20,7 +20,7 @@ LOG = Tank().log.init(script=__name__)
 #*********************************************************************
 # MENU
 def add_menu():
-    menu_path = f'{os.getenv("DATA_PROJECT_PATH")}/houdini/MainMenuMaster.xml'
+    menu_path = f'{os.getenv("CONFIG_PROJECT_PATH")}/houdini/MainMenuMaster.xml'
 
     try:
         with open(menu_path, 'r+') as outfile:

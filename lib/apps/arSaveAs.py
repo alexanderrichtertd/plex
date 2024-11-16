@@ -42,7 +42,7 @@ class ArSaveAs(ArUtil):
 
         self.new_file  = new_file
         self.save_file = ''
-        self.save_dir  = Tank().data_project['path']
+        self.save_dir  = Tank().config_project['path']
         self.inputs    = [self.wgSaveAs.cbxScene, self.wgSaveAs.cbxSet, self.wgSaveAs.cbxAsset, self.wgSaveAs.cbxTask]
 
         self.wgHeader.btnOption.hide()
@@ -78,7 +78,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.currentIndexChanged.connect(self.update_file)
         self.wgSaveAs.cbxAsset.editTextChanged.connect(self.update_file)
 
-        for keys, items in Tank().data_project['SCENES'].items():
+        for keys, items in Tank().config_project['SCENES'].items():
             self.wgSaveAs.cbxScene.addItem(keys)
 
         self.update_file()
@@ -97,7 +97,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.clear()
         if not self.new_file: self.wgSaveAs.cbxTask.addItem(self.all_task)
 
-        self.scene_steps = len(Tank().data_project['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
+        self.scene_steps = len(Tank().config_project['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
         if self.scene_steps < 5:
             self.wgSaveAs.cbxSet.hide()
             self.wgSaveAs.lblSet.hide()
@@ -108,38 +108,38 @@ class ArSaveAs(ArUtil):
 
         try:
             if self.wgSaveAs.cbxScene.currentText():
-                self.wgSaveAs.cbxTask.addItems(Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
-        except: self.set_status('FAILED adding tasks items: data/project/$project/project.yml : TASK', msg_type=3)
+                self.wgSaveAs.cbxTask.addItems(Tank().config_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
+        except: self.set_status('FAILED adding tasks items: config/projects/$project/project.yml : TASK', msg_type=3)
 
         if Tank().software.is_nuke:
             index = self.wgSaveAs.cbxTask.findText('COMP', QtCore.Qt.MatchContains)
             if index >= 0: self.wgSaveAs.cbxTask.setCurrentIndex(index)
 
         try:
-            self.save_dir = Tank().data_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
+            self.save_dir = Tank().config_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
             if self.wgSaveAs.cbxSet.isVisible():
                 self.wgSaveAs.cbxSet.addItems(pipefunc.get_file_list(self.save_dir))
-        except: LOG.error('FAILED adding PATH items: data/project/$project/project.yml : PATH', exc_info=True)
+        except: LOG.error('FAILED adding PATH items: config/projects/$project/project.yml : PATH', exc_info=True)
 
 
     #*********************************************************************
     # FUNC
     def update_file(self):
         if self.wgSaveAs.cbxScene.currentText():
-            status_text = '/' + Tank().data_project['STATUS']['work']
+            status_text = '/' + Tank().config_project['STATUS']['work']
 
             if self.new_file: extension = Tank().software.extension
             else: extension = ''
 
-            new_item = Tank().data_project['SCENES'][self.wgSaveAs.cbxScene.currentText()]
+            new_item = Tank().config_project['SCENES'][self.wgSaveAs.cbxScene.currentText()]
             new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
                                        entity    = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
-                                       status    = Tank().data_project['STATUS']['work'],
-                                       version   = Tank().data_project['FILE']['version'].replace(r'\d','0').replace('_',''),
+                                       status    = Tank().config_project['STATUS']['work'],
+                                       version   = Tank().config_project['FILE']['version'].replace(r'\d','0').replace('_',''),
                                        user      = getpass.getuser()[:2].lower(),
                                        extension = extension,
-                                       frame     = Tank().data_project['start_frame'])
+                                       frame     = Tank().config_project['start_frame'])
 
             if self.new_file: status_text += '/' + os.path.basename(new_item)
             self.save_file = self.save_dir + '/' + new_item
@@ -165,7 +165,7 @@ class ArSaveAs(ArUtil):
         save_list = []
 
         if self.all_task in self.save_file:
-            for task in Tank().data_project['TASK'][self.wgSaveAs.cbxScene.currentText()]:
+            for task in Tank().config_project['TASK'][self.wgSaveAs.cbxScene.currentText()]:
                 new_path = self.save_file.replace(self.all_task, task)
                 save_list.append(new_path)
         else:
@@ -182,7 +182,7 @@ class ArSaveAs(ArUtil):
             tmp_title = os.path.basename(self.save_file).split('.')[0]
             tmp_func = 'SAVE AS'
 
-            self.set_meta_data(self.save_file)
+            self.set_meta_config(self.save_file)
         else:
             try:    self.set_open_folder(save_list[0])
             except: LOG.error(f'CAN\'T set folder: {save_list}')
@@ -203,11 +203,11 @@ class ArSaveAs(ArUtil):
         return True
 
 
-    def set_meta_data(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + Tank().data_project['META']['file']
+    def set_meta_config(self, save_path=''):
+        meta_path    = os.path.dirname(save_path) + Tank().config_project['META']['file']
         comment_dict = {'user':    User().id,
                         'comment': 'new scene'}
-        Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
+        Tank().set_config(meta_path, os.path.basename(save_path), comment_dict)
 
 
 

@@ -17,7 +17,7 @@ from software import Software
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-DEFAULT_PATH = os.path.normpath(os.getenv('DATA_USER_PATH').split(';')[0] + '/tmp_img.jpg')
+DEFAULT_PATH = os.path.normpath(os.getenv('CONFIG_USER_PATH').split(';')[0] + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -58,7 +58,7 @@ class Nuke(Software):
         topName ="[file tail [knob [topnode].file]]"
 
         # create writes and define render format
-        write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=Tank().data_project['EXTENSION']['thumnail'])
+        write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=Tank().config_project['EXTENSION']['thumnail'])
         write1.setInput(0, selInput)
 
         # look up current frame

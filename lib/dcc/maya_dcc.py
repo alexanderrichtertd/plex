@@ -54,25 +54,25 @@ class Maya(Software):
     # SHELF
     def add_shelf(self, shelf_name='', header_footer=True):
         new_shelf  = []
-        shelf_data = Tank().data_software['SHELF']
+        shelf_config = Tank().config_software['SHELF']
 
         # GET header scripts
-        if header_footer: new_shelf += shelf_data['HEADER']
+        if header_footer: new_shelf += shelf_config['HEADER']
 
         # GET main scripts
-        if shelf_name in shelf_data:
-            new_shelf += shelf_data[shelf_name]
+        if shelf_name in shelf_config:
+            new_shelf += shelf_config[shelf_name]
         else:
             LOG.warning(f'shelf {shelf_name} doesnt exist')
 
         # GET footer scripts
-        if header_footer: new_shelf += shelf_data['FOOTER']
+        if header_footer: new_shelf += shelf_config['FOOTER']
 
         LOG.debug(f'{shelf_name} - {new_shelf}')
         if not shelf_name: shelf_name = os.getenv('PROJECT_NAME')
 
         # DELETE old and CREATE shelf tab
-        remove_shelfs = shelf_data.keys() + [shelf_name, os.getenv('PROJECT_NAME')]
+        remove_shelfs = shelf_config.keys() + [shelf_name, os.getenv('PROJECT_NAME')]
         for shelf in remove_shelfs:
             if pm.shelfLayout(shelf, ex=1):
                 pm.deleteUI(shelf)

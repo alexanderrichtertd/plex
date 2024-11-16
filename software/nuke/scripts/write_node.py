@@ -36,7 +36,7 @@ def create_node(this_node=''):
     this_node["resolutionY"].setValue(this_node.height())
 
     fileName   = os.path.basename(nuke.root().name()).split(".")[0]
-    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + f"/{Tank().data_project['STATUS']['render']}/{fileName}/exr/{fileName}.%04d.exr"
+    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + f"/{Tank().config_project['STATUS']['render']}/{fileName}/exr/{fileName}.%04d.exr"
     renderPath = renderPath.replace('\\','/')
 
     # this_node["rootPath"].setValue(renderPath)
@@ -49,7 +49,7 @@ def openRV(path):
     if not os.path.exists(os.path.dirname(path)) or not os.listdir(os.path.dirname(path)):
         LOG.warning("FOLDER : NOT EXISTS : " + path)
     else:
-        os.system('start "" "' + Tank().data_software['RV']['path'] + '" ' + path)
+        os.system('start "" "' + Tank().config_software['RV']['path'] + '" ' + path)
 
 
 # TODO: REPLACE with lib.pipefunc.openFolder(path)
@@ -119,7 +119,7 @@ def publishRender(file_type):
         if part == "COMP": break
 
     fileName    = ("_").join(fileName)
-    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().data_project['STATUS']['publish'] + "/" + file_type
+    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().config_project['STATUS']['publish'] + "/" + file_type
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)

@@ -10,7 +10,7 @@ import os
 import sys
 import getpass
 
-from extern import yaml
+import yaml
 from Qt import QtGui
 
 import pipefunc
@@ -18,7 +18,7 @@ import pipefunc
 
 #*********************************************************************
 # VARIABLES
-DATA_FORMAT = '.yml'
+CONFIG_FORMAT = '.yml'
 
 
 #*********************************************************************
@@ -101,64 +101,64 @@ class Tank(Singleton):
 
 
     #*********************************************************************
-    # DATA
+    # CONFIG
     @property
-    def data(self):
-        return self.get_data()
+    def config(self):
+        return self.get_config()
 
     @property
-    def data_project(self):
-        return self.get_data('project')
+    def config_project(self):
+        return self.get_config('project')
 
     @property
-    def data_software(self):
-        return self.get_data(f'dcc/{os.getenv("SOFTWARE")}')
+    def config_software(self):
+        return self.get_config(f'dcc/{os.getenv("SOFTWARE")}')
 
     @property
-    def data_script(self):
-        return self.get_data('script')
+    def config_script(self):
+        return self.get_config('script')
 
     @property
-    def data_notice(self):
-        return self.get_data('notice')
+    def config_notice(self):
+        return self.get_config('notice')
 
 
     #*********************************************************************
-    # GET AND SET DATA
-    def get_data(self, file_name='', user_id=getpass.getuser()):
+    # GET AND SET CONFIG
+    def get_config(self, file_name='', user_id=getpass.getuser()):
 
-        def get_all_data():
-            config_data = {}
-            data_user_files    = pipefunc.get_file_list(path=self.get_env('DATA_USER_PATH'),    file_type='*' + DATA_FORMAT)
-            data_project_files = pipefunc.get_file_list(path=self.get_env('DATA_PROJECT_PATH'), file_type='*' + DATA_FORMAT)
+        def get_all_config():
+            config_config = {}
+            config_user_files    = pipefunc.get_file_list(path=self.get_env('CONFIG_USER_PATH'),    file_type='*' + CONFIG_FORMAT)
+            config_project_files = pipefunc.get_file_list(path=self.get_env('CONFIG_PROJECT_PATH'), file_type='*' + CONFIG_FORMAT)
 
-            data_project_files = list(set(data_user_files)|set(data_project_files))
-            for each_file in data_project_files:
-                config_data.update({each_file : self.get_data(each_file, user_id)})
+            config_project_files = list(set(config_user_files)|set(config_project_files))
+            for each_file in config_project_files:
+                config_config.update({each_file : self.get_config(each_file, user_id)})
                 
-            return config_data
+            return config_config
 
-        if not file_name: return get_all_data()
+        if not file_name: return get_all_config()
 
         file_name = file_name.split('.')[0]
         file_name = file_name.lower()
         file_path = ''
 
-        if user_id and self.get_env('DATA_USER_OVERWRITE') == 'True':
-            file_path = os.path.normpath(('/').join([self.get_env('DATA_USER_PATH'), file_name + DATA_FORMAT]))
+        if user_id and self.get_env('CONFIG_USER_OVERWRITE') == 'True':
+            file_path = os.path.normpath(('/').join([self.get_env('CONFIG_USER_PATH'), file_name + CONFIG_FORMAT]))
 
         if not os.path.exists(file_path):
-            file_path = os.path.normpath(('/').join([self.get_env('DATA_PROJECT_PATH'), file_name + DATA_FORMAT]))
+            file_path = os.path.normpath(('/').join([self.get_env('CONFIG_PROJECT_PATH'), file_name + CONFIG_FORMAT]))
 
-        # OPEN data path
+        # OPEN config path
         if os.path.exists(file_path):
             return self.get_yml_file(file_path)
-
         else: print(f'CANT find file: {file_path}')
+        
         return ''
 
 
-    def set_data(self, path, key, value):
+    def set_config(self, path, key, value):
         if os.path.exists(path):
             tmp_content = self.get_yml_file(path)
         else:
@@ -190,7 +190,7 @@ class Tank(Singleton):
         if '.' in end_path:
             img_format = ''
         else:
-            img_format = self.data_project['EXTENSION']['icons']
+            img_format = self.config_project['EXTENSION']['icons']
 
         path = self.get_pipeline_path(f'img/{end_path}.{img_format}')
         if not path:

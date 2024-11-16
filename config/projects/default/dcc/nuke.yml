@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = Nuke data
+# content   = Nuke config
 # date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
@@ -41,7 +41,7 @@ ENV:
 MENU:
   - Plex:
       open_scene_folder:   addCommand('Open Scene Folder', 'import pipefunc; pipefunc.open_folder(nuke.root().knob("name").value())')
-      open_project_folder: addCommand('Open Project Folder', 'import pipefunc;import tank; pipefunc.open_folder(Tank().data_project["path"])')
+      open_project_folder: addCommand('Open Project Folder', 'import pipefunc;import tank; pipefunc.open_folder(Tank().config_project["path"])')
 
   - break:   addSeparator()
 

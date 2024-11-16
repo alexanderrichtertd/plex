@@ -20,7 +20,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-DEFAULT_PATH = os.path.normpath(os.getenv('DATA_USER_PATH').split(';')[0] + '/tmp_img.jpg')
+DEFAULT_PATH = os.path.normpath(os.getenv('CONFIG_USER_PATH').split(';')[0] + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -31,13 +31,13 @@ class Software(tank.Singleton):
 
     def setup(self):
         os.environ['SOFTWARE'] = self._NAME
-        self._software_data = Tank().data_software
-        self._version = self._software_data['version']
-        self._path    = self._software_data['path']
+        self._software_config = Tank().config_software
+        self._version = self._software_config['version']
+        self._path    = self._software_config['path']
 
         # RENDERER
-        self._renderer      = self._software_data.get('renderer', '')
-        self._renderer_path = self._software_data.get('renderer_path', '')
+        self._renderer      = self._software_config.get('renderer', '')
+        self._renderer_path = self._software_config.get('renderer_path', '')
 
 
     def setup_env(self):
@@ -58,9 +58,9 @@ class Software(tank.Singleton):
         os.environ['SOFTWARE_SUB_PATH'] = (';').join(sub_path)
         LOG.debug(f'SOFTWARE_PATH: {os.environ["SOFTWARE_PATH"]}')
 
-        # GET data
-        self._software_data = Tank().data_software
-        self._env = self._software_data.get('ENV', '')
+        # GET config
+        self._software_config = Tank().config_software
+        self._env = self._software_config.get('ENV', '')
 
         # ADD software ENV
         if(self._env):
@@ -81,7 +81,7 @@ class Software(tank.Singleton):
         self.setup()
         self.setup_env()
 
-        cmd = self._software_data['start'].format(open_file)
+        cmd = self._software_config['start'].format(open_file)
 
         if open_file:
             if self._NAME == 'maya':
@@ -118,16 +118,16 @@ class Software(tank.Singleton):
         return self._path
 
     @property
-    def data(self):
-        return self._software_data
+    def config(self):
+        return self._software_config
 
     @property
     def extension(self):
-        return Tank().data_project['EXTENSION'][self._NAME]
+        return Tank().config_project['EXTENSION'][self._NAME]
 
     @property
     def menu(self):
-        return self._software_data['MENU']
+        return self._software_config['MENU']
 
     @property
     def env(self):
@@ -184,9 +184,9 @@ class Software(tank.Singleton):
     # MENU
     def add_menu(self, menu_node):
         self.add_sub_menu = []
-        self._software_data = Tank().data_software
+        self._software_config = Tank().config_software
 
-        for menu_item in self._software_data['MENU']:
+        for menu_item in self._software_config['MENU']:
             try:    self.add_menu_item(menu_node, menu_item)
             except: LOG.error('SOFTWARE Menu couldnt be created', exc_info=True)
 
@@ -237,15 +237,15 @@ class Software(tank.Singleton):
     def scene_setup(self, setup_type, status='', default=True):
         import maya.cmds as cmds
 
-        data_setup = Tank().data_software['SETUP']
-        LOG.info(data_setup)
+        config_setup = Tank().config_software['SETUP']
+        LOG.info(config_setup)
         new_setup  = []
 
         if default:
-            new_setup += data_setup['DEFAULT']
+            new_setup += config_setup['DEFAULT']
 
-        if status in data_setup:
-            new_setup += data_setup[status]
+        if status in config_setup:
+            new_setup += config_setup[status]
 
         LOG.debug(new_setup)
 
@@ -284,7 +284,7 @@ class Software(tank.Singleton):
         print('PATH')
 
         self.print_checked_header('img')
-        self.print_checked_header('data')
+        self.print_checked_header('config')
         self.print_checked_header('lib')
         self.print_checked_header('lib/apps')
         self.print_checked_header(f'software/{self._NAME}')
@@ -301,7 +301,7 @@ class Software(tank.Singleton):
 
         print('SCENE')
         # scripts from software/MENU
-        for menu_item in self._software_data['MENU']:
+        for menu_item in self._software_config['MENU']:
             for key in menu_item:
                 if key == 'break': continue
                 self.print_checked_header(key)

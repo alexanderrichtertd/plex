@@ -31,7 +31,7 @@ def init(software="default", script="default", level=logging.DEBUG, path="",
          debug_console=False, multi_threads=False, *args, **kwargs):
 
     if not path: 
-        path = ("/").join([os.getenv('DATA_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
+        path = ("/").join([os.getenv('CONFIG_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
 
     create_folder(path)
 

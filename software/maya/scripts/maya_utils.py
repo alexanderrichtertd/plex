@@ -41,13 +41,13 @@ def load_menus():
 #*********************************************************************
 # START SETUP
 def setup_scene(file_path=''):
-    project_data = Tank().data_project
+    project_config = Tank().config_project
 
     # RESOLUTION
     try:
-        cmds.setAttr("defaultResolution.width", project_data['resolution'][0])
-        cmds.setAttr("defaultResolution.height", project_data['resolution'][1])
-        cmds.setAttr('defaultResolution.deviceAspectRatio', (( project_data['resolution'][0]) / (project_data['resolution'][1])))
+        cmds.setAttr("defaultResolution.width", project_config['resolution'][0])
+        cmds.setAttr("defaultResolution.height", project_config['resolution'][1])
+        cmds.setAttr('defaultResolution.deviceAspectRatio', (( project_config['resolution'][0]) / (project_config['resolution'][1])))
     except: LOG.error('FAIL load resolution.', exc_info=True)
 
     # IMG FORMAT
@@ -57,21 +57,21 @@ def setup_scene(file_path=''):
 
     # FPS
     try:
-        fps = SOFTWARE_DATA['SETTINGS']['FPS'][project_data['fps']]
+        fps = SOFTWARE_CONFIG['SETTINGS']['FPS'][project_config['fps']]
         cmds.currentUnit(time=fps)
         cmds.optionVar(sv = ("workingUnitTime", fps))
         cmds.optionVar(sv = ("workingUnitTimeDefault", fps))
     except: LOG.error('FAIL load fps.', exc_info=True)
 
     # UNIT
-    try:    cmds.currentUnit(linear=SOFTWARE_DATA['SETTINGS']['unit'])
+    try:    cmds.currentUnit(linear=SOFTWARE_CONFIG['SETTINGS']['unit'])
     except: LOG.error('FAIL load unit.', exc_info=True)
 
     # RENDERER
     try:
-        renderer = SOFTWARE_DATA['renderer']
-        cmds.optionVar(sv = ("preferredRenderer", SOFTWARE_DATA['renderer']))
-        cmds.optionVar(sv = ("preferredRendererHold", SOFTWARE_DATA['renderer']))
+        renderer = SOFTWARE_CONFIG['renderer']
+        cmds.optionVar(sv = ("preferredRenderer", SOFTWARE_CONFIG['renderer']))
+        cmds.optionVar(sv = ("preferredRendererHold", SOFTWARE_CONFIG['renderer']))
     except: LOG.error('FAIL load renderer.', exc_info=True)
 
     # ANIMATION extension
@@ -84,7 +84,7 @@ def setup_scene(file_path=''):
     if file_path:
         try:
             render_path = os.path.dirname(os.path.dirname(file_path))
-            render_path += "/" + Tank().data_project["STATUS"]["render"] + "/<Scene>/<Scene>"
+            render_path += "/" + Tank().config_project["STATUS"]["render"] + "/<Scene>/<Scene>"
             cmds.setAttr('defaultRenderGlobals.imageFilePrefix', render_path, type='string')
         except: LOG.error('FAIL set image path.', exc_info=True)
 

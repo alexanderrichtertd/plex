@@ -65,7 +65,7 @@ class ArUtil(object):
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
         # SETUP
-        self.refresh_data()
+        self.refresh_config()
         self.set_status()
         self.set_open_folder()
         self.wgHeader.edtComment.setText('')
@@ -104,7 +104,7 @@ class ArUtil(object):
                         self.wgMenu.btnMenu01_item04, self.wgMenu.btnMenu01_item05, self.wgMenu.btnMenu01_item06]
 
         self.select_menu = {
-            "data"     : self.wgMenu.btnMenu01_item01,
+            "config"   : self.wgMenu.btnMenu01_item01,
             "path"     : self.wgMenu.btnMenu01_item02,
             "advanced" : self.wgMenu.btnMenu01_item03,
             "log"      : self.wgMenu.btnMenu01_item04,
@@ -116,7 +116,7 @@ class ArUtil(object):
             each_item.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(menu01_img[index]))))
             # each_item.clicked.connect(lambda: self.press_btnMenu("settings"))
 
-        self.wgMenu.btnMenu01_item01.clicked.connect(lambda: self.press_btnMenu("data"))
+        self.wgMenu.btnMenu01_item01.clicked.connect(lambda: self.press_btnMenu("config"))
         self.wgMenu.btnMenu01_item02.clicked.connect(lambda: self.press_btnMenu("path"))
         self.wgMenu.btnMenu01_item03.clicked.connect(lambda: self.press_btnMenu("advanced"))
         self.wgMenu.btnMenu01_item04.clicked.connect(lambda: self.press_btnMenu("log"))
@@ -164,9 +164,9 @@ class ArUtil(object):
 
         tmp_menu.setStyleSheet("background-color: rgb(51, 140, 188);")
 
-        if menu_tag == 'data':
-            self.data = Tank().data
-            for eachKey in self.data.keys():
+        if menu_tag == 'config':
+            self.config = Tank().config
+            for eachKey in self.config.keys():
                 addButton = QtGui.QPushButton(eachKey)
                 addButton.clicked.connect(lambda: self.press_btnSubMenu(eachKey))
                 self.wgMenu.layMenu02.addWidget(addButton)
@@ -215,7 +215,7 @@ class ArUtil(object):
 
         if not msg_type:
             template_css = """QProgressBar::chunk { background: %s; }"""
-            css = template_css % self.data['script'][__name__]['progress_color'][msg_type]
+            css = template_css % self.config['script'][__name__]['progress_color'][msg_type]
             self.wgHeader.prbStatus.setStyleSheet(css)
             self.set_progress(100)
 
@@ -236,14 +236,14 @@ class ArUtil(object):
         if os.path.exists(path):
             self.wgHeader.btnOpenFolder.setEnabled(True)
             self.open_path = os.path.normpath(path)
-            self.wgHeader.edtPath.setText(self.open_path)
+            self.wgHeader.lblContext.setText(self.open_path)
         else:
-            self.wgHeader.edtPath.setText('')
+            self.wgHeader.lblContext.setText('')
             self.wgHeader.btnOpenFolder.setEnabled(False)
 
 
-    def refresh_data(self):
-        self.data = Tank().data
+    def refresh_config(self):
+        self.config = Tank().config
 
 
     def resize_widget(self, widget):

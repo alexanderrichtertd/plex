@@ -1,0 +1,125 @@
+#*********************************************************************
+# content   = project config
+# date      = 2024-11-09
+#
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+
+name: Default Project
+
+
+#*********************************************************************
+SETTING:
+    frame_start: 1001
+
+    resolution:
+        - 1920
+        - 1080
+
+    fps: 24
+
+
+#*********************************************************************
+PATH:
+    project           : &PROJECT D:\project
+    pipeline          : ''
+
+    sandbox           : !join [*PROJECT, /1_sandbox]
+    pre               : !join [*PROJECT, /2_preproduction]
+
+    footage           : !join [*PROJECT, /3_footage]
+    assets            : !join [*PROJECT, /4_assets]
+    shots             : !join [*PROJECT, /4_shots]
+    render            : !join [*PROJECT, /5_render]
+
+    post              : !join [*PROJECT, /6_post]
+
+
+#*********************************************************************
+URL:
+    default:   &WIKI https://github.com/alexanderrichtertd/plex/wiki
+
+    arUtil:    !join [*WIKI, /arUtil]
+    arDesktop: !join [*WIKI, /arDesktop]
+    arSave:    !join [*WIKI, /arSave]
+    arNotice:  !join [*WIKI, /arNotice]
+
+    shelf:     !join [*WIKI, /shelf]
+    report:    !join [*WIKI, /report]
+
+
+#*****************************************************************************************************************************
+# FORMATS
+EXTENSION:
+    maya:      ma
+    max :      max
+    nuke:      nk
+    houdini:   hipnc
+    photoshop: psd
+    substance: spp
+
+    playblast: mov
+    texture:   exr
+    render:    exr
+    thumbnail: jpg
+
+    icons:     png
+
+
+#*********************************************************************
+# STRUCTURE
+STATUS:
+    work:    WORK
+    publish: PUBLISH
+    render:  RENDER
+
+
+FILE:
+    shots:   s\d\d\d_  # s412_name
+    version: _v\d\d\d  # _v001
+
+
+# sq010_sky/s020_angle/RIG/WORK/s020_angle_RIG_v001.mb
+# items.format(seq='sq010_sequence', entity='s010_shot',
+#              task='RIG', status='WORK', version='v001',
+#              frame='1001', user='ar', extension='mb')
+SCENES:
+    assets: "{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
+    shots : "{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
+    render: "{entity}/{task}/{status}/{entity}_{task}_{version}.{frame}.{extension}"
+
+    # replace if with sequences
+    # shots : "{sequence}/{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
+    # render: "{sequence}/{entity}/{task}/{status}/{entity}_{task}_{version}.{frame}.{extension}"
+
+
+META:
+    dir:  &META '/meta/'
+    file: !join [*META, 'info.yml']
+
+
+TASK:
+    assets: &ASSET_TASK
+        - GEO
+        - TEX
+        - SHD
+        - RIG
+
+    shots: &SHOT_TASK
+        - ANIM
+        - LGT
+        - FX
+        - RENDER
+        - COMP
+
+    render: *SHOT_TASK
+
+SET:
+    assets: &ASSET_SET
+        - char
+        - prop
+        - set
+
+  # shots: &SHOT_SET

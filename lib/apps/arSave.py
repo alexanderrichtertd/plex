@@ -117,16 +117,16 @@ class ArSave(ArUtil):
 
         self.update_version()
 
-        if self.data['project']['STATUS']['publish'] in self.save_dir:
-            self.save_dir = self.save_dir.replace(self.data['project']['STATUS']['publish'], self.data['project']['STATUS']['work'])
+        if self.config['project']['STATUS']['publish'] in self.save_dir:
+            self.save_dir = self.save_dir.replace(self.config['project']['STATUS']['publish'], self.config['project']['STATUS']['work'])
 
-        if self.data['script'][__name__]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
+        if self.config['script'][__name__]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
         else: snapshot.create_any_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
 
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(self.data['project']['FILE']['version'], os.path.basename(self.save_file))
+        found_version = re.search(self.config['project']['FILE']['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
@@ -149,7 +149,7 @@ class ArSave(ArUtil):
         
         try:
             Tank().software.scene_save_as(self.save_file)
-            self.set_meta_data()
+            self.set_meta_config()
             LOG.info(f'SAVE : {self.save_file}')
         except:
             LOG.error(f'FAIL : Couldn\'t save file : {self.save_file}', exc_info=True)
@@ -157,19 +157,19 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmpCopyWork = self.save_file.replace('.', f'_{self.data["project"]["STATUS"]["publish"]}.')
+            tmpCopyWork = self.save_file.replace('.', f'_{self.config["project"]["STATUS"]["publish"]}.')
             snapshot.save_snapshot(tmpCopyWork)
-            self.set_meta_data(tmpCopyWork)
+            self.set_meta_config(tmpCopyWork)
 
-            found_version = re.search(self.data['project']['FILE']['version'], os.path.basename(self.save_file))
+            found_version = re.search(self.config['project']['FILE']['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Tank().software.extension
 
-            if self.data['project']['STATUS']['work'] in self.save_file:
-                self.save_publish_file = self.save_publish_file.replace(self.data['project']['STATUS']['work'], self.data['project']['STATUS']['publish'])
+            if self.config['project']['STATUS']['work'] in self.save_file:
+                self.save_publish_file = self.save_publish_file.replace(self.config['project']['STATUS']['work'], self.config['project']['STATUS']['publish'])
             else:
-                LOG.error(f'FAIL : NO {self.data["project"]["STATUS"]["work"]} in path : {self.save_publish_file}', exc_info=True)
+                LOG.error(f'FAIL : NO {self.config["project"]["STATUS"]["work"]} in path : {self.save_publish_file}', exc_info=True)
                 return False
 
             pipefunc.create_folder(os.path.dirname(self.save_publish_file))
@@ -183,7 +183,7 @@ class ArSave(ArUtil):
 
             LOG.info(f"PUBLISH : {self.save_publish_file}")
             snapshot.save_snapshot(self.save_publish_file)
-            self.set_meta_data(self.save_publish_file)
+            self.set_meta_config(self.save_publish_file)
 
         note = arNotice.Notice(title = os.path.basename(self.save_file).split('.')[0],
                                msg   = self.wgSave.edtComment.text(),
@@ -196,18 +196,18 @@ class ArSave(ArUtil):
         return True
 
 
-    def set_meta_data(self, save_path=''):
+    def set_meta_config(self, save_path=''):
         if not save_path: save_path = self.save_file
 
-        meta_path = os.path.dirname(save_path) + Tank().data_project['META']['file']
+        meta_path = os.path.dirname(save_path) + Tank().config_project['META']['file']
         # LOG.info(meta_path)
         comment_dict = {'user':   User().id,
                         'comment': str(self.wgSave.edtComment.text())}
-        Tank().set_data(meta_path, os.path.basename(save_path), comment_dict)
+        Tank().set_config(meta_path, os.path.basename(save_path), comment_dict)
 
 
-    def folder_msg_box(self, bpS, dataFilter, title = 'Choose file to open', path = ''): #dataFilter = "Maya Files (*.mb *.ma)"
-        result = QtGui.QFileDialog().getOpenFileName(bpS, title, path, dataFilter)
+    def folder_msg_box(self, bpS, configFilter, title = 'Choose file to open', path = ''): #configFilter = "Maya Files (*.mb *.ma)"
+        result = QtGui.QFileDialog().getOpenFileName(bpS, title, path, configFilter)
         return str(result[0])
 
 

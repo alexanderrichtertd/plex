@@ -127,26 +127,26 @@ class ArNotice():
 def create_default_notice(script_string, msg=""):
     root, script_name = script_string.split(":")
 
-    notice_data = Tank().data_notice
+    notice_config = Tank().config_notice
 
-    if root in notice_data and script_name in notice_data[root]:
-        notice_data = notice_data[root][script_name]
-        notice_msg = [lambda: notice_data["msg"], lambda: msg][msg != ""]()
+    if root in notice_config and script_name in notice_config[root]:
+        notice_config = notice_config[root][script_name]
+        notice_msg = [lambda: notice_config["msg"], lambda: msg][msg != ""]()
     else:
-        notice_data['title'] = root
+        notice_config['title'] = root
         notice_msg  = script_name
-        # LOG.warning(f"notice.yml data doesn't exist: {script_name}")
+        # LOG.warning(f"notice.yml config doesn't exist: {script_name}")
         # return
 
-    if "quote" in notice_data: notice_quote = notice_data["quote"]
+    if "quote" in notice_config: notice_quote = notice_config["quote"]
     else: notice_quote = ''
 
-    img_name = [lambda: script_name, lambda: notice_data["img"]]["img" in notice_data]()
-    img_link = [lambda: "", lambda: notice_data["img_link"]]["img_link" in notice_data]()
+    img_name = [lambda: script_name, lambda: notice_config["img"]]["img" in notice_config]()
+    img_link = [lambda: "", lambda: notice_config["img_link"]]["img_link" in notice_config]()
     img_path = Tank().get_img_path("lbl/notice_" + img_name)
     img_path = [lambda: f'{img_path}/notice_default.png', lambda: img_path][os.path.exists(img_path)]()
 
-    note = Notice(title = notice_data['title'],
+    note = Notice(title = notice_config['title'],
                     msg = notice_msg,
                   quote = notice_quote,
                     img = img_path,
@@ -181,29 +181,29 @@ def create_changelog_popup():
 
     # READ YAML file
     with open(last_changelog, 'r') as stream:
-        changelog_data = yaml.load(stream, Loader=yaml.Loader)
+        changelog_config = yaml.load(stream, Loader=yaml.Loader)
 
-    notice_data = changelog_data["notice"]
+    notice_config = changelog_config["notice"]
     popup_func  = ''
 
-    if 'changelog' in changelog_data:
+    if 'changelog' in changelog_config:
         popup_func  = f"""from Qt import QtWidgets, QtGui, QtCore, QtCompat
                         widget = QtGui.QMessageBox()
-                        widget.setWindowTitle('{notice_data["title"]}')
-                        widget.setText({changelog_data["changelog"]})
+                        widget.setWindowTitle('{notice_config["title"]}')
+                        widget.setText({changelog_config["changelog"]})
                         widget.show()"""
 
-    notice_msg = notice_data["msg"]
+    notice_msg = notice_config["msg"]
 
-    img_name = notice_data["img"] if "img" in notice_data else "changelog"
-    img_path = f'{pipefunc.get_data_path("img_notice")}/notice_{img_name}.png'
+    img_name = notice_config["img"] if "img" in notice_config else "changelog"
+    img_path = f'{pipefunc.get_config_path("img_notice")}/notice_{img_name}.png'
 
-    note = Notice(title    = notice_data["title"],
+    note = Notice(title    = notice_config["title"],
                   msg      = notice_msg,
                   # func   = popup_func,
                   img      = img_path,
-                  quote    = notice_data["quote"],
-                  img_link = notice_data["img_link"])
+                  quote    = notice_config["quote"],
+                  img_link = notice_config["img_link"])
 
     ArNotice(note)
 

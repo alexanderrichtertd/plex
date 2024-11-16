@@ -19,10 +19,10 @@ from tank import Tank
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
 
-PROJECT_DATA = Tank().data_project
-RESOLUTION   = (' ').join([str(PROJECT_DATA['resolution'][0]),
-                            str(PROJECT_DATA['resolution'][1]),
-                            PROJECT_DATA['name'].replace(' ', '')])
+PROJECT_CONFIG = Tank().config_project
+RESOLUTION   = (' ').join([str(PROJECT_CONFIG['resolution'][0]),
+                            str(PROJECT_CONFIG['resolution'][1]),
+                            PROJECT_CONFIG['name'].replace(' ', '')])
 
 
 #*********************************************************************
@@ -74,7 +74,7 @@ print('SETTINGS')
 # RESOLUTION *********************************************************************
 try:
     nuke.addFormat(RESOLUTION)
-    nuke.knobDefault('Root.format', PROJECT_DATA['name'].replace(' ', ''))
+    nuke.knobDefault('Root.format', PROJECT_CONFIG['name'].replace(' ', ''))
     print(f'  {chr(254)} ON  - {RESOLUTION}')
 except:
     LOG.error(f'  OFF - {RESOLUTION}', exc_info=True)
@@ -82,11 +82,11 @@ except:
 
 # FPS *********************************************************************
 try:
-    nuke.knobDefault("Root.fps", str(PROJECT_DATA['fps']))
-    print(f'  {chr(254)} ON  - {PROJECT_DATA['fps']} fps')
+    nuke.knobDefault("Root.fps", str(PROJECT_CONFIG['fps']))
+    print(f'  {chr(254)} ON  - {PROJECT_CONFIG['fps']} fps')
 except:
-    LOG.error(f'  OFF - {PROJECT_DATA['fps']} fps', exc_info=True)
-    print(f'  {chr(254)} OFF - {PROJECT_DATA['fps']} fps')
+    LOG.error(f'  OFF - {PROJECT_CONFIG['fps']} fps', exc_info=True)
+    print(f'  {chr(254)} OFF - {PROJECT_CONFIG['fps']} fps')
 
 # createFolder *********************************************************************
 try:

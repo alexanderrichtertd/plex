@@ -71,41 +71,41 @@ def check_ui():
 
 
 def set_exe_file(root, script_name, stats_path, result_time):
-    user_data = {}
+    user_config = {}
 
     if os.path.exists(stats_path):
         # READ YAML file
         with open(stats_path, 'r') as stream:
-            user_data = yaml.load(stream)
+            user_config = yaml.load(stream)
 
     # CREATE entry if not existing
-    if not user_data or not root in user_data:
-        user_data[root] = {}
-    if not script_name in user_data[root]:
-        user_data[root][script_name]= { "count"    : 0,
+    if not user_config or not root in user_config:
+        user_config[root] = {}
+    if not script_name in user_config[root]:
+        user_config[root][script_name]= { "count"    : 0,
                                         "time avg" : 0,
                                         "time min" : 0,
                                         "time max" : 0 }
 
     # FILL content
-    user_data[root][script_name]["count"] += 1
+    user_config[root][script_name]["count"] += 1
 
-    if user_data[root][script_name]["count"] == 1:
-        user_data[root][script_name]["time avg"] = result_time
+    if user_config[root][script_name]["count"] == 1:
+        user_config[root][script_name]["time avg"] = result_time
     else:
-        avg_time = ((user_data[root][script_name]["time avg"] * (user_data[root][script_name]["count"] - 1))
-                    + result_time) / user_data[root][script_name]["count"]
-        user_data[root][script_name]["time avg"] = avg_time
+        avg_time = ((user_config[root][script_name]["time avg"] * (user_config[root][script_name]["count"] - 1))
+                    + result_time) / user_config[root][script_name]["count"]
+        user_config[root][script_name]["time avg"] = avg_time
 
-    if result_time < user_data[root][script_name]["time min"] or user_data[root][script_name]["time min"] == 0:
-        user_data[root][script_name]["time min"] = result_time
-    if result_time > user_data[root][script_name]["time max"]:
-        user_data[root][script_name]["time max"] = result_time
+    if result_time < user_config[root][script_name]["time min"] or user_config[root][script_name]["time min"] == 0:
+        user_config[root][script_name]["time min"] = result_time
+    if result_time > user_config[root][script_name]["time max"]:
+        user_config[root][script_name]["time max"] = result_time
 
     # WRITE YAML file
     try:
         with io.open(stats_path, 'w', encoding='utf8') as outfile:
-            yaml.dump(user_data, outfile, default_flow_style=False, allow_unicode=True)
+            yaml.dump(user_config, outfile, default_flow_style=False, allow_unicode=True)
     except:
         LOG.error(f'CAN\'T write stats info into: {stats_path}', exc_info=True)
 

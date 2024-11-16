@@ -73,7 +73,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>data</string>
+           <string>config</string>
           </property>
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>

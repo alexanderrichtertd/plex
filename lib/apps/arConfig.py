@@ -53,7 +53,7 @@ class ArConfig(ArUtil):
         LOG.info('START : ArConfig')
 
     def setup(self):
-        self.set_open_folder(os.getenv('DATA_PROJECT_PATH'))
+        self.set_open_folder(os.getenv('CONFIG_PROJECT_PATH'))
         print("")
 
 

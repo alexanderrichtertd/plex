@@ -36,8 +36,8 @@ def add_write_node():
 
 #*********************************************************************
 # TOOLBAR
-menu_data = Tank().data_software['MENU']
-menuNode  = nuke.menu('Nodes').addMenu(Tank().data_project['name'], icon = 'nuke.ico')
+menu_config = Tank().config_software['MENU']
+menuNode  = nuke.menu('Nodes').addMenu(Tank().config_project['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 

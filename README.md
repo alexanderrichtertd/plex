@@ -36,14 +36,14 @@ The basic idea is to manage the file and folder structure, set the ground rules 
 - [x] **scripts**
  - desktop app
  - save (+ publish) | load | create | render
- - get, set and handle data | img | scripts
+ - get, set and handle config | img | scripts
  - template UI (user, report, help, accept, comment, color code)
  - setup menu, shelf, toolbar, ...
 - [x] **Workflows and Charts**
  - naming conventions
  - software pipeline
  - folder structure (project & pipeline)
-- [x] **Data and Helper**
+- [x] **Config and Helper**
  - project (resolution, fps ...)
  - user (name, task ...)
  - context (shot, task, comment ...)

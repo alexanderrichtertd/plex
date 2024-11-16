@@ -23,7 +23,7 @@ def help(name=''):
     if not name and os.getenv('SOFTWARE'):
         name = os.getenv('SOFTWARE')
 
-    project_help = Tank().data_project['HELP']
+    project_help = Tank().config_project['URL']
     if name in project_help:
         webbrowser.open(project_help[name])
     else:
@@ -128,15 +128,15 @@ def make_github_issue(title, body=None, assignee='', milestone=None, labels=None
     import requests
     from tank import Tank
 
-    REPO_DATA = Tank().user.data_user_path
-    if not assignee: assignee = REPO_DATA['username']
+    REPO_CONFIG = Tank().user.config_user_path
+    if not assignee: assignee = REPO_CONFIG['username']
 
     # Our url to create issues via POST
-    url = 'https://api.github.com/repos/%s/%s/issues' % (REPO_DATA['owner'], REPO_DATA['repository'])
+    url = 'https://api.github.com/repos/%s/%s/issues' % (REPO_CONFIG['owner'], REPO_CONFIG['repository'])
 
     # Create an authenticated session to create the issue
     session = requests.Session()
-    session.auth = (REPO_DATA['username'], REPO_DATA['password'])
+    session.auth = (REPO_CONFIG['username'], REPO_CONFIG['password'])
 
     issue = {'title': title,
              'body': body,

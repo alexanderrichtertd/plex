@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = Houdini data
+# content   = Houdini config
 # date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
@@ -20,17 +20,17 @@ ENV:
     - !env [SOFTWARE_PATH]
     - !env [SOFTWARE_PATH, /scripts]
     - !env [SOFTWARE_PATH, /plugins]
-    - !env [DATA_PROJECT_PATH, /houdini]
+    - !env [CONFIG_PROJECT_PATH, /houdini]
 
   HOUDINI_USER_PREF_DIR:
-    - !env_first [DATA_PROJECT_PATH, /houdini]
+    - !env_first [CONFIG_PROJECT_PATH, /houdini]
   HOUDIN_PATH:
-    - !env [DATA_PROJECT_PATH, /houdini]
+    - !env [CONFIG_PROJECT_PATH, /houdini]
 
-  #   - !env [DATA_PROJECT_PATH, houdini]
+  #   - !env [CONFIG_PROJECT_PATH, houdini]
 
   HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
 
-# MENU: plex/data/$project/houdini/MainMenuMaster.xml
+# MENU: plex/config/$project/houdini/MainMenuMaster.xml
 
 SETTINGS:

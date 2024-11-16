@@ -41,7 +41,7 @@ def delete_menu():
 
 def copy_splash():
     splash_path = Tank().get_img_path("software/max/splash.bmp")
-    max_path    = os.path.dirname(Tank().software.data['path'])
+    max_path    = os.path.dirname(Tank().software.config['path'])
 
     if not os.path.exists(max_path + '/splash.bmp'):
         try:

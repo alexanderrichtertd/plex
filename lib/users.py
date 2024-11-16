@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = set und get user data
+# content   = set und get user config
 # date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
@@ -72,38 +72,38 @@ class User(tank.Singleton):
         return True if self._rights == 'admin' else False
 
     @property
-    def data_path(self):
-        return os.getenv('DATA_USER_PATH')
+    def config_path(self):
+        return os.getenv('CONFIG_USER_PATH')
 
     @property
-    def data_user_path(self):
-        data_user_path = f'{self.data_path}/{self.name}.yml'
-        if not os.path.exists(data_user_path):
-            data_user_path = ''
-        return data_user_path
+    def config_user_path(self):
+        config_user_path = f'{self.config_path}/{self.name}.yml'
+        if not os.path.exists(config_user_path):
+            config_user_path = ''
+        return config_user_path
 
     @property
     def stats_path(self):
-        return f'{self.data_path}/{self.name}.stats'
+        return f'{self.config_path}/{self.name}.stats'
 
     @property
     def log_path(self):
-        return f'{self.data_path}/{self.name}.log'
+        return f'{self.config_path}/{self.name}.log'
 
     @property
     def sandbox_path(self):
-        return Tank().data_project['PATH']['sandbox'] + '/' + self._id
+        return Tank().config_project['PATH']['sandbox'] + '/' + self._id
 
 
     #*********************************************************************
     # FUNCTIONS
-    def write_data(self, scriptSettings):
+    def write_config(self, scriptSettings):
         currentChange = self.read_user()
         currentChange.__dict__["settings"].update(scriptSettings)
         setUser(currentChange)
 
-    def delete_data(self):
-        deletePath = os.path.join(Tank.PATH['data_user'], self.id)
+    def delete_config(self):
+        deletePath = os.path.join(Tank.PATH['config_user'], self.id)
         if os.path.exists(deletePath):
             LOG.info("DONE : " + self.id + " removed")
             os.remove(deletePath)

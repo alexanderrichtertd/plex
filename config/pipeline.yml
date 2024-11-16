@@ -1,0 +1,42 @@
+#*********************************************************************
+# content   = pipeline config
+# date      = 2024-11-09
+#
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+name:    Plex
+version: 2.1.0
+
+url: https://github.com/alexanderrichtertd/plex
+
+
+# SETS project path
+# in config/projects/$project
+project_default: default
+
+# PROJECT customize
+# [True] - Add project pipeline PATH as primary
+# [False]- Only this pipeline is valid
+pipeline_overwrite: True
+
+# USER customize
+# [True] - overwrite project with user config (if exists)
+# [False]- use ONLY project config
+user_config_overwrite: True
+
+# ADMIN special rights (user name)
+admin:
+    - arichter
+
+EXTENSION_CODE:
+    ma  : mayaAscii
+    mb  : mayaBinary
+    obj : OBJ
+    abc : Alembic
+    nk  : nuke
+    tif : tiff
+    exr : openExr
+    avi : avi
+    jpg : jpeg

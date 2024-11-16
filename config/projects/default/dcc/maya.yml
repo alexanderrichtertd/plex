@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = Maya data
+# content   = Maya config
 # date      = 2024-11-09
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
@@ -49,7 +49,7 @@ ENV:
 MENU:
   - !env [PROJECT_NAME]:
       - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))')
-      - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])')
+      - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().config_project["path"])')
       - sub_break:           menuItem(p="{}", d=True)
       - reload_pipeline:     menuItem(p="{}", l='Reload Pipeline', c='import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menus()")')
 
@@ -91,7 +91,7 @@ SHELF:
     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
 
     - folder:  l='Project Folder', command='import webbrowser; webbrowser.open(os.path.dirname(Tank().software.scene_path))', dcc='', image='shelf_open_folder.png'
-    - folder:  l='Project Folder', command='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().data_project["path"])', dcc='', image='shelf_open_folder_project.png'
+    - folder:  l='Project Folder', command='import pipefunc;from tank import Tank; pipefunc.open_folder(Tank().config_project["path"])', dcc='', image='shelf_open_folder_project.png'
 
     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
 
@@ -167,8 +167,8 @@ RENDER:
 SETUP:
 
   DEFAULT:
-    # - defaultResolution.width  : Tank().data_project['resolution'][0]
-    # - defaultResolution.height : Tank().data_project['resolution'][1]
+    # - defaultResolution.width  : Tank().config_project['resolution'][0]
+    # - defaultResolution.height : Tank().config_project['resolution'][1]
 
     - defaultRenderGlobals.animation : 1
     - defaultRenderGlobals.putFrameBeforeExt : 1

@@ -19,7 +19,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-DEFAULT_PATH = os.path.normpath(os.getenv('DATA_USER_PATH').split(';')[0] + '/tmp_img.jpg')
+DEFAULT_PATH = os.path.normpath(os.getenv('CONFIG_USER_PATH').split(';')[0] + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -99,9 +99,9 @@ def create_screenshot_viewport(WIDGET, ui=''):
 def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img = QtGui.QImage()
     img.load(src_path)
-    thumbnail_extension = '.' + Tank().data_project['EXTENSION']['thumbnail']
+    thumbnail_extension = '.' + Tank().config_project['EXTENSION']['thumbnail']
 
-    tmpDir   = os.path.dirname(rlt_path) + '/' + Tank().data_project['META']['dir']
+    tmpDir   = os.path.dirname(rlt_path) + '/' + Tank().config_project['META']['dir']
     rlt_path = tmpDir + "/" + os.path.basename(rlt_path).split(".")[0] + thumbnail_extension
 
     pipefunc.create_folder(rlt_path)
