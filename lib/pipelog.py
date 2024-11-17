@@ -1,6 +1,6 @@
 #*********************************************************************
 # content   = write loggings into console and files
-# date      = 2020-06-19
+# date      = 2024-11-16
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -31,7 +31,7 @@ def init(software="default", script="default", level=logging.DEBUG, path="",
          debug_console=False, multi_threads=False, *args, **kwargs):
 
     if not path: 
-        path = ("/").join([os.getenv('CONFIG_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
+        path = "/".join([os.getenv('CONFIG_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
 
     create_folder(path)
 

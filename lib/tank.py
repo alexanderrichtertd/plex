@@ -7,7 +7,6 @@
 #*********************************************************************
 
 import os
-import sys
 import getpass
 
 import yaml
@@ -178,7 +177,7 @@ class Tank(Singleton):
         pipeline_path = pipeline_path.split(';')
         # find first fitting path
         for eachPath in pipeline_path:
-            path = os.path.normpath(('/').join([eachPath,end_path]))
+            path = os.path.normpath('/'.join([eachPath,end_path]))
 
             if os.path.exists(path):
                 return path
@@ -289,9 +288,9 @@ class Tank(Singleton):
 
             # CHECK empty
             if os.environ.__contains__(var):
-                os.environ[var] += ('').join([';', content])
+                os.environ[var] += ''.join([';', content])
             else:
-                os.environ[var] = ('').join([content])
+                os.environ[var] = ''.join([content])
 
             return os.environ[var]
 

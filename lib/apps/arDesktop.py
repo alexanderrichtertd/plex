@@ -6,11 +6,9 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import os
 import sys
 import getpass
 import importlib
-import webbrowser
 
 from Qt import QtWidgets, QtGui, QtCore
 

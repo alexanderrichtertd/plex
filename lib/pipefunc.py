@@ -102,7 +102,7 @@ def get_file_list(path, file_type='*', extension=False, exclude='*', add_path=Fa
 
         for file_name in glob.glob(file_type):
             if exclude in file_name: continue
-            if add_path:  file_name = os.path.normpath(('/').join([path,file_name]))
+            if add_path:  file_name = os.path.normpath('/'.join([path,file_name]))
 
             if extension: get_file.append(file_name)
             else:         get_file.append((file_name.split('.')[0]))

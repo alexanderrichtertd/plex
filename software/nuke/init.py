@@ -20,7 +20,7 @@ from tank import Tank
 LOG = Tank().log.init(script=__name__)
 
 PROJECT_CONFIG = Tank().config_project
-RESOLUTION   = (' ').join([str(PROJECT_CONFIG['resolution'][0]),
+RESOLUTION   = ' '.join([str(PROJECT_CONFIG['resolution'][0]),
                             str(PROJECT_CONFIG['resolution'][1]),
                             PROJECT_CONFIG['name'].replace(' ', '')])
 

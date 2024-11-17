@@ -7,7 +7,6 @@
 #*********************************************************************
 
 import os
-import sys
 import getpass
 import subprocess
 
@@ -48,14 +47,14 @@ class Software(tank.Singleton):
 
         for each_path in os.environ['SOFTWARE_SRC_PATH'].split(';'):
             # if not each_path.endswith('software'): each_path = os.path.dirname(each_path)
-            tmp_paths  = ('/').join([each_path, self._NAME])
+            tmp_paths = '/'.join([each_path, self._NAME])
             software_path.append(tmp_paths)
             tmp_folder = pipefunc.get_file_list(path=tmp_paths, exclude='.py', add_path=True)
             if not tmp_folder: continue
             sub_path.extend(tmp_folder)
 
-        os.environ['SOFTWARE_PATH']     = (';').join(software_path)
-        os.environ['SOFTWARE_SUB_PATH'] = (';').join(sub_path)
+        os.environ['SOFTWARE_PATH']     = ';'.join(software_path)
+        os.environ['SOFTWARE_SUB_PATH'] = ';'.join(sub_path)
         LOG.debug(f'SOFTWARE_PATH: {os.environ["SOFTWARE_PATH"]}')
 
         # GET config

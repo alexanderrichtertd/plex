@@ -64,7 +64,7 @@ class Notice():
 class ArNotice():
 
     def __init__(self, notice):
-        ui_path = ('/').join([os.path.dirname(__file__), 'ui', __name__ + '.ui'])
+        ui_path = '/'.join([os.path.dirname(__file__), 'ui', __name__ + '.ui'])
         self.wgNotice = QtCompat.loadUi(ui_path)
         self.notice   = notice
 
