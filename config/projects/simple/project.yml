@@ -7,7 +7,7 @@
 #*********************************************************************
 
 
-name: Plex Project
+name: Plex Simple
 
 
 #*********************************************************************
@@ -23,17 +23,18 @@ SETTING:
 
 #*********************************************************************
 PATH:
-    project       : &PROJECT $pipeline\project
+    project       : &PROJECT D:\project
 
     pipeline      : !join [*PROJECT, /0_pipeline]
     sandbox       : !join [*PROJECT, /1_sandbox]
     preproduction : !join [*PROJECT, /2_preproduction]
+
     footage       : !join [*PROJECT, /3_footage]
-    
     assets        : !join [*PROJECT, /4_assets]
     shots         : !join [*PROJECT, /4_shots]
+    render        : !join [*PROJECT, /5_render]
 
-    post          : !join [*PROJECT, /5_post]
+    post          : !join [*PROJECT, /6_post]
 
 
 # sq010_sky/s020_angle/RIG/WORK/s020_angle_RIG_v001.mb

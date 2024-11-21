@@ -1,0 +1,33 @@
+#*********************************************************************
+# content   = Houdini config
+# date      = 2024-11-08
+#
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+version: &HOUDINI_VERSION 19.5.773
+path:    &HOUDINI_PATH !join ["C:/Program Files/Side Effects Software/Houdini ", *HOUDINI_VERSION, /bin/houdini.exe]
+
+start: *HOUDINI_PATH
+
+renderer:
+renderer_path:
+
+
+ENV:
+  PYTHONPATH:
+    - !env [SOFTWARE_PATH]
+    - !env [SOFTWARE_PATH, /scripts]
+    - !env [SOFTWARE_PATH, /plugins]
+
+  # HOUDINI_USER_PREF_DIR:
+  #  - !env_first [CONFIG_FILE_PATH, /houdini]
+  # HOUDIN_PATH:
+  #  - !env [CONFIG_FILE_PATH, /houdini]
+
+  HOUDINI_SPLASH_FILE: !env [IMG_PATH, /software/houdini/houdini_splash.png]
+
+# MENU: plex/config/$project/houdini/MainMenuMaster.xml
+
+SETTINGS:

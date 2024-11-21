@@ -1,0 +1,60 @@
+#*********************************************************************
+# content   = Nuke config
+# date      = 2024-11-09
+#
+# license   = MIT <https://github.com/alexanderrichtertd>
+# author    = Alexander Richter <alexanderrichtertd.com>
+#*********************************************************************
+
+version:      &NUKE_VERSION 15.1                                # SET version
+version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      # SET versiom
+
+start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
+
+path:  !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
+
+
+ENV:
+  PYTHONPATH:
+    - !env [SOFTWARE_PATH, /scripts]
+    - !env [SOFTWARE_PATH, /plugins]
+    - !env [SOFTWARE_PATH, /gizmos]
+
+  NUKE_PATH:
+    - !env [PIPELINE_PATH]
+    - !env [SOFTWARE_PATH]
+    # - STATUS_PATH
+    # - PLUGIN_PATH
+
+  # Init & Menu
+  NUKE_INIT_PATH: !env [SOFTWARE_PATH]
+  NUKE_MENU_PATH: !env [SOFTWARE_PATH]
+
+  NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
+
+  PATH: *NUKE_DIR
+
+
+#*********************************************************************
+# MENU
+#*********************************************************************
+MENU:
+  - Plex:
+      open_scene_folder:   addCommand('Open Scene Folder', 'import pipefunc; pipefunc.open_folder(nuke.root().knob("name").value())')
+      open_project_folder: addCommand('Open Project Folder', 'import pipefunc;import tank; pipefunc.open_folder(Tank().config_project["path"])')
+
+  - break:   addSeparator()
+
+  - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
+  - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
+
+  - break:   "addSeparator()"
+
+  - arWrite: addCommand('arWrite', 'arWrite()', 'ctrl+alt+w', 'write.ico')
+
+  - break:   addSeparator()
+
+  - Report:  addCommand('Report', 'import pipefunc; pipefunc.help("report")', 'ctrl+alt+r', 'report.ico')
+  - Help:    addCommand('Help', 'import pipefunc; pipefunc.help()', 'ctrl+alt+h', 'help.ico')
+
+SETTINGS:
