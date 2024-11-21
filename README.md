@@ -33,7 +33,7 @@ The basic idea is to manage the file and folder structure, set the ground rules 
  - create a company pipeline
  - add a project pipeline
  - test and develop in a personal environment
-- [x] **scripts**
+- [x] **Scripts**
  - desktop app
  - save (+ publish) | load | create | render
  - get, set and handle config | img | scripts

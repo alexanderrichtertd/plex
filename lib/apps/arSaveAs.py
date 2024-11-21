@@ -20,7 +20,6 @@ import arNotice
 import snapshot
 
 from tank import Tank
-from users import User
 from arUtil import ArUtil
 
 
@@ -35,7 +34,7 @@ class ArSaveAs(ArUtil):
     def __init__(self, new_file=True):
         super(ArSaveAs, self).__init__()
 
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgSaveAs = QtCompat.loadUi(path_ui)
 
         self.all_task = '<all tasks>'
@@ -126,7 +125,6 @@ class ArSaveAs(ArUtil):
     # FUNC
     def update_file(self):
         if self.wgSaveAs.cbxScene.currentText():
-            status_text = '/' + Tank().config_project['STATUS']['work']
 
             if self.new_file: extension = Tank().software.extension
             else: extension = ''
@@ -135,16 +133,13 @@ class ArSaveAs(ArUtil):
             new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
                                        entity    = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
-                                       status    = Tank().config_project['STATUS']['work'],
-                                       version   = Tank().config_project['FILE']['version'].replace(r'\d','0').replace('_',''),
+                                       version   = Tank().config_pipeline['version'].replace(r'\d','0').replace('_',''),
                                        user      = getpass.getuser()[:2].lower(),
                                        extension = extension,
                                        frame     = Tank().config_project['start_frame'])
 
-            if self.new_file: status_text += '/' + os.path.basename(new_item)
             self.save_file = self.save_dir + '/' + new_item
 
-            self.wgSaveAs.lblStatus.setText(status_text)
 
 
     def create_folder_structure(self):
@@ -185,7 +180,7 @@ class ArSaveAs(ArUtil):
             self.set_meta_config(self.save_file)
         else:
             try:    self.set_open_folder(save_list[0])
-            except: LOG.error(f'CAN\'T set folder: {save_list}')
+            except: LOG.error(f"CAN'T set folder: {save_list}")
 
             self.set_status(f'Created new {self.wgSaveAs.cbxScene.currentText()}', msg_type=1)
 
@@ -204,8 +199,8 @@ class ArSaveAs(ArUtil):
 
 
     def set_meta_config(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + Tank().config_project['META']['file']
-        comment_dict = {'user':    User().id,
+        meta_path    = os.path.dirname(save_path) + Tank().config_pipeline['meta']
+        comment_dict = {'user': getpass.getuser(),
                         'comment': 'new scene'}
         Tank().set_config(meta_path, os.path.basename(save_path), comment_dict)
 

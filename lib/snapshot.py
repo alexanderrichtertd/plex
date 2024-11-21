@@ -19,7 +19,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-DEFAULT_PATH = os.path.normpath(os.getenv('CONFIG_USER_PATH').split(';')[0] + '/tmp_img.jpg')
+DEFAULT_PATH = os.path.normpath(Tank().get_config('config_user') + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -101,8 +101,8 @@ def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img.load(src_path)
     thumbnail_extension = '.' + Tank().config_project['EXTENSION']['thumbnail']
 
-    tmpDir   = os.path.dirname(rlt_path) + '/' + Tank().config_project['META']['dir']
-    rlt_path = tmpDir + "/" + os.path.basename(rlt_path).split(".")[0] + thumbnail_extension
+    tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(Tank().plex_paths["meta"])}'
+    rlt_path =  + f'{tmp_dir}/{os.path.basename(rlt_path).split(".")[0]}{thumbnail_extension}'
 
     pipefunc.create_folder(rlt_path)
     img.save(rlt_path, format=thumbnail_extension)
@@ -111,4 +111,4 @@ def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
 
 def remove_tmp_img(img_path=DEFAULT_PATH):
     try:    os.remove(img_path)
-    except: LOG.error('FAIL : cant delete tmpFile : ' + img_path, exc_info=True)
+    except: LOG.error(f'FAIL : cant delete tmpFile : {img_path}', exc_info=True)

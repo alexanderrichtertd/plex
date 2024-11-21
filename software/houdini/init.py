@@ -20,13 +20,13 @@ LOG = Tank().log.init(script=__name__)
 #*********************************************************************
 # MENU
 def add_menu():
-    menu_path = f'{os.getenv("CONFIG_PROJECT_PATH")}/houdini/MainMenuMaster.xml'
+    menu_path = f'{Tank().plex_paths["config_project"]}/houdini/MainMenuMaster.xml'
 
     try:
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
             find_title = pipefunc.find_inbetween(content, '<label>', '</label>')
-            content = content.replace(f'<label>{find_title}</label>', f'<label>{os.getenv("PROJECT_NAME")}</label>')
+            content = content.replace(f'<label>{find_title}</label>', f'<label>{Tank().plex_context["project_name"]}</label>')
             print(content)
             # WRITE new XML
             outfile.seek(0)

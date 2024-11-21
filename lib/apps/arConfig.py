@@ -18,7 +18,6 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 import arNotice
 
 from tank import Tank
-from users import User
 from arUtil import ArUtil
 
 
@@ -33,7 +32,7 @@ class ArConfig(ArUtil):
     def __init__(self, new_file=True):
         super(ArConfig, self).__init__()
 
-        path_ui = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgArConfig = QtCompat.loadUi(path_ui)
 
         self.wgHeader.btnOption.hide()
@@ -53,7 +52,7 @@ class ArConfig(ArUtil):
         LOG.info('START : ArConfig')
 
     def setup(self):
-        self.set_open_folder(os.getenv('CONFIG_PROJECT_PATH'))
+        self.set_open_folder(Tank().plex_paths['config_project'])
         print("")
 
 

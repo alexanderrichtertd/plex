@@ -36,7 +36,7 @@ def create_node(this_node=''):
     this_node["resolutionY"].setValue(this_node.height())
 
     fileName   = os.path.basename(nuke.root().name()).split(".")[0]
-    renderPath = os.path.dirname(os.path.dirname(nuke.root().name())) + f"/{Tank().config_project['STATUS']['render']}/{fileName}/exr/{fileName}.%04d.exr"
+    renderPath = f"{os.path.dirname(os.path.dirname(nuke.root().name()))}/RENDER/{fileName}/exr/{fileName}.%04d.exr"
     renderPath = renderPath.replace('\\','/')
 
     # this_node["rootPath"].setValue(renderPath)
@@ -116,10 +116,10 @@ def publishRender(file_type):
 
     for part in splitFile:
         fileName.append(part)
-        if part == "COMP": break
+        if part == 'COMP': break
 
-    fileName    = ("_").join(fileName)
-    publishPath = os.path.dirname(os.path.dirname(nuke.root().name())) + "/" + Tank().config_project['STATUS']['publish'] + "/" + file_type
+    fileName    = "_".join(fileName)
+    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{Tank().config_pipeline['publish']}/{file_type}'
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)
@@ -132,7 +132,7 @@ def publishRender(file_type):
         framePart    = oldFrame.split(".")
         framePart[0] = fileName
 
-        newFrame = publishPath + "/" + (".").join(framePart)
+        newFrame = publishPath + "/" + ".".join(framePart)
         oldFrame = oldPath + "/" + oldFrame
 
         shutil.copyfile(oldFrame, newFrame)

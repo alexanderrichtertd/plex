@@ -17,7 +17,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-menu_name = os.getenv('PROJECT_NAME')
+menu_name = Tank().plex_context['project_name']
 Tank().init_software()
 
 

@@ -69,10 +69,10 @@ class Maya(Software):
         if header_footer: new_shelf += shelf_config['FOOTER']
 
         LOG.debug(f'{shelf_name} - {new_shelf}')
-        if not shelf_name: shelf_name = os.getenv('PROJECT_NAME')
+        if not shelf_name: shelf_name = Tank().plex_context['project_name']
 
         # DELETE old and CREATE shelf tab
-        remove_shelfs = shelf_config.keys() + [shelf_name, os.getenv('PROJECT_NAME')]
+        remove_shelfs = shelf_config.keys() + [shelf_name, Tank().plex_context['project_name']]
         for shelf in remove_shelfs:
             if pm.shelfLayout(shelf, ex=1):
                 pm.deleteUI(shelf)

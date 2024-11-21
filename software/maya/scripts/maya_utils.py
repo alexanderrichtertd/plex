@@ -26,7 +26,7 @@ LOG = Tank().log.init(script=__name__)
 # MENU
 # TODO: delete and reload shelf
 def load_menus():
-    project_path = os.getenv('PROJECT_NAME').replace(' ','')
+    project_path = Tank().plex_context['project_name'].replace(' ','')
 
     if cmds.menu(project_path, query=True, exists=True):
         cmds.deleteUI(project_path, menu=True)
@@ -84,7 +84,7 @@ def setup_scene(file_path=''):
     if file_path:
         try:
             render_path = os.path.dirname(os.path.dirname(file_path))
-            render_path += "/" + Tank().config_project["STATUS"]["render"] + "/<Scene>/<Scene>"
+            render_path += "/RENDER/<Scene>/<Scene>"
             cmds.setAttr('defaultRenderGlobals.imageFilePrefix', render_path, type='string')
         except: LOG.error('FAIL set image path.', exc_info=True)
 

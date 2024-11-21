@@ -13,6 +13,7 @@ import logging
 import logging.config
 
 USER = getpass.getuser()
+config_user_path = eval(os.environ['PLEX_PATHS'])['config_user']
 
 
 #*********************************************************************
@@ -31,7 +32,7 @@ def init(software="default", script="default", level=logging.DEBUG, path="",
          debug_console=False, multi_threads=False, *args, **kwargs):
 
     if not path: 
-        path = "/".join([os.getenv('CONFIG_USER_PATH') or os.path.expanduser('~'), USER + ".log"])
+        path = "/".join([config_user_path or os.path.expanduser('~'), USER + ".log"])
 
     create_folder(path)
 
@@ -106,4 +107,4 @@ def create_folder(path):
 
     if not os.path.exists(path):
         try:    os.makedirs(path)
-        except: print(f'CAN\'T create folder: {path}')
+        except: print(f"CAN'T create folder: {path}")

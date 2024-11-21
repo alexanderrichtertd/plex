@@ -19,7 +19,6 @@ import arNotice
 import snapshot
 
 from tank import Tank
-from users import User
 from arUtil import ArUtil
 
 
@@ -116,22 +115,19 @@ class ArSave(ArUtil):
 
         self.update_version()
 
-        if self.config['project']['STATUS']['publish'] in self.save_dir:
-            self.save_dir = self.save_dir.replace(self.config['project']['STATUS']['publish'], self.config['project']['STATUS']['work'])
-
         if self.config['script'][__name__]['just_screenshot']: snapshot.create_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
         else: snapshot.create_any_screenshot(self.wgSave, self.wgSave.btnPreviewImg)
 
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(self.config['project']['FILE']['version'], os.path.basename(self.save_file))
+        found_version = re.search(Tank().config_pipeline['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
 
             if new_version < 0:
-                self.set_comment('CANT be smaller than 0')
+                self.set_comment("CAN'T be smaller than 0")
                 return
 
             new_version = ('{:0%sd}' % len(old_version)).format(new_version)
@@ -139,7 +135,7 @@ class ArSave(ArUtil):
             self.save_file = os.path.dirname(self.save_file) + '/' + os.path.basename(self.save_file).replace(found_version.group(), new_version)
             self.wgSave.edtSaveFile.setText(os.path.basename(self.save_file))
         else:
-            self.set_status(f'CAN\'T find version: {os.path.basename(self.save_file)}', 3)
+            self.set_status(f"CAN'T find version: {os.path.basename(self.save_file)}", 3)
 
 
     def save_file_path(self):
@@ -156,20 +152,14 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmpCopyWork = self.save_file.replace('.', f'_{self.config["project"]["STATUS"]["publish"]}.')
+            tmpCopyWork = self.save_file.replace('.', f'_{Tank().config_pipeline['publish']}.')
             snapshot.save_snapshot(tmpCopyWork)
             self.set_meta_config(tmpCopyWork)
 
-            found_version = re.search(self.config['project']['FILE']['version'], os.path.basename(self.save_file))
+            found_version = re.search(Tank().config_pipeline['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Tank().software.extension
-
-            if self.config['project']['STATUS']['work'] in self.save_file:
-                self.save_publish_file = self.save_publish_file.replace(self.config['project']['STATUS']['work'], self.config['project']['STATUS']['publish'])
-            else:
-                LOG.error(f'FAIL : NO {self.config["project"]["STATUS"]["work"]} in path : {self.save_publish_file}', exc_info=True)
-                return False
 
             pipefunc.create_folder(os.path.dirname(self.save_publish_file))
 
@@ -198,9 +188,9 @@ class ArSave(ArUtil):
     def set_meta_config(self, save_path=''):
         if not save_path: save_path = self.save_file
 
-        meta_path = os.path.dirname(save_path) + Tank().config_project['META']['file']
+        meta_path = os.path.dirname(save_path) + Tank().config_pipeline['meta']
         # LOG.info(meta_path)
-        comment_dict = {'user':   User().id,
+        comment_dict = {'user': getpass.getuser(),
                         'comment': str(self.wgSave.edtComment.text())}
         Tank().set_config(meta_path, os.path.basename(save_path), comment_dict)
 

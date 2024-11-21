@@ -73,7 +73,7 @@ error:
         quote : Magic needs substance.
 
     no_open_folder:
-        title : FOLDER CANT BE OPEN
+        title : FOLDER CAN'T BE OPEN
         msg   : |
                 Folder doesnt exist.
         quote : Magic needs direction.

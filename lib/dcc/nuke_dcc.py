@@ -17,7 +17,7 @@ from software import Software
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-DEFAULT_PATH = os.path.normpath(os.getenv('CONFIG_USER_PATH').split(';')[0] + '/tmp_img.jpg')
+DEFAULT_PATH = os.path.normpath(Tank().get_config('config_user') + '/tmp_img.jpg')
 
 
 #*********************************************************************

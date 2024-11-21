@@ -19,7 +19,7 @@ from tank import Tank
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
-DEFAULT_PATH = os.path.normpath(os.getenv('CONFIG_USER_PATH').split(';')[0] + '/tmp_img.jpg')
+DEFAULT_PATH = os.path.normpath(Tank().plex_paths['config_user'] + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -198,7 +198,7 @@ class Software(tank.Singleton):
         if   self._NAME == 'maya': import maya.cmds as cmds
         elif self._NAME == 'max' : import MaxPlus
         else:
-            LOG.debug(f'CAN\'T find software: {self._NAME}')
+            LOG.debug(f"CAN'T find software: {self._NAME}")
             return
 
         sub_menu = ''
@@ -269,12 +269,12 @@ class Software(tank.Singleton):
     def print_header(self):
         if self._NAME == 'max': return
 
-        space = (20-int(len(os.getenv('PROJECT_NAME'))/2)) - 1
+        space = (20-int(len(Tank().plex_context['project_name'])/2)) - 1
 
         # project name
         print('')
         print(chr(124) + chr(151)*38 + chr(124))
-        print(chr(124) + ' ' * space + os.getenv('PROJECT_NAME') + ' ' * space + chr(124))
+        print(chr(124) + ' ' * space + Tank().plex_context['project_name'] + ' ' * space + chr(124))
         print(chr(124) + chr(151)*38 + chr(124))
 
         # user name
