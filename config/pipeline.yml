@@ -12,31 +12,36 @@ version: 2.1.0
 url: https://github.com/alexanderrichtertd/plex
 
 
-# SETS project path
-# in config/projects/$project
-project_default: default
-
-# PROJECT customize
-# [True] - Add project pipeline PATH as primary
-# [False]- Only this pipeline is valid
-pipeline_overwrite: True
-
-# USER customize
-# [True] - overwrite project with user config (if exists)
-# [False]- use ONLY project config
-user_config_overwrite: True
-
 # ADMIN special rights (user name)
 admin:
+    - alexa
     - arichter
 
-EXTENSION_CODE:
-    ma  : mayaAscii
-    mb  : mayaBinary
-    obj : OBJ
-    abc : Alembic
-    nk  : nuke
-    tif : tiff
-    exr : openExr
-    avi : avi
-    jpg : jpeg
+
+# RULES
+shots:   s\d\d\d_  # s412_name
+version: _v\d\d\d  # _v001
+meta:    '/meta/info.yml'
+
+
+STATUS:
+    work:    WORK
+    publish: PUBLISH
+    render:  RENDER
+
+
+# FORMATS
+EXTENSION:
+    maya:      ma
+    max :      max
+    nuke:      nk
+    houdini:   hipnc
+    photoshop: psd
+    substance: spp
+
+    playblast: mov
+    texture:   exr
+    render:    exr
+    thumbnail: jpg
+
+    icons:     png

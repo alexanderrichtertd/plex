@@ -68,7 +68,6 @@ class ArNotice():
         self.wgNotice = QtCompat.loadUi(ui_path)
         self.notice   = notice
 
-        self.wgNotice.btnCancel.clicked.connect(self.press_btnCancel)
         self.wgNotice.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
 
         self.wgNotice.edtTitle.setText(self.notice.title)
@@ -86,15 +85,14 @@ class ArNotice():
         # if self.notice.func: self.wgNotice.lblFunc.setText(self.notice.func)
         # else:                self.wgNotice.lblFunc.hide()
         if not self.notice.img_link: self.wgNotice.btnPreviewImg.setEnabled(False)
-        # self.wgNotice.btnCancel.hide()
 
         # WIDGET : delete border & always on top
         self.wgNotice.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
 
         # WIDGET : move to right low corner
-        resolution = QtWidgets.QDesktopWidget().screenGeometry()
-        self.wgNotice.move(resolution.width() - self.wgNotice.width() - 10, resolution.height() - self.wgNotice.height() - 75)
-        self.wgNotice.setWindowOpacity(0.9)
+        width, height = QtWidgets.QApplication.screens()[0].size().toTuple()
+        self.wgNotice.move(width - self.wgNotice.width() - 10, height - self.wgNotice.height() - 75)
+        self.wgNotice.setWindowOpacity(0.95)
 
         # round edges
         path = QtGui.QPainterPath()

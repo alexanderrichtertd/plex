@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>962</width>
-    <height>300</height>
+    <width>627</width>
+    <height>276</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>720</width>
-    <height>300</height>
+    <width>500</width>
+    <height>250</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -22,42 +22,237 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QHBoxLayout" name="layMain" stretch="6,6,1,0,0">
+  <layout class="QHBoxLayout" name="layMain" stretch="6,0,0">
    <property name="bottomMargin">
-    <number>4</number>
+    <number>16</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,3">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <item>
-      <widget class="QListWidget" name="lstScene">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(230, 230, 230);</string>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>3</number>
        </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-       </property>
-       <property name="resizeMode">
-        <enum>QListView::Adjust</enum>
-       </property>
-       <property name="viewMode">
-        <enum>QListView::ListMode</enum>
-       </property>
-       <property name="uniformItemSizes">
-        <bool>false</bool>
-       </property>
-       <property name="batchSize">
-        <number>100</number>
-       </property>
-      </widget>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="btnAssets">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>assets</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnShots">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>shots</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QListWidget" name="lstScene">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(230, 230, 230);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <item>
+          <property name="text">
+           <string>s010</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>s020</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>s030</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="lstSet">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="edtSearch">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="placeholderText">
+          <string>search</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QComboBox" name="cbxTask">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>model</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>texture</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>shading</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>animation</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>lighting</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>fx</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>compositing</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cbxStatus">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>work</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>publish</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>render</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="lstVersion">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
@@ -70,97 +265,199 @@
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
        </property>
+       <item>
+        <property name="text">
+         <string>s010_COMP_v001.nk</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s020_COMP_v021.nk</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QListWidget" name="lstAsset">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>0</height>
-      </size>
+    <layout class="QVBoxLayout" name="layMeta" stretch="1,2,1">
+     <property name="rightMargin">
+      <number>0</number>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(230, 230, 230);</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,10">
      <item>
-      <widget class="QListWidget" name="lstTask">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(230, 230, 230);</string>
+      <widget class="QPushButton" name="btnPreviewImg">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QListWidget" name="lstStatus">
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
-         <height>16777215</height>
+         <width>166666</width>
+         <height>166666</height>
         </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(230, 230, 230);</string>
+       <property name="text">
+        <string/>
        </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/lbl/lbl/default.png</normaloff>:/lbl/lbl/default.png</iconset>
        </property>
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
+       <property name="iconSize">
+        <size>
+         <width>200</width>
+         <height>200</height>
+        </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPlainTextEdit" name="edtComment">
+       <property name="font">
+        <font>
+         <family>MS Shell Dlg 2</family>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(198, 198, 198);</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_12">
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lblSoftwareIcon">
+         <property name="maximumSize">
+          <size>
+           <width>8</width>
+           <height>8</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>:/btn/software/default/nuke.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblDate">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>7</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Date Modified</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(198, 198, 198);</string>
+         </property>
+         <property name="text">
+          <string>13:00:00 - 09.10.2016 </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblUser">
+         <property name="font">
+          <font>
+           <pointsize>7</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>User Name</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(198, 198, 198);</string>
+         </property>
+         <property name="text">
+          <string>arichter</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblFileSize">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>7</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>File Size</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(198, 198, 198);</string>
+         </property>
+         <property name="text">
+          <string>10034 MB</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QListWidget" name="lstFiles">
-     <property name="minimumSize">
-      <size>
-       <width>300</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(230, 230, 230);</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="layMeta"/>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>lstFiles</tabstop>
-  <tabstop>lstAsset</tabstop>
-  <tabstop>lstScene</tabstop>
-  <tabstop>lstSet</tabstop>
-  <tabstop>lstTask</tabstop>
-  <tabstop>lstStatus</tabstop>
- </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../img/img.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -16,11 +16,6 @@ import pipefunc
 
 
 #*********************************************************************
-# VARIABLES
-CONFIG_FORMAT = '.yml'
-
-
-#*********************************************************************
 # SINGLETON
 class Singleton(object):
     def __new__(cls, *args, **kwds):
@@ -39,16 +34,10 @@ class Singleton(object):
 #*********************************************************************
 # CLASS
 class Tank(Singleton):
-
     _software = ''
 
-    def init_os(self):
-        self.user.setup()
-
-
     def init_software(self, software=''):
-        if not software:
-            software = os.getenv('SOFTWARE')
+        if not software: software = os.getenv('SOFTWARE')
 
         if not self._software:
             if software == 'maya':
@@ -75,7 +64,6 @@ class Tank(Singleton):
 
         self._software = Software()
         self._software.setup()
-        self.user.setup()
         self._software.start(software, open_file)
         self._software.print_header()
 
@@ -83,11 +71,6 @@ class Tank(Singleton):
     @property
     def software(self):
         return self.init_software()
-
-    @property
-    def user(self):
-        from users import User
-        return User()
 
     @property
     def context(self):
@@ -108,14 +91,14 @@ class Tank(Singleton):
     @property
     def config_project(self):
         return self.get_config('project')
+    
+    @property
+    def config_pipeline(self):
+        return self.get_config(file_name='pipeline', file_dir=self.plex_paths['config'])
 
     @property
     def config_software(self):
         return self.get_config(f'dcc/{os.getenv("SOFTWARE")}')
-
-    @property
-    def config_script(self):
-        return self.get_config('script')
 
     @property
     def config_notice(self):
@@ -123,91 +106,89 @@ class Tank(Singleton):
 
 
     #*********************************************************************
+    # PLEX
+    @property
+    def plex_paths(self):
+        return eval(os.environ['PLEX_PATHS'])
+    
+    @property
+    def plex_context(self):
+        return eval(os.environ['PLEX_CONTEXT'])
+
+    @property
+    def admin(self):
+        return eval(os.environ['PLEX_CONTEXT'])['admin']
+   
+   
+    #*********************************************************************
+    # PROJECT    
+    @property
+    def project_names(self):
+        projects_path = Tank().plex_paths['config_projects']
+        return [os.path.basename(f.path) for f in os.scandir(projects_path) if f.is_dir()]
+
+    @property
+    def user_id(self):
+        return getpass.getuser()
+    
+    @property    
+    def user_sandbox(self):
+        return f'{self.config_project["PATH"]["sandbox"]}/{self.user_id}'
+    
+
+    #*********************************************************************
     # GET AND SET CONFIG
-    def get_config(self, file_name='', user_id=getpass.getuser()):
+    def get_config(self, file_name='', file_dir='', user_id=getpass.getuser()):
+        if not file_dir: file_dir = self.plex_paths['config_project']
+        file_dir = file_dir.split('.')[0]
 
         def get_all_config():
-            config_config = {}
-            config_user_files    = pipefunc.get_file_list(path=self.get_env('CONFIG_USER_PATH'),    file_type='*' + CONFIG_FORMAT)
-            config_project_files = pipefunc.get_file_list(path=self.get_env('CONFIG_PROJECT_PATH'), file_type='*' + CONFIG_FORMAT)
+            configs = {}
+            config_project_files = pipefunc.get_file_list(path=file_dir, file_type='*' + '.yml')
 
-            config_project_files = list(set(config_user_files)|set(config_project_files))
             for each_file in config_project_files:
-                config_config.update({each_file : self.get_config(each_file, user_id)})
+                configs.update({each_file : self.get_config(each_file, file_dir, user_id)})
                 
-            return config_config
+            return configs
 
         if not file_name: return get_all_config()
 
-        file_name = file_name.split('.')[0]
-        file_name = file_name.lower()
-        file_path = ''
-
-        if user_id and self.get_env('CONFIG_USER_OVERWRITE') == 'True':
-            file_path = os.path.normpath(('/').join([self.get_env('CONFIG_USER_PATH'), file_name + CONFIG_FORMAT]))
-
-        if not os.path.exists(file_path):
-            file_path = os.path.normpath(('/').join([self.get_env('CONFIG_PROJECT_PATH'), file_name + CONFIG_FORMAT]))
+        file_name = file_name.split('.')[0].lower()
+        file_path = os.path.normpath(f'{file_dir}/{file_name}.yml')
 
         # OPEN config path
         if os.path.exists(file_path):
-            return self.get_yml_file(file_path)
-        else: print(f'CANT find file: {file_path}')
+            return self.get_yaml_file(file_path)
+        else: 
+            print(f"CAN'T find file: {file_path}")
         
         return ''
 
 
     def set_config(self, path, key, value):
         if os.path.exists(path):
-            tmp_content = self.get_yml_file(path)
+            tmp_content = self.get_yaml_file(path)
         else:
             tmp_content = {}
             pipefunc.create_folder(path)
 
         tmp_content[key] = value
-        self.set_yml_file(path, tmp_content)
+        self.set_yaml_file(path, tmp_content)
 
 
-    #*********************************************************************
-    # PATH
-    def get_pipeline_path(self, end_path):
-        pipeline_path = os.getenv('PIPELINE_PATH')
-        if not pipeline_path: return
+    def get_img_path(self, end_path='btn/default'):
+        img_format = '' if '.' in end_path else '.png'
 
-        pipeline_path = pipeline_path.split(';')
-        # find first fitting path
-        for eachPath in pipeline_path:
-            path = os.path.normpath('/'.join([eachPath,end_path]))
-
-            if os.path.exists(path):
-                return path
-
-        return ''
-
-
-    def get_img_path(self, end_path='btn/default', format=''):
-        if '.' in end_path:
-            img_format = ''
-        else:
-            img_format = self.config_project['EXTENSION']['icons']
-
-        path = self.get_pipeline_path(f'img/{end_path}.{img_format}')
-        if not path:
-            path = self.get_pipeline_path(f'img/{os.path.dirname(end_path)}/default.{img_format}')
-            if not path:
-                path = self.get_pipeline_path(f'img/btn/default.{img_format}')
-
-        if format == 'pixmap':
-            return QtGui.QPixmap(QtGui.QImage(path))
-        elif format == 'icon':
-            return QtGui.QIcon(path)
+        path = f'{self.plex_paths["pipeline"]}/img/{end_path}{img_format}' or \
+               f'{self.plex_paths["pipeline"]}/img/{os.path.dirname(end_path)}/default{img_format}' or \
+               f'{self.plex_paths["pipeline"]}/img/btn/default{img_format}'
 
         return path
 
 
     #*********************************************************************
     # YAML
-    def set_yml_file(self, path, content):
+    def set_yaml_file(self, path, content):
         with open(path, 'w') as outfile:
             try:
                 yaml.dump(content, outfile, default_flow_style=False)
@@ -215,15 +196,20 @@ class Tank(Singleton):
                 print(exc)
 
 
-    def get_yml_file(self, path):
+    def get_yaml_file(self, path):
         try:
             with open(path, 'r') as stream:
                 # STRING into DICT
-                yml_content = yaml.load(stream, Loader=yaml.Loader)
-                if yml_content:
-                    return yml_content
+                yaml_content = str(yaml.load(stream, Loader=yaml.Loader))
+
+                for key, value in self.plex_paths.items():
+                    yaml_content = yaml_content.replace(f'${key}', value)
+                yaml_content = yaml.safe_load(yaml_content)
+
+                if yaml_content:
+                    return yaml_content
                 else:
-                    print(f'CANT load file: {path}')
+                    print(f"CAN'T load file: {path}")
 
         except yaml.YAMLError as exc:
             print(exc)
@@ -272,10 +258,6 @@ class Tank(Singleton):
 
     #*********************************************************************
     # ENV
-    #
-    # @BRIEF  creates or add enviroment variable
-    #
-    # @PARAM  STRING var, STRING content
     def add_env(self, var, content):
         if not content: return
 
@@ -293,12 +275,3 @@ class Tank(Singleton):
                 os.environ[var] = ''.join([content])
 
             return os.environ[var]
-
-
-    # GET env or empty str & WARNING
-    def get_env(self, var):
-        if os.environ.__contains__(var):
-            return os.environ[var].split(';')[0]
-        print(f'ENV doesnt exist: {var}')
-
-        return ''

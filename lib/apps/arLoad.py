@@ -1,6 +1,6 @@
 #*********************************************************************
 # content   = load work and publishes files
-# date      = 2024-11-09
+# date      = 2024-11-20
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -8,6 +8,7 @@
 
 import os
 import sys
+import pathlib
 
 import datetime
 
@@ -32,81 +33,78 @@ class ArLoad(ArUtil):
     def __init__(self):
         super(ArLoad, self).__init__()
 
-        path_ui     = ("/").join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
         self.wgLoad = QtCompat.loadUi(path_ui)
 
-        self.load_dir  = ''
         self.load_file = ''
+        self.task_path = ''
 
-        self.software_format = {y:x.upper() for x, y in self.data['project']['EXTENSION'].items()}
-        self.software_keys   = list(self.software_format.keys())
+        # CLEAR context
+        self.wgLoad.lstScene.clear()
+        self.wgLoad.cbxTask.clear()
+        self.wgLoad.cbxStatus.clear()
+        self.wgLoad.lstVersion.clear()
+
+        self.wgLoad.edtComment.setReadOnly(True)
+
+        self.clear_context()
+
+        # SETUP content
+        self.software_formats = {y:x for x, y in Tank().config_pipeline['EXTENSION'].items()}
+        self.software_keys    = list(self.software_formats.keys())
+
+        self.wgLoad.btnAssets.clicked.connect(lambda: self.press_btnEntity('assets'))
+        self.wgLoad.btnShots.clicked.connect(lambda: self.press_btnEntity('shots'))
+
+        self.wgLoad.cbxTask.currentIndexChanged.connect(self.change_cbxTask)
+        self.wgLoad.cbxStatus.currentIndexChanged.connect(self.change_cbxStatus)
 
         self.wgLoad.lstScene.itemSelectionChanged.connect(self.change_lstScene)
-        self.wgLoad.lstSet.itemSelectionChanged.connect(self.change_lstSet)
-        self.wgLoad.lstAsset.itemSelectionChanged.connect(self.change_lstAsset)
-        self.wgLoad.lstTask.itemSelectionChanged.connect(self.change_lstTask)
-        self.wgLoad.lstStatus.itemSelectionChanged.connect(self.change_lstStatus)
-        self.wgLoad.lstFiles.itemSelectionChanged.connect(self.change_lstFiles)
-
-        self.wgHeader.btnOption.clicked.connect(self.press_menuItemAddFolder)
-        self.wgLoad.lstFiles.itemDoubleClicked.connect(self.press_btnAccept)
-
         self.wgLoad.lstScene.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.wgLoad.lstScene.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstScene))
-        self.wgLoad.lstSet.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.wgLoad.lstSet.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstSet))
-        self.wgLoad.lstAsset.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.wgLoad.lstAsset.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstAsset))
-        self.wgLoad.lstTask.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.wgLoad.lstTask.customContextMenuRequested.connect( lambda: self.press_openMenu(self.wgLoad.lstTask))
-        self.wgLoad.lstFiles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.wgLoad.lstFiles.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstFiles))
 
-        self.wgLoad.lstAsset.hide()
-        self.wgHeader.cbxAdd.hide()
+        self.wgLoad.lstVersion.itemSelectionChanged.connect(self.change_lstVersion)
+        self.wgLoad.lstVersion.itemDoubleClicked.connect(self.press_btnAccept)
+        self.wgLoad.lstVersion.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.wgLoad.lstVersion.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstVersion))
 
-        self.add_preview(self.wgLoad.layMeta)
+        self.wgLoad.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
+        
         self.wgHeader.layMain.addWidget(self.wgLoad, 0)
 
-        self.wgPreview.wgSnapshot.hide()
         self.wgHeader.setWindowTitle(__name__)
         self.wgHeader.btnAccept.setText('Load')
-        self.wgHeader.btnOption.setText('Create')
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_load")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("icons/load")))
 
-        self.setup()
+        for status in Tank().config_pipeline['STATUS'].values():
+            self.wgLoad.cbxStatus.addItem(status)
+
+        # SELECT start
+        self.press_btnEntity()
 
         self.resize_widget(self.wgLoad)
         self.wgLoad.show()
         LOG.info('START : ArLoad')
 
 
-    def setup(self):
-        # FILL COMBO BOX -------------------------------
-        self.wgLoad.lstScene.clear()
-        self.wgLoad.lstStatus.clear()
-        self.wgLoad.lstSet.clear()
-        self.wgLoad.lstAsset.clear()
-        self.wgLoad.lstTask.clear()
-        self.wgLoad.lstFiles.clear()
-        self.wgPreview.edtComment.setReadOnly(True)
+    def clear_context(self):
+        self.wgLoad.lblUser.setText('')
+        self.wgLoad.lblDate.setText('')
+        self.wgLoad.lblFileSize.setText('')
+        self.wgLoad.edtComment.setPlainText('')
+        self.set_open_folder('')
 
-        self.clear_meta()
-
-        for keys, items in self.data['project']['SCENES'].items():
-            self.wgLoad.lstScene.addItem(keys)
-
-        self.wgLoad.lstScene.setCurrentRow(0)
+        self.wgLoad.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage('')))
 
 
     #*********************************************************************
     # PRESS
     def press_btnAccept(self):
         if not os.path.exists(self.load_file):
-            self.set_status('FAILED LOADING : Path doesn\'t exists: {}'.format(self.load_file), msg_type=3)
+            self.set_status(f"FAILED LOADING : Path doesn't exists: {self.load_file}", msg_type=3)
             return False
 
-        open_software = self.software_format[os.path.splitext(self.load_file)[1][1:]].lower()
+        open_software = self.software_formats[self.extension]
 
         # OPEN in current software
         try:
@@ -118,22 +116,37 @@ class ArLoad(ArUtil):
                 try:    Tank().start_software(open_software, self.load_file)
                 except: LOG.error('FAILED to open software', exc_info=True)
             # else: subprocess.Popen(self.load_file, shell=True)
-        except: LOG.warning("No Software setup")
+        except: LOG.warning(f"No Software setup: {open_software}")
 
-        note = arNotice.Notice(title = os.path.basename(self.load_file).split('.')[0],
-                               msg   = self.wgPreview.edtComment.toPlainText(),
-                               user  = self.wgPreview.lblUser.text(),
-                               img   = self.preview_img_path if os.path.exists(self.preview_img_path)
-                                       else 'lbl/lbl{}131'.format(Tank().software.software.lower().title()),
+        note = arNotice.Notice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
+                               msg   = self.wgLoad.edtComment.toPlainText(),
+                               img   = self.meta_img_path if os.path.exists(self.meta_img_path)
+                                       else Tank().get_img_path('label/default'),
                                img_link = os.path.dirname(self.load_file))
         arNotice.ArNotice(note)
 
 
+    def press_btnEntity(self, button_name='assets'):
+        self.wgLoad.lstScene.clear()
+
+        if button_name == 'assets':
+            self.wgLoad.btnAssets.setStyleSheet("background-color: rgb(80, 80, 80);")
+            self.wgLoad.btnShots.setStyleSheet("background-color: rgb(41, 43, 51);")
+        else:
+            self.wgLoad.btnAssets.setStyleSheet("background-color: rgb(41, 43, 51);")
+            self.wgLoad.btnShots.setStyleSheet("background-color: rgb(80, 80, 80);")
+
+        self.entity_path = Tank().config_project['PATH'][button_name]
+
+        for scene in pipefunc.get_all_dirs(self.entity_path):
+            self.wgLoad.lstScene.addItem(scene)
+        self.wgLoad.lstScene.setCurrentRow(0)
+
+
     def press_openMenu(self, list_widget):
         self.listMenu = QtGui.QMenu()
-        self.listMenu.setStyleSheet(self.data['script'][__name__]['style'])
+        self.listMenu.setStyleSheet(self.config['script'][__name__]['style'])
 
-        menu_item = self.listMenu.addAction("Add " + self.wgLoad.lstScene.currentItem().text())
         self.wgLoad.triggered.connect(self.press_menuItemAddFolder)
         menu_item = self.listMenu.addSeparator()
         menu_item = self.listMenu.addAction("ABC")
@@ -141,7 +154,7 @@ class ArLoad(ArUtil):
         menu_item = self.listMenu.addAction("CBA")
         self.wgLoad.triggered.connect(lambda: self.press_menuSort(list_widget, True))
 
-        parentPosition = self.wgLoad.lstTask.mapToGlobal(QtCore.QPoint(0, 0))
+        parentPosition = self.wgLoad.cbxTask.mapToGlobal(QtCore.QPoint(0, 0))
         self.listMenu.move(QtGui.QCursor().pos())
         self.listMenu.show()
 
@@ -157,154 +170,84 @@ class ArLoad(ArUtil):
         Args:
             list_widget ([type]): list of given widgets
             reverse (bool, optional): Sorted in reverse. Defaults to False.
-        """        
+        """
         file_list = []
-        for index in xrange(list_widget.count()):
+        for index in range(list_widget.count()):
              file_list.append(list_widget.item(index).text())
 
         list_widget.clear()
         list_widget.addItems(sorted(file_list, reverse=reverse))
 
+    def press_btnPreviewImg(self):
+        print('press_btnPreviewImg')
+
 
     #*********************************************************************
     # CHANGE
     def change_lstScene(self):
-        self.load_dir = self.data['project']['PATH'][self.wgLoad.lstScene.currentItem().text()]
-        tmp_content   = pipefunc.get_file_list(self.load_dir)
+        self.wgLoad.cbxTask.clear()
 
-        self.scene_steps = len(self.data['project']['SCENES'][self.wgLoad.lstScene.currentItem().text()].split('/'))
-        if self.scene_steps < 5: self.wgLoad.lstAsset.hide()
+        self.scene_path = f'{self.entity_path}/{self.wgLoad.lstScene.currentItem().text()}'
+        task_names = pipefunc.get_all_dirs(self.scene_path)
+
+        self.wgLoad.cbxTask.addItems(task_names)
+        self.wgLoad.cbxTask.setCurrentIndex(0)
+
+
+    def change_cbxTask(self):
+        self.task_path = f'{self.scene_path}/{self.wgLoad.cbxTask.currentText()}'
+        self.wgLoad.cbxStatus.setCurrentIndex(0)
+
+        self.change_cbxStatus()
+
+
+    def change_cbxStatus(self):
+        self.wgLoad.lstVersion.clear()
+        self.open_path = f'{self.task_path}/{self.wgLoad.cbxStatus.currentText()}'
+
+        ext = Tank().config_pipeline['EXTENSION'].values()
+        folder = pathlib.Path(self.open_path)
+        version_files = sorted(filter(lambda path: path.suffix.replace('.', '') in ext, folder.glob('*')), reverse=True)
+        
+        for version_file in version_files:
+            version_file = os.path.basename(str(version_file))
+            self.wgLoad.lstVersion.addItem(version_file)
+        self.wgLoad.lstVersion.setCurrentRow(0)
+
+
+    def change_lstVersion(self):
+        self.load_file = f'{self.open_path}/{self.wgLoad.lstVersion.currentItem().text()}'
+
+        self.wgLoad.lblDate.setText(str(datetime.datetime.fromtimestamp(os.path.getmtime(self.load_file))).split(".")[0])
+        self.wgLoad.lblFileSize.setText(str("{0:.2f}".format(os.path.getsize(self.load_file)/(1024*1024.0)) + " MB"))
+
+        self.extension = self.wgLoad.lstVersion.currentItem().text().split('.')[-1]
+
+        software_img = Tank().get_img_path(f"software/default/{self.software_formats[self.extension]}")
+        self.wgLoad.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(software_img)))
+
+        comment = ''
+        user_id = 'unknown'
+
+        current_file = self.wgLoad.lstVersion.currentItem().text()
+        meta_file_path = f'{self.task_path}/{Tank().config_pipeline["meta"]}'
+        self.meta_img_path = f'{os.path.dirname(meta_file_path)}/{os.path.splitext(current_file)[0]}.jpg'
+
+        if os.path.exists(self.meta_img_path):
+            self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.meta_img_path)))
         else:
-            self.wgLoad.lstAsset.itemSelectionChanged.connect(self.change_lstAsset)
-            self.wgLoad.lstAsset.show()
+            self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("labels/default"))))
 
-        self.wgLoad.lstSet.clear()
-        if tmp_content:
-            self.wgLoad.lstSet.addItems(sorted(tmp_content))
-            self.wgLoad.lstSet.setCurrentRow(0)
+        if os.path.exists(meta_file_path):
+            file_config = Tank().get_yaml_file(meta_file_path)
 
+            if file_config and current_file in file_config:
+                file_content = file_config[self.wgLoad.lstVersion.currentItem().text()]
+                comment = file_content.get('comment')
+                user_id = file_content.get('user')
 
-    def change_lstSet(self):
-        new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text()
-        tmp_content = pipefunc.get_file_list(new_path)
-
-        if self.scene_steps < 5:
-            self.wgLoad.lstTask.clear()
-            if tmp_content:
-                self.wgLoad.lstTask.addItems(sorted(tmp_content))
-                self.wgLoad.lstTask.setCurrentRow(0)
-        else:
-            self.wgLoad.lstAsset.clear()
-            if tmp_content:
-                self.wgLoad.lstAsset.addItems(sorted(tmp_content))
-                self.wgLoad.lstAsset.setCurrentRow(0)
-
-
-    def change_lstAsset(self):
-        new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + '/' + self.wgLoad.lstAsset.currentItem().text()
-        tmp_content = pipefunc.get_file_list(new_path)
-
-        self.wgLoad.lstTask.clear()
-        if tmp_content:
-            self.wgLoad.lstTask.addItems(sorted(tmp_content))
-            self.wgLoad.lstTask.setCurrentRow(0)
-
-
-    def change_lstTask(self):
-        if self.scene_steps > 4: asset_content = '/' + self.wgLoad.lstAsset.currentItem().text()
-        else: asset_content = ''
-
-        new_path    = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + asset_content + '/' + self.wgLoad.lstTask.currentItem().text()
-        tmp_content = pipefunc.get_file_list(new_path)
-
-        self.wgLoad.lstStatus.clear()
-        if tmp_content:
-            self.wgLoad.lstStatus.addItems(sorted(tmp_content, reverse=True))
-            self.wgLoad.lstStatus.setCurrentRow(0)
-
-
-    def change_lstStatus(self):
-        if self.scene_steps < 5: part_path = ''
-        else: part_path = self.wgLoad.lstAsset.currentItem().text() + '/'
-
-        if not self.wgLoad.lstStatus.currentItem() or not self.wgLoad.lstTask.currentItem(): return
-
-        self.file_dir = self.load_dir + '/' + self.wgLoad.lstSet.currentItem().text() + '/' + part_path + self.wgLoad.lstTask.currentItem().text() + '/' + self.wgLoad.lstStatus.currentItem().text()
-        tmp_content   = pipefunc.get_file_list(self.file_dir, extension=True)
-
-        self.wgLoad.lstFiles.clear()
-        if not tmp_content: return
-
-        file_list = []
-        for file in tmp_content:
-            if os.path.splitext(file)[1][1:] in self.software_keys: file_list.append(file)
-
-        if file_list:
-            if os.path.exists(self.file_dir + Tank().data_project['META']['file']):
-                self.file_data = Tank().get_yml_file(self.file_dir + Tank().data_project['META']['file'])
-            else: self.file_data = ''
-
-            self.wgLoad.lstFiles.addItems(sorted(file_list, reverse=True))
-            self.wgLoad.lstFiles.setCurrentRow(0)
-
-
-    def change_lstFiles(self):
-        self.extension = self.wgLoad.lstFiles.currentItem().text().split('.')[-1]
-        self.file_name = self.wgLoad.lstFiles.currentItem().text().split('.')[0]
-
-        if self.extension in self.data['script'][__name__]['img']:
-            self.preview_img_path = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
-        else:
-            self.preview_img_path = self.file_dir + '/' + Tank().data_project['META']['dir'] + '/' + self.file_name + '.' + self.data['project']['EXTENSION']['thumbnail']
-
-        self.load_file = self.file_dir + '/' + self.wgLoad.lstFiles.currentItem().text()
-
-        if os.path.exists(self.preview_img_path):
-            self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.preview_img_path)))
-        else:
-            self.wgPreview.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
-
-        self.set_open_folder(self.file_dir)
-
-        if os.path.exists(self.load_file): self.fill_meta()
-        else: self.clear_meta()
-
-
-    #*********************************************************************
-    # FUNCTIONS
-    def fill_meta(self):
-        self.wgPreview.lblTitle.setText(self.file_name)
-        self.wgPreview.lblDate.setText(str(datetime.datetime.fromtimestamp(os.path.getmtime(self.load_file))).split(".")[0])
-        self.wgPreview.lblSize.setText(str("{0:.2f}".format(os.path.getsize(self.load_file)/(1024*1024.0)) + " MB"))
-
-        self.extension = self.wgLoad.lstFiles.currentItem().text().split('.')[-1]
-        if self.extension in self.data['script'][__name__].get('img'): software_img = "software/img"
-        else: software_img = "software/" + self.software_format[self.extension]
-
-        if self.file_data and self.file_data.has_key(self.wgLoad.lstFiles.currentItem().text()):
-            current_file = self.file_data[self.wgLoad.lstFiles.currentItem().text()]
-            comment = current_file.get('comment')
-            user_id = current_file.get('user')
-        else:
-            comment = ''
-            user_id = 'unknown'
-
-        self.wgPreview.edtComment.setPlainText(comment)
-        self.wgPreview.lblUser.setText(user_id)
-        self.wgPreview.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path(software_img))))
-        self.wgPreview.lblUserIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('user/' + user_id))))
-
-
-    def clear_meta(self):
-        self.wgPreview.lblUser.setText('')
-        self.wgPreview.lblTitle.setText('')
-        self.wgPreview.lblDate.setText('')
-        self.wgPreview.lblSize.setText('')
-        self.wgPreview.edtComment.setPlainText('')
-        self.set_open_folder('')
-        self.wgPreview.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage('')))
-        self.wgPreview.lblUserIcon.setPixmap(QtGui.QPixmap(QtGui.QImage('')))
-
+        self.wgLoad.edtComment.setPlainText(comment)
+        self.wgLoad.lblUser.setText(user_id)
 
 
 #******************************************************************************

@@ -72,15 +72,20 @@ def create_folder(path):
     if len(path.split('.')) > 1: path = os.path.dirname(path)
     if not os.path.exists(path):
         try:    os.makedirs(path)
-        except: print(f'CAN\'T create folder: {path}')
+        except: print(f"CAN'T create folder: {path}")
 
 # @BRIEF  opens folder even if file is given
 def open_folder(path):
     path = os.path.normpath(path)
+
     if os.path.exists(path):
-        if len(path.split('.')) > 1: path = os.path.dirname(path)
+        if len(path.split('.')) > 1: 
+            path = os.path.dirname(path)
+
         webbrowser.open(path)
-    else: print(f'INVALID path: {path}')
+    else: 
+        print(f'INVALID path: {path}')
+
     return path
 
 
@@ -116,7 +121,7 @@ def get_deep_folder_list(path, add_path=False):
     else:        get_file = map(lambda x: os.path.basename(x[0]), os.walk(path))
 
     try:    get_file.pop(0)
-    except: print(f'CAN\'T pop file. Path: {path}')
+    except: print(f"CAN'T pop file. Path: {path}")
 
     return get_file
 
@@ -128,8 +133,8 @@ def make_github_issue(title, body=None, assignee='', milestone=None, labels=None
     import requests
     from tank import Tank
 
-    REPO_CONFIG = Tank().user.config_user_path
-    if not assignee: assignee = REPO_CONFIG['username']
+    # REPO_CONFIG = Tank().user.config_user_path
+    # if not assignee: assignee = REPO_CONFIG['username']
 
     # Our url to create issues via POST
     url = 'https://api.github.com/repos/%s/%s/issues' % (REPO_CONFIG['owner'], REPO_CONFIG['repository'])
@@ -148,9 +153,14 @@ def make_github_issue(title, body=None, assignee='', milestone=None, labels=None
     repo = session.post(url, json.dumps(issue))
 
     if repo.status_code == 201:
-        LOG.info(f'Successfully created Issue {title}')
+        print(f'Successfully created Issue {title}')
     else:
-        LOG.warning(f'Couldn\'t create Issue {title}.\nResponse:{repo.content}')
+        print(f'Couldn\'t create Issue {title}.\nResponse:{repo.content}')
+
+
+def get_all_dirs(path, sort=True):
+    dir_names = [directory.name for directory in os.scandir(path) if directory.is_dir()]
+    return sorted(dir_names) if sort else dir_names
 
 
 #*********************************************************************
