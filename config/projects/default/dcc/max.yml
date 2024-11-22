@@ -16,16 +16,16 @@ renderer_path:
 
 ENV:
 PATH:
-  - !env [SOFTWARE_PATH]
-  - !env [SOFTWARE_PATH, /scripts]
-  - !env [SOFTWARE_PATH, /plugins]
-  - !env [SOFTWARE_PATH, /icons]
+  - $software
+  - $software/scripts
+  - $software/plugins
+  - $software/icons
 
 PYTHONPATH:
-  - !env [SOFTWARE_PATH]
-  - !env [SOFTWARE_PATH, /scripts]
-  - !env [SOFTWARE_PATH, /plugins]
-  - !env [SOFTWARE_PATH, /icons]
+  - $software
+  - $software/scripts
+  - $software/plugins
+  - $software/icons
 
 # ADSKFLEX_LICENSE_FILE:
 

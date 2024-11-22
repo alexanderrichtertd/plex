@@ -83,8 +83,8 @@ smartLoader:
 
     SCRIPTS:
         arSave: *arSave
-        Report: import pipefunc; pipefunc.help('report')
-        Help:   import pipefunc; pipefunc.help()
+        Report: from tank import Tank; Tank().help('report')
+        Help:   from tank import Tank; Tank().help()
 
     SOFTWARE:
         maya:    Tank().config_software['MAYA']['start']

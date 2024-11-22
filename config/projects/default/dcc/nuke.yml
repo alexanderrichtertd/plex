@@ -6,8 +6,8 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-version:      &NUKE_VERSION 15.1                                # SET version
-version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      # SET versiom
+version:      &NUKE_VERSION 15.1                                
+version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      
 
 start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
 
@@ -16,19 +16,19 @@ path:  !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, 
 
 ENV:
   PYTHONPATH:
-    - !env [SOFTWARE_PATH, /scripts]
-    - !env [SOFTWARE_PATH, /plugins]
-    - !env [SOFTWARE_PATH, /gizmos]
+    - $software/scripts
+    - $software/plugins
+    - $software/gizmos
 
   NUKE_PATH:
-    - !env [PIPELINE_PATH]
-    - !env [SOFTWARE_PATH]
+    - $pipeline
+    - $software
     # - STATUS_PATH
     # - PLUGIN_PATH
 
   # Init & Menu
-  NUKE_INIT_PATH: !env [SOFTWARE_PATH]
-  NUKE_MENU_PATH: !env [SOFTWARE_PATH]
+  NUKE_INIT_PATH: $software
+  NUKE_MENU_PATH: $software
 
   NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
 
@@ -38,23 +38,23 @@ ENV:
 #*********************************************************************
 # MENU
 #*********************************************************************
-MENU:
-  - Plex:
-      open_scene_folder:   addCommand('Open Scene Folder', 'import pipefunc; pipefunc.open_folder(nuke.root().knob("name").value())')
-      open_project_folder: addCommand('Open Project Folder', 'import pipefunc;import tank; pipefunc.open_folder(Tank().config_project["path"])')
+# MENU:
+#   - Plex:
+#       open_scene_folder:   addCommand('Open Scene Folder', 'from tank import Tank; Tank().open_folder(nuke.root().knob("name").value())')
+#       open_project_folder: addCommand('Open Project Folder', 'from tank import Tank;import tank; Tank().open_folder(Tank().config_project["path"])')
 
-  - break:   addSeparator()
+#   - break:   addSeparator()
 
-  - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
-  - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
+#   - Save:    "addCommand('Save', 'import menu; save()', 'ctrl+alt+s', 'save.ico')"
+#   - Load:    "addCommand('Load', 'import menu; load()', 'ctrl+alt+l', 'load.ico')"
 
-  - break:   "addSeparator()"
+#   - break:   "addSeparator()"
 
-  - arWrite: addCommand('arWrite', 'arWrite()', 'ctrl+alt+w', 'write.ico')
+#   - arWrite: addCommand('arWrite', 'arWrite()', 'ctrl+alt+w', 'write.ico')
 
-  - break:   addSeparator()
+#   - break:   addSeparator()
 
-  - Report:  addCommand('Report', 'import pipefunc; pipefunc.help("report")', 'ctrl+alt+r', 'report.ico')
-  - Help:    addCommand('Help', 'import pipefunc; pipefunc.help()', 'ctrl+alt+h', 'help.ico')
+#   - Report:  addCommand('Report', 'from tank import Tank; Tank().help("report")', 'ctrl+alt+r', 'report.ico')
+#   - Help:    addCommand('Help', 'from tank import Tank; Tank().help()', 'ctrl+alt+h', 'help.ico')
 
-SETTINGS:
+# SETTINGS:
