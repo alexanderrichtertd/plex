@@ -6,8 +6,6 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import os
-import pipefunc
 
 from tank import Tank
 
@@ -25,7 +23,7 @@ def add_menu():
     try:
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
-            find_title = pipefunc.find_inbetween(content, '<label>', '</label>')
+            find_title = Tank().find_inbetween(content, '<label>', '</label>')
             content = content.replace(f'<label>{find_title}</label>', f'<label>{Tank().plex_context["project_name"]}</label>')
             print(content)
             # WRITE new XML

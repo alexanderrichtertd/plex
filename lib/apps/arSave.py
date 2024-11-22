@@ -14,7 +14,6 @@ import shutil
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipefunc
 import arNotice
 import snapshot
 
@@ -101,7 +100,7 @@ class ArSave(ArUtil):
         snapshot.create_screenshot_viewport(self.wgSave, self.wgSave.btnPreviewImg)
 
     def press_btnHelp(self, name=''):
-        pipefunc.help(__name__)
+        Tank().help(__name__)
 
 
     #*********************************************************************
@@ -161,7 +160,7 @@ class ArSave(ArUtil):
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Tank().software.extension
 
-            pipefunc.create_folder(os.path.dirname(self.save_publish_file))
+            Tank().create_folder(os.path.dirname(self.save_publish_file))
 
             try:
                 shutil.copy(self.save_file, tmpCopyWork)

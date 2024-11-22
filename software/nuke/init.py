@@ -11,7 +11,6 @@ import errno
 
 import nuke
 
-import pipefunc
 from tank import Tank
 
 
@@ -43,12 +42,12 @@ def create_write_dir():
 def add_plugin_paths():
     # ADD all IMG paths
     for img in os.getenv('IMG_PATH').split(';'):
-        for img_sub in pipefunc.get_deep_folder_list(path=img, add_path=True):
+        for img_sub in Tank().get_deep_dirs(path=img, full_path=True):
             nuke.pluginAddPath(img_sub)
 
     # ADD sub software paths
-    for paths in os.getenv('SOFTWARE_SUB_PATH').split(';'):
-        nuke.pluginAddPath(paths)
+    for path in os.getenv('SOFTWARE_PATH').split(';'):
+        nuke.pluginAddPath(path)
 
 
 
@@ -62,10 +61,10 @@ except: LOG.warning('FAILED loading write_node')
 
 # LOAD paths
 try:
-    for paths in os.getenv('SOFTWARE_SUB_PATH').split(';'):
+    for paths in os.getenv('SOFTWARE_PATH').split(';'):
         nuke.pluginAddPath(paths)
 except:
-    LOG.warning('FAILED loading SOFTWARE_SUB_PATH')
+    LOG.warning('FAILED loading SOFTWARE_PATH')
 
 
 

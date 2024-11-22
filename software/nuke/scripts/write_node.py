@@ -15,7 +15,6 @@ import webbrowser
 import nuke
 
 import arNotice
-import pipefunc
 from tank import Tank
 
 
@@ -52,7 +51,7 @@ def openRV(path):
         os.system('start "" "' + Tank().config_software['RV']['path'] + '" ' + path)
 
 
-# TODO: REPLACE with lib.pipefunc.openFolder(path)
+# TODO: REPLACE with lib.Tank().openFolder(path)
 def openFolder(path):
     path = os.path.dirname(path).replace("/","\\")
     if not os.path.exists(path) or not os.listdir(path):
@@ -126,7 +125,7 @@ def publishRender(file_type):
 
     if not os.path.exists(publishPath): os.makedirs(publishPath)
 
-    oldFrames = pipefunc.getFolderList(oldPath, fileType='*' + file_type, ex=True)
+    oldFrames = Tank().getFolderList(oldPath, fileType='*' + file_type, ex=True)
 
     for oldFrame in oldFrames:
         framePart    = oldFrame.split(".")

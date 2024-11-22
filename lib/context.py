@@ -8,7 +8,6 @@
 #*********************************************************************
 
 
-import pipefunc
 from tank import Tank
 
 
@@ -79,4 +78,4 @@ class Context():
     #*********************************************************************
     # FUNCTIONS
     def open_path(self):
-        return pipefunc.open_folder(self.file_path)
+        return Tank().open_folder(self.file_path)

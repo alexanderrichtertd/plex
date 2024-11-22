@@ -18,7 +18,6 @@ from datetime import datetime
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipefunc
 from tank import Tank
 
 
@@ -194,7 +193,7 @@ def create_changelog_popup():
     notice_msg = notice_config["msg"]
 
     img_name = notice_config["img"] if "img" in notice_config else "changelog"
-    img_path = f'{pipefunc.get_config_path("img_notice")}/notice_{img_name}.png'
+    img_path = f'{Tank().get_config_path("img_notice")}/notice_{img_name}.png'
 
     note = Notice(title    = notice_config["title"],
                   msg      = notice_msg,

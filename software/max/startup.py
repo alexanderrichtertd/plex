@@ -32,7 +32,7 @@ def create_menu():
         print('The menu ', menu_name, ' already exists')
     else:
         menu = MaxPlus.MenuBuilder(menu_name)
-        Tank().software.add_menu(menu)
+        # create menu
 
 
 def delete_menu():

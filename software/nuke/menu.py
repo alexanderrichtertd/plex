@@ -22,7 +22,7 @@ LOG = Tank().log.init(script=__name__)
 #*********************************************************************
 # FUNCTIONS
 def add_gizmo_menu(menu):
-    for paths in os.getenv('SOFTWARE_SUB_PATH').split(';'):
+    for paths in os.getenv('SOFTWARE_PATH').split(';'):
         for file in os.listdir(paths):
             if file.endswith('.gizmo'):
                 gizmo = file.replace('.gizmo', '')

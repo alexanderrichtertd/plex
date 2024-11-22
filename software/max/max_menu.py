@@ -10,15 +10,13 @@ import os
 
 import MaxPlus
 
-import pipefunc
-
 
 #*********************************************************************
 def open_scene_folder():
-    pipefunc.open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
+    Tank().open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
 
 def open_project_folder():
-    pipefunc.open_folder(os.getenv("PROJECT_PATH"))
+    Tank().open_folder(os.getenv("PROJECT_PATH"))
 
 def save():
     import arSave
@@ -29,7 +27,7 @@ def load():
     arLoad.start()
 
 def get_report():
-    pipefunc.help('report')
+    Tank().help('report')
 
 def get_help():
-    pipefunc.help()
+    Tank().help()
