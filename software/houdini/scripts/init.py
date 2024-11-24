@@ -20,10 +20,16 @@ LOG = Tank().log.init(script=__name__)
 def add_menu():
     menu_path = f'{Tank().plex_paths["config_project"]}/houdini/MainMenuMaster.xml'
 
+    def find_inbetween(self, text, first, last):
+        try:
+            return text.split(first, 1)[1].split(last, 1)[0]
+        except (IndexError, ValueError):
+            return ""
+
     try:
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
-            find_title = Tank().find_inbetween(content, '<label>', '</label>')
+            find_title = find_inbetween(content, '<label>', '</label>')
             content = content.replace(f'<label>{find_title}</label>', f'<label>{Tank().plex_context["project_name"]}</label>')
             print(content)
             # WRITE new XML

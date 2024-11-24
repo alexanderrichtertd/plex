@@ -42,38 +42,38 @@ ENV:
 #*********************************************************************
 # MENU
 #*********************************************************************
-# MENU:
-#   - $project_name:
-#       - open_scene_folder:   menuItem(p="{}", l='Open Scene Folder', c='from tank import Tank; Tank().open_folder(cmds.file(q=True, sceneName=True))')
-#       - open_project_folder: menuItem(p="{}", l='Open Project Folder', c='from tank import Tank;from tank import Tank; Tank().open_folder(Tank().config_project["path"])')
-#       - sub_break:           menuItem(p="{}", d=True)
-#       - reload_pipeline:     menuItem(p="{}", l='Reload Pipeline', c='import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menu()")')
+MENU:
+    - $project_name:
+      - open_scene_folder:   parent="{}", label="Open Scene Folder", command="from tank import Tank; Tank().open_folder(cmds.file(q=True, sceneName=True))"
+      - open_project_folder: parent="{}", label="Open Project Folder", command="from tank import Tank;from tank import Tank; Tank().open_folder(Tank().config_project["path"])"
+      - sub_break:           parent="{}", d=True
+      - reload_pipeline:     parent="{}", label="Reload Pipeline", command="import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menu()")"
 
-#   - break:  menuItem(p="{}", d=True)
+    - break:  parent="{}", d=True
 
-#   - Save: menuItem(p="{}", l='Save', c='import arSave; arSave.start()')
-#   - Load: menuItem(p="{}", l='Load', c='import arLoad; arLoad.start()')
+    - Save: parent="{}", label="Save", command="import arSave; arSave.start()"
+    - Load: parent="{}", label="Load", command="import arLoad; arLoad.start()"
 
-#   - break:  menuItem(p="{}", d=True)
+    - break:  parent="{}", d=True
 
-#   - Animation:
-#       playblast: menuItem(p="{}", l='Playblast', c='from ANIM import playblast;playblast.start()')
+    - Animation:
+      playblast: parent="{}", label="Playblast", command="from ANIM import playblast;playblast.start()"
 
-#   - Light:
-#       light_linker: menuItem(p="{}", l='Light Linker', c='from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()')
+    - Light:
+      light_linker: parent="{}", label="Light Linker", command="from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()"
 
-#   - Render:
-#       rendersetting_work:    menuItem(p="{}", l='Rendersetting - Work', c='Tank().software.scene_setup("RENDER", "WORK")')
-#       rendersetting_preview: menuItem(p="{}", l='Rendersetting - Preview', c='Tank().software.scene_setup("RENDER", "PREVIEW")')
-#       rendersetting_publish: menuItem(p="{}", l='Rendersetting - Publish', c='Tank().software.scene_setup("RENDER", "DELIVER")')
+    - Render:
+      rendersetting_work:    parent="{}", label="Rendersetting - Work", command="Tank().software.scene_setup("RENDER", "WORK")"
+      rendersetting_preview: parent="{}", label="Rendersetting - Preview", command="Tank().software.scene_setup("RENDER", "PREVIEW")"
+      rendersetting_publish: parent="{}", label="Rendersetting - Publish", command="Tank().software.scene_setup("RENDER", "DELIVER")"
 
-#   - Utils:
-#       position_selected: menuItem(p="{}", l='Snap to First Selection', c='import maya_utils; maya_utils.position_selected()')
+    - Utils:
+      position_selected: parent="{}", label="Snap to First Selection", command="import maya_utils; maya_utils.position_selected()"
 
-#   - break:  menuItem(p="{}", d=True)
+    - break:  parent="{}", d=True
 
-#   - Report: menuItem(p="{}", l='Report', c='from tank import Tank; Tank().help("report")')
-#   - Help:   menuItem(p="{}", l='Help', c='from tank import Tank; Tank().help()')
+    - Report: parent="{}", label="Report", command="from tank import Tank; Tank().help("report")"
+    - Help:   parent="{}", label="Help", command="from tank import Tank; Tank().help()"
 
 
 
@@ -82,52 +82,52 @@ ENV:
 # #*********************************************************************
 # SHELF:
 #   HEADER:
-#     - save:    l='Save', command='import arSave; import importlib;importlib.reload(arSave); arSave.start()', dcc='', image='shelf_save.png'
-#     - load:    l='Load', command='import arLoad; import importlib;importlib.reload(arLoad); arLoad.start()', dcc='', image='shelf_load.png'
-#     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+#     - save:    l="Save", command="import arSave; import importlib;importlib.reload(arSave); arSave.start()", dcc=", image="shelf_save.png"
+#     - load:    l="Load", command="import arLoad; import importlib;importlib.reload(arLoad); arLoad.start()", dcc=", image="shelf_load.png"
+#     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
-#     - folder:  l='Project Folder', command='import webbrowser; webbrowser.open(os.path.dirname(Tank().software.scene_path))', dcc='', image='shelf_open_folder.png'
-#     - folder:  l='Project Folder', command='from tank import Tank;from tank import Tank; Tank().open_folder(Tank().config_project["path"])', dcc='', image='shelf_open_folder_project.png'
+#     - folder:  l="Project Folder", command="import webbrowser; webbrowser.open(os.path.dirname(Tank().software.scene_path))", dcc=", image="shelf_open_folder.png"
+#     - folder:  l="Project Folder", command="from tank import Tank;from tank import Tank; Tank().open_folder(Tank().config_project["path"])", dcc=", image="shelf_open_folder_project.png"
 
-#     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+#     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
 #   FOOTER:
-#     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+#     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
-#     - rs_publish:  l='Rendersetting - Work', command='Tank().software.scene_setup("RENDER", "WORK")', dcc='', image='shelf_render_work.png'
-#     - rs_publish:  l='Rendersetting - Preview', command='Tank().software.scene_setup("RENDER", "PREVIEW")', dcc='', image='shelf_render_preview.png'
-#     - rs_publish:  l='Rendersetting - Publish', command='Tank().software.scene_setup("RENDER", "DELIVER")', dcc='', image='shelf_render_deliver.png'
+#     - rs_publish:  l="Rendersetting - Work", command="Tank().software.scene_setup("RENDER", "WORK")", dcc=", image="shelf_render_work.png"
+#     - rs_publish:  l="Rendersetting - Preview", command="Tank().software.scene_setup("RENDER", "PREVIEW")", dcc=", image="shelf_render_preview.png"
+#     - rs_publish:  l="Rendersetting - Publish", command="Tank().software.scene_setup("RENDER", "DELIVER")", dcc=", image="shelf_render_deliver.png"
 
-#     - break:   width=1, l='break', command='print("empty")', dcc='', image='separator.png'
+#     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
-#     - report:  l='Report', command='from tank import Tank;Tank().help("report")', dcc='', image='shelf_report.png'
-#     - help:    l='Help', command='from tank import Tank;Tank().help()', dcc='', image='shelf_help.png'
+#     - report:  l="Report", command="from tank import Tank;Tank().help("report")", dcc=", image="shelf_report.png"
+#     - help:    l="Help", command="from tank import Tank;Tank().help()", dcc=", image="shelf_help.png"
 
 # #*****************************************************************************************************************************
 
 #   GEO:
-#     - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
+#     - temp: l="Nothing", command="print("nothing")", dcc=", image="shelf_default.png"
 
 #   SHD:
-#     - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
+#     - temp: l="Nothing", command="print("nothing")", dcc=", image="shelf_default.png"
 
 #   RIG:
-#     - temp: l='Nothing', command='print("nothing")', dcc='', image='shelf_default.png'
+#     - temp: l="Nothing", command="print("nothing")", dcc=", image="shelf_default.png"
 
 #   LAY:
-#     - snap:      l='Snap to first selection', command='import maya_utils;import importlib;importlib.reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
-#     - playblast: l='Playblast', command='from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
+#     - snap:      l="Snap to first selection", command="import maya_utils;import importlib;importlib.reload(maya_utils); maya_utils.position_selected()", dcc=", image="shelf_snap.png"
+#     - playblast: l="Playblast", command="from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()", dcc=", image="shelf_playblast.png"
 
 #   ANIM:
-#     - snap:      l='Snap to first selection', command='import maya_utils;import importlib;importlib.reload(maya_utils); maya_utils.position_selected()', dcc='', image='shelf_snap.png'
-#     - playblast: l='Playblast', command='from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()', dcc='', image='shelf_playblast.png'
+#     - snap:      l="Snap to first selection", command="import maya_utils;import importlib;importlib.reload(maya_utils); maya_utils.position_selected()", dcc=", image="shelf_snap.png"
+#     - playblast: l="Playblast", command="from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()", dcc=", image="shelf_playblast.png"
 
 #   LIGHT:
-#     - render_work:    l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", WORK")', dcc='', image='shelf_render_work.png'
-#     - render_preview: l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", "PREVIEW")', dcc='', image='shelf_render_preview.png'
-#     - render_deliver: l='Rendersettings - Work', command='Tank().software.scene_setup("RENDER", "DELIVER")', dcc='', image='shelf_render_deliver.png'
-#     - break:          width=1, l='break', command='print("empty")', dcc='', image='separator.png'
-#     - light_linker:   l='Light Linker', command='from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()', dcc='', image='shelf_light_linker.png'
+#     - render_work:    l="Rendersettings - Work", command="Tank().software.scene_setup("RENDER", WORK")", dcc=", image="shelf_render_work.png"
+#     - render_preview: l="Rendersettings - Work", command="Tank().software.scene_setup("RENDER", "PREVIEW")", dcc=", image="shelf_render_preview.png"
+#     - render_deliver: l="Rendersettings - Work", command="Tank().software.scene_setup("RENDER", "DELIVER")", dcc=", image="shelf_render_deliver.png"
+#     - break:          width=1, l="break", command="print("empty")", dcc=", image="separator.png"
+#     - light_linker:   l="Light Linker", command="from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()", dcc=", image="shelf_light_linker.png"
 
 
 
@@ -138,22 +138,22 @@ ENV:
 
 #   DEFAULT:
 #     # - defaultArnoldRenderOptions.AASamples: 2
-#     - '' : ''
+#     - " : "
 
 #   WORK:
-#     - '' : ''
+#     - " : "
 
 
 #   PREVIEW:
-#     - '' : ''
+#     - " : "
 
 
 #   DELIVER:
-#     - '' : ''
+#     - " : "
 
 
 #   CUSTOM:
-#     - '' : ''
+#     - " : "
 
 
 
@@ -163,8 +163,8 @@ ENV:
 # SETUP:
 
 #   DEFAULT:
-#     # - defaultResolution.width  : Tank().config_project['resolution'][0]
-#     # - defaultResolution.height : Tank().config_project['resolution'][1]
+#     # - defaultResolution.width  : Tank().config_project["resolution"][0]
+#     # - defaultResolution.height : Tank().config_project["resolution"][1]
 
 #     - defaultRenderGlobals.animation : 1
 #     - defaultRenderGlobals.putFrameBeforeExt : 1
@@ -203,7 +203,7 @@ ENV:
 #       - props_GRP
 #       - sets_GRP
 #     CAM_GRP:
-#       - ''
+#       - "
 #     REVIEW_GRP:
 #       - proxy_GRP
 #       - playblast_GRP
