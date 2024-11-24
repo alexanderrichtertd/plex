@@ -55,8 +55,8 @@ class ArUtil(object):
         self.wgHeader.btnReport.clicked.connect(self.press_btnReport)
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
-        # SHOW message from project or (if not existing) pipeline
-        self.wgHeader.lblMessage.setText(Tank().config_message)
+        # SHOW announcement from project or (if not existing) pipeline
+        self.wgHeader.lblAnnouncement.setText(Tank().config_announcement)
 
         # SETUP
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("icons/program")))
@@ -90,8 +90,8 @@ class ArUtil(object):
     def set_progress(self, count=0):
         self.wgHeader.prbStatus.setValue(count)
 
-    def set_message(self, comment):
-        self.wgHeader.lblMessage.setText(comment)
+    def set_announcement(self, comment):
+        self.wgHeader.lblAnnouncement.setText(comment)
         LOG.info(comment)
 
     def resize_widget(self, widget):

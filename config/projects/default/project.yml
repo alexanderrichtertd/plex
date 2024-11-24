@@ -9,7 +9,8 @@
 
 name: Plex Project
 
-message: 
+# ANNOUNCEMENT shown in every application
+announcement: 
 
 
 #*********************************************************************

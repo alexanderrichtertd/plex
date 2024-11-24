@@ -98,12 +98,17 @@ class Tank(Singleton):
 
     @property
     def config_software(self):
-        return self.get_config(f'dcc/{os.getenv("SOFTWARE")}')
+        return self.get_config(f'software/{self.software.name}')
 
     @property
     def config_notice(self):
         return self.get_config('notice')
 
+    @property
+    def config_announcement(self):
+        return self.config_pipeline['announcement'] if self.config_project['announcement'] == 'None' or self.config_pipeline['announcement_overwrite'] else self.config_project['announcement']
+        # return self.config_pipeline['announcement_overwrite'] and self.config_pipeline['announcement'] or self.config_project['announcement']
+    
 
     #*********************************************************************
     # PLEX

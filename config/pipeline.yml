@@ -6,10 +6,16 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-name:    Plex
-version: 2.1.0
+name: Plex
+ver:  2.5.0
 
 url: https://github.com/alexanderrichtertd/plex
+
+
+# ANNOUNCEMENT shown in every application
+# overwrite and show this announcement vs project
+announcement_overwrite: False
+announcement: Plex 2.5.0
 
 
 # ADMIN special rights (user name)
