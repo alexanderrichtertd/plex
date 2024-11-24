@@ -6,8 +6,6 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import os
-
 import maya.cmds as cmds
 
 from pipestats import notice
