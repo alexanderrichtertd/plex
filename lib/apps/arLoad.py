@@ -9,17 +9,18 @@
 import os
 import sys
 import pathlib
+import importlib
+import webbrowser
 
 import datetime
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipefunc
 import arNotice
 
 from tank import Tank
-from arUtil import ArUtil
-
+import arUtil
+importlib.reload(arUtil)
 
 #*********************************************************************
 # VARIABLE
@@ -28,7 +29,7 @@ LOG = Tank().log.init(script=__name__)
 
 #*********************************************************************
 # CLASS
-class ArLoad(ArUtil):
+class ArLoad(arUtil.ArUtil):
 
     def __init__(self):
         super(ArLoad, self).__init__()
@@ -61,12 +62,10 @@ class ArLoad(ArUtil):
 
         self.wgLoad.lstScene.itemSelectionChanged.connect(self.change_lstScene)
         self.wgLoad.lstScene.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.wgLoad.lstScene.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstScene))
 
         self.wgLoad.lstVersion.itemSelectionChanged.connect(self.change_lstVersion)
         self.wgLoad.lstVersion.itemDoubleClicked.connect(self.press_btnAccept)
         self.wgLoad.lstVersion.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.wgLoad.lstVersion.customContextMenuRequested.connect(lambda: self.press_openMenu(self.wgLoad.lstVersion))
 
         self.wgLoad.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
         
@@ -92,7 +91,6 @@ class ArLoad(ArUtil):
         self.wgLoad.lblDate.setText('')
         self.wgLoad.lblFileSize.setText('')
         self.wgLoad.edtComment.setPlainText('')
-        self.set_open_folder('')
 
         self.wgLoad.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage('')))
 
@@ -104,19 +102,20 @@ class ArLoad(ArUtil):
             self.set_status(f"FAILED LOADING : Path doesn't exists: {self.load_file}", msg_type=3)
             return False
 
-        open_software = self.software_formats[self.extension]
+        software = self.software_formats[self.extension]
+        self.wgHeader.close()
 
         # OPEN in current software
-        try:
-            if open_software == Tank().software.software:
-                LOG.info(self.load_file)
-                Tank().software.scene_open(self.load_file)
-                self.wgHeader.close()
-            else:
-                try:    Tank().start_software(open_software, self.load_file)
-                except: LOG.error('FAILED to open software', exc_info=True)
+        if software == Tank().software.name:
+            LOG.info(f'OPEN file: {self.load_file}')
+            Tank().software.scene_open(self.load_file)
+        # OPEN in os
+        else:
+            try:    Tank().start_software(software=software, open_file=self.load_file)
+            except: LOG.error('FAILED to open software', exc_info=True)
             # else: subprocess.Popen(self.load_file, shell=True)
-        except: LOG.warning(f"No Software setup: {open_software}")
+        # except Exception as exc: 
+        #     LOG.warning(f"No Software setup: {open_software} {exc}")
 
         note = arNotice.Notice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
                                msg   = self.wgLoad.edtComment.toPlainText(),
@@ -138,48 +137,14 @@ class ArLoad(ArUtil):
 
         self.entity_path = Tank().config_project['PATH'][button_name]
 
-        for scene in pipefunc.get_all_dirs(self.entity_path):
+        for scene in Tank().get_sub_dirs(self.entity_path):
             self.wgLoad.lstScene.addItem(scene)
         self.wgLoad.lstScene.setCurrentRow(0)
 
 
-    def press_openMenu(self, list_widget):
-        self.listMenu = QtGui.QMenu()
-        self.listMenu.setStyleSheet(self.config['script'][__name__]['style'])
-
-        self.wgLoad.triggered.connect(self.press_menuItemAddFolder)
-        menu_item = self.listMenu.addSeparator()
-        menu_item = self.listMenu.addAction("ABC")
-        self.wgLoad.triggered.connect(lambda: self.press_menuSort(list_widget))
-        menu_item = self.listMenu.addAction("CBA")
-        self.wgLoad.triggered.connect(lambda: self.press_menuSort(list_widget, True))
-
-        parentPosition = self.wgLoad.cbxTask.mapToGlobal(QtCore.QPoint(0, 0))
-        self.listMenu.move(QtGui.QCursor().pos())
-        self.listMenu.show()
-
-
-    def press_menuItemAddFolder(self):
-        import arSaveAs
-        self.save_as = arSaveAs.start(new_file=False)
-
-
-    def press_menuSort(self, list_widget, reverse=False):
-        """ This press function sorts the menu
-
-        Args:
-            list_widget ([type]): list of given widgets
-            reverse (bool, optional): Sorted in reverse. Defaults to False.
-        """
-        file_list = []
-        for index in range(list_widget.count()):
-             file_list.append(list_widget.item(index).text())
-
-        list_widget.clear()
-        list_widget.addItems(sorted(file_list, reverse=reverse))
-
     def press_btnPreviewImg(self):
-        print('press_btnPreviewImg')
+        if os.path.exists(self.meta_img_path):
+            webbrowser.open(self.meta_img_path)
 
 
     #*********************************************************************
@@ -188,7 +153,7 @@ class ArLoad(ArUtil):
         self.wgLoad.cbxTask.clear()
 
         self.scene_path = f'{self.entity_path}/{self.wgLoad.lstScene.currentItem().text()}'
-        task_names = pipefunc.get_all_dirs(self.scene_path)
+        task_names = Tank().get_sub_dirs(self.scene_path)
 
         self.wgLoad.cbxTask.addItems(task_names)
         self.wgLoad.cbxTask.setCurrentIndex(0)
@@ -239,7 +204,7 @@ class ArLoad(ArUtil):
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("labels/default"))))
 
         if os.path.exists(meta_file_path):
-            file_config = Tank().get_yaml_file(meta_file_path)
+            file_config = Tank().get_yaml_content(meta_file_path)
 
             if file_config and current_file in file_config:
                 file_content = file_config[self.wgLoad.lstVersion.currentItem().text()]
@@ -261,5 +226,3 @@ def create():
 def start():
     global main_widget
     main_widget = ArLoad()
-
-# create()

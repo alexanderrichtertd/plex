@@ -6,6 +6,10 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
+import maya.mel as mel
+import pymel.core as pm
+import maya.cmds as cmds
+
 from tank import Tank
 from software import Software
 
@@ -13,16 +17,14 @@ from software import Software
 #*********************************************************************
 # VARIABLE
 LOG = Tank().log.init(script=__name__)
+MENU_NAME = Tank().config_project['name'][:20]
 
 
 #*********************************************************************
 # CLASS
 class Maya(Software):
-    import maya.mel as mel
-    import pymel.core as pm
-    import maya.cmds as cmds
 
-    _NAME = 'maya'
+    NAME = 'maya'
 
     @property
     def scene_path(self):
@@ -41,6 +43,28 @@ class Maya(Software):
     def scene_import(self, file_path):
         pass
 
+
+    #******************************************************************************
+    # MENU
+    def create_menu(self):
+        self.delete_menu()
+        print('create menu: Maya')
+
+        menu = cmds.menu(MENU_NAME, parent='MayaWindow',
+                    label=MENU_NAME, helpMenu=True, tearOff=True)
+    
+        for key, value in Tank().config_project['MENU'].items:
+            print(key)
+
+            sub_menu = cmds.menuItem(parent=menu, label=key, subMenu=True)
+
+            cmds.menuItem(eval(menu_item.format(sub_menu)))
+    
+
+    def delete_menu():
+        if cmds.menu(MENU_NAME, query=True, exists=True):
+            cmds.deleteUI(MENU_NAME, menu=True)
+      
         # # reference or open
         # if ref or ".abc" in self.save_dir or ".obj" in self.save_dir or ".fbx" in self.save_dir:
         #     # file -r -type "mayaBinary"  -ignoreVersion -gl -mergeNamespacesOnClash false -namespace "bull_MODEL_v004_jo" -options "v=0;" "K:/30_assets/bull/10_MODEL/WORK/bull_MODEL_v004_jo.mb";

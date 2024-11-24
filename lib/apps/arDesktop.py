@@ -13,7 +13,6 @@ import importlib
 
 from Qt import QtWidgets, QtGui, QtCore
 
-import pipefunc
 from tank import Tank
 
 
@@ -44,16 +43,6 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('icons/folder_open')), 'Project Config')
             menuItem.triggered.connect(self.btnOpenProjectConfig)
 
-
-        # SUBMENU: software
-        subMenu = QtWidgets.QMenu('Software')
-        subMenu.setStyleSheet(Tank().config['script'][__name__]['style'])
-        menu.addMenu(subMenu)
-
-        for soft, soft_func in Tank().config['script'][__name__]['SOFTWARE'].items():
-            menuItem = subMenu.addAction(QtGui.QIcon(Tank().get_img_path('software/default/' + soft)), soft.title())
-            menuItem.triggered.connect(eval(soft_func))
-
         menu.addSeparator()
 
         project_menu = QtWidgets.QMenu(Tank().plex_context['project_name'])
@@ -65,18 +54,16 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menuItem = project_menu.addAction(QtGui.QIcon(selected_icon), project)
             menuItem.triggered.connect(self.btn_changeProject)
 
-        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('user/default')), Tank().user_id)
-        menuItem.triggered.connect(self.press_btnShowUserConfig)
-            
         menu.addSeparator()
 
-        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('icons/folder_open')), 'Sandbox')
-        menuItem.triggered.connect(self.press_btnShowUserSandbox)
+        # SUBMENU: software
+        subMenu = QtWidgets.QMenu('Software')
+        subMenu.setStyleSheet(Tank().config['script'][__name__]['style'])
+        menu.addMenu(subMenu)
 
-        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('icons/folder_open')), Tank().config_project['name'])
-        menuItem.triggered.connect(self.press_btnOpenProjectPath)
-
-        menu.addSeparator()
+        for soft, soft_func in Tank().config['script'][__name__]['SOFTWARE'].items():
+            menuItem = subMenu.addAction(QtGui.QIcon(Tank().get_img_path('software/default/' + soft)), soft.title())
+            menuItem.triggered.connect(eval(soft_func))
 
         menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('icons/load_yellow')), 'Load')
         menuItem.triggered.connect(self.press_btnLoad)
@@ -91,6 +78,9 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
         menu.addSeparator()
 
+        menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('user/default')), Tank().user_id)
+        menuItem.triggered.connect(self.press_btnShowUserSandbox)
+
         menuItem = menu.addAction(QtGui.QIcon(Tank().get_img_path('icons/cancel')), 'Quit')
         menuItem.triggered.connect(self.press_closeStartup)
 
@@ -99,14 +89,8 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #**********************
     # PRESS
-    def press_btnShowUserConfig(self):
-        pipefunc.open_folder(Tank().plex_paths['config_user'])
-
     def press_btnShowUserSandbox(self):
-        pipefunc.open_folder(Tank().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
-
-    def press_btnOpenProjectPath(self):
-        pipefunc.open_folder(Tank().config_project['PATH']['project'])
+        Tank().open_folder(Tank().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
 
     def press_btnLoad(self):
         import arLoad
@@ -128,17 +112,17 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #------------------------------
     def btnOpenProjectConfig(self):
-        pipefunc.open_folder(Tank().plex_paths['config_project'])
+        Tank().open_folder(Tank().plex_paths['config_project'])
     
     def btn_changeProject(self):
         LOG.debug('Change project')
 
     #------------------------------
     def press_btnReport(self):
-        pipefunc.help('report')
+        Tank().help('report')
 
     def press_btnHelp(self):
-        pipefunc.help(__name__)
+        Tank().help(__name__)
 
     #------------------------------
     def press_closeStartup(self):

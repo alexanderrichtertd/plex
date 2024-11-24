@@ -35,24 +35,19 @@ class Software(tank.Singleton):
         software_dirs = Tank().get_sub_dirs(self.software_path, full_path=True)
 
         os.environ['SOFTWARE_PATH'] = ';'.join(software_dirs)
+        # PYTHONPATH important for software imports
+        os.environ['PYTHONPATH'] += f';{";".join(software_dirs)};{Tank().plex_paths["lib"]};{Tank().plex_paths["apps"]}'
+        sys.path.extend(software_dirs)
 
-        # PYTHONPATH important for the software imports
-        os.environ['PYTHONPATH'] += ';' + ';'.join(software_dirs)
-        os.environ['PYTHONPATH'] += ';' + Tank().plex_paths['lib']
-        for software_dir in software_dirs:
-            sys.path.append(software_dir)
-
-        # GET config
+        # GET software config
         self.env = Tank().config_software.get('ENV', '')
 
         # ADD software ENV
-        if(self.env):
-            for env, content in self.env.items():
-                if isinstance(content, list):
-                    for each in content:
-                        Tank().add_env(env, each)
-                else: 
-                    Tank().add_env(env, content)
+        for env, content in self.env.items():
+            if isinstance(content, list):
+                [Tank().add_env(env, each) for each in content]
+            else:
+                Tank().add_env(env, content)
 
         self.version = Tank().config_software['version']
         self.path = Tank().config_software['path']
@@ -67,6 +62,15 @@ class Software(tank.Singleton):
         LOG.debug(cmd)
 
         self.print_header()
+
+
+    #*********************************************************************
+    # DEFAULT FUNCTIONS
+    def create_menu(self):
+        print('create menu: software')
+
+    def delete_menu(self):
+        print('delete menu: software')
 
 
     #*********************************************************************
@@ -141,19 +145,19 @@ class Software(tank.Singleton):
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
 
         # user name & software
-        space = (20-int(len('Welcome ' + getpass.getuser())/2)) - 1
+        space = (21-int(len('Welcome ' + getpass.getuser())/2)) - 1
         print(' ' * space + 'Welcome ' + getpass.getuser())
         print('')
         space = (20-int(len(f'{self.name} {self.version}')/2)) - 1
         print(' ' * space + f'{self.name.title()} {self.version}')
 
-        print(f'\nPATHS')
+        print(f'\nPATHS: {Tank().plex_paths["pipeline"]}')
         print('• img')
         print('• lib')
         print('• lib/apps')
         print('• lib/extern')
 
-        print('\n• config')
+        print(f'\n• config{Tank().plex_paths["config_project"].split("config")[1][:-1]}\n')
 
         for sub_dir in Tank().get_sub_dirs(self.software_path):
             if sub_dir == 'menu': sub_dir += f'/{Tank().config_software["menu"]}'
