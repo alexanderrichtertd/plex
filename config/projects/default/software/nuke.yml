@@ -9,30 +9,30 @@
 version:      &NUKE_VERSION 15.1                                
 version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      
 
-start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex "{}"']
+start: !join ['start "" Nuke', *NUKE_VERSION ,'.exe --nukex {}']
 
 path:  !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, .exe]
 
 
 ENV:
-  PYTHONPATH:
-    - $software/scripts
-    - $software/plugins
-    - $software/gizmos
+    PYTHONPATH:
+      - $software/scripts
+      - $software/plugins
+      - $software/gizmos
 
-  NUKE_PATH:
-    - $pipeline
-    - $software
-    # - STATUS_PATH
-    # - PLUGIN_PATH
+    NUKE_PATH:
+      - $pipeline
+      - $software
+      # - STATUS_PATH
+      # - PLUGIN_PATH
 
-  # Init & Menu
-  NUKE_INIT_PATH: $software
-  NUKE_MENU_PATH: $software
+    # Init & Menu
+    NUKE_INIT_PATH: $software
+    NUKE_MENU_PATH: $software
 
-  NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
+    NUKE_DIR: &NUKE_DIR !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG]
 
-  PATH: *NUKE_DIR
+    PATH: *NUKE_DIR
 
 
 #*********************************************************************

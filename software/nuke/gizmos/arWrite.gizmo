@@ -166,7 +166,7 @@ set N9b3df800 [stack 0]
  }
  Text {
   opacity {{text_master.opacity}}
-  message "\[python \{os.getenv('PROJECT_NAME')\}]"
+  message "Plex"
   font C:/Windows/Fonts/impact.ttf
   size {{text_master.size}}
   yjustify top

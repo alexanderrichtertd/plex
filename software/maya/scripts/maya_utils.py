@@ -23,22 +23,6 @@ LOG = Tank().log.init(script=__name__)
 
 
 #*********************************************************************
-# MENU
-# TODO: delete and reload shelf
-def load_menus():
-    project_path = Tank().plex_context['project_name'].replace(' ','')
-
-    if cmds.menu(project_path, query=True, exists=True):
-        cmds.deleteUI(project_path, menu=True)
-
-    menu = cmds.menu(project_path, hm=True, parent='MayaWindow',
-                     l=project_path, to=True,)
-
-    Tank().software.add_menu(menu)
-    Tank().software.add_shelf()
-
-
-#*********************************************************************
 # START SETUP
 def setup_scene(file_path=''):
     project_config = Tank().config_project
@@ -107,21 +91,21 @@ def setup_scene(file_path=''):
 
 #*********************************************************************
 def position_selected():
-	selected = ls(selection=True)
+    selected = ls(selection=True)
 
-	if len(selected) > 1:
-	    origin = selected[0]
-	    selected.pop(0)
+    if len(selected) > 1:
+        origin = selected[0]
+        selected.pop(0)
 
-	    for select in selected:
-	        cam_new = general.PyNode(select)
-	        cam_origin = general.PyNode(origin)
+        for select in selected:
+            cam_new = general.PyNode(select)
+            cam_origin = general.PyNode(origin)
 
-	        cam_new.translate.set(cam_origin.translate.get())
-	        cam_new.rotate.set(cam_origin.rotate.get())
-	        cam_new.scale.set(cam_origin.scale.get())
-	else:
-	    LOG.warning("Need at least 2 selections to set the rest on the 1. selection position.")
+            cam_new.translate.set(cam_origin.translate.get())
+            cam_new.rotate.set(cam_origin.rotate.get())
+            cam_new.scale.set(cam_origin.scale.get())
+        else:
+            LOG.warning("Need at least 2 selections to set the rest on the 1. selection position.")
 
 
 #*********************************************************************
@@ -134,7 +118,7 @@ def viewport_off(func):
             mel.eval("paneLayout -e -manage false $gMainPane")
             return func(*args, **kwargs)
         except Exception:
-    	    LOG.error("FAIL : Viewport off", exc_info=True)
+            LOG.error("FAIL : Viewport off", exc_info=True)
             raise
         finally:
             # viewport ON

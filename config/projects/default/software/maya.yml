@@ -12,8 +12,8 @@ path:    &MAYA_PATH !join ["C:/Program Files/Autodesk/Maya", *MAYA_VERSION, /bin
 # start command
 start: !join ['start "" "', *MAYA_PATH, '" {}']
 
-renderer:
-renderer_path:
+# renderer:
+# renderer_path:
 
 menu: menu_default
 

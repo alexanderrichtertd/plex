@@ -11,23 +11,23 @@ path:    &HOUDINI_PATH !join ["C:/Program Files/Side Effects Software/Houdini ",
 
 start: *HOUDINI_PATH
 
-renderer:
-renderer_path:
+# renderer:
+# renderer_path:
 
 
 ENV:
-  PYTHONPATH:
-    - $software
-    - $software/scripts
-    - $software/plugins
+    PYTHONPATH:
+      - $software
+      - $software/scripts
+      - $software/plugins
 
-  # HOUDINI_USER_PREF_DIR:
-  #  - !env_first [CONFIG_FILE_PATH, /houdini]
-  # HOUDIN_PATH:
-  #  - !env [CONFIG_FILE_PATH, /houdini]
+    # HOUDINI_USER_PREF_DIR:
+    #  - $config_project/houdini]
+    # HOUDIN_PATH:
+    #  - $config_project/houdini]
 
-  HOUDINI_SPLASH_FILE: $img/software/houdini/houdini_splash.png
+    HOUDINI_SPLASH_FILE: $img/software/houdini/houdini_splash.png
 
 # MENU: plex/config/$project/houdini/MainMenuMaster.xml
 
-SETTINGS:
+# SETTINGS:
