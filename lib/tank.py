@@ -38,13 +38,12 @@ class Tank(Singleton):
     def init_software(self, name=''):
         name = name or os.getenv('SOFTWARE') or 'software'
 
-        if not self._software:
-            # e.g. maya_dcc Maya
-            module_name = f'{name}_dcc' if name != 'software' else 'software'
-            class_name = name.title() 
+        # e.g. maya_dcc Maya
+        module_name = f'{name}_dcc' if name != 'software' else 'software'
+        class_name = name.title() 
 
-            module = __import__(module_name, fromlist=[class_name])
-            self._software = getattr(module, class_name)()
+        module = __import__(module_name, fromlist=[class_name])
+        self._software = getattr(module, class_name)()
 
         return self._software
 

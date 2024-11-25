@@ -115,19 +115,19 @@ class Software(tank.Singleton):
     # FUNCTION
     @property
     def scene_path(self):
-        LOG.warning('NO software override found')
+        print('NO scene_path software override found')
 
     def scene_save(self):
-        LOG.warning('NO software override found')
+        print('NO scene_save software override found')
 
     def scene_save_as(self, file):
-        LOG.warning('NO software override found')
+        print('NO scene_save_as software override found')
 
     def scene_open(self, file):
-        LOG.warning('NO software override found')
+        print('NO scene_open software override found')
 
     def scene_import(self, file):
-        LOG.warning('NO software override found')
+        print('NO scene_import software override found')
 
 
     #*********************************************************************
@@ -151,17 +151,16 @@ class Software(tank.Singleton):
         space = (20-int(len(f'{self.name} {self.version}')/2)) - 1
         print(' ' * space + f'{self.name.title()} {self.version}')
 
-        print(f'\nPATHS: {Tank().plex_paths["pipeline"]}')
-        print('• img')
+        print(f'\n\n{Tank().plex_paths["pipeline"]}')
+        print('\n• img')
         print('• lib')
-        print('• lib/apps')
-        print('• lib/extern')
+        print(r'• lib\apps')
+        print(r'• lib\extern')
 
         print(f'\n• config{Tank().plex_paths["config_project"].split("config")[1][:-1]}\n')
 
         for sub_dir in Tank().get_sub_dirs(self.software_path):
-            if sub_dir == 'menu': sub_dir += f'/{Tank().config_software["menu"]}'
-            print(f'• software/{self.name}/{sub_dir}')
+            print(fr'• software\{self.name}\{sub_dir}')
 
         print('')
 

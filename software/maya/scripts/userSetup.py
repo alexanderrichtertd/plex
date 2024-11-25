@@ -26,9 +26,7 @@ cmds.evalDeferred('print("create menu")')
 cmds.evalDeferred('print("create shelf")')
 
 # Tank().init_software(os.getenv('SOFTWARE'))
-LOG.debug(f'userSetup: import {menu_module};{menu_module}.create_menu()')
-cmds.evalDeferred(f'import {menu_module};{menu_module}.create_menu()')
-cmds.evalDeferred(f'import {menu_module};{menu_module}.create_shelf()')
+cmds.evalDeferred(f'from maya_dcc import Maya; Maya().create_menu()')
 
 cmds.evalDeferred('print("FINISH -----------------------------------------")')
 cmds.evalDeferred('print("")')

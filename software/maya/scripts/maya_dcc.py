@@ -6,8 +6,6 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import maya.mel as mel
-import pymel.core as pm
 import maya.cmds as cmds
 
 from tank import Tank
@@ -23,25 +21,24 @@ MENU_NAME = Tank().config_project['name'][:20]
 #*********************************************************************
 # CLASS
 class Maya(Software):
-
     NAME = 'maya'
 
     @property
     def scene_path(self):
-        return pm.sceneName()
+        return cmds.file(query=True, sceneName=True)
 
     def scene_save(self, file_path):
-        return pm.saveFile(file_path)
-
-    def scene_save_as(self, file_path, setup_scene=False):
-        if setup_scene: self.scene_setup(file_path)
-        return pm.saveAs(file_path)
+        cmds.file(rename=file_path)
+        return cmds.file(save=True)
 
     def scene_open(self, file_path):
-        return pm.openFile(file_path, force=True)
+        return cmds.file(file_path, open=True, force=True)
 
     def scene_import(self, file_path):
-        pass
+        return cmds.file(file_path, i=True)
+
+    def scene_reference(self, file_path):
+        return cmds.file(file_path, reference=True)
 
 
     #******************************************************************************
@@ -50,16 +47,19 @@ class Maya(Software):
         self.delete_menu()
         print('create menu: Maya')
 
-        menu = cmds.menu(MENU_NAME, parent='MayaWindow',
-                    label=MENU_NAME, helpMenu=True, tearOff=True)
-    
-        for key, value in Tank().config_project['MENU'].items:
-            print(key)
+        menu = cmds.menu(MENU_NAME, parent='MayaWindow', label=MENU_NAME, helpMenu=True, tearOff=True)
 
-            sub_menu = cmds.menuItem(parent=menu, label=key, subMenu=True)
+        LOG.debug(Tank().config_software['MENU'])
+        for menu_item in Tank().config_software['MENU']:
+            # print(menu_item)
+            for key, value in menu_item.items():
+                if value == 'None':
+                    print(f'MENU: {key}')
+                    sub_menu = cmds.menuItem(parent=menu, label=key, subMenu=True)
+                else:
+                    print(value)
+                    cmds.menuItem(eval(menu_item.format(sub_menu)))
 
-            cmds.menuItem(eval(menu_item.format(sub_menu)))
-    
 
     def delete_menu():
         if cmds.menu(MENU_NAME, query=True, exists=True):

@@ -1,11 +1,10 @@
 #*********************************************************************
 # content   = houdini init
-# date      = 2020-06-19
+# date      = 2024-11-19
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
-
 
 from tank import Tank
 
@@ -18,7 +17,7 @@ LOG = Tank().log.init(script=__name__)
 #*********************************************************************
 # MENU
 def add_menu():
-    menu_path = f'{Tank().plex_paths["config_project"]}/houdini/MainMenuMaster.xml'
+    menu_path = f'{Tank().plex_paths["software"]}/houdini/scripts/MainMenuMaster.xml'
 
     def find_inbetween(self, text, first, last):
         try:

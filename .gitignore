@@ -1,7 +1,6 @@
 !__init__.py
 
 _src
-test.py
 .vscode
 
 *.bak
@@ -16,8 +15,6 @@ test.py
 config/user/alexa
 
 img/img_rc.py
-
-lib/ideas
 
 software/max/plugins/*
 software/maya/plugins/*
