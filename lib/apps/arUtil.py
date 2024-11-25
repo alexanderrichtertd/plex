@@ -11,12 +11,13 @@ import sys
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
+import pipefunc
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
@@ -43,7 +44,7 @@ class ArUtil(object):
                                                   'Admin' if Tank().admin else 'Artist', '<br>[open user sandbox]</p></body></html>']))
 
         self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('icons/project2')))) # current user
-        self.wgHeader.btnProject.setToolTip(Tank().plex_context['project_name'] + '\n[open project folder]')
+        self.wgHeader.btnProject.setToolTip(Tank().context['project_name'] + '\n[open project folder]')
 
         # SIGNAL
         self.wgHeader.btnAccept.clicked.connect(self.press_btnAccept)
@@ -70,13 +71,13 @@ class ArUtil(object):
         print('PRESS accept')
 
     def press_btnOpenFolder(self):
-        Tank().open_folder(self.open_path)
+        pipefunc.open_folder(self.open_path)
 
     def press_btnUser(self):
-        Tank().open_folder(Tank().user_sandbox)
+        pipefunc.open_folder(Tank().user_sandbox)
 
     def press_btnProject(self):
-        Tank().open_folder(Tank().config_project['PATH']['project'])
+        pipefunc.open_folder(Tank().config_project['PATH']['project'])
 
     def press_btnReport(self):
         Tank().help('report')

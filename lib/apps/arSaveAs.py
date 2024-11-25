@@ -17,6 +17,7 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
 import arNotice
 import snapshot
+import pipefunc
 
 from tank import Tank
 from arUtil import ArUtil
@@ -24,7 +25,7 @@ from arUtil import ArUtil
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
@@ -116,7 +117,7 @@ class ArSaveAs(ArUtil):
         try:
             self.save_dir = Tank().config_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
             if self.wgSaveAs.cbxSet.isVisible():
-                self.wgSaveAs.cbxSet.addItems(Tank().get_file_list(self.save_dir))
+                self.wgSaveAs.cbxSet.addItems(pipefunc.get_files(self.save_dir))
         except: LOG.error('FAILED adding PATH items: config/projects/$project/project.yml : PATH', exc_info=True)
 
 
@@ -166,7 +167,7 @@ class ArSaveAs(ArUtil):
             save_list.append(self.save_file)
 
         LOG.debug(f'Folder list {save_list}')
-        for folder in save_list: Tank().create_folder(folder)
+        for folder in save_list: pipefunc.create_folder(folder)
 
         if self.new_file:
             Tank().software.scene_save_as(self.save_file, setup_scene=True)

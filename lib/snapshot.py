@@ -11,12 +11,12 @@ import os
 
 from Qt import QtWidgets, QtGui, QtCore, __binding__
 
+import pipefunc
 from tank import Tank
-
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 DEFAULT_PATH = os.path.normpath(Tank().get_config('config_user') + '/tmp_img.jpg')
 
 
@@ -99,10 +99,10 @@ def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img.load(src_path)
     thumbnail_extension = '.' + Tank().config_project['EXTENSION']['thumbnail']
 
-    tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(Tank().plex_paths["meta"])}'
+    tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(Tank().paths["meta"])}'
     rlt_path =  + f'{tmp_dir}/{os.path.basename(rlt_path).split(".")[0]}{thumbnail_extension}'
 
-    Tank().create_folder(rlt_path)
+    pipefunc.create_folder(rlt_path)
     img.save(rlt_path, format=thumbnail_extension)
     remove_tmp_img(src_path)
     return rlt_path

@@ -7,13 +7,13 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
+import pipefunc
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
@@ -78,4 +78,4 @@ class Context():
     #*********************************************************************
     # FUNCTIONS
     def open_path(self):
-        return Tank().open_folder(self.file_path)
+        return pipefunc.open_folder(self.file_path)

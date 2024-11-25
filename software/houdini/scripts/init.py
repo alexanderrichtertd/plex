@@ -11,13 +11,13 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
 # MENU
 def add_menu():
-    menu_path = f'{Tank().plex_paths["software"]}/houdini/scripts/MainMenuMaster.xml'
+    menu_path = f'{Tank().paths["software"]}/houdini/scripts/MainMenuMaster.xml'
 
     def find_inbetween(self, text, first, last):
         try:
@@ -29,7 +29,7 @@ def add_menu():
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
             find_title = find_inbetween(content, '<label>', '</label>')
-            content = content.replace(f'<label>{find_title}</label>', f'<label>{Tank().plex_context["project_name"]}</label>')
+            content = content.replace(f'<label>{find_title}</label>', f'<label>{Tank().context["project_name"]}</label>')
             print(content)
             # WRITE new XML
             outfile.seek(0)

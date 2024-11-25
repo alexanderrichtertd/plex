@@ -11,12 +11,13 @@ import errno
 
 import nuke
 
+import pipefunc
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 PROJECT_CONFIG = Tank().config_project
 RESOLUTION   = ' '.join([str(PROJECT_CONFIG['resolution'][0]),
@@ -42,7 +43,7 @@ def create_write_dir():
 def add_plugin_paths():
     # ADD all IMG paths
     for img in os.getenv('IMG_PATH').split(';'):
-        for img_sub in Tank().get_deep_dirs(path=img, full_path=True):
+        for img_sub in pipefunc.get_sub_dirs(path=img, full_path=True):
             nuke.pluginAddPath(img_sub)
 
     # ADD sub software paths

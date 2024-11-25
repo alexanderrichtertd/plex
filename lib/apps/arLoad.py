@@ -9,7 +9,6 @@
 import os
 import sys
 import pathlib
-import importlib
 import webbrowser
 
 import datetime
@@ -18,13 +17,17 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
 import arNotice
 
+import pipefunc
 from tank import Tank
 import arUtil
+
+import importlib
 importlib.reload(arUtil)
+
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
@@ -106,9 +109,9 @@ class ArLoad(arUtil.ArUtil):
         self.wgHeader.close()
 
         # OPEN in current software
-        if software == Tank().software.name:
+        if software == Tank().software:
             LOG.info(f'OPEN file: {self.load_file}')
-            Tank().software.scene_open(self.load_file)
+            Tank().scene_open(self.load_file)
         # OPEN in os
         else:
             try:    Tank().start_software(software=software, open_file=self.load_file)
@@ -137,7 +140,7 @@ class ArLoad(arUtil.ArUtil):
 
         self.entity_path = Tank().config_project['PATH'][button_name]
 
-        for scene in Tank().get_sub_dirs(self.entity_path):
+        for scene in pipefunc.get_sub_dirs(self.entity_path):
             self.wgLoad.lstScene.addItem(scene)
         self.wgLoad.lstScene.setCurrentRow(0)
 
@@ -153,7 +156,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.cbxTask.clear()
 
         self.scene_path = f'{self.entity_path}/{self.wgLoad.lstScene.currentItem().text()}'
-        task_names = Tank().get_sub_dirs(self.scene_path)
+        task_names = pipefunc.get_sub_dirs(self.scene_path)
 
         self.wgLoad.cbxTask.addItems(task_names)
         self.wgLoad.cbxTask.setCurrentIndex(0)
@@ -204,7 +207,7 @@ class ArLoad(arUtil.ArUtil):
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("labels/default"))))
 
         if os.path.exists(meta_file_path):
-            file_config = Tank().get_yaml_content(meta_file_path)
+            file_config = pipefunc.get_yaml_content(meta_file_path)
 
             if file_config and current_file in file_config:
                 file_content = file_config[self.wgLoad.lstVersion.currentItem().text()]

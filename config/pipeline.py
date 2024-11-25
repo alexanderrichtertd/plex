@@ -9,6 +9,7 @@
 import os
 import sys
 import getpass
+import pathlib
 
 try:
     import yaml
@@ -28,8 +29,8 @@ yaml.add_constructor('!join', join)
 class Setup(object):
 
     def __init__(self):
-        self.config_path = os.path.dirname(__file__)
-        self.pipeline_path = os.path.dirname(os.path.dirname(__file__))
+        self.config_path = str(pathlib.Path(os.path.dirname(__file__)).resolve())
+        self.pipeline_path = str(pathlib.Path(os.path.dirname(os.path.dirname(__file__))).resolve())
 
         # LOAD pipeline config
         self.pipeline_config = self.get_yaml_content(f'{self.config_path}/pipeline.yml')
@@ -71,9 +72,8 @@ class Setup(object):
         os.environ['PLEX_CONTEXT'] = str(plex_context)
     
         # PATH env: Add all plex_paths
-        for path in plex_paths.values():
-            sys.path.append(path)
-            # os.environ['PYTHONPATH'] += f';{path}' 
+        sys.path.extend(plex_paths.values())
+        # os.environ['PYTHONPATH'] += f';{path}' 
 
         self.__call__(plex_paths)
 
@@ -90,7 +90,7 @@ class Setup(object):
     def __call__(self, plex_paths):
         from tank import Tank
 
-        LOG = Tank().log.init(script=__name__)
+        LOG = Tank().log(script=__name__)
 
         LOG.debug('')
         LOG.debug(200 * '_')

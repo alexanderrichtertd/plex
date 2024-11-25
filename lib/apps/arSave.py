@@ -17,13 +17,14 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 import arNotice
 import snapshot
 
+import pipefunc
 from tank import Tank
 from arUtil import ArUtil
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
@@ -160,7 +161,7 @@ class ArSave(ArUtil):
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Tank().software.extension
 
-            Tank().create_folder(os.path.dirname(self.save_publish_file))
+            pipefunc.create_folder(os.path.dirname(self.save_publish_file))
 
             try:
                 shutil.copy(self.save_file, tmpCopyWork)

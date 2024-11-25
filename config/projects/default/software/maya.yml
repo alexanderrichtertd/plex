@@ -15,9 +15,6 @@ start: !join ['start "" "', *MAYA_PATH, '" {}']
 # renderer:
 # renderer_path:
 
-menu: menu_default
-
-
 # Added BEFORE software starts
 ENV:
     MAYA_SCRIPT_PATH: 
@@ -26,8 +23,8 @@ ENV:
     MAYA_PLUG_IN_PATH:
         - $software/maya/plugins
 
-    MAYA_SHELF_PATH:
-        - $software/maya/menu
+    # MAYA_SHELF_PATH:
+    #     - $software/maya/scripts
 
     # SPLASHSCREEN & IMG PATH
     XBMLANGPATH:
@@ -43,37 +40,33 @@ ENV:
 # MENU
 #*********************************************************************
 MENU:
-    - $project_name:
-      - open_scene_folder:   parent="{}", label="Open Scene Folder", command="from tank import Tank; Tank().open_folder(cmds.file(q=True, sceneName=True))"
-      - open_project_folder: parent="{}", label="Open Project Folder", command="from tank import Tank;from tank import Tank; Tank().open_folder(Tank().config_project["path"])"
-      - sub_break:           parent="{}", d=True
-      - reload_pipeline:     parent="{}", label="Reload Pipeline", command="import maya_utils;import maya.cmds as cmds;cmds.evalDeferred("maya_utils.load_menu()")"
+    - project_name:
+      - Open Scene Folder:   import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))
+      - Open Project Folder: import pipefunc; pipefunc.open_folder(Tank().config_project['PATH']['project'])
+      - break:               
+      - Reload Pipeline:     print('reload pipeline')
 
-    - break:  parent="{}", d=True
+    - break:
 
-    - Save: parent="{}", label="Save", command="import arSave; arSave.start()"
-    - Load: parent="{}", label="Load", command="import arLoad; arLoad.start()"
+    - Save: import arSave; arSave.start()
+    - Load: import arLoad; arLoad.start()
 
-    - break:  parent="{}", d=True
+    - break:
 
     - Animation:
-      playblast: parent="{}", label="Playblast", command="from ANIM import playblast;playblast.start()"
+      - Playblast: from ANIM import playblast;playblast.start()
 
     - Light:
-      light_linker: parent="{}", label="Light Linker", command="from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()"
+      - Light Linker: from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()
 
     - Render:
-      rendersetting_work:    parent="{}", label="Rendersetting - Work", command="Tank().software.scene_setup("RENDER", "WORK")"
-      rendersetting_preview: parent="{}", label="Rendersetting - Preview", command="Tank().software.scene_setup("RENDER", "PREVIEW")"
-      rendersetting_publish: parent="{}", label="Rendersetting - Publish", command="Tank().software.scene_setup("RENDER", "DELIVER")"
+      - Rendersetting - Work:    Tank().scene_setup("render", "work")
+      - Rendersetting - Publish: Tank().scene_setup("render", "publish")
 
-    - Utils:
-      position_selected: parent="{}", label="Snap to First Selection", command="import maya_utils; maya_utils.position_selected()"
+    - break: 
 
-    - break:  parent="{}", d=True
-
-    - Report: parent="{}", label="Report", command="from tank import Tank; Tank().help("report")"
-    - Help:   parent="{}", label="Help", command="from tank import Tank; Tank().help()"
+    - Report: from tank import Tank; Tank().help("report")
+    - Help:   from tank import Tank; Tank().help()
 
 
 
@@ -87,7 +80,7 @@ MENU:
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
 #     - folder:  l="Project Folder", command="import webbrowser; webbrowser.open(os.path.dirname(Tank().software.scene_path))", dcc=", image="shelf_open_folder.png"
-#     - folder:  l="Project Folder", command="from tank import Tank;from tank import Tank; Tank().open_folder(Tank().config_project["path"])", dcc=", image="shelf_open_folder_project.png"
+#     - folder:  l="Project Folder", command="import pipefunc; pipefunc.open_folder(Tank().config_project["path"])", dcc=", image="shelf_open_folder_project.png"
 
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 

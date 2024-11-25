@@ -13,12 +13,13 @@ import importlib
 
 from Qt import QtWidgets, QtGui, QtCore
 
+import pipefunc
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
@@ -43,14 +44,17 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('icons/folder_open')), 'Project Config')
             menuItem.triggered.connect(self.btnOpenProjectConfig)
 
+            menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('icons/app_modify')), 'arConfig')
+            menuItem.triggered.connect(self.btnConfigApp)
+
         menu.addSeparator()
 
-        project_menu = QtWidgets.QMenu(Tank().plex_context['project_name'])
+        project_menu = QtWidgets.QMenu(Tank().context['project_name'])
         project_menu.setStyleSheet(Tank().config['script'][__name__]['style'])
         menu.addMenu(project_menu)
 
         for project in Tank().project_names:
-            selected_icon = Tank().get_img_path('icons/check') if project == Tank().plex_context['project_id'] else ''
+            selected_icon = Tank().get_img_path('icons/check') if project == Tank().context['project_id'] else ''
             menuItem = project_menu.addAction(QtGui.QIcon(selected_icon), project)
             menuItem.triggered.connect(self.btn_changeProject)
 
@@ -90,7 +94,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     #**********************
     # PRESS
     def press_btnShowUserSandbox(self):
-        Tank().open_folder(Tank().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
+        pipefunc.open_folder(Tank().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
 
     def press_btnLoad(self):
         import arLoad
@@ -112,7 +116,11 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #------------------------------
     def btnOpenProjectConfig(self):
-        Tank().open_folder(Tank().plex_paths['config_project'])
+        pipefunc.open_folder(Tank().paths['config_project'])
+    
+    def btnConfigApp(self):
+        import arConfig
+        arConfig.start(Tank().config_project['name'])
     
     def btn_changeProject(self):
         LOG.debug('Change project')

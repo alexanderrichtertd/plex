@@ -8,18 +8,16 @@
 
 import maya.cmds as cmds
 
-from pipestats import notice
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
 # LIGHT LINKER
-@notice('apps:light_linker')
 def start():
     cmds.window(title='Light Linker')
     cmds.columnLayout()
@@ -54,7 +52,6 @@ def start():
     cmds.showWindow()
 
 
-@notice('apps:light_linker', meta=False)
 def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
     selection = cmds.ls(dag=1,o=1,s=1,sl=1)
     lights    = cmds.ls(selection, type=["light"] + cmds.listNodeTypes("light"))
@@ -83,7 +80,6 @@ def selection_light_linking(break_light=False, exclusive="", shadow_link=False):
     LOG.debug(f"LightLinking - break:{break_light} - shadow:{shadow_link}: {lights} with {meshes}")
 
 
-@notice('Select Attached:See all the attached files', meta=False)
 def select_attached(shadow_link=False):
     selection = cmds.ls(dag=1,o=1,s=1,sl=1)
     lights    = cmds.ls(selection, type=["light"] + cmds.listNodeTypes("light"))
@@ -107,4 +103,3 @@ def select_attached(shadow_link=False):
 
     cmds.select(select_nodes)
     cmds.pickWalk(direction='up')
-

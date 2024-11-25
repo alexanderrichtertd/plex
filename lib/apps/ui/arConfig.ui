@@ -15,16 +15,30 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
      <item>
-      <widget class="QComboBox" name="cbxProject"/>
+      <widget class="QComboBox" name="cbxProjects">
+       <property name="minimumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btnAddProject">
        <property name="maximumSize">
         <size>
-         <width>23</width>
-         <height>23</height>
+         <width>24</width>
+         <height>24</height>
         </size>
        </property>
        <property name="font">
@@ -35,14 +49,17 @@
         </font>
        </property>
        <property name="text">
-        <string>+</string>
+        <string/>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="cbxMaster">
-       <property name="text">
-        <string>master</string>
+       <property name="icon">
+        <iconset resource="../../../img/img.qrc">
+         <normaloff>:/icons/icons/plus4.png</normaloff>:/icons/icons/plus4.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -51,7 +68,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -395,6 +412,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../img/img.qrc"/>
+ </resources>
  <connections/>
 </ui>
