@@ -7,10 +7,8 @@
 #*********************************************************************
 
 import os
-import sys
 import getpass
 import webbrowser
-import subprocess
 
 import pipelog
 import pipefunc
@@ -18,24 +16,22 @@ import pipefunc
 LOG = pipelog.init(script=__name__)
 
 
-
-
-
 #*********************************************************************
 # CLASS
 class Tank(pipefunc.Singleton):
-    software_name = ''
+    software_name = 'software'
 
     @property
     def software(self):
-        self.software_name = os.environ.get('SOFTWARE', '')
+        # Get the current software object. Software by default.
+        self.software_name = os.environ.get('SOFTWARE', self.software_name)
 
-        if self.software_name == 'maya':
-            from maya_dcc import Maya
-            return Maya()
-        else:
-            from software import Software
-            return Software()
+        module_name = self.software_name if self.software_name == 'software' else f'{self.software_name}_dcc'
+        class_name = self.software_name.title()
+        module = __import__(module_name, fromlist=[class_name])
+        
+        # e.g. maya_dcc.Maya()
+        return getattr(module, class_name)()
 
     @property
     def context(self):

@@ -24,16 +24,22 @@ class Software(pipefunc.Singleton):
 
     def start(self, name='', open_file=''):
         self.name = name or self.name
+        Tank().software_name = self.name
+
+        LOG.debug(f'{self.name.upper()} -----------------------------------------------------')
 
         # SETUP env
-        LOG.debug(f'- {self.name.upper()} -----------------------------------------------------')
-
-        self.software_path = '/'.join([Tank().paths['software'], self.name])
-        software_dirs = pipefunc.get_sub_dirs(self.software_path, full_path=True)
+        software_dirs = pipefunc.get_sub_dirs(self.path, full_path=True)
 
         os.environ['SOFTWARE_PATH'] = ';'.join(software_dirs)
         # PYTHONPATH important for software imports
-        os.environ['PYTHONPATH'] = os.environ.get('PYTHONPATH', '') + f';{";".join(software_dirs)};{Tank().paths["lib"]};{Tank().paths["apps"]};{Tank().paths["extern"]}'
+        os.environ['PYTHONPATH'] = ';'.join([
+            os.environ.get('PYTHONPATH', ''),
+            *software_dirs,
+            Tank().paths["lib"],
+            Tank().paths["apps"],
+            Tank().paths["extern"]])        
+
         sys.path.extend(software_dirs)
 
         # GET software config
@@ -46,31 +52,13 @@ class Software(pipefunc.Singleton):
             else:
                 pipefunc.add_env(env, content)
 
-        self.version = Tank().config_software['version']
-        self.path = Tank().config_software['path']
-
-        # RENDERER
-        self.renderer = Tank().config_software.get('renderer', '')
-        self.renderer_path = Tank().config_software.get('renderer_path', '')
-
-        
         if open_file: open_file = f'"{open_file}"'
         cmd = Tank().config_software['start'].format(open_file)
         os.environ['SOFTWARE'] = self.name
         subprocess.Popen(cmd, shell=True, env=os.environ)
+
         LOG.debug(cmd)
-
         self.print_header()
-
-
-
-    #*********************************************************************
-    # DEFAULT FUNCTIONS
-    def create_menu(self):
-        print('create menu: software')
-
-    def delete_menu(self):
-        print('delete menu: software')
 
 
     #*********************************************************************
@@ -90,29 +78,37 @@ class Software(pipefunc.Singleton):
     @property
     def menu(self):
         return Tank().config_software['MENU']
-
-
-    #*********************************************************************
-    # IS DCC
+    
     @property
-    def is_maya(self):
-        return self.name == 'maya'
-
+    def version(self):
+        return Tank().config_software['version']
+   
     @property
-    def is_nuke(self):
-        return self.name == 'nuke'
-
+    def path(self):        
+        return f'{Tank().paths["software"]}/{self.name}'
+    
     @property
-    def is_houdini(self):
-        return self.name == 'houdini'
-
+    def renderer(self):
+        return Tank().config_software.get('renderer', '')
+        
     @property
-    def is_max(self):
-        return self.name == 'max'
+    def renderer_path(self):        
+        return Tank().config_software.get('renderer_path', '')
+
 
 
     #*********************************************************************
     # FUNCTION
+    def is_software(self, software_name):
+        return self.name == software_name
+    
+    def create_menu(self):
+        print('create menu: software')
+
+    def delete_menu(self):
+        print('delete menu: software')
+
+
     @property
     def scene_path(self):
         print('NO scene_path software override found')
@@ -157,9 +153,9 @@ class Software(pipefunc.Singleton):
         print(r'• lib\apps')
         print(r'• lib\extern')
 
-        print(f'\n• config{Tank().paths["config_project"].split("config")[1][:-1]}\n')
+        print(f'\n• config\\projects\\{Tank().context["project_id"]}\n')
 
-        for sub_dir in pipefunc.get_sub_dirs(self.software_path):
+        for sub_dir in pipefunc.get_sub_dirs(self.path):
             print(fr'• software\{self.name}\{sub_dir}')
 
         print('')

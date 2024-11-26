@@ -20,9 +20,7 @@ LOG = Tank().log(script=__name__)
 # INIT AND PRINT CONSOLE
 cmds.evalDeferred('print("")')
 cmds.evalDeferred('print("START PLEX -------------------------------------")')
-cmds.evalDeferred('Tank().software.name = "maya"')
-# Tank().init_software(os.getenv('SOFTWARE'))
-cmds.evalDeferred(f'from maya_dcc import Maya; Maya().create_menu()')
+cmds.evalDeferred(f'from tank import Tank; Tank().software.create_menu()')
 
 cmds.evalDeferred('print("FINISH -----------------------------------------")')
 cmds.evalDeferred('print("")')
