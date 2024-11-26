@@ -59,12 +59,14 @@ def create_screenshot_render(WIDGET, ui=''):
             return False
 
     try:
-        if os.getenv("SOFTWARE") == "MAYA":
+        if Tank().software.is_software('maya'):
             if not maya_renderSnapshot(DEFAULT_PATH)[1]:
                 LOG.warning("no snapshot no")
                 return False
-        elif os.getenv("SOFTWARE") == "HOUDINI": houdini_renderSnapshot(DEFAULT_PATH)
-        else: return False
+        elif Tank().is_software('houdini'): 
+            houdini_renderSnapshot(DEFAULT_PATH)
+        else: 
+            return False
     except:
         LOG.error('FAIL', exc_info=True)
         return False

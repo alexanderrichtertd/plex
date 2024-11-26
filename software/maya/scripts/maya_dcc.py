@@ -22,6 +22,7 @@ LOG = Tank().log(script=__name__)
 # FUN
 class Maya(Software):
     menu_name = Tank().config_project['name'][:20]
+    name = 'maya'
 
     @property
     def scene_path(self):
@@ -49,7 +50,6 @@ class Maya(Software):
 
         menu = cmds.menu(self.menu_name, parent='MayaWindow', label=self.menu_name, helpMenu=True, tearOff=True)
 
-        LOG.debug(Tank().config_software['MENU'])
         menu_config = Tank().config_software['MENU']
         LOG.debug(f'Menu items: {menu_config}')
 
@@ -69,8 +69,6 @@ class Maya(Software):
                     else:
                         cmds.menuItem(parent=menu, label=key, command=value)
         
-        print('Menu finished')
-
 
     def delete_menu(self):
         if cmds.menu(self.menu_name, query=True, exists=True):

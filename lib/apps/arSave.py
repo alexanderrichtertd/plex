@@ -67,7 +67,7 @@ class ArSave(ArUtil):
         self.wgHeader.btnOption.setText('SaveAs')
         self.wgSave.btnSnapshotRender.hide()
 
-        if Tank().software.is_nuke:
+        if Tank().software.is_software('nuke'):
             self.wgSave.btnSnapshotRender.hide()
 
         self.wgHeader.layMain.addWidget(self.wgSave, 0)

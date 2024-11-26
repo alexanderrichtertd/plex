@@ -57,7 +57,7 @@ class ArUtil(object):
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
         # SHOW announcement from project or (if not existing) pipeline
-        self.wgHeader.lblAnnouncement.setText(Tank().config_announcement)
+        self.wgHeader.lblAnnouncement.setText(Tank().announcement)
 
         # SETUP
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("icons/program")))

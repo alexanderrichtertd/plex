@@ -14,9 +14,6 @@ import subprocess
 import pipefunc
 from tank import Tank
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Tank().log(script=__name__)
 
 
@@ -136,7 +133,7 @@ class Software(pipefunc.Singleton):
     #*********************************************************************
     # PRINT
     def print_header(self):
-        if self.name == 'max': return
+        if self.is_software('max'): return
 
         project_len = len(Tank().context['project_name'])
         space = (20-int(project_len/2)) - 1

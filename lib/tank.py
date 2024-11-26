@@ -49,7 +49,12 @@ class Tank(pipefunc.Singleton):
     @property
     def LOG(self):
         return self.log.init(script=__name__)
-
+   
+    @property
+    def announcement(self):
+        # announcement order: overwrite than pipeline or project 
+        return self.config_pipeline['announcement'] if self.config_project['announcement'] == 'None' or self.config_pipeline['announcement_overwrite'] else self.config_project['announcement']
+    
 
     #*********************************************************************
     # CONFIG
@@ -67,16 +72,12 @@ class Tank(pipefunc.Singleton):
 
     @property
     def config_software(self):
-        return self.get_config(f'software/{self.software.name}')
+        return self.get_config(f'software/{self.software_name}')
 
     @property
     def config_notice(self):
         return self.get_config('notice')
 
-    @property
-    def config_announcement(self):
-        return self.config_pipeline['announcement'] if self.config_project['announcement'] == 'None' or self.config_pipeline['announcement_overwrite'] else self.config_project['announcement']
-    
 
     #*********************************************************************
     # CONFIG: Get & Set
@@ -100,7 +101,7 @@ class Tank(pipefunc.Singleton):
 
         # OPEN config path
         if os.path.exists(file_path):
-            # print(pipefunc.get_yaml_content(file_path, self.paths))
+            # self.LOG.debug(pipefunc.get_yaml_content(file_path, self.paths))
             return pipefunc.get_yaml_content(file_path, self.paths)
         else: 
             print(f"CAN'T find file: {file_path}")
@@ -139,10 +140,6 @@ class Tank(pipefunc.Singleton):
     def context(self):
         return eval(os.environ['PLEX_CONTEXT'])
 
-    @property
-    def admin(self):
-        return eval(os.environ['PLEX_CONTEXT'])['admin']
-   
    
     #*********************************************************************
     # PROJECT    
@@ -158,6 +155,10 @@ class Tank(pipefunc.Singleton):
     def user_id(self):
         return getpass.getuser()
     
+    @property
+    def admin(self):
+        return eval(os.environ['PLEX_CONTEXT'])['admin']
+   
     @property    
     def user_sandbox(self):
         user_sandbox_path = f'{self.config_project["PATH"]["sandbox"]}/{self.user_id}'
@@ -170,8 +171,6 @@ class Tank(pipefunc.Singleton):
     def report(self):
         self.help('report')
 
-
     def help(self, name=''):
-        name = name or os.getenv('SOFTWARE', name)
-        project_help = self.config_project['URL']
-        webbrowser.open(project_help.get(name, project_help['default']))
+        name = name or Tank().software_name
+        webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
