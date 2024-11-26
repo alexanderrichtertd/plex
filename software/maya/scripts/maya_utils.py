@@ -1,8 +1,8 @@
 #*********************************************************************
-# content   = maya utils
-# date      = 2024-11-10
+# content   = Maya utils
+# date      = 2024-11-09
 #
-# license   = MIT <https://github.com/alexanderrichtertd> <https://github.com/alexanderrichtertd>
+# license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
@@ -10,7 +10,6 @@ import os
 
 import maya.mel as mel
 import maya.cmds as cmds
-from pymel.core import *
 
 from functools import wraps
 
@@ -18,20 +17,13 @@ from tank import Tank
 
 
 #*********************************************************************
-# VARIABLE
-LOG = Tank().log.init(script=__name__)
-
-
-#*********************************************************************
 # START SETUP
 def setup_scene(file_path=''):
-    project_config = Tank().config_project
-
     # RESOLUTION
     try:
-        cmds.setAttr("defaultResolution.width", project_config['resolution'][0])
-        cmds.setAttr("defaultResolution.height", project_config['resolution'][1])
-        cmds.setAttr('defaultResolution.deviceAspectRatio', (( project_config['resolution'][0]) / (project_config['resolution'][1])))
+        cmds.setAttr("defaultResolution.width", Tank().config_project['resolution'][0])
+        cmds.setAttr("defaultResolution.height", Tank().config_project['resolution'][1])
+        cmds.setAttr('defaultResolution.deviceAspectRatio', (( Tank().config_project['resolution'][0]) / (Tank().config_project['resolution'][1])))
     except: LOG.error('FAIL load resolution.', exc_info=True)
 
     # IMG FORMAT
@@ -41,21 +33,18 @@ def setup_scene(file_path=''):
 
     # FPS
     try:
-        fps = SOFTWARE_CONFIG['SETTINGS']['FPS'][project_config['fps']]
+        fps = Tank().config_project['fps']
         cmds.currentUnit(time=fps)
         cmds.optionVar(sv = ("workingUnitTime", fps))
         cmds.optionVar(sv = ("workingUnitTimeDefault", fps))
     except: LOG.error('FAIL load fps.', exc_info=True)
 
-    # UNIT
-    try:    cmds.currentUnit(linear=SOFTWARE_CONFIG['SETTINGS']['unit'])
-    except: LOG.error('FAIL load unit.', exc_info=True)
 
     # RENDERER
     try:
-        renderer = SOFTWARE_CONFIG['renderer']
-        cmds.optionVar(sv = ("preferredRenderer", SOFTWARE_CONFIG['renderer']))
-        cmds.optionVar(sv = ("preferredRendererHold", SOFTWARE_CONFIG['renderer']))
+        renderer = Tank().config_project['SETTINGS']['renderer']
+        cmds.optionVar(sv = ("preferredRenderer", renderer))
+        cmds.optionVar(sv = ("preferredRendererHold", renderer))
     except: LOG.error('FAIL load renderer.', exc_info=True)
 
     # ANIMATION extension
@@ -73,8 +62,8 @@ def setup_scene(file_path=''):
         except: LOG.error('FAIL set image path.', exc_info=True)
 
         try:
-            import pymel.core as pm
-            pm.mel.setProject(os.path.dirname(file_path))
+            pass 
+            # pm.mel.setProject(os.path.dirname(file_path))
         except: LOG.error('FAIL set project path.', exc_info=True)
 
     # shortcut - SAVE
@@ -87,25 +76,6 @@ def setup_scene(file_path=''):
     # def fixRenderLayer(*args):
     #     mel.eval("fixRenderLayerOutAdjustmentErrors;")
     # api.MSceneMessage.addCallback(api.MSceneMessage.kAfterOpen, fixRenderLayer)
-
-
-#*********************************************************************
-def position_selected():
-    selected = ls(selection=True)
-
-    if len(selected) > 1:
-        origin = selected[0]
-        selected.pop(0)
-
-        for select in selected:
-            cam_new = general.PyNode(select)
-            cam_origin = general.PyNode(origin)
-
-            cam_new.translate.set(cam_origin.translate.get())
-            cam_new.rotate.set(cam_origin.rotate.get())
-            cam_new.scale.set(cam_origin.scale.get())
-        else:
-            LOG.warning("Need at least 2 selections to set the rest on the 1. selection position.")
 
 
 #*********************************************************************

@@ -13,18 +13,14 @@ from tank import Tank
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
 # INIT AND PRINT CONSOLE
-menu_module = Tank().config_software['menu']
-
 cmds.evalDeferred('print("")')
 cmds.evalDeferred('print("START PLEX -------------------------------------")')
-cmds.evalDeferred('print("create menu")')
-cmds.evalDeferred('print("create shelf")')
-
+cmds.evalDeferred('Tank().software.name = "maya"')
 # Tank().init_software(os.getenv('SOFTWARE'))
 cmds.evalDeferred(f'from maya_dcc import Maya; Maya().create_menu()')
 

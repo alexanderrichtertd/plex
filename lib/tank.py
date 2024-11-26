@@ -18,48 +18,24 @@ import pipefunc
 LOG = pipelog.init(script=__name__)
 
 
-#*********************************************************************
-# SINGLETON
-class Singleton(object):
-    def __new__(cls, *args, **kwds):
 
-        self = "__self__"
-        if not hasattr(cls, self):
-            instance = object.__new__(cls)
-            instance.init(*args, **kwds)
-            setattr(cls, self, instance)
-        return getattr(cls, self)
-
-    def init(self, *args, **kwds):
-        pass
 
 
 #*********************************************************************
 # CLASS
-class Tank(Singleton):
-    _software = ''
-
-    def init_software(self, name=''):
-        name = name or os.getenv('SOFTWARE') or 'software'
-
-        # e.g. maya_dcc Maya
-        module_name = f'{name}_dcc' if name != 'software' else 'software'
-        class_name = name.title() 
-
-        module = __import__(module_name, fromlist=[class_name])
-        self._software = getattr(module, class_name)()
-
-        return self._software
-
-
-    def start_software(self, software, open_file=''):
-        from software import Software
-        self._software = Software()
-        self._software.start(software, open_file)
+class Tank(pipefunc.Singleton):
+    software_name = ''
 
     @property
     def software(self):
-        return self.init_software()
+        self.software_name = os.environ.get('SOFTWARE', '')
+
+        if self.software_name == 'maya':
+            from maya_dcc import Maya
+            return Maya()
+        else:
+            from software import Software
+            return Software()
 
     @property
     def context(self):
@@ -68,7 +44,7 @@ class Tank(Singleton):
     @property
     def log(self):
         import pipelog
-        return pipelog
+        return pipelog.init
     
     @property
     def LOG(self):
@@ -91,7 +67,7 @@ class Tank(Singleton):
 
     @property
     def config_software(self):
-        return self.get_config(f'software/{self.software}')
+        return self.get_config(f'software/{self.software.name}')
 
     @property
     def config_notice(self):

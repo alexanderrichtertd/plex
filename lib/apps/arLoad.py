@@ -109,12 +109,12 @@ class ArLoad(arUtil.ArUtil):
         self.wgHeader.close()
 
         # OPEN in current software
-        if software == Tank().software:
+        if software == Tank().software.name:
             LOG.info(f'OPEN file: {self.load_file}')
-            Tank().scene_open(self.load_file)
+            Tank().software.scene_open(self.load_file)
         # OPEN in os
         else:
-            try:    Tank().start_software(software=software, open_file=self.load_file)
+            try:    Tank().software.start(software=software, open_file=self.load_file)
             except: LOG.error('FAILED to open software', exc_info=True)
             # else: subprocess.Popen(self.load_file, shell=True)
         # except Exception as exc: 

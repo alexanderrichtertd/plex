@@ -11,18 +11,18 @@ import sys
 import getpass
 import subprocess
 
-import tank
+import pipefunc
 from tank import Tank
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
 # CLASS
-class Software(tank.Singleton):
+class Software(pipefunc.Singleton):
     name = 'software'
 
     def start(self, name='', open_file=''):
@@ -31,12 +31,12 @@ class Software(tank.Singleton):
         # SETUP env
         LOG.debug(f'- {self.name.upper()} -----------------------------------------------------')
 
-        self.software_path = '/'.join([Tank().plex_paths['software'], self.name])
-        software_dirs = Tank().get_sub_dirs(self.software_path, full_path=True)
+        self.software_path = '/'.join([Tank().paths['software'], self.name])
+        software_dirs = pipefunc.get_sub_dirs(self.software_path, full_path=True)
 
         os.environ['SOFTWARE_PATH'] = ';'.join(software_dirs)
         # PYTHONPATH important for software imports
-        os.environ['PYTHONPATH'] += f';{";".join(software_dirs)};{Tank().plex_paths["lib"]};{Tank().plex_paths["apps"]}'
+        os.environ['PYTHONPATH'] = os.environ.get('PYTHONPATH', '') + f';{";".join(software_dirs)};{Tank().paths["lib"]};{Tank().paths["apps"]};{Tank().paths["extern"]}'
         sys.path.extend(software_dirs)
 
         # GET software config
@@ -45,9 +45,9 @@ class Software(tank.Singleton):
         # ADD software ENV
         for env, content in self.env.items():
             if isinstance(content, list):
-                [Tank().add_env(env, each) for each in content]
+                [pipefunc.add_env(env, each) for each in content]
             else:
-                Tank().add_env(env, content)
+                pipefunc.add_env(env, content)
 
         self.version = Tank().config_software['version']
         self.path = Tank().config_software['path']
@@ -56,12 +56,15 @@ class Software(tank.Singleton):
         self.renderer = Tank().config_software.get('renderer', '')
         self.renderer_path = Tank().config_software.get('renderer_path', '')
 
+        
         if open_file: open_file = f'"{open_file}"'
         cmd = Tank().config_software['start'].format(open_file)
+        os.environ['SOFTWARE'] = self.name
         subprocess.Popen(cmd, shell=True, env=os.environ)
         LOG.debug(cmd)
 
         self.print_header()
+
 
 
     #*********************************************************************
@@ -135,13 +138,13 @@ class Software(tank.Singleton):
     def print_header(self):
         if self.name == 'max': return
 
-        project_len = len(Tank().plex_context['project_name'])
+        project_len = len(Tank().context['project_name'])
         space = (20-int(project_len/2)) - 1
 
         # project name
         print('')
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
-        print(chr(124) + ' ' * space + Tank().plex_context['project_name'] + ' ' * space + chr(124))
+        print(chr(124) + ' ' * space + Tank().context['project_name'] + ' ' * space + chr(124))
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
 
         # user name & software
@@ -151,15 +154,15 @@ class Software(tank.Singleton):
         space = (20-int(len(f'{self.name} {self.version}')/2)) - 1
         print(' ' * space + f'{self.name.title()} {self.version}')
 
-        print(f'\n\n{Tank().plex_paths["pipeline"]}')
+        print(f'\n\n{Tank().paths["pipeline"]}')
         print('\n• img')
         print('• lib')
         print(r'• lib\apps')
         print(r'• lib\extern')
 
-        print(f'\n• config{Tank().plex_paths["config_project"].split("config")[1][:-1]}\n')
+        print(f'\n• config{Tank().paths["config_project"].split("config")[1][:-1]}\n')
 
-        for sub_dir in Tank().get_sub_dirs(self.software_path):
+        for sub_dir in pipefunc.get_sub_dirs(self.software_path):
             print(fr'• software\{self.name}\{sub_dir}')
 
         print('')

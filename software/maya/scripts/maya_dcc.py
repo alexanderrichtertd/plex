@@ -6,6 +6,7 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
+import maya.mel as mel
 import maya.cmds as cmds
 
 from tank import Tank
@@ -14,14 +15,13 @@ from software import Software
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log.init(script=__name__)
-MENU_NAME = Tank().config_project['name'][:20]
+LOG = Tank().log(script=__name__)
 
 
 #*********************************************************************
-# CLASS
+# FUN
 class Maya(Software):
-    NAME = 'maya'
+    menu_name = Tank().config_project['name'][:20]
 
     @property
     def scene_path(self):
@@ -47,24 +47,35 @@ class Maya(Software):
         self.delete_menu()
         print('create menu: Maya')
 
-        menu = cmds.menu(MENU_NAME, parent='MayaWindow', label=MENU_NAME, helpMenu=True, tearOff=True)
+        menu = cmds.menu(self.menu_name, parent='MayaWindow', label=self.menu_name, helpMenu=True, tearOff=True)
 
         LOG.debug(Tank().config_software['MENU'])
-        for menu_item in Tank().config_software['MENU']:
-            # print(menu_item)
+        menu_config = Tank().config_software['MENU']
+        LOG.debug(f'Menu items: {menu_config}')
+
+        for menu_item in menu_config:
             for key, value in menu_item.items():
-                if value == 'None':
-                    print(f'MENU: {key}')
+                if isinstance(value, list):
                     sub_menu = cmds.menuItem(parent=menu, label=key, subMenu=True)
+                    for sub_item in value:
+                        for label, command in sub_item.items():
+                            if label == 'break':
+                                cmds.menuItem(parent=sub_menu, divider=True)
+                            else:
+                                cmds.menuItem(parent=sub_menu, label=label, command=command)
                 else:
-                    print(value)
-                    cmds.menuItem(eval(menu_item.format(sub_menu)))
+                    if key == 'break':
+                        cmds.menuItem(parent=menu, divider=True)
+                    else:
+                        cmds.menuItem(parent=menu, label=key, command=value)
+        
+        print('Menu finished')
 
 
-    def delete_menu():
-        if cmds.menu(MENU_NAME, query=True, exists=True):
-            cmds.deleteUI(MENU_NAME, menu=True)
-      
+    def delete_menu(self):
+        if cmds.menu(self.menu_name, query=True, exists=True):
+            cmds.deleteUI(self.menu_name, menu=True)
+        
         # # reference or open
         # if ref or ".abc" in self.save_dir or ".obj" in self.save_dir or ".fbx" in self.save_dir:
         #     # file -r -type "mayaBinary"  -ignoreVersion -gl -mergeNamespacesOnClash false -namespace "bull_MODEL_v004_jo" -options "v=0;" "K:/30_assets/bull/10_MODEL/WORK/bull_MODEL_v004_jo.mb";
@@ -73,21 +84,21 @@ class Maya(Software):
 
     #******************************************************************************
     # SNAPSHOT
-    # def viewport_snapshot(img_path):
-    #     mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
+    def viewport_snapshot(self, img_path):
+        mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
 
-    #     # playblast one frame to a specific file
-    #     currentFrame = str(cmds.currentTime(q=1))
-    #     snapshotStr = 'playblast -frame ' + currentFrame + ' -format "image" -cf "' + img_path + '" -v 0 -wh 1024 576 -p 100;'
-    #     mel.eval(snapshotStr)
+        # playblast one frame to a specific file
+        currentFrame = str(cmds.currentTime(q=1))
+        snapshotStr = 'playblast -frame ' + currentFrame + ' -format "image" -cf "' + img_path + '" -v 0 -wh 1024 576 -p 100;'
+        mel.eval(snapshotStr)
 
-    #     # restore the old format
-    #     mel.eval('setAttr "defaultRenderGlobals.imageFormat" `getAttr "defaultRenderGlobals.imageFormat"`;')
-    #     LOG.info("maya_viewport_snapshot")
+        # restore the old format
+        mel.eval('setAttr "defaultRenderGlobals.imageFormat" `getAttr "defaultRenderGlobals.imageFormat"`;')
+        LOG.info("maya_viewport_snapshot")
 
 
-    # def render_snapshot(img_path):
-    #     mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
+    def render_snapshot(self, img_path):
+        mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
 
-    #     LOG.info("maya_render_snapshot")
-    #     return cmds.renderWindowEditor('renderView', e=True, writeImage=img_path)
+        LOG.info("maya_render_snapshot")
+        return cmds.renderWindowEditor('renderView', e=True, writeImage=img_path)
