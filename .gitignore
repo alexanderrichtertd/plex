@@ -12,7 +12,10 @@ _src
 *_DEBUG.sh
 *_DEBUG.bat
 
-config/user/alexa
+config/users/*
+!config/users/arichter
+config/projects/*
+!config/projects/default
 
 img/img_rc.py
 
