@@ -68,31 +68,6 @@ arWrite:
     renderthreads: 12
 
 
-#*********************************************************************
-smartLoader:
-    active:   True
-    start:    &smartLoader import arSave; arSave.start()
-    shortcut: F1
-    ignore:
-    favourite:
-
-    # priority order
-    CONTENT:
-        SHOTS:  Tank().config_project['PATH']['shots']
-        ASSETS: Tank().config_project['PATH']['assets']
-
-    SCRIPTS:
-        arSave: *arSave
-        Report: from tank import Tank; Tank().help('report')
-        Help:   from tank import Tank; Tank().help()
-
-    SOFTWARE:
-        maya:    Tank().config_software['MAYA']['start']
-        nuke:    Tank().config_software['NUKE']['start']
-        max:     Tank().config_software['MAX']['start']
-        houdini: Tank().config_software['HOUDINI']['start']
-
-
 achievement:
     active: True
 
