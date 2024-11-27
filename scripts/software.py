@@ -20,13 +20,8 @@ LOG = Tank().log(script=__name__)
 #*********************************************************************
 # CLASS
 class Software(pipefunc.Singleton):
-    name = 'software'
-
     def start(self, name='', open_file=''):
-        self.name = name or self.name
-        Tank().software_name = self.name
-
-        LOG.debug(f'{self.name.upper()} -----------------------------------------------------')
+        os.environ['SOFTWARE'] = name
 
         # SETUP env
         software_dirs = pipefunc.get_sub_dirs(self.path, full_path=True)
@@ -36,9 +31,12 @@ class Software(pipefunc.Singleton):
         os.environ['PYTHONPATH'] = ';'.join([
             os.environ.get('PYTHONPATH', ''),
             *software_dirs,
-            Tank().paths["lib"],
+            f'{Tank().paths["software"]}/{self.name}',
+            Tank().paths["scripts"],
             Tank().paths["apps"],
-            Tank().paths["extern"]])        
+            Tank().paths["extern"],
+            # Tank().paths["software"]
+            ])        
 
         sys.path.extend(software_dirs)
 
@@ -54,9 +52,9 @@ class Software(pipefunc.Singleton):
 
         if open_file: open_file = f'"{open_file}"'
         cmd = Tank().config_software['start'].format(open_file)
-        os.environ['SOFTWARE'] = self.name
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
+        LOG.debug(f'{self.name.upper()}{20 * "-"}')
         LOG.debug(cmd)
         self.print_header()
 
@@ -66,6 +64,14 @@ class Software(pipefunc.Singleton):
     @property
     def id(self):
         return id(self)
+    
+    @property
+    def name(self):
+        return os.environ.get('SOFTWARE', 'software')
+   
+    @property
+    def path(self):        
+        return f'{Tank().paths["software"]}/{self.name}'
 
     @property
     def config(self):
@@ -82,10 +88,6 @@ class Software(pipefunc.Singleton):
     @property
     def version(self):
         return Tank().config_software['version']
-   
-    @property
-    def path(self):        
-        return f'{Tank().paths["software"]}/{self.name}'
     
     @property
     def renderer(self):
@@ -96,17 +98,16 @@ class Software(pipefunc.Singleton):
         return Tank().config_software.get('renderer_path', '')
 
 
-
     #*********************************************************************
     # FUNCTION
     def is_software(self, software_name):
         return self.name == software_name
     
     def create_menu(self):
-        print('create menu: software')
+        print('NO menu create')
 
     def delete_menu(self):
-        print('delete menu: software')
+        print('NO menu deleted')
 
 
     @property
@@ -155,6 +156,7 @@ class Software(pipefunc.Singleton):
 
         print(f'\n• config\\projects\\{Tank().context["project_id"]}\n')
 
+        print(fr'• software\{self.name}')
         for sub_dir in pipefunc.get_sub_dirs(self.path):
             print(fr'• software\{self.name}\{sub_dir}')
 

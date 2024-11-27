@@ -37,7 +37,7 @@ class ArLoad(arUtil.ArUtil):
     def __init__(self):
         super(ArLoad, self).__init__()
 
-        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
         self.wgLoad = QtCompat.loadUi(path_ui)
 
         self.load_file = ''
@@ -114,7 +114,7 @@ class ArLoad(arUtil.ArUtil):
             Tank().software.scene_open(self.load_file)
         # OPEN in os
         else:
-            try:    Tank().software.start(software=software, open_file=self.load_file)
+            try:    Tank().software.start(name=software, open_file=self.load_file)
             except: LOG.error('FAILED to open software', exc_info=True)
             # else: subprocess.Popen(self.load_file, shell=True)
         # except Exception as exc: 

@@ -25,7 +25,7 @@ LOG = Tank().log(script=__name__)
 class ArUtil(object):
 
     def __init__(self):
-        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
         self.wgHeader = QtCompat.loadUi(path_ui)
 
         # IMPORTANT variables

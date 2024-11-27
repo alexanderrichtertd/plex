@@ -9,8 +9,6 @@
 import os
 import sys
 import glob
-import time
-import getpass
 import webbrowser
 
 from threading import Timer
@@ -20,9 +18,6 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
 from tank import Tank
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Tank().log(script=__name__)
 
 
@@ -37,7 +32,7 @@ class Notice():
                  img      = 'lbl/default',
                  img_link = 'https://www.alexanderrichtertd.com',
                  func     = '',
-                 timer    = 7):
+                 timer    = 8):
 
         self.title    = str(title)   # Pipeline Update
         self.msg      = str(msg)     # New Features for Pipeline
@@ -57,13 +52,12 @@ class Notice():
                     'img_link: ' + self.img_link)
 
 
-
 #*********************************************************************
 # NOTICE UI
 class ArNotice():
 
     def __init__(self, notice):
-        ui_path = '/'.join([os.path.dirname(__file__), 'ui', __name__ + '.ui'])
+        ui_path = '/'.join([os.path.dirname(__file__), __name__ + '.ui'])
         self.wgNotice = QtCompat.loadUi(ui_path)
         self.notice   = notice
 
@@ -120,41 +114,7 @@ class ArNotice():
             webbrowser.open(os.path.realpath(self.notice.img_link))
 
 
-#*********************************************************************
-def create_default_notice(script_string, msg=""):
-    root, script_name = script_string.split(":")
-
-    notice_config = Tank().config_notice
-
-    if root in notice_config and script_name in notice_config[root]:
-        notice_config = notice_config[root][script_name]
-        notice_msg = [lambda: notice_config["msg"], lambda: msg][msg != ""]()
-    else:
-        notice_config['title'] = root
-        notice_msg  = script_name
-        # LOG.warning(f"notice.yml config doesn't exist: {script_name}")
-        # return
-
-    if "quote" in notice_config: notice_quote = notice_config["quote"]
-    else: notice_quote = ''
-
-    img_name = [lambda: script_name, lambda: notice_config["img"]]["img" in notice_config]()
-    img_link = [lambda: "", lambda: notice_config["img_link"]]["img_link" in notice_config]()
-    img_path = Tank().get_img_path("lbl/notice_" + img_name)
-    img_path = [lambda: f'{img_path}/notice_default.png', lambda: img_path][os.path.exists(img_path)]()
-
-    note = Notice(title = notice_config['title'],
-                    msg = notice_msg,
-                  quote = notice_quote,
-                    img = img_path,
-               img_link = img_link)
-
-    classVar = ArNotice(note)
-    # start(note)
-
-
 def create_changelog_popup():
-    import pwd
     import yaml
 
     # TODO: changelog_path undefined
@@ -214,4 +174,3 @@ def start(note = Notice()):
     app.exec_()
 
 # start()
-# create_default_notice("shelf/submit")

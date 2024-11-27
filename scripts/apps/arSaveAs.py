@@ -34,7 +34,7 @@ class ArSaveAs(ArUtil):
     def __init__(self, new_file=True):
         super(ArSaveAs, self).__init__()
 
-        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
         self.wgSaveAs = QtCompat.loadUi(path_ui)
 
         self.all_task = '<all tasks>'

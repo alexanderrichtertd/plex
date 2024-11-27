@@ -29,7 +29,8 @@ yaml.add_constructor('!join', join)
 class Setup(object):
 
     def __init__(self):
-        self.config_path = str(pathlib.Path(os.path.dirname(__file__)).resolve())
+        self.scripts_path = str(pathlib.Path(os.path.dirname(__file__)).resolve())
+        self.config_path = f'{os.path.dirname(self.scripts_path)}/config'
         self.pipeline_path = str(pathlib.Path(os.path.dirname(os.path.dirname(__file__))).resolve())
 
         # LOAD pipeline config
@@ -49,16 +50,16 @@ class Setup(object):
         plex_paths = {'pipeline' : os.path.dirname(self.config_path),
                       
                       'config'          : f'{self.config_path}/',
-                      'config_users'    : f'{self.config_path}/users/',
-                      'config_user'     : f'{self.config_path}/users/{getpass.getuser()}/',
-                      'config_projects' : f'{self.config_path}/projects/',
-                      'config_project'  : f'{os.path.dirname(project_yaml_path)}/',
+                        'config_users'    : f'{self.config_path}/users/',
+                        'config_user'     : f'{self.config_path}/users/{getpass.getuser()}/',
+                        'config_projects' : f'{self.config_path}/projects/',
+                        'config_project'  : f'{os.path.dirname(project_yaml_path)}/',
 
                       'img' : self.pipeline_path + '/img/',
 
-                      'lib'    : self.pipeline_path + '/lib/',
-                      'apps'   : self.pipeline_path + '/lib/apps/',
-                      'extern' : self.pipeline_path + '/lib/extern/',
+                      'scripts' : self.scripts_path,
+                        'apps'    : self.scripts_path + '/apps/',
+                        'extern'  : self.scripts_path + '/extern/',
 
                       'software' : self.pipeline_path + '/software/',
                       }
@@ -70,6 +71,7 @@ class Setup(object):
         
         os.environ['PLEX_PATHS'] = str(plex_paths)
         os.environ['PLEX_CONTEXT'] = str(plex_context)
+        os.environ['SOFTWARE'] = 'software'
     
         # PATH env: Add all plex_paths
         sys.path.extend(plex_paths.values())

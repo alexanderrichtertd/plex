@@ -19,19 +19,25 @@ LOG = pipelog.init(script=__name__)
 #*********************************************************************
 # CLASS
 class Tank(pipefunc.Singleton):
-    software_name = 'software'
 
     @property
     def software(self):
-        # Get the current software object. Software by default.
-        self.software_name = os.environ.get('SOFTWARE', self.software_name)
-
-        module_name = self.software_name if self.software_name == 'software' else f'{self.software_name}_dcc'
+        """ Get the current software object based on the environment variable.
+            RETURN: software class e.g. maya_dcc.Maya()
+        """
+        module_name = f"{self.software_name}_dcc" if self.software_name != 'software' else 'software'
         class_name = self.software_name.title()
-        module = __import__(module_name, fromlist=[class_name])
-        
-        # e.g. maya_dcc.Maya()
-        return getattr(module, class_name)()
+
+        try:
+            module = __import__(module_name, fromlist=[class_name])
+            return getattr(module, class_name)()
+        except ImportError:
+            from software import Software
+            return Software()
+
+    @property
+    def software_name(self):
+        return os.environ.get('SOFTWARE', 'software')
 
     @property
     def context(self):
@@ -69,10 +75,6 @@ class Tank(pipefunc.Singleton):
     @property
     def config_software(self):
         return self.get_config(f'software/{self.software_name}')
-
-    @property
-    def config_notice(self):
-        return self.get_config('notice')
 
 
     #*********************************************************************

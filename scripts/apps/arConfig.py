@@ -27,7 +27,7 @@ class ArConfig(ArUtil):
     def __init__(self, project_name=''):
         super(ArConfig, self).__init__()
 
-        path_ui = "/".join([os.path.dirname(__file__), "ui", __name__ + ".ui"])
+        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
         self.wgConfig = QtCompat.loadUi(path_ui)
 
         self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("icons/app_modify")))
