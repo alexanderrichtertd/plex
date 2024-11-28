@@ -15,9 +15,6 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 from tank import Tank
 from arUtil import ArUtil
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Tank().log(script=__name__)
 
 
@@ -50,9 +47,13 @@ class ArConfig(ArUtil):
 
 #*********************************************************************
 # START
-def start(project_name=''):
+def create(project_name=''):
     global main_widget
     app = QtWidgets.QApplication(sys.argv)
     main_widget = ArConfig(project_name)
     sys.exit(app.exec_())
+    
+def start(project_name=''):
+    global main_widget
+    main_widget = ArConfig(project_name)
 

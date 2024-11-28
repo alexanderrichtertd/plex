@@ -150,9 +150,9 @@ class Software(pipefunc.Singleton):
 
         print(f'\n\n{Tank().paths["pipeline"]}')
         print('\n• img')
-        print('• lib')
-        print(r'• lib\apps')
-        print(r'• lib\extern')
+        print('• scripts')
+        print(r'• scripts\apps')
+        print(r'• scripts\extern')
 
         print(f'\n• config\\projects\\{Tank().context["project_id"]}\n')
 

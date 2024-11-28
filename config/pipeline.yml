@@ -36,7 +36,6 @@ STATUS:
     render:  RENDER
 
 
-# FORMATS
 EXTENSION:
     maya:      ma
     max :      max

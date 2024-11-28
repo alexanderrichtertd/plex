@@ -14,7 +14,7 @@ import pathlib
 try:
     import yaml
 except: # use included yaml: plex/lib/extern/yaml
-    sys.path.append(f'{os.path.dirname(os.path.dirname(__file__))}/lib/extern')
+    sys.path.append(f'{os.path.dirname(os.path.dirname(__file__))}/scripts/extern')
     import yaml
 
 # yaml !join combines variables and strings

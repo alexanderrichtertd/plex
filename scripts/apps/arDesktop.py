@@ -42,21 +42,21 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menu.addMenu(adminMenu)
 
             menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('icons/folder_open')), 'Project Config')
-            menuItem.triggered.connect(self.btnOpenProjectConfig)
+            menuItem.triggered.connect(self.press_btnOpenProjectConfig)
 
             menuItem = adminMenu.addAction(QtGui.QIcon(Tank().get_img_path('icons/app_modify')), 'arConfig')
-            menuItem.triggered.connect(self.btnConfigApp)
+            menuItem.triggered.connect(self.press_btnConfigApp)
 
         menu.addSeparator()
 
-        project_menu = QtWidgets.QMenu(Tank().context['project_name'])
-        project_menu.setStyleSheet(Tank().config['script'][__name__]['style'])
-        menu.addMenu(project_menu)
+        self.project_menu = QtWidgets.QMenu(Tank().context['project_name'])
+        self.project_menu.setStyleSheet(Tank().config['script'][__name__]['style'])
+        menu.addMenu(self.project_menu)
 
         for project in Tank().project_names:
             selected_icon = Tank().get_img_path('icons/check') if project == Tank().context['project_id'] else ''
-            menuItem = project_menu.addAction(QtGui.QIcon(selected_icon), project)
-            menuItem.triggered.connect(self.btn_changeProject)
+            menuItem = self.project_menu.addAction(QtGui.QIcon(selected_icon), project)
+            menuItem.triggered.connect(self.press_btnChangeProject)
 
         menu.addSeparator()
 
@@ -115,19 +115,19 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         Tank().software.start('max')
 
     #------------------------------
-    def btnOpenProjectConfig(self):
+    def press_btnOpenProjectConfig(self):
         pipefunc.open_folder(Tank().paths['config_project'])
     
-    def btnConfigApp(self):
+    def press_btnConfigApp(self):
         import arConfig
         arConfig.start(Tank().config_project['name'])
     
-    def btn_changeProject(self):
+    def press_btnChangeProject(self):
         LOG.debug('Change project')
 
     #------------------------------
     def press_btnReport(self):
-        Tank().help('report')
+        Tank().report()
 
     def press_btnHelp(self):
         Tank().help(__name__)
