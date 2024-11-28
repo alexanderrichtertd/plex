@@ -40,7 +40,7 @@ ENV:
 # MENU
 #*********************************************************************
 MENU:
-    - project_name:
+    - $project_name:
       - Open Scene Folder:   import pipefunc; pipefunc.open_folder(cmds.file(q=True, sceneName=True))
       - Open Project Folder: import pipefunc; pipefunc.open_folder(Tank().config_project['PATH']['project'])
       - break:               

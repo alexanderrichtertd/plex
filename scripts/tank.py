@@ -100,7 +100,7 @@ class Tank(pipefunc.Singleton):
         # OPEN config path
         if os.path.exists(file_path):
             # self.LOG.debug(pipefunc.get_yaml_content(file_path, self.paths))
-            return pipefunc.get_yaml_content(file_path, self.paths)
+            return pipefunc.get_yaml_content(file_path, (self.paths | self.context))
         else: 
             print(f"CAN'T find file: {file_path}")
         
@@ -172,3 +172,4 @@ class Tank(pipefunc.Singleton):
     def help(self, name=''):
         name = name or Tank().software_name
         webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
+        
