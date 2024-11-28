@@ -10,14 +10,14 @@ import os
 
 import nuke
 
-from tank import Tank
+from plex import Plex
 from software import Software
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
-DEFAULT_PATH = os.path.normpath(Tank().get_config('config_user') + '/tmp_img.jpg')
+LOG = Plex().log(script=__name__)
+DEFAULT_PATH = os.path.normpath(Plex().get_config('config_user') + '/tmp_img.jpg')
 
 
 #*********************************************************************
@@ -58,7 +58,7 @@ class Nuke(Software):
         topName ="[file tail [knob [topnode].file]]"
 
         # create writes and define render format
-        write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=Tank().config_project['EXTENSION']['thumnail'])
+        write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=Plex().config_project['EXTENSION']['thumnail'])
         write1.setInput(0, selInput)
 
         # look up current frame

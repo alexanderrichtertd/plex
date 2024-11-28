@@ -90,17 +90,17 @@ class Setup(object):
 
 
     def __call__(self, plex_paths):
-        from tank import Tank
+        from plex import Plex
 
-        LOG = Tank().log(script=__name__)
+        LOG = Plex().log(script=__name__)
 
         LOG.debug('')
         LOG.debug(200 * '_')
         LOG.debug(f"PIPELINE: {self.pipeline_config['name']} {self.pipeline_config['ver']} | PIPELINE PATHS: {plex_paths['pipeline']}")
 
         LOG.debug(f"PROJECT:  {self.project_config['name']} " + 
-                  f"[{Tank().config_project['SETTING']['resolution'][0]} x {Tank().config_project['SETTING']['resolution'][1]} | {Tank().config_project['SETTING']['fps']}] " +
-                  f"{Tank().config_project['PATH']['project']}")
+                  f"[{Plex().config_project['SETTING']['resolution'][0]} x {Plex().config_project['SETTING']['resolution'][1]} | {Plex().config_project['SETTING']['fps']}] " +
+                  f"{Plex().config_project['PATH']['project']}")
 
         LOG.debug(200 * '-')
         LOG.debug(f"SYS_PATH: {'[%s]' % ', '.join(map(str, sys.path))}")
@@ -126,5 +126,5 @@ if args.software:
         import arDesktop
         arDesktop.start()
     else:
-        from tank import Tank
-        Tank().start_software(args.software)
+        from plex import Plex
+        Plex().start_software(args.software)

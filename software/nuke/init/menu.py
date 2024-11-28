@@ -11,12 +11,12 @@ import nuke
 import importlib
 import webbrowser
 
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -36,13 +36,13 @@ def add_write_node():
 
 #*********************************************************************
 # TOOLBAR
-menu_config = Tank().config_software['MENU']
-menuNode  = nuke.menu('Nodes').addMenu(Tank().config_project['name'], icon = 'nuke.ico')
+menu_config = Plex().config_software['MENU']
+menuNode  = nuke.menu('Nodes').addMenu(Plex().config_project['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 
 # ADD menu
-Tank().software.add_menu(menuNode)
+Plex().software.add_menu(menuNode)
 menuNode.addSeparator()
 add_gizmo_menu(menuNode)
 

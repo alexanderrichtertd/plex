@@ -12,14 +12,14 @@ import errno
 import nuke
 
 import pipefunc
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
-PROJECT_CONFIG = Tank().config_project
+PROJECT_CONFIG = Plex().config_project
 RESOLUTION   = ' '.join([str(PROJECT_CONFIG['resolution'][0]),
                             str(PROJECT_CONFIG['resolution'][1]),
                             PROJECT_CONFIG['name'].replace(' ', '')])
@@ -54,7 +54,7 @@ def add_plugin_paths():
 
 #*********************************************************************
 # PIPELINE
-Tank().init_software()
+Plex().init_software()
 add_plugin_paths()
 
 try:    from scripts import write_node

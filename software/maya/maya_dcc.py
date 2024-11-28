@@ -9,19 +9,19 @@
 import maya.mel as mel
 import maya.cmds as cmds
 
-from tank import Tank
+from plex import Plex
 from software import Software
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
 # FUN
 class Maya(Software):
-    menu_name = Tank().config_project['name'][:20]
+    menu_name = Plex().config_project['name'][:20]
     name = 'maya'
 
     @property
@@ -50,7 +50,7 @@ class Maya(Software):
 
         menu = cmds.menu(self.menu_name, parent='MayaWindow', label=self.menu_name, helpMenu=True, tearOff=True)
 
-        menu_config = Tank().config_software['MENU']
+        menu_config = Plex().config_software['MENU']
         LOG.debug(f'Menu items: {menu_config}')
 
         for menu_item in menu_config:

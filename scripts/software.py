@@ -12,9 +12,9 @@ import getpass
 import subprocess
 
 import pipefunc
-from tank import Tank
+from plex import Plex
 
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -31,17 +31,17 @@ class Software(pipefunc.Singleton):
         os.environ['PYTHONPATH'] = ';'.join([
             os.environ.get('PYTHONPATH', ''),
             *software_dirs,
-            f'{Tank().paths["software"]}/{self.name}',
-            Tank().paths["scripts"],
-            Tank().paths["apps"],
-            Tank().paths["extern"],
-            # Tank().paths["software"]
+            f'{Plex().paths["software"]}/{self.name}',
+            Plex().paths["scripts"],
+            Plex().paths["apps"],
+            Plex().paths["extern"],
+            # Plex().paths["software"]
             ])        
 
         sys.path.extend(software_dirs)
 
         # GET software config
-        self.env = Tank().config_software.get('ENV', '')
+        self.env = Plex().config_software.get('ENV', '')
 
         # ADD software ENV
         for env, content in self.env.items():
@@ -51,7 +51,7 @@ class Software(pipefunc.Singleton):
                 pipefunc.add_env(env, content)
 
         if open_file: open_file = f'"{open_file}"'
-        cmd = Tank().config_software['start'].format(open_file)
+        cmd = Plex().config_software['start'].format(open_file)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
         LOG.debug(f'{self.name.upper()}{20 * "-"}')
@@ -71,31 +71,31 @@ class Software(pipefunc.Singleton):
    
     @property
     def path(self):        
-        return f'{Tank().paths["software"]}/{self.name}'
+        return f'{Plex().paths["software"]}/{self.name}'
 
     @property
     def config(self):
-        return Tank().config_software
+        return Plex().config_software
 
     @property
     def extension(self):
-        return Tank().config_project['EXTENSION'][self.name]
+        return Plex().config_project['EXTENSION'][self.name]
 
     @property
     def menu(self):
-        return Tank().config_software['MENU']
+        return Plex().config_software['MENU']
     
     @property
     def version(self):
-        return Tank().config_software['version']
+        return Plex().config_software['version']
     
     @property
     def renderer(self):
-        return Tank().config_software.get('renderer', '')
+        return Plex().config_software.get('renderer', '')
         
     @property
     def renderer_path(self):        
-        return Tank().config_software.get('renderer_path', '')
+        return Plex().config_software.get('renderer_path', '')
 
 
     #*********************************************************************
@@ -132,13 +132,13 @@ class Software(pipefunc.Singleton):
     def print_header(self):
         if self.is_software('max'): return
 
-        project_len = len(Tank().context['project_name'])
+        project_len = len(Plex().context['project_name'])
         space = (20-int(project_len/2)) - 1
 
         # project name
         print('')
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
-        print(chr(124) + ' ' * space + Tank().context['project_name'] + ' ' * space + chr(124))
+        print(chr(124) + ' ' * space + Plex().context['project_name'] + ' ' * space + chr(124))
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
 
         # user name & software
@@ -148,13 +148,13 @@ class Software(pipefunc.Singleton):
         space = (20-int(len(f'{self.name} {self.version}')/2)) - 1
         print(' ' * space + f'{self.name.title()} {self.version}')
 
-        print(f'\n\n{Tank().paths["pipeline"]}')
+        print(f'\n\n{Plex().paths["pipeline"]}')
         print('\n• img')
         print('• scripts')
         print(r'• scripts\apps')
         print(r'• scripts\extern')
 
-        print(f'\n• config\\projects\\{Tank().context["project_id"]}\n')
+        print(f'\n• config\\projects\\{Plex().context["project_id"]}\n')
 
         print(fr'• software\{self.name}')
         for sub_dir in pipefunc.get_sub_dirs(self.path):

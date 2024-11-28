@@ -11,14 +11,14 @@ import shutil
 
 import MaxPlus
 
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
-menu_name = Tank().context['project_name']
-Tank().init_software()
+LOG = Plex().log(script=__name__)
+menu_name = Plex().context['project_name']
+Plex().init_software()
 
 
 
@@ -40,8 +40,8 @@ def delete_menu():
 
 
 def copy_splash():
-    splash_path = Tank().get_img_path("software/max/splash.bmp")
-    max_path    = os.path.dirname(Tank().software.config['path'])
+    splash_path = Plex().get_img_path("software/max/splash.bmp")
+    max_path    = os.path.dirname(Plex().software.config['path'])
 
     if not os.path.exists(max_path + '/splash.bmp'):
         try:

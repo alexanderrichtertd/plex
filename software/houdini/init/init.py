@@ -6,18 +6,18 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
 # MENU
 def add_menu():
-    menu_path = f'{Tank().paths["software"]}/houdini/scripts/MainMenuMaster.xml'
+    menu_path = f'{Plex().paths["software"]}/houdini/scripts/MainMenuMaster.xml'
 
     def find_inbetween(self, text, first, last):
         try:
@@ -29,7 +29,7 @@ def add_menu():
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
             find_title = find_inbetween(content, '<label>', '</label>')
-            content = content.replace(f'<label>{find_title}</label>', f'<label>{Tank().context["project_name"]}</label>')
+            content = content.replace(f'<label>{find_title}</label>', f'<label>{Plex().context["project_name"]}</label>')
             print(content)
             # WRITE new XML
             outfile.seek(0)

@@ -9,18 +9,18 @@
 import os
 import maya.cmds as cmds
 
-from tank import Tank
+from plex import Plex
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
 # INIT AND PRINT CONSOLE
 cmds.evalDeferred('print("")')
 cmds.evalDeferred('print("START PLEX -------------------------------------")')
-cmds.evalDeferred(f'from tank import Tank; Tank().software.create_menu()')
+cmds.evalDeferred(f'from plex import Plex; Plex().software.create_menu()')
 
 cmds.evalDeferred('print("FINISH -----------------------------------------")')
 cmds.evalDeferred('print("")')

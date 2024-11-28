@@ -8,13 +8,13 @@
 
 import os
 
-from tank import Tank
+from plex import Plex
 from software import Software
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************

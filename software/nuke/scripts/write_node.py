@@ -15,11 +15,11 @@ import webbrowser
 import nuke
 
 import arNotice
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -48,10 +48,10 @@ def openRV(path):
     if not os.path.exists(os.path.dirname(path)) or not os.listdir(os.path.dirname(path)):
         LOG.warning("FOLDER : NOT EXISTS : " + path)
     else:
-        os.system('start "" "' + Tank().config_software['RV']['path'] + '" ' + path)
+        os.system('start "" "' + Plex().config_software['RV']['path'] + '" ' + path)
 
 
-# TODO: REPLACE with lib.Tank().openFolder(path)
+# TODO: REPLACE with lib.Plex().openFolder(path)
 def openFolder(path):
     path = os.path.dirname(path).replace("/","\\")
     if not os.path.exists(path) or not os.listdir(path):
@@ -118,14 +118,14 @@ def publishRender(file_type):
         if part == 'COMP': break
 
     fileName    = "_".join(fileName)
-    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{Tank().config_pipeline['publish']}/{file_type}'
+    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{Plex().config_pipeline['publish']}/{file_type}'
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)
 
     if not os.path.exists(publishPath): os.makedirs(publishPath)
 
-    oldFrames = Tank().getFolderList(oldPath, fileType='*' + file_type, ex=True)
+    oldFrames = Plex().getFolderList(oldPath, fileType='*' + file_type, ex=True)
 
     for oldFrame in oldFrames:
         framePart    = oldFrame.split(".")

@@ -12,12 +12,12 @@ import maya.mel as mel
 import maya.cmds as cmds
 from pymel.core import *
 
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************

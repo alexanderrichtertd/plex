@@ -18,7 +18,7 @@ LOG = pipelog.init(script=__name__)
 
 #*********************************************************************
 # CLASS
-class Tank(pipefunc.Singleton):
+class Plex(pipefunc.Singleton):
 
     @property
     def software(self):
@@ -170,6 +170,6 @@ class Tank(pipefunc.Singleton):
         self.help('report')
 
     def help(self, name=''):
-        name = name or Tank().software_name
+        name = name or self.software_name
         webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
         

@@ -13,7 +13,7 @@ import maya.cmds as cmds
 
 from functools import wraps
 
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
@@ -21,9 +21,9 @@ from tank import Tank
 def setup_scene(file_path=''):
     # RESOLUTION
     try:
-        cmds.setAttr("defaultResolution.width", Tank().config_project['resolution'][0])
-        cmds.setAttr("defaultResolution.height", Tank().config_project['resolution'][1])
-        cmds.setAttr('defaultResolution.deviceAspectRatio', (( Tank().config_project['resolution'][0]) / (Tank().config_project['resolution'][1])))
+        cmds.setAttr("defaultResolution.width", Plex().config_project['resolution'][0])
+        cmds.setAttr("defaultResolution.height", Plex().config_project['resolution'][1])
+        cmds.setAttr('defaultResolution.deviceAspectRatio', (( Plex().config_project['resolution'][0]) / (Plex().config_project['resolution'][1])))
     except: LOG.error('FAIL load resolution.', exc_info=True)
 
     # IMG FORMAT
@@ -33,7 +33,7 @@ def setup_scene(file_path=''):
 
     # FPS
     try:
-        fps = Tank().config_project['fps']
+        fps = Plex().config_project['fps']
         cmds.currentUnit(time=fps)
         cmds.optionVar(sv = ("workingUnitTime", fps))
         cmds.optionVar(sv = ("workingUnitTimeDefault", fps))
@@ -42,7 +42,7 @@ def setup_scene(file_path=''):
 
     # RENDERER
     try:
-        renderer = Tank().config_project['SETTINGS']['renderer']
+        renderer = Plex().config_project['SETTINGS']['renderer']
         cmds.optionVar(sv = ("preferredRenderer", renderer))
         cmds.optionVar(sv = ("preferredRendererHold", renderer))
     except: LOG.error('FAIL load renderer.', exc_info=True)

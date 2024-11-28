@@ -10,13 +10,13 @@ import os
 
 import MaxPlus
 
-from tank import Tank
+from plex import Plex
 from software import Software
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -45,10 +45,10 @@ class Max(Software):
     #*********************************************************************
     # MENU
     def open_scene_folder():
-        Tank().open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
+        Plex().open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
 
     def open_project_folder():
-        Tank().open_folder(os.getenv("PROJECT_PATH"))
+        Plex().open_folder(os.getenv("PROJECT_PATH"))
 
     def save():
         import arSave
@@ -59,7 +59,7 @@ class Max(Software):
         arLoad.start()
 
     def get_report():
-        Tank().help('report')
+        Plex().help('report')
 
     def get_help():
-        Tank().help()
+        Plex().help()

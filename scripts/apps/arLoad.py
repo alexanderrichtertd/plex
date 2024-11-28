@@ -18,7 +18,7 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 import arNotice
 
 import pipefunc
-from tank import Tank
+from plex import Plex
 import arUtil
 
 import importlib
@@ -27,14 +27,14 @@ importlib.reload(arUtil)
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
 # CLASS
 class ArLoad(arUtil.ArUtil):
 
-    def __init__(self):
+    def __init__(self, desktop=False):
         super(ArLoad, self).__init__()
 
         path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
@@ -42,6 +42,7 @@ class ArLoad(arUtil.ArUtil):
 
         self.load_file = ''
         self.task_path = ''
+        self.desktop = desktop
 
         # CLEAR context
         self.wgLoad.lstScene.clear()
@@ -54,7 +55,7 @@ class ArLoad(arUtil.ArUtil):
         self.clear_context()
 
         # SETUP content
-        self.software_formats = {y:x for x, y in Tank().config_pipeline['EXTENSION'].items()}
+        self.software_formats = {y:x for x, y in Plex().config_pipeline['EXTENSION'].items()}
         self.software_keys    = list(self.software_formats.keys())
 
         self.wgLoad.btnAssets.clicked.connect(lambda: self.press_btnEntity('assets'))
@@ -76,9 +77,9 @@ class ArLoad(arUtil.ArUtil):
 
         self.wgHeader.setWindowTitle(__name__)
         self.wgHeader.btnAccept.setText('Load')
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("icons/load")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("icons/load")))
 
-        for status in Tank().config_pipeline['STATUS'].values():
+        for status in Plex().config_pipeline['STATUS'].values():
             self.wgLoad.cbxStatus.addItem(status)
 
         # SELECT start
@@ -109,12 +110,12 @@ class ArLoad(arUtil.ArUtil):
         self.wgHeader.close()
 
         # OPEN in current software
-        if software == Tank().software.name:
+        if software == Plex().software.name and not self.desktop:
             LOG.info(f'OPEN file: {self.load_file}')
-            Tank().software.scene_open(self.load_file)
-        # OPEN in os
+            Plex().software.scene_open(self.load_file)
+        # OPEN in OS
         else:
-            try:    Tank().software.start(name=software, open_file=self.load_file)
+            try:    Plex().software.start(name=software, open_file=self.load_file)
             except: LOG.error('FAILED to open software', exc_info=True)
             # else: subprocess.Popen(self.load_file, shell=True)
         # except Exception as exc: 
@@ -123,7 +124,7 @@ class ArLoad(arUtil.ArUtil):
         note = arNotice.Notice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
                                msg   = self.wgLoad.edtComment.toPlainText(),
                                img   = self.meta_img_path if os.path.exists(self.meta_img_path)
-                                       else Tank().get_img_path('label/default'),
+                                       else Plex().get_img_path('label/default'),
                                img_link = os.path.dirname(self.load_file))
         arNotice.ArNotice(note)
 
@@ -138,7 +139,7 @@ class ArLoad(arUtil.ArUtil):
             self.wgLoad.btnAssets.setStyleSheet("background-color: rgb(41, 43, 51);")
             self.wgLoad.btnShots.setStyleSheet("background-color: rgb(80, 80, 80);")
 
-        self.entity_path = Tank().config_project['PATH'][button_name]
+        self.entity_path = Plex().config_project['PATH'][button_name]
 
         for scene in pipefunc.get_sub_dirs(self.entity_path):
             self.wgLoad.lstScene.addItem(scene)
@@ -173,7 +174,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lstVersion.clear()
         self.open_path = f'{self.task_path}/{self.wgLoad.cbxStatus.currentText()}'
 
-        ext = Tank().config_pipeline['EXTENSION'].values()
+        ext = Plex().config_pipeline['EXTENSION'].values()
         folder = pathlib.Path(self.open_path)
         version_files = sorted(filter(lambda path: path.suffix.replace('.', '') in ext, folder.glob('*')), reverse=True)
         
@@ -191,20 +192,20 @@ class ArLoad(arUtil.ArUtil):
 
         self.extension = self.wgLoad.lstVersion.currentItem().text().split('.')[-1]
 
-        software_img = Tank().get_img_path(f"software/default/{self.software_formats[self.extension]}")
+        software_img = Plex().get_img_path(f"software/default/{self.software_formats[self.extension]}")
         self.wgLoad.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(software_img)))
 
         comment = ''
         user_id = 'unknown'
 
         current_file = self.wgLoad.lstVersion.currentItem().text()
-        meta_file_path = f'{self.task_path}/{Tank().config_pipeline["meta"]}'
+        meta_file_path = f'{self.task_path}/{Plex().config_pipeline["meta"]}'
         self.meta_img_path = f'{os.path.dirname(meta_file_path)}/{os.path.splitext(current_file)[0]}.jpg'
 
         if os.path.exists(self.meta_img_path):
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.meta_img_path)))
         else:
-            self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("labels/default"))))
+            self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("labels/default"))))
 
         if os.path.exists(meta_file_path):
             file_config = pipefunc.get_yaml_content(meta_file_path)
@@ -222,7 +223,7 @@ class ArLoad(arUtil.ArUtil):
 # START
 def create():
     app = QtWidgets.QApplication(sys.argv)
-    main_widget = ArLoad()
+    main_widget = ArLoad(desktop=True)
     sys.exit(app.exec_())
 
 

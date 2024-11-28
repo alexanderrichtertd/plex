@@ -19,13 +19,13 @@ import arNotice
 import snapshot
 import pipefunc
 
-from tank import Tank
+from plex import Plex
 from arUtil import ArUtil
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -41,12 +41,12 @@ class ArSaveAs(ArUtil):
 
         self.new_file  = new_file
         self.save_file = ''
-        self.save_dir  = Tank().config_project['path']
+        self.save_dir  = Plex().config_project['path']
         self.inputs    = [self.wgSaveAs.cbxScene, self.wgSaveAs.cbxSet, self.wgSaveAs.cbxAsset, self.wgSaveAs.cbxTask]
 
         self.wgHeader.btnOption.hide()
         self.wgHeader.cbxAdd.hide()
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("btn/btn_save")))
 
         btn_title = __name__ if self.new_file else 'Create New Folder'
         self.wgHeader.setWindowTitle(btn_title)
@@ -77,7 +77,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.currentIndexChanged.connect(self.update_file)
         self.wgSaveAs.cbxAsset.editTextChanged.connect(self.update_file)
 
-        for keys, items in Tank().config_project['SCENES'].items():
+        for keys, items in Plex().config_project['SCENES'].items():
             self.wgSaveAs.cbxScene.addItem(keys)
 
         self.update_file()
@@ -96,7 +96,7 @@ class ArSaveAs(ArUtil):
         self.wgSaveAs.cbxTask.clear()
         if not self.new_file: self.wgSaveAs.cbxTask.addItem(self.all_task)
 
-        self.scene_steps = len(Tank().config_project['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
+        self.scene_steps = len(Plex().config_project['SCENES'][self.wgSaveAs.cbxScene.currentText()].split('/'))
         if self.scene_steps < 5:
             self.wgSaveAs.cbxSet.hide()
             self.wgSaveAs.lblSet.hide()
@@ -107,15 +107,15 @@ class ArSaveAs(ArUtil):
 
         try:
             if self.wgSaveAs.cbxScene.currentText():
-                self.wgSaveAs.cbxTask.addItems(Tank().config_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
+                self.wgSaveAs.cbxTask.addItems(Plex().config_project['TASK'][self.wgSaveAs.cbxScene.currentText()])
         except: self.set_status('FAILED adding tasks items: config/projects/$project/project.yml : TASK', msg_type=3)
 
-        if Tank().software.is_software('nuke'):
+        if Plex().software.is_software('nuke'):
             index = self.wgSaveAs.cbxTask.findText('COMP', QtCore.Qt.MatchContains)
             if index >= 0: self.wgSaveAs.cbxTask.setCurrentIndex(index)
 
         try:
-            self.save_dir = Tank().config_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
+            self.save_dir = Plex().config_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
             if self.wgSaveAs.cbxSet.isVisible():
                 self.wgSaveAs.cbxSet.addItems(pipefunc.get_files(self.save_dir))
         except: LOG.error('FAILED adding PATH items: config/projects/$project/project.yml : PATH', exc_info=True)
@@ -126,17 +126,17 @@ class ArSaveAs(ArUtil):
     def update_file(self):
         if self.wgSaveAs.cbxScene.currentText():
 
-            if self.new_file: extension = Tank().software.extension
+            if self.new_file: extension = Plex().software.extension
             else: extension = ''
 
-            new_item = Tank().config_project['SCENES'][self.wgSaveAs.cbxScene.currentText()]
+            new_item = Plex().config_project['SCENES'][self.wgSaveAs.cbxScene.currentText()]
             new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
                                        entity    = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
-                                       version   = Tank().config_pipeline['version'].replace(r'\d','0').replace('_',''),
+                                       version   = Plex().config_pipeline['version'].replace(r'\d','0').replace('_',''),
                                        user      = getpass.getuser()[:2].lower(),
                                        extension = extension,
-                                       frame     = Tank().config_project['start_frame'])
+                                       frame     = Plex().config_project['start_frame'])
 
             self.save_file = self.save_dir + '/' + new_item
 
@@ -160,7 +160,7 @@ class ArSaveAs(ArUtil):
         save_list = []
 
         if self.all_task in self.save_file:
-            for task in Tank().config_project['TASK'][self.wgSaveAs.cbxScene.currentText()]:
+            for task in Plex().config_project['TASK'][self.wgSaveAs.cbxScene.currentText()]:
                 new_path = self.save_file.replace(self.all_task, task)
                 save_list.append(new_path)
         else:
@@ -170,7 +170,7 @@ class ArSaveAs(ArUtil):
         for folder in save_list: pipefunc.create_folder(folder)
 
         if self.new_file:
-            Tank().software.scene_save_as(self.save_file, setup_scene=True)
+            Plex().software.scene_save_as(self.save_file, setup_scene=True)
             snapshot.create_any_screenshot(self.wgSaveAs)
             tmp_img_path = snapshot.save_snapshot(self.save_file)
 
@@ -199,10 +199,10 @@ class ArSaveAs(ArUtil):
 
 
     def set_meta_config(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + Tank().config_pipeline['meta']
+        meta_path    = os.path.dirname(save_path) + Plex().config_pipeline['meta']
         comment_dict = {'user': getpass.getuser(),
                         'comment': 'new scene'}
-        Tank().set_config(meta_path, os.path.basename(save_path), comment_dict)
+        Plex().set_config(meta_path, os.path.basename(save_path), comment_dict)
 
 
 

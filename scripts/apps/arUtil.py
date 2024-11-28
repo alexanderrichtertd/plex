@@ -12,12 +12,12 @@ import sys
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
 import pipefunc
-from tank import Tank
+from plex import Plex
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -32,19 +32,19 @@ class ArUtil(object):
         self.open_path = ""
 
 
-        self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("icons/app_modify"))))
+        self.wgHeader.setWindowIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("icons/app_modify"))))
 
         # BUTTONS ICONS
-        self.wgHeader.btnReport.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("icons/email"))))
-        self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("icons/help"))))
-        self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("icons/folder_open"))))
-        self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("user/default")))) # current user
+        self.wgHeader.btnReport.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("icons/email"))))
+        self.wgHeader.btnHelp.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("icons/help"))))
+        self.wgHeader.btnOpenFolder.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("icons/folder_open"))))
+        self.wgHeader.btnUser.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("user/default")))) # current user
         self.wgHeader.btnUser.setToolTip("".join(['<html><head/><body><p><span style=" font-weight:600;">',
-                                                   Tank().user_id, '</span><br>',
-                                                  'Admin' if Tank().admin else 'Artist', '<br>[open user sandbox]</p></body></html>']))
+                                                   Plex().user_id, '</span><br>',
+                                                  'Admin' if Plex().admin else 'Artist', '<br>[open user sandbox]</p></body></html>']))
 
-        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path('icons/project2')))) # current user
-        self.wgHeader.btnProject.setToolTip(Tank().context['project_name'] + '\n[open project folder]')
+        self.wgHeader.btnProject.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path('icons/project2')))) # current user
+        self.wgHeader.btnProject.setToolTip(Plex().context['project_name'] + '\n[open project folder]')
 
         # SIGNAL
         self.wgHeader.btnAccept.clicked.connect(self.press_btnAccept)
@@ -57,10 +57,10 @@ class ArUtil(object):
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
         # SHOW announcement from project or (if not existing) pipeline
-        self.wgHeader.lblAnnouncement.setText(Tank().announcement)
+        self.wgHeader.lblAnnouncement.setText(Plex().announcement)
 
         # SETUP
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("icons/program")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("icons/program")))
         self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.wgHeader.show()
 
@@ -74,16 +74,16 @@ class ArUtil(object):
         pipefunc.open_folder(self.open_path)
 
     def press_btnUser(self):
-        pipefunc.open_folder(Tank().user_sandbox)
+        pipefunc.open_folder(Plex().user_sandbox)
 
     def press_btnProject(self):
-        pipefunc.open_folder(Tank().config_project['PATH']['project'])
+        pipefunc.open_folder(Plex().config_project['PATH']['project'])
 
     def press_btnReport(self):
-        Tank().help('report')
+        Plex().help('report')
 
     def press_btnHelp(self, name=__name__):
-        Tank().help(name)
+        Plex().help(name)
 
 
     #*********************************************************************

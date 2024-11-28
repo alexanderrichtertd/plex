@@ -18,13 +18,13 @@ import arNotice
 import snapshot
 
 import pipefunc
-from tank import Tank
+from plex import Plex
 from arUtil import ArUtil
 
 
 #*********************************************************************
 # VARIABLE
-LOG = Tank().log(script=__name__)
+LOG = Plex().log(script=__name__)
 
 
 #*********************************************************************
@@ -47,10 +47,10 @@ class ArSave(ArUtil):
         self.wgSave.btnSnapshotViewport.clicked.connect(self.press_btnSnapshotViewport)
         self.wgSave.btnSnapshotRender.clicked.connect(self.press_btnSnapshotRender)
 
-        self.wgSave.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("lbl/default"))))
-        self.wgSave.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_camera"))))
-        self.wgSave.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_viewport"))))
-        self.wgSave.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(Tank().get_img_path("btn/btn_render"))))
+        self.wgSave.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("lbl/default"))))
+        self.wgSave.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("btn/btn_camera"))))
+        self.wgSave.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("btn/btn_viewport"))))
+        self.wgSave.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("btn/btn_render"))))
 
         self.resize_widget(self.wgSave)
 
@@ -62,12 +62,12 @@ class ArSave(ArUtil):
         # self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.wgHeader.setWindowTitle(__name__)
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Tank().get_img_path("btn/btn_save")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("btn/btn_save")))
 
         self.wgHeader.btnOption.setText('SaveAs')
         self.wgSave.btnSnapshotRender.hide()
 
-        if Tank().software.is_software('nuke'):
+        if Plex().software.is_software('nuke'):
             self.wgSave.btnSnapshotRender.hide()
 
         self.wgHeader.layMain.addWidget(self.wgSave, 0)
@@ -101,13 +101,13 @@ class ArSave(ArUtil):
         snapshot.create_screenshot_viewport(self.wgSave, self.wgSave.btnPreviewImg)
 
     def press_btnHelp(self, name=''):
-        Tank().help(__name__)
+        Plex().help(__name__)
 
 
     #*********************************************************************
     # FUNCTIONS
     def set_path(self):
-        self.save_file = Tank().software.scene_path
+        self.save_file = Plex().software.scene_path
         if not self.save_file or self.save_file == "Root": return False
 
         self.save_dir = os.path.dirname(self.save_file)
@@ -121,7 +121,7 @@ class ArSave(ArUtil):
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(Tank().config_pipeline['version'], os.path.basename(self.save_file))
+        found_version = re.search(Plex().config_pipeline['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
@@ -143,7 +143,7 @@ class ArSave(ArUtil):
         if self.wgHeader.cbxAdd.isChecked(): self.update_version()
         
         try:
-            Tank().software.scene_save_as(self.save_file)
+            Plex().software.scene_save_as(self.save_file)
             self.set_meta_config()
             LOG.info(f'SAVE : {self.save_file}')
         except:
@@ -152,14 +152,14 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmpCopyWork = self.save_file.replace('.', f'_{Tank().config_pipeline['publish']}.')
+            tmpCopyWork = self.save_file.replace('.', f'_{Plex().config_pipeline['publish']}.')
             snapshot.save_snapshot(tmpCopyWork)
             self.set_meta_config(tmpCopyWork)
 
-            found_version = re.search(Tank().config_pipeline['version'], os.path.basename(self.save_file))
+            found_version = re.search(Plex().config_pipeline['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
-                self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Tank().software.extension
+                self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Plex().software.extension
 
             pipefunc.create_folder(os.path.dirname(self.save_publish_file))
 
@@ -188,11 +188,11 @@ class ArSave(ArUtil):
     def set_meta_config(self, save_path=''):
         if not save_path: save_path = self.save_file
 
-        meta_path = os.path.dirname(save_path) + Tank().config_pipeline['meta']
+        meta_path = os.path.dirname(save_path) + Plex().config_pipeline['meta']
         # LOG.info(meta_path)
         comment_dict = {'user': getpass.getuser(),
                         'comment': str(self.wgSave.edtComment.text())}
-        Tank().set_config(meta_path, os.path.basename(save_path), comment_dict)
+        Plex().set_config(meta_path, os.path.basename(save_path), comment_dict)
 
 
     def folder_msg_box(self, bpS, configFilter, title = 'Choose file to open', path = ''): #configFilter = "Maya Files (*.mb *.ma)"
