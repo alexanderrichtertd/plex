@@ -7,7 +7,7 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import pipefunc
+import plexfunc
 from plex import Plex
 
 
@@ -78,4 +78,4 @@ class Context():
     #*********************************************************************
     # FUNCTIONS
     def open_path(self):
-        return pipefunc.open_folder(self.file_path)
+        return plexfunc.open_folder(self.file_path)

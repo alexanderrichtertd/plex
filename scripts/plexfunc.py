@@ -1,5 +1,5 @@
 #*********************************************************************
-# content   = pipefunc
+# content   = plexfunc
 # date      = 2024-11-25
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
@@ -11,9 +11,6 @@ import glob
 import time
 import yaml
 import webbrowser
-
-import pipelog
-LOG = pipelog.init(__name__)
 
 
 #*********************************************************************
@@ -72,7 +69,6 @@ def join(loader, node):
 yaml.add_constructor('!join', join)
 
 
-
 #*********************************************************************
 # TIME
 # decorator: return function duration time
@@ -123,9 +119,9 @@ def create_folder(path):
     if not os.path.exists(path):
         try:
             os.makedirs(path)
-            LOG.debug(f'create_folder: {path}')
+            print(f'create_folder: {path}')
         except Exception as e:
-            LOG.error(f"Failed to create folder: {path}. Error: {e}")
+            print(f"Failed to create folder: {path}. Error: {e}")
 
 def open_folder(path):
     path = os.path.normpath(path)

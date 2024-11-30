@@ -40,8 +40,8 @@ ENV:
 #*********************************************************************
 # MENU:
 #   - Plex:
-#       open_scene_folder:   addCommand('Open Scene Folder', 'import pipefunc; pipefunc.open_folder(nuke.root().knob("name").value())')
-#       open_project_folder: addCommand('Open Project Folder', 'import pipefunc; pipefunc.open_folder(Plex().config_project["path"])')
+#       open_scene_folder:   addCommand('Open Scene Folder', 'import plexfunc; plexfunc.open_folder(nuke.root().knob("name").value())')
+#       open_project_folder: addCommand('Open Project Folder', 'import plexfunc; plexfunc.open_folder(Plex().config_project["path"])')
 
 #   - break:   addSeparator()
 
@@ -54,7 +54,7 @@ ENV:
 
 #   - break:   addSeparator()
 
-#   - Report:  addCommand('Report', 'import pipefunc; pipefunc.help("report")', 'ctrl+alt+r', 'report.ico')
-#   - Help:    addCommand('Help', 'import pipefunc; pipefunc.help()', 'ctrl+alt+h', 'help.ico')
+#   - Report:  addCommand('Report', 'import plexfunc; plexfunc.help("report")', 'ctrl+alt+r', 'report.ico')
+#   - Help:    addCommand('Help', 'import plexfunc; plexfunc.help()', 'ctrl+alt+h', 'help.ico')
 
 # SETTINGS:

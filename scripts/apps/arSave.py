@@ -17,7 +17,7 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 import arNotice
 import snapshot
 
-import pipefunc
+import plexfunc
 from plex import Plex
 from arUtil import ArUtil
 
@@ -161,7 +161,7 @@ class ArSave(ArUtil):
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Plex().software.extension
 
-            pipefunc.create_folder(os.path.dirname(self.save_publish_file))
+            plexfunc.create_folder(os.path.dirname(self.save_publish_file))
 
             try:
                 shutil.copy(self.save_file, tmpCopyWork)

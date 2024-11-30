@@ -11,7 +11,7 @@ import errno
 
 import nuke
 
-import pipefunc
+import plexfunc
 from plex import Plex
 
 
@@ -43,7 +43,7 @@ def create_write_dir():
 def add_plugin_paths():
     # ADD all IMG paths
     for img in os.getenv('IMG_PATH').split(';'):
-        for img_sub in pipefunc.get_sub_dirs(path=img, full_path=True):
+        for img_sub in plexfunc.get_sub_dirs(path=img, full_path=True):
             nuke.pluginAddPath(img_sub)
 
     # ADD sub software paths

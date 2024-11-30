@@ -13,7 +13,7 @@ import importlib
 
 from Qt import QtWidgets, QtGui, QtCore
 
-import pipefunc
+import plexfunc
 from plex import Plex
 
 
@@ -94,7 +94,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     #**********************
     # PRESS
     def press_btnShowUserSandbox(self):
-        pipefunc.open_folder(Plex().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
+        plexfunc.open_folder(Plex().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
 
     def press_btnLoad(self):
         import arLoad
@@ -116,7 +116,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #------------------------------
     def press_btnOpenProjectConfig(self):
-        pipefunc.open_folder(Plex().paths['config_project'])
+        plexfunc.open_folder(Plex().paths['config_project'])
     
     def press_btnConfigApp(self):
         import arConfig

@@ -17,7 +17,7 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
 import arNotice
 import snapshot
-import pipefunc
+import plexfunc
 
 from plex import Plex
 from arUtil import ArUtil
@@ -117,7 +117,7 @@ class ArSaveAs(ArUtil):
         try:
             self.save_dir = Plex().config_project['PATH'][self.wgSaveAs.cbxScene.currentText()]
             if self.wgSaveAs.cbxSet.isVisible():
-                self.wgSaveAs.cbxSet.addItems(pipefunc.get_files(self.save_dir))
+                self.wgSaveAs.cbxSet.addItems(plexfunc.get_files(self.save_dir))
         except: LOG.error('FAILED adding PATH items: config/projects/$project/project.yml : PATH', exc_info=True)
 
 
@@ -167,7 +167,7 @@ class ArSaveAs(ArUtil):
             save_list.append(self.save_file)
 
         LOG.debug(f'Folder list {save_list}')
-        for folder in save_list: pipefunc.create_folder(folder)
+        for folder in save_list: plexfunc.create_folder(folder)
 
         if self.new_file:
             Plex().software.scene_save_as(self.save_file, setup_scene=True)

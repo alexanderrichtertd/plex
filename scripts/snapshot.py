@@ -11,7 +11,7 @@ import os
 
 from Qt import QtWidgets, QtGui, QtCore, __binding__
 
-import pipefunc
+import plexfunc
 from plex import Plex
 
 #*********************************************************************
@@ -104,7 +104,7 @@ def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(Plex().paths["meta"])}'
     rlt_path =  + f'{tmp_dir}/{os.path.basename(rlt_path).split(".")[0]}{thumbnail_extension}'
 
-    pipefunc.create_folder(rlt_path)
+    plexfunc.create_folder(rlt_path)
     img.save(rlt_path, format=thumbnail_extension)
     remove_tmp_img(src_path)
     return rlt_path

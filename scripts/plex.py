@@ -7,18 +7,19 @@
 #*********************************************************************
 
 import os
+import sys
 import getpass
 import webbrowser
 
-import pipelog
-import pipefunc
+import plexlog
+import plexfunc
 
-LOG = pipelog.init(script=__name__)
+LOG = plexlog.init(script=__name__)
 
 
 #*********************************************************************
 # CLASS
-class Plex(pipefunc.Singleton):
+class Plex(plexfunc.Singleton):
 
     @property
     def software(self):
@@ -45,8 +46,8 @@ class Plex(pipefunc.Singleton):
 
     @property
     def log(self):
-        import pipelog
-        return pipelog.init
+        import plexlog
+        return plexlog.init
    
     @property
     def announcement(self):
@@ -85,7 +86,7 @@ class Plex(pipefunc.Singleton):
 
         def get_all_config():
             configs = {}
-            config_project_files = pipefunc.get_files(path=file_dir, file_type='*' + '.yml')
+            config_project_files = plexfunc.get_files(path=file_dir, file_type='*' + '.yml')
 
             for each_file in config_project_files:
                 configs.update({each_file : self.get_config(each_file, file_dir, user_id)})
@@ -99,8 +100,8 @@ class Plex(pipefunc.Singleton):
 
         # OPEN config path
         if os.path.exists(file_path):
-            # self.LOG.debug(pipefunc.get_yaml_content(file_path, self.paths))
-            return pipefunc.get_yaml_content(file_path, (self.paths | self.context))
+            # self.LOG.debug(plexfunc.get_yaml_content(file_path, self.paths))
+            return plexfunc.get_yaml_content(file_path, (self.paths | self.context))
         else: 
             print(f"CAN'T find file: {file_path}")
         
@@ -109,13 +110,13 @@ class Plex(pipefunc.Singleton):
 
     def set_config(self, path, key, value):
         if os.path.exists(path):
-            tmp_content = pipefunc.get_yaml_content(path, self.paths)
+            tmp_content = plexfunc.get_yaml_content(path, self.paths)
         else:
             tmp_content = {}
-            pipefunc.create_folder(path)
+            plexfunc.create_folder(path)
 
         tmp_content[key] = value
-        pipefunc.set_yaml_content(path, tmp_content)
+        plexfunc.set_yaml_content(path, tmp_content)
 
 
     def get_img_path(self, end_path='btn/default'):
@@ -165,9 +166,9 @@ class Plex(pipefunc.Singleton):
     @property    
     def user_sandbox(self):
         user_sandbox_path = f'{self.config_project["PATH"]["sandbox"]}/{self.user_id}'
-        if not os.path.exists(user_sandbox_path): pipefunc.create_folder(user_sandbox_path)
+        if not os.path.exists(user_sandbox_path): plexfunc.create_folder(user_sandbox_path)
         return user_sandbox_path
-    
+
 
     #*********************************************************************
     # BUTTON

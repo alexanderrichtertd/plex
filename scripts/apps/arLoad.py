@@ -17,7 +17,7 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
 import arNotice
 
-import pipefunc
+import plexfunc
 from plex import Plex
 import arUtil
 
@@ -141,7 +141,7 @@ class ArLoad(arUtil.ArUtil):
 
         self.entity_path = Plex().config_project['PATH'][button_name]
 
-        for scene in pipefunc.get_sub_dirs(self.entity_path):
+        for scene in plexfunc.get_sub_dirs(self.entity_path):
             self.wgLoad.lstScene.addItem(scene)
         self.wgLoad.lstScene.setCurrentRow(0)
 
@@ -157,7 +157,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.cbxTask.clear()
 
         self.scene_path = f'{self.entity_path}/{self.wgLoad.lstScene.currentItem().text()}'
-        task_names = pipefunc.get_sub_dirs(self.scene_path)
+        task_names = plexfunc.get_sub_dirs(self.scene_path)
 
         self.wgLoad.cbxTask.addItems(task_names)
         self.wgLoad.cbxTask.setCurrentIndex(0)

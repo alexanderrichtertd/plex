@@ -11,7 +11,7 @@ import sys
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-import pipefunc
+import plexfunc
 from plex import Plex
 
 
@@ -71,13 +71,13 @@ class ArUtil(object):
         print('PRESS accept')
 
     def press_btnOpenFolder(self):
-        pipefunc.open_folder(self.open_path)
+        plexfunc.open_folder(self.open_path)
 
     def press_btnUser(self):
-        pipefunc.open_folder(Plex().user_sandbox)
+        plexfunc.open_folder(Plex().user_sandbox)
 
     def press_btnProject(self):
-        pipefunc.open_folder(Plex().config_project['PATH']['project'])
+        plexfunc.open_folder(Plex().config_project['PATH']['project'])
 
     def press_btnReport(self):
         Plex().help('report')

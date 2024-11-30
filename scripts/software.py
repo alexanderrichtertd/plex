@@ -11,7 +11,7 @@ import sys
 import getpass
 import subprocess
 
-import pipefunc
+import plexfunc
 from plex import Plex
 
 LOG = Plex().log(script=__name__)
@@ -19,12 +19,12 @@ LOG = Plex().log(script=__name__)
 
 #*********************************************************************
 # CLASS
-class Software(pipefunc.Singleton):
+class Software(plexfunc.Singleton):
     def start(self, name='', open_file=''):
         Plex().set_context('software', name)
 
         # SETUP env
-        software_dirs = pipefunc.get_sub_dirs(self.path, full_path=True)
+        software_dirs = plexfunc.get_sub_dirs(self.path, full_path=True)
 
         os.environ['SOFTWARE_PATH'] = ';'.join(software_dirs)
         # PYTHONPATH important for software imports
@@ -45,9 +45,9 @@ class Software(pipefunc.Singleton):
         # ADD software ENV
         for env, content in self.env.items():
             if isinstance(content, list):
-                [pipefunc.add_env(env, each) for each in content]
+                [plexfunc.add_env(env, each) for each in content]
             else:
-                pipefunc.add_env(env, content)
+                plexfunc.add_env(env, content)
 
         if open_file: open_file = f'"{open_file}"'
         cmd = Plex().config_software['start'].format(open_file)
@@ -156,7 +156,7 @@ class Software(pipefunc.Singleton):
         print(f'\n• config\\projects\\{Plex().context["project_id"]}\n')
 
         print(fr'• software\{self.name}')
-        for sub_dir in pipefunc.get_sub_dirs(self.path):
+        for sub_dir in plexfunc.get_sub_dirs(self.path):
             print(fr'• software\{self.name}\{sub_dir}')
 
         print('')
