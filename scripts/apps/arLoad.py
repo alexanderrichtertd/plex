@@ -117,9 +117,6 @@ class ArLoad(arUtil.ArUtil):
         else:
             try:    Plex().software.start(name=software, open_file=self.load_file)
             except: LOG.error('FAILED to open software', exc_info=True)
-            # else: subprocess.Popen(self.load_file, shell=True)
-        # except Exception as exc: 
-        #     LOG.warning(f"No Software setup: {open_software} {exc}")
 
         note = arNotice.Notice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
                                msg   = self.wgLoad.edtComment.toPlainText(),

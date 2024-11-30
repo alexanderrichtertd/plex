@@ -144,6 +144,14 @@ class Plex(plexfunc.Singleton):
         context[key] = value
         os.environ['PLEX_CONTEXT'] = str(context)
 
+    def print_pipeline(self):
+        LOG.debug('')
+        LOG.debug(200 * '_')
+        LOG.debug(f'PIPELINE: {os.environ["PLEX_PATHS"]}')
+        LOG.debug(f'CONTEXT:  {os.environ["PLEX_CONTEXT"]}')
+        LOG.debug(f"SYS_PATH: {'[%s]' % ', '.join(map(str, sys.path))}")
+        LOG.debug(200 * '-')
+   
    
     #*********************************************************************
     # PROJECT    
