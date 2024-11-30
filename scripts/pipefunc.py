@@ -51,7 +51,7 @@ def get_yaml_content(path, yaml_variables={}):
             for key, value in yaml_variables.items():
                 # Ignore boolean since it breaks
                 if isinstance(value, bool): continue
-                yaml_content = yaml_content.replace(f'${key}', value)
+                yaml_content = yaml_content.replace(f'${key}', f'{value}')
             yaml_content = yaml.safe_load(yaml_content)
 
             if yaml_content:

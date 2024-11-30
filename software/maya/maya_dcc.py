@@ -21,7 +21,7 @@ LOG = Plex().log(script=__name__)
 #*********************************************************************
 # FUN
 class Maya(Software):
-    menu_name = Plex().config_project['name'][:20]
+    menu_name = Plex().config_pipeline['name']
     name = 'maya'
 
     @property

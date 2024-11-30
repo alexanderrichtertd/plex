@@ -45,6 +45,7 @@ class Setup(object):
             print(f'WARNING: Set to default project. Project config doesn\'t exist: {project_yaml_path}')
             project_yaml_path = f'{self.config_path}/projects/default/project.yml'
 
+
         self.project_config = self.get_yaml_content(project_yaml_path)
 
         plex_paths = {'pipeline' : os.path.dirname(self.config_path),
@@ -64,9 +65,25 @@ class Setup(object):
                       'software' : self.pipeline_path + '/software/',
                       }
         
-        plex_context = {'project_id'   : project_id,
-                        'project_name' : self.project_config['name'],
-                        'admin'        : True if getpass.getuser() in self.pipeline_config['admin'] else False}
+        plex_context = {'project_id'   : project_id,                                 # default
+                        'project_name' : self.project_config['name'],                # Plex default
+                        'project_path' : self.project_config['PATH']['project'],     # D:/project
+
+                        'resolution' : self.project_config['SETTING']['resolution'], # [1920, 1080]
+                        'fps'        : self.project_config['SETTING']['fps'],        # 24
+
+                        'artist'     : getpass.getuser(),                            # arichter
+                        'admin'      : True if getpass.getuser() in self.pipeline_config['admin'] else False,  # True or False
+
+                        'file_name'       : '', # mike_RIG_v012
+                        'file_path'       : '', # D:/project/asset/mike_RIG_v012.mb
+                        'file_extension'  : '', # mb
+
+                        'step'       : '',      # shots or assets or renders
+                        'scene'      : '',      # s010 or mike
+                        'task'       : '',      # ANIMATION
+                        'status'     : '',      # WORK or PUBLISH
+                        }
 
         
         os.environ['PLEX_PATHS'] = str(plex_paths)
