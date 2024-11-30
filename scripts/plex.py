@@ -25,8 +25,8 @@ class Plex(pipefunc.Singleton):
         """ Get the current software object based on the environment variable.
             RETURN: software class e.g. maya_dcc.Maya()
         """
-        module_name = f"{self.software_name}_dcc" if self.software_name != 'software' else 'software'
-        class_name = self.software_name.title()
+        module_name = f"{self.software_name}_dcc" if self.software_name else 'software'
+        class_name = self.software_name.title() or 'Software'
 
         try:
             module = __import__(module_name, fromlist=[class_name])
@@ -47,10 +47,6 @@ class Plex(pipefunc.Singleton):
     def log(self):
         import pipelog
         return pipelog.init
-    
-    @property
-    def LOG(self):
-        return self.log.init(script=__name__)
    
     @property
     def announcement(self):

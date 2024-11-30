@@ -35,7 +35,7 @@ class Software(pipefunc.Singleton):
             Plex().paths["scripts"],
             Plex().paths["apps"],
             Plex().paths["extern"],
-            ])        
+        ])        
 
         sys.path.extend(software_dirs)
 

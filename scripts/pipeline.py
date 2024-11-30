@@ -69,7 +69,7 @@ class Setup(object):
                         'project_name' : self.project_config['name'],                # Plex default
                         'project_path' : self.project_config['PATH']['project'],     # D:/project
 
-                        'software'     : 'software',                                 # maya, max, nuke, houdini
+                        'software'   : '',                                 # maya, max, nuke, houdini
 
                         'resolution' : self.project_config['SETTING']['resolution'], # [1920, 1080]
                         'fps'        : self.project_config['SETTING']['fps'],        # 24
@@ -143,4 +143,4 @@ if args.software:
         arDesktop.start()
     else:
         from plex import Plex
-        Plex().start_software(args.software)
+        Plex().software.start(name=args.software)
