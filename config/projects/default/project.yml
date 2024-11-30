@@ -6,7 +6,6 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-
 name: Plex Project
 
 # ANNOUNCEMENT shown in every application
@@ -28,9 +27,11 @@ SETTING:
 
 #*********************************************************************
 PATH:
-    project       : &PROJECT $pipeline\project
+    project       : &PROJECT $pipeline/project
 
     pipeline      : !join [*PROJECT, /0_pipeline]
+    meta          : !join [*PROJECT, /0_pipeline/meta]
+
     sandbox       : !join [*PROJECT, /1_sandbox]
     preproduction : !join [*PROJECT, /2_preproduction]
     footage       : !join [*PROJECT, /3_footage]

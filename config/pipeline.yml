@@ -27,7 +27,6 @@ admin:
 # RULES
 shots:   s\d\d\d_  # s412_name
 version: _v\d\d\d  # _v001
-meta:    '/meta/info.yml'
 
 
 STATUS:

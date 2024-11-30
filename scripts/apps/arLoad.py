@@ -199,21 +199,18 @@ class ArLoad(arUtil.ArUtil):
         user_id = 'unknown'
 
         current_file = self.wgLoad.lstVersion.currentItem().text()
-        meta_file_path = f'{self.task_path}/{Plex().config_pipeline["meta"]}'
-        self.meta_img_path = f'{os.path.dirname(meta_file_path)}/{os.path.splitext(current_file)[0]}.jpg'
+        meta_file_path = Plex().config_project['PATH']['meta']
+        self.meta_img_path = f'{meta_file_path}/{os.path.splitext(current_file)[0]}.jpg'
 
         if os.path.exists(self.meta_img_path):
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.meta_img_path)))
         else:
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("labels/default"))))
 
-        if os.path.exists(meta_file_path):
-            file_config = pipefunc.get_yaml_content(meta_file_path)
-
-            if file_config and current_file in file_config:
-                file_content = file_config[self.wgLoad.lstVersion.currentItem().text()]
-                comment = file_content.get('comment')
-                user_id = file_content.get('user')
+        file_config = Plex().config_meta.get(current_file, '')
+        if file_config:
+            comment = file_config.get('comment')
+            user_id = file_config.get('user')
 
         self.wgLoad.edtComment.setPlainText(comment)
         self.wgLoad.lblUser.setText(user_id)

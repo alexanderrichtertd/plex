@@ -69,6 +69,10 @@ class Plex(pipefunc.Singleton):
         return self.get_config('project')
     
     @property
+    def config_meta(self):
+        return self.get_config('meta')
+    
+    @property
     def config_pipeline(self):
         return self.get_config(file_name='pipeline', file_dir=self.paths['config'])
 
