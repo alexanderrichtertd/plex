@@ -21,7 +21,7 @@ LOG = Plex().log(script=__name__)
 # CLASS
 class Software(pipefunc.Singleton):
     def start(self, name='', open_file=''):
-        os.environ['SOFTWARE'] = name
+        Plex().set_context('software', name)
 
         # SETUP env
         software_dirs = pipefunc.get_sub_dirs(self.path, full_path=True)
@@ -35,7 +35,6 @@ class Software(pipefunc.Singleton):
             Plex().paths["scripts"],
             Plex().paths["apps"],
             Plex().paths["extern"],
-            # Plex().paths["software"]
             ])        
 
         sys.path.extend(software_dirs)
@@ -67,7 +66,7 @@ class Software(pipefunc.Singleton):
     
     @property
     def name(self):
-        return os.environ.get('SOFTWARE', 'software')
+        return Plex().context['software']
    
     @property
     def path(self):        

@@ -14,7 +14,7 @@ import pathlib
 try:
     import yaml
 except: # use included yaml: plex/lib/extern/yaml
-    sys.path.append(f'{os.path.dirname(os.path.dirname(__file__))}/scripts/extern')
+    sys.path.append(f'{os.path.dirname(__file__)}/extern')
     import yaml
 
 # yaml !join combines variables and strings
@@ -69,6 +69,8 @@ class Setup(object):
                         'project_name' : self.project_config['name'],                # Plex default
                         'project_path' : self.project_config['PATH']['project'],     # D:/project
 
+                        'software'     : 'software',                                 # maya, max, nuke, houdini
+
                         'resolution' : self.project_config['SETTING']['resolution'], # [1920, 1080]
                         'fps'        : self.project_config['SETTING']['fps'],        # 24
 
@@ -88,7 +90,6 @@ class Setup(object):
         
         os.environ['PLEX_PATHS'] = str(plex_paths)
         os.environ['PLEX_CONTEXT'] = str(plex_context)
-        os.environ['SOFTWARE'] = 'software'
     
         # PATH env: Add all plex_paths
         sys.path.extend(plex_paths.values())
@@ -113,11 +114,9 @@ class Setup(object):
 
         LOG.debug('')
         LOG.debug(200 * '_')
-        LOG.debug(f"PIPELINE: {self.pipeline_config['name']} {self.pipeline_config['ver']} | PIPELINE PATHS: {plex_paths['pipeline']}")
 
-        LOG.debug(f"PROJECT:  {self.project_config['name']} " + 
-                  f"[{Plex().config_project['SETTING']['resolution'][0]} x {Plex().config_project['SETTING']['resolution'][1]} | {Plex().config_project['SETTING']['fps']}] " +
-                  f"{Plex().config_project['PATH']['project']}")
+        LOG.debug(f'PIPELINE: {os.environ["PLEX_PATHS"]}')
+        LOG.debug(f'CONTEXT:  {os.environ["PLEX_CONTEXT"]}')
 
         LOG.debug(200 * '-')
         LOG.debug(f"SYS_PATH: {'[%s]' % ', '.join(map(str, sys.path))}")

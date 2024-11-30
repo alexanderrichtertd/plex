@@ -37,10 +37,10 @@ class Plex(pipefunc.Singleton):
 
     @property
     def software_name(self):
-        return os.environ.get('SOFTWARE', 'software')
+        return self.context['software']
 
     @property
-    def context(self):
+    def software_context(self):
         return self.software.context
 
     @property
@@ -141,6 +141,11 @@ class Plex(pipefunc.Singleton):
     @property
     def context(self):
         return eval(os.environ['PLEX_CONTEXT'])
+    
+    def set_context(self, key, value):
+        context = eval(os.environ['PLEX_CONTEXT'])
+        context[key] = value
+        os.environ['PLEX_CONTEXT'] = str(context)
 
    
     #*********************************************************************
