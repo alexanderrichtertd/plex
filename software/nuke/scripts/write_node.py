@@ -118,7 +118,7 @@ def publishRender(file_type):
         if part == 'COMP': break
 
     fileName    = "_".join(fileName)
-    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{Plex().config_pipeline['publish']}/{file_type}'
+    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{Plex().config_plex['publish']}/{file_type}'
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)

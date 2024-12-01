@@ -21,7 +21,7 @@ ENV:
       - $software/gizmos
 
     NUKE_PATH:
-      - $pipeline
+      - $plex
       - $software
       # - STATUS_PATH
       # - PLUGIN_PATH

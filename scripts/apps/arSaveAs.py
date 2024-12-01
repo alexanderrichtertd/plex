@@ -133,7 +133,7 @@ class ArSaveAs(ArUtil):
             new_item = new_item.format(sequence  = self.wgSaveAs.cbxSet.currentText(),
                                        entity    = self.wgSaveAs.cbxAsset.currentText(),
                                        task      = self.wgSaveAs.cbxTask.currentText(),
-                                       version   = Plex().config_pipeline['version'].replace(r'\d','0').replace('_',''),
+                                       version   = Plex().config_plex['version'].replace(r'\d','0').replace('_',''),
                                        user      = getpass.getuser()[:2].lower(),
                                        extension = extension,
                                        frame     = Plex().config_project['start_frame'])
@@ -199,7 +199,7 @@ class ArSaveAs(ArUtil):
 
 
     def set_meta_config(self, save_path=''):
-        meta_path    = os.path.dirname(save_path) + Plex().config_pipeline['meta']
+        meta_path    = os.path.dirname(save_path) + Plex().config_plex['meta']
         comment_dict = {'user': getpass.getuser(),
                         'comment': 'new scene'}
         Plex().set_config(meta_path, os.path.basename(save_path), comment_dict)

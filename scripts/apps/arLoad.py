@@ -55,7 +55,7 @@ class ArLoad(arUtil.ArUtil):
         self.clear_context()
 
         # SETUP content
-        self.software_formats = {y:x for x, y in Plex().config_pipeline['EXTENSION'].items()}
+        self.software_formats = {y:x for x, y in Plex().config_plex['EXTENSION'].items()}
         self.software_keys    = list(self.software_formats.keys())
 
         self.wgLoad.btnAssets.clicked.connect(lambda: self.press_btnEntity('assets'))
@@ -79,7 +79,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgHeader.btnAccept.setText('Load')
         self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("icons/load")))
 
-        for status in Plex().config_pipeline['STATUS'].values():
+        for status in Plex().config_plex['STATUS'].values():
             self.wgLoad.cbxStatus.addItem(status)
 
         # SELECT start
@@ -171,7 +171,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lstVersion.clear()
         self.open_path = f'{self.task_path}/{self.wgLoad.cbxStatus.currentText()}'
 
-        ext = Plex().config_pipeline['EXTENSION'].values()
+        ext = Plex().config_plex['EXTENSION'].values()
         folder = pathlib.Path(self.open_path)
         version_files = sorted(filter(lambda path: path.suffix.replace('.', '') in ext, folder.glob('*')), reverse=True)
         

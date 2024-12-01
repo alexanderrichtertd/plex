@@ -147,7 +147,7 @@ class Software(plexfunc.Singleton):
         space = (20-int(len(f'{self.name} {self.version}')/2)) - 1
         print(' ' * space + f'{self.name.title()} {self.version}')
 
-        print(f'\n\n{Plex().paths["pipeline"]}')
+        print(f'\n\n{Plex().paths["plex"]}')
         print('\n• img')
         print('• scripts')
         print(r'• scripts\apps')

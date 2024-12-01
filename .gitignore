@@ -17,6 +17,8 @@ config/users/*
 config/projects/*
 !config/projects/default
 
+exe/debug.py
+
 img/img_rc.py
 
 software/max/plugins/*

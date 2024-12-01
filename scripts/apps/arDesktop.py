@@ -143,8 +143,8 @@ def start():
 
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
-    trayIcon.setToolTip(Plex().config_pipeline['name'] + ' [right click]')
-    trayIcon.showMessage(Plex().config_pipeline['name'], '[right click]',
+    trayIcon.setToolTip(Plex().config_plex['name'] + ' [right click]')
+    trayIcon.showMessage(Plex().config_plex['name'], '[right click]',
                          QtWidgets.QSystemTrayIcon.Information , 20000)
 
     app.exec_()

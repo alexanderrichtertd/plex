@@ -56,7 +56,7 @@ class ArUtil(object):
         self.wgHeader.btnReport.clicked.connect(self.press_btnReport)
         self.wgHeader.btnHelp.clicked.connect(self.press_btnHelp)
 
-        # SHOW announcement from project or (if not existing) pipeline
+        # SHOW announcement from project or (if not existing) plex
         self.wgHeader.lblAnnouncement.setText(Plex().announcement)
 
         # SETUP

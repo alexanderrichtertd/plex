@@ -121,7 +121,7 @@ class ArSave(ArUtil):
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(Plex().config_pipeline['version'], os.path.basename(self.save_file))
+        found_version = re.search(Plex().config_plex['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
@@ -152,11 +152,11 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmpCopyWork = self.save_file.replace('.', f'_{Plex().config_pipeline['publish']}.')
-            snapshot.save_snapshot(tmpCopyWork)
-            self.set_meta_config(tmpCopyWork)
+            tmp_copy_work = self.save_file.replace('.', f'_{Plex().config_plex['publish']}.')
+            snapshot.save_snapshot(tmp_copy_work)
+            self.set_meta_config(tmp_copy_work)
 
-            found_version = re.search(Plex().config_pipeline['version'], os.path.basename(self.save_file))
+            found_version = re.search(Plex().config_plex['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Plex().software.extension
@@ -164,8 +164,8 @@ class ArSave(ArUtil):
             plexfunc.create_folder(os.path.dirname(self.save_publish_file))
 
             try:
-                shutil.copy(self.save_file, tmpCopyWork)
-                shutil.copy(tmpCopyWork, self.save_publish_file)
+                shutil.copy(self.save_file, tmp_copy_work)
+                shutil.copy(tmp_copy_work, self.save_publish_file)
             except:
                 LOG.error(f"FAIL : Copying publish file : {self.save_publish_file}", exc_info=True)
                 return False
@@ -188,7 +188,7 @@ class ArSave(ArUtil):
     def set_meta_config(self, save_path=''):
         if not save_path: save_path = self.save_file
 
-        meta_path = os.path.dirname(save_path) + Plex().config_pipeline['meta']
+        meta_path = os.path.dirname(save_path) + Plex().config_plex['meta']
         # LOG.info(meta_path)
         comment_dict = {'user': getpass.getuser(),
                         'comment': str(self.wgSave.edtComment.text())}

@@ -5,6 +5,6 @@
 
 CALL %~dp0\setup_env.bat
 
-pythonw %newDir%\pipeline.py %1 --software maya
+pythonw %newDir%\plex.py %1 --software maya
 
 exit

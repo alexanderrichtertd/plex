@@ -27,7 +27,7 @@ SETTING:
 
 #*********************************************************************
 PATH:
-    project       : &PROJECT $pipeline/project
+    project       : &PROJECT $plex/project
 
     pipeline      : !join [*PROJECT, /0_pipeline]
     meta          : !join [*PROJECT, /0_pipeline/meta]
