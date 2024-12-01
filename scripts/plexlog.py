@@ -13,7 +13,6 @@ import logging
 import logging.config
 
 USER = getpass.getuser()
-config_user_path = eval(os.environ['PLEX_PATHS'])['config_user']
 
 
 #*********************************************************************
@@ -30,6 +29,7 @@ class ContextFilter(logging.Filter):
 # LOGGING
 def init(software="default", script="default", level=logging.DEBUG, path="", 
          debug_console=False, multi_threads=False, *args, **kwargs):
+    config_user_path = eval(os.environ['PLEX_PATHS'])['config_user']
 
     if not path: 
         path = "/".join([config_user_path or os.path.expanduser('~'), USER + ".log"])

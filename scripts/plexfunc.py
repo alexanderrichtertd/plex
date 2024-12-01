@@ -9,8 +9,9 @@
 import os
 import glob
 import time
-import yaml
 import webbrowser
+
+from extern import yaml
 
 
 #*********************************************************************
@@ -71,8 +72,8 @@ yaml.add_constructor('!join', join)
 
 #*********************************************************************
 # TIME
-# decorator: return function duration time
 def get_duration(func):
+    """ decorator: return function duration time """
     def timed(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
@@ -99,16 +100,6 @@ def add_env(var, content):
     content = str(content)
     os.environ[var] = os.environ.get(var, '') + (';' + content if var in os.environ else content)
     return os.environ[var]
-
-
-# GET all (sub) keys in dict
-def get_all_keys(key_list, dictonary=[]):
-    for key, items in key_list.items():
-        dictonary.append(key)
-        if isinstance(items, dict):
-            get_all_keys(items, dictonary)
-
-    return dictonary
     
 
 #*********************************************************************
