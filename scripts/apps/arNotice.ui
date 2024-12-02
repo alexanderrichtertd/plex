@@ -41,11 +41,33 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget{
-color: rgb(255, 255, 255);
-background-color: rgb(41, 43, 51); 
+    color: rgb(201, 202, 204);
+	background-color: rgb(38, 38, 38); 
+	selection-background-color: rgb(1, 79, 131);
 }
+
+QListWidget::item:selected
+{
+   color: rgb(235, 235, 235);
+   background-color: rgb(61, 120, 200);
+}
+
+QPushButton { 
+	border: 2px;
+    border-color: rgb(33, 33, 33);
+	border-radius: 3px;
+   background-color: rgb(49, 49, 49); 
+}
+
+QPushButton:hover {
+	border-radius: 3px;
+    color: rgb(49, 49, 49); 
+	background-color: rgb(200, 184, 86); 
+}
+
 QToolTip { 
-	background-color: rgb(52, 52, 52);
+	border-radius: 5px;
+	background-color: rgb(33, 33, 33);
 	color: rgb(241, 241, 241);
 	border: black solid 1px;
 }</string>
@@ -80,8 +102,7 @@ QToolTip {
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(46, 52, 61);
-</string>
+        <string notr="true"/>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="leftMargin">
@@ -117,7 +138,7 @@ QToolTip {
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../../../img/img.qrc">
+           <iconset resource="../../img/img.qrc">
             <normaloff>:/label/labels/default.png</normaloff>:/label/labels/default.png</iconset>
           </property>
           <property name="iconSize">
@@ -293,7 +314,7 @@ QToolTip {
   </layout>
  </widget>
  <resources>
-  <include location="../../../img/img.qrc"/>
+  <include location="../../img/img.qrc"/>
  </resources>
  <connections/>
 </ui>
