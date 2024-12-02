@@ -10,10 +10,14 @@ import getpass
 import logging
 import logging.config
 
+# GET log file path
+# Plex: C:/plex/config/users/$user/$user.log
+# Else: C:/Users/$user/$user.log
 USER = getpass.getuser()
+plex_user_path = eval(os.environ.get('PLEX_PATHS', '{}')).get('config_user', os.path.expanduser('~'))
+USER_PATH = os.path.join(plex_user_path, f"{USER}.log")
 
 
-# CLASS ***************************************************************
 class ContextFilter(logging.Filter):
     USERS = USER
 
@@ -25,11 +29,8 @@ class ContextFilter(logging.Filter):
 # LOGGING *************************************************************
 def init(software="default", script="default", level=logging.DEBUG, path="", 
          debug_console=False, multi_threads=False, *args, **kwargs):
-    config_user_path = eval(os.environ['PLEX_PATHS'])['config_user']
-
-    if not path: 
-        path = "/".join([config_user_path or os.path.expanduser('~'), USER + ".log"])
-
+    
+    path = path or USER_PATH
     create_folder(path)
 
     # OPTIONAL: separate levels into different files
@@ -96,7 +97,6 @@ def init(software="default", script="default", level=logging.DEBUG, path="",
     return logger
 
 
-#*********************************************************************
 def create_folder(path):
     if len(path.split('.')) > 1: 
         path = os.path.dirname(path)
@@ -104,3 +104,9 @@ def create_folder(path):
     if not os.path.exists(path):
         try:    os.makedirs(path)
         except: print(f"CAN'T create folder: {path}")
+
+
+# USE
+# import plexlog
+# LOG = plexlog.init(__name__)
+# LOG.info('This works')
