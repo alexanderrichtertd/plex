@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import maya.mel as mel
 import maya.cmds as cmds
@@ -14,8 +13,6 @@ from software import Software
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# FUN
 class Maya(Software):
     menu_name = Plex().config_plex['name']
     name = 'maya'
@@ -38,8 +35,7 @@ class Maya(Software):
         return cmds.file(file_path, reference=True)
 
 
-    #******************************************************************************
-    # MENU
+    # MENU ***************************************************************
     def create_menu(self):
         self.delete_menu()
         print('create menu: Maya')
@@ -76,8 +72,7 @@ class Maya(Software):
         #     mel.eval('file -r -type "' + s.FILE_FORMAT_CODE["." + self.save_dir.split(".")[-1]] + '" -ignoreVersion -gl -mergeNamespacesOnClash false "' + self.save_dir.replace("\\", "/") + '"')
 
 
-    #******************************************************************************
-    # SNAPSHOT
+    # SNAPSHOT ***************************************************************
     def viewport_snapshot(self, img_path):
         mel.eval('setAttr "defaultRenderGlobals.imageFormat" 8;')
 

@@ -4,7 +4,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 
@@ -13,14 +12,12 @@ from Qt import QtWidgets, QtGui, QtCore, __binding__
 import plexfunc
 from plex import Plex
 
-#*********************************************************************
-# VARIABLE
+# VARIABLE ***********************************************************
 LOG = Plex().log(script=__name__)
 DEFAULT_PATH = os.path.normpath(Plex().get_config('config_user') + '/tmp_img.jpg')
 
 
-#*********************************************************************
-# SCREENSHOT
+# SCREENSHOT *********************************************************
 # creates a screenshot of the main screen and saves it
 def create_any_screenshot(WIDGET, ui=''):
     # if not create_screenshot_render(WIDGET, ui):
@@ -93,8 +90,7 @@ def create_screenshot_viewport(WIDGET, ui=''):
     return True
 
 
-#*********************************************************************
-# FILE HANDLING
+# FILE HANDLING ******************************************************
 def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img = QtGui.QImage()
     img.load(src_path)
@@ -103,7 +99,7 @@ def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(Plex().paths["meta"])}'
     rlt_path =  + f'{tmp_dir}/{os.path.basename(rlt_path).split(".")[0]}{thumbnail_extension}'
 
-    plexfunc.create_folder(rlt_path)
+    plexfunc.create_dir(rlt_path)
     img.save(rlt_path, format=thumbnail_extension)
     remove_tmp_img(src_path)
     return rlt_path

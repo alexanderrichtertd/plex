@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import glob
@@ -13,8 +12,7 @@ import webbrowser
 from extern import yaml
 
 
-#*********************************************************************
-# SINGLETON
+# SINGLETON ***************************************************************
 class Singleton(object):
     def __new__(cls, *args, **kwds):
 
@@ -29,8 +27,7 @@ class Singleton(object):
         pass
 
 
-#*********************************************************************
-# YAML
+# YAML ***************************************************************
 def set_yaml_content(path, content):
     with open(path, 'w') as outfile:
         try:
@@ -69,8 +66,7 @@ def join(loader, node):
 yaml.add_constructor('!join', join)
 
 
-#*********************************************************************
-# TIME
+# TIME ***************************************************************
 def get_duration(func):
     """ decorator: return function duration time """
     def timed(*args, **kwargs):
@@ -84,8 +80,7 @@ def get_duration(func):
     return timed
 
 
-#*********************************************************************
-# ENV
+# ENV ***************************************************************
 def add_env(var, content):
     if not content:
         return
@@ -101,23 +96,22 @@ def add_env(var, content):
     return os.environ[var]
     
 
-#*********************************************************************
-# FOLDER
-def create_folder(path):
+# DIRECTORY ***************************************************************
+def create_dir(path):
     # Ensure the path is a directory, even if a file is given
     path = os.path.dirname(path) if '.' in os.path.basename(path) else path
     if not os.path.exists(path):
         try:
             os.makedirs(path)
-            print(f'create_folder: {path}')
+            print(f'create_dir: {path}')
         except Exception as e:
-            print(f"Failed to create folder: {path}. Error: {e}")
+            print(f"Failed to create dir: {path}. Error: {e}")
 
-def open_folder(path):
+def open_dir(path):
     path = os.path.normpath(path)
 
     if os.path.exists(path):
-        # Open folder if the path points to a file
+        # Open dir if the path points to a file
         if '.' in os.path.basename(path):
             path = os.path.dirname(path)
         webbrowser.open(path)
@@ -126,9 +120,14 @@ def open_folder(path):
 
     return path
 
+def get_sub_dirs(path, exclude=['__pycache__'], sort=True, full_path=False):
+    sub_dirs = [f.path if full_path else f.name
+                    for f in os.scandir(path)
+                    if f.is_dir() and os.path.basename(f.path) not in exclude]
+    return sorted(sub_dirs) if sort else sub_dirs
 
-#*********************************************************************
-# FILES
+
+# FILES ***************************************************************
 #   file_type string/string[]. '*.py'
 #   extension bool. True:[name.py] False:[name]
 #   exclude string /string[]. '__init__.py' | '__init__' | ['btnReport48', 'btnHelp48']
@@ -146,10 +145,3 @@ def get_files(path, file_type='*', extension=False, exclude='*', add_path=False)
             else:         get_file.append((file_name.split('.')[0]))
 
         return get_file
-
-
-def get_sub_dirs(path, exclude=['__pycache__'], sort=True, full_path=False):
-    sub_dirs = [f.path if full_path else f.name
-                    for f in os.scandir(path)
-                    if f.is_dir() and os.path.basename(f.path) not in exclude]
-    return sorted(sub_dirs) if sort else sub_dirs

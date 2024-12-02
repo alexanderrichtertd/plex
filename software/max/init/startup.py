@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import shutil
@@ -13,16 +12,13 @@ import MaxPlus
 from plex import Plex
 
 
-#*********************************************************************
-# VARIABLE
+# VARIABLE ***************************************************************
 LOG = Plex().log(script=__name__)
 menu_name = Plex().context['project_name']
 Plex().init_software()
 
 
-
-#*********************************************************************
-# MENU
+# MENU ***************************************************************
 def create_menu():
     # copy_splash()
     delete_menu()
@@ -32,7 +28,6 @@ def create_menu():
     else:
         menu = MaxPlus.MenuBuilder(menu_name)
         # create menu
-
 
 def delete_menu():
     MaxPlus.MenuManager.UnregisterMenu(unicode(menu_name))
@@ -47,6 +42,3 @@ def copy_splash():
             shutil.copy(splash_path, max_path)
         except:
             LOG.error(f'FAILED to copy splash: {max_path}', exc_info=True)
-
-
-create_menu()

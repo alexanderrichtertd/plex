@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 
@@ -13,10 +12,10 @@ import maya.cmds as cmds
 from functools import wraps
 
 from plex import Plex
+LOG = Plex().log(__name__)
 
 
-#*********************************************************************
-# START SETUP
+# START SETUP ***************************************************************
 def setup_scene(file_path=''):
     # RESOLUTION
     try:
@@ -77,8 +76,7 @@ def setup_scene(file_path=''):
     # api.MSceneMessage.addCallback(api.MSceneMessage.kAfterOpen, fixRenderLayer)
 
 
-#*********************************************************************
-# DECORATOR
+# DECORATOR ***************************************************************
 def viewport_off(func):
     @wraps(func)
     def viewport(*args, **kwargs):

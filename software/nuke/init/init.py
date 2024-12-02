@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import errno
@@ -14,8 +13,7 @@ import plexfunc
 from plex import Plex
 
 
-#*********************************************************************
-# VARIABLE
+# VARIABLE ***************************************************************
 LOG = Plex().log(script=__name__)
 
 PROJECT_CONFIG = Plex().config_project
@@ -24,8 +22,6 @@ RESOLUTION   = ' '.join([str(PROJECT_CONFIG['resolution'][0]),
                             PROJECT_CONFIG['name'].replace(' ', '')])
 
 
-#*********************************************************************
-# FOLDER CREATION
 def create_write_dir():
     file_name = nuke.filename(nuke.thisNode())
     file_path = os.path.dirname(file_name)
@@ -51,8 +47,7 @@ def add_plugin_paths():
 
 
 
-#*********************************************************************
-# PIPELINE
+# PIPELINE ***************************************************************
 Plex().init_software()
 add_plugin_paths()
 
@@ -70,7 +65,7 @@ except:
 
 print('SETTINGS')
 
-# RESOLUTION *********************************************************************
+# RESOLUTIONs
 try:
     nuke.addFormat(RESOLUTION)
     nuke.knobDefault('Root.format', PROJECT_CONFIG['name'].replace(' ', ''))
@@ -79,7 +74,8 @@ except:
     LOG.error(f'  OFF - {RESOLUTION}', exc_info=True)
     print(f'  {chr(254)} OFF - {RESOLUTION}')
 
-# FPS *********************************************************************
+
+# FPS
 try:
     nuke.knobDefault("Root.fps", str(PROJECT_CONFIG['fps']))
     print(f'  {chr(254)} ON  - {PROJECT_CONFIG['fps']} fps')
@@ -87,7 +83,8 @@ except:
     LOG.error(f'  OFF - {PROJECT_CONFIG['fps']} fps', exc_info=True)
     print(f'  {chr(254)} OFF - {PROJECT_CONFIG['fps']} fps')
 
-# createFolder *********************************************************************
+
+# createFolder
 try:
     nuke.addBeforeRender(create_write_dir)
     print(f'  {chr(254)} ON  - create_write_dir (before render)')
@@ -96,4 +93,3 @@ except:
     print(f'  {chr(254)} OFF - create_write_dir (before render)')
 
 print('')
-

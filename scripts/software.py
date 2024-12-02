@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -16,8 +15,6 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# CLASS
 class Software(plexfunc.Singleton):
     def start(self, name='', open_file=''):
         Plex().set_context('software', name)
@@ -57,8 +54,7 @@ class Software(plexfunc.Singleton):
         self.print_header()
 
 
-    #*********************************************************************
-    # VARIABLES
+    # VARIABLES ***********************************************************
     @property
     def id(self):
         return id(self)

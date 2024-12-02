@@ -4,7 +4,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import re
@@ -20,14 +19,9 @@ import plexfunc
 from plex import Plex
 from arUtil import ArUtil
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# CLASS
 class ArSave(ArUtil):
     def __init__(self, parent=None):
         super(ArSave, self).__init__()
@@ -75,8 +69,7 @@ class ArSave(ArUtil):
         LOG.info('START : arSave')
 
 
-    #********************************************************************
-    # PRESS
+    # PRESS **************************************************************
     def press_btnAccept(self):
         if self.save_file_path(): self.wgHeader.close()
 
@@ -102,9 +95,8 @@ class ArSave(ArUtil):
     def press_btnHelp(self, name=''):
         Plex().help(__name__)
 
-
-    #*********************************************************************
-    # FUNCTIONS
+ 
+    # FUNCTIONS **************************************************************
     def set_path(self):
         self.save_file = Plex().software.scene_path
         if not self.save_file or self.save_file == "Root": return False
@@ -160,7 +152,7 @@ class ArSave(ArUtil):
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Plex().software.extension
 
-            plexfunc.create_folder(os.path.dirname(self.save_publish_file))
+            plexfunc.create_dir(os.path.dirname(self.save_publish_file))
 
             try:
                 shutil.copy(self.save_file, tmp_copy_work)
@@ -200,8 +192,7 @@ class ArSave(ArUtil):
 
 
 
-#*********************************************************************
-# START
+# START **************************************************************
 def create():
     app = QtWidgets.QApplication(sys.argv)
     main_widget = ArSave()
@@ -210,5 +201,3 @@ def create():
 def start():
     global main_widget
     main_widget = ArSave()
-
-# create()

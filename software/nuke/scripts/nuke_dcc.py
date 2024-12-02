@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 
@@ -13,14 +12,11 @@ from plex import Plex
 from software import Software
 
 
-#*********************************************************************
-# VARIABLE
+# VARIABLE ***************************************************************
 LOG = Plex().log(script=__name__)
 DEFAULT_PATH = os.path.normpath(Plex().get_config('config_user') + '/tmp_img.jpg')
 
 
-#*********************************************************************
-# CLASS
 class Nuke(Software):
 
     _NAME = 'nuke'
@@ -42,8 +38,7 @@ class Nuke(Software):
         pass
 
 
-    #******************************************************************************
-    # SNAPSHOT
+    # SNAPSHOT ***************************************************************
     def viewport_snapshot(img_path=DEFAULT_PATH):
         viewer   = nuke.activeViewer()
         viewNode = nuke.activeViewer().node()

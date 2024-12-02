@@ -3,13 +3,10 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import maya.cmds as cmds
 
 
-#*********************************************************************
-# FUNCTIONS
 def create_simple_shd(name="BLACK_SHD", color=[0,0,0]):
     if cmds.objExists(name):
         print(f"CREATED - {name}")

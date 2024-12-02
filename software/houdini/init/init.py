@@ -3,15 +3,12 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 from plex import Plex
 
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# MENU
 def add_menu():
     menu_path = f'{Plex().paths["software"]}/houdini/scripts/MainMenuMaster.xml'
 
@@ -32,6 +29,3 @@ def add_menu():
             outfile.write(content)
             outfile.truncate()
     except: LOG.error(f'FILE not found: {menu_path}', exc_info=True)
-
-
-add_menu()

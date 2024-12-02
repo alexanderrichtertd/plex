@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -14,8 +13,7 @@ import logging.config
 USER = getpass.getuser()
 
 
-#*********************************************************************
-# CLASS
+# CLASS ***************************************************************
 class ContextFilter(logging.Filter):
     USERS = USER
 
@@ -24,8 +22,7 @@ class ContextFilter(logging.Filter):
         return True
 
 
-#*********************************************************************
-# LOGGING
+# LOGGING *************************************************************
 def init(software="default", script="default", level=logging.DEBUG, path="", 
          debug_console=False, multi_threads=False, *args, **kwargs):
     config_user_path = eval(os.environ['PLEX_PATHS'])['config_user']

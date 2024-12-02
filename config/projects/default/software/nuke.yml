@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 version:      &NUKE_VERSION 15.1                                
 version_long: &NUKE_VERSION_LONG !join [*NUKE_VERSION, v1]      
@@ -39,8 +38,8 @@ ENV:
 #*********************************************************************
 # MENU:
 #   - Plex:
-#       open_scene_folder:   addCommand('Open Scene Folder', 'import plexfunc; plexfunc.open_folder(nuke.root().knob("name").value())')
-#       open_project_folder: addCommand('Open Project Folder', 'import plexfunc; plexfunc.open_folder(Plex().config_project["path"])')
+#       open_scene_folder:   addCommand('Open Scene Folder', 'import plexfunc; plexfunc.open_dir(nuke.root().knob("name").value())')
+#       open_project_folder: addCommand('Open Project Folder', 'import plexfunc; plexfunc.open_dir(Plex().config_project["path"])')
 
 #   - break:   addSeparator()
 

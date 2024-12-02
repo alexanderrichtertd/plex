@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -14,12 +13,10 @@ import webbrowser
 import plexfunc
 
 
-#*********************************************************************
-# CLASS
+# CLASS **************************************************************
 class Plex(plexfunc.Singleton):
    
-    #*********************************************************************
-    # SETUP
+    # SETUP **************************************************************
     def setup(self, project_id='default'):
         scripts_path = str(pathlib.Path(os.path.dirname(__file__)).resolve())
         config_path = f'{os.path.dirname(scripts_path)}/config'
@@ -95,8 +92,7 @@ class Plex(plexfunc.Singleton):
         LOG.debug(200 * '-')
 
 
-    #*********************************************************************
-    # SOFTWARE
+    # SOFTWARE ************************************************************
     @property
     def software(self):
         """ Get the current software object based on the environment variable.
@@ -131,8 +127,7 @@ class Plex(plexfunc.Singleton):
         return self.config_plex['announcement'] if self.config_project['announcement'] == 'None' or self.config_plex['announcement_overwrite'] else self.config_project['announcement']
     
 
-    #*********************************************************************
-    # CONFIG
+    # CONFIG *************************************************************
     @property
     def config(self):
         return self.get_config()
@@ -154,8 +149,7 @@ class Plex(plexfunc.Singleton):
         return self.get_config(f'software/{self.software_name}')
 
 
-    #*********************************************************************
-    # CONFIG: Get & Set
+    # CONFIG: Get & Set **************************************************
     def get_config(self, file_name='', file_dir='', user_id=getpass.getuser()):
         if not file_dir: file_dir = self.paths['config_project']
         file_dir = file_dir.split('.')[0]
@@ -189,7 +183,7 @@ class Plex(plexfunc.Singleton):
             tmp_content = plexfunc.get_yaml_content(path, self.paths)
         else:
             tmp_content = {}
-            plexfunc.create_folder(path)
+            plexfunc.create_dir(path)
 
         tmp_content[key] = value
         plexfunc.set_yaml_content(path, tmp_content)
@@ -205,8 +199,7 @@ class Plex(plexfunc.Singleton):
         return path
 
 
-    #*********************************************************************
-    # PLEX
+    # PLEX ***************************************************************
     @property
     def paths(self):
         return eval(os.environ['PLEX_PATHS'])
@@ -221,16 +214,14 @@ class Plex(plexfunc.Singleton):
         os.environ['PLEX_CONTEXT'] = str(context)
 
 
-    #*********************************************************************
-    # PROJECT    
+    # PROJECT ************************************************************    
     @property
     def project_names(self):
         projects_path = self.paths['config_projects']
         return [os.path.basename(f.path) for f in os.scandir(projects_path) if f.is_dir()]
     
     
-    #*********************************************************************
-    # USER  
+    # USER ***************************************************************  
     @property
     def user_id(self):
         return getpass.getuser()
@@ -242,12 +233,11 @@ class Plex(plexfunc.Singleton):
     @property    
     def user_sandbox(self):
         user_sandbox_path = f'{self.config_project["PATH"]["sandbox"]}/{self.user_id}'
-        if not os.path.exists(user_sandbox_path): plexfunc.create_folder(user_sandbox_path)
+        if not os.path.exists(user_sandbox_path): plexfunc.create_dir(user_sandbox_path)
         return user_sandbox_path
 
 
-    #*********************************************************************
-    # BUTTON
+    # BUTTON **************************************************************
     def report(self):
         self.help('report')
 
@@ -256,8 +246,7 @@ class Plex(plexfunc.Singleton):
         webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
 
 
-#*********************************************************************
-# START
+# START **************************************************************
 import argparse
 
 parser = argparse.ArgumentParser(description='Setup your plex and start scripts.')

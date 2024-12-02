@@ -3,10 +3,8 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
-import sys
 import shutil
 
 import webbrowser
@@ -19,8 +17,7 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# INIT
+# INIT ***************************************************************
 def create_node(this_node=''):
     if not this_node: this_node = nuke.thisNode()
 

@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -16,8 +15,6 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# CLASS
 class ArUtil(object):
 
     def __init__(self):
@@ -61,19 +58,18 @@ class ArUtil(object):
         self.wgHeader.show()
 
 
-    #*********************************************************************
-    # PRESS
+    # PRESS ***************************************************************
     def press_btnAccept(self):
         print('PRESS accept')
 
     def press_btnOpenFolder(self):
-        plexfunc.open_folder(self.open_path)
+        plexfunc.open_dir(self.open_path)
 
     def press_btnUser(self):
-        plexfunc.open_folder(Plex().user_sandbox)
+        plexfunc.open_dir(Plex().user_sandbox)
 
     def press_btnProject(self):
-        plexfunc.open_folder(Plex().config_project['PATH']['project'])
+        plexfunc.open_dir(Plex().config_project['PATH']['project'])
 
     def press_btnReport(self):
         Plex().help('report')
@@ -82,8 +78,7 @@ class ArUtil(object):
         Plex().help(name)
 
 
-    #*********************************************************************
-    # FUNCTION
+    # FUNCTION ***************************************************************
     def set_progress(self, count=0):
         self.wgHeader.prbStatus.setValue(count)
 
@@ -98,8 +93,7 @@ class ArUtil(object):
         self.wgHeader.setMinimumSize(x, y)
 
 
-#*********************************************************************
-# START UI
+# START ***************************************************************
 def start():
     app = QtWidgets.QApplication(sys.argv)
     util = ArUtil()

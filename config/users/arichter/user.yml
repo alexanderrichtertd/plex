@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 name:     Alexander Richter
 id:       alexa
@@ -12,8 +11,7 @@ position: Technical Director
 rights:   'admin'
 
 
-#*********************************************************************
-# REPOSITORY
+# REPOSITORY **********************************************************
 REPOSITORY:
   username: guest
   password:

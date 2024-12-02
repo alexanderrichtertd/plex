@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -20,8 +19,6 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# NOTICE
 class Notice():
 
     def __init__(self,
@@ -51,8 +48,7 @@ class Notice():
                     'img_link: ' + self.img_link)
 
 
-#*********************************************************************
-# NOTICE UI
+# NOTICE UI **********************************************************
 class ArNotice():
 
     def __init__(self, notice):
@@ -101,8 +97,7 @@ class ArNotice():
             t.start()
 
 
-    #*********************************************************************
-    # PRESS_TRIGGER
+    # PRESS ***************************************************************
     def press_btnCancel(self):
         self.wgNotice.close()
 
@@ -164,12 +159,8 @@ def create_changelog_popup():
     ArNotice(note)
 
 
-
-#******************************************************************************
-# START
+# START ***********************************************************************
 def start(note = Notice()):
     app = QtWidgets.QApplication(sys.argv)
     classVar = ArNotice(note)
     app.exec_()
-
-# start()

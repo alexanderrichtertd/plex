@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -23,14 +22,9 @@ import arUtil
 import importlib
 importlib.reload(arUtil)
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# CLASS
 class ArLoad(arUtil.ArUtil):
 
     def __init__(self, desktop=False):
@@ -98,8 +92,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage('')))
 
 
-    #*********************************************************************
-    # PRESS
+    # PRESS **************************************************************
     def press_btnAccept(self):
         if not os.path.exists(self.load_file):
             self.set_status(f"FAILED LOADING : Path doesn't exists: {self.load_file}", msg_type=3)
@@ -147,8 +140,7 @@ class ArLoad(arUtil.ArUtil):
             webbrowser.open(self.meta_img_path)
 
 
-    #*********************************************************************
-    # CHANGE
+    # CHANGE *************************************************************
     def change_lstScene(self):
         self.wgLoad.cbxTask.clear()
 
@@ -212,13 +204,11 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lblUser.setText(user_id)
 
 
-#******************************************************************************
-# START
+# START ************************************************************************
 def create():
     app = QtWidgets.QApplication(sys.argv)
     main_widget = ArLoad(desktop=True)
     sys.exit(app.exec_())
-
 
 def start():
     global main_widget

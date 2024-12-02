@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 version: &MAX_VERSION 2023
 path:    &MAX_PATH !join ["C:/Program Files/Autodesk/3ds Max ", *MAX_VERSION, /3dsmax.exe]

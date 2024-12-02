@@ -3,20 +3,18 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 
 import MaxPlus
 
+import plexfunc
 from plex import Plex
 from software import Software
 
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# CLASS
 class Max(Software):
 
     _NAME = 'max'
@@ -38,13 +36,12 @@ class Max(Software):
         pass
 
 
-    #*********************************************************************
-    # MENU
+    # MENU ***************************************************************
     def open_scene_folder():
-        Plex().open_folder(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
+        plexfunc.open_dir(MaxPlus.Core.EvalMAXScript("sceneName = maxFilePath + maxFileName").Get())
 
     def open_project_folder():
-        Plex().open_folder(os.getenv("PROJECT_PATH"))
+        plexfunc.open_dir(os.getenv("PROJECT_PATH"))
 
     def save():
         import arSave

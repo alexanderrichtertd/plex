@@ -3,7 +3,6 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import maya.cmds as cmds
 
@@ -12,8 +11,7 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# LIGHT LINKER
+# LIGHT LINKER ***************************************************************
 def start():
     cmds.window(title='Light Linker')
     cmds.columnLayout()

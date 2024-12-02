@@ -3,7 +3,6 @@
 
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import maya.mel as mel
 import maya.cmds as cmds
@@ -14,8 +13,6 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# FUNCTIONS
 def start(shader_types=["alSurface", "alLayer"]):
     shaders = []
 

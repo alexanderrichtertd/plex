@@ -4,7 +4,7 @@
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
+
 
 import os
 from os import startfile
@@ -17,7 +17,6 @@ from plex import Plex
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
 def start():
     LOG.info("CREATE playblast")
     file_path = cmds.file(q=True, sn=True)
