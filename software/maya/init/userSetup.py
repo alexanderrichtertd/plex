@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = setup maya
 # date      = 2024-11-24
 #
@@ -6,13 +5,10 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import os
 import maya.cmds as cmds
 
 from plex import Plex
 
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 

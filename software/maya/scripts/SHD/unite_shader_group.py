@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = sets the name of all shader groups as the shader (+SG)
 # date      = 2020-06-19
 
@@ -6,17 +5,12 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 #*********************************************************************
 
-import os
-
 import maya.mel as mel
 import maya.cmds as cmds
 from pymel.core import *
 
 from plex import Plex
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 

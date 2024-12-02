@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = 3ds Max
 # date      = 2024-11-09
 #
@@ -13,9 +12,6 @@ import MaxPlus
 from plex import Plex
 from software import Software
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 

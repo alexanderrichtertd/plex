@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = Maya
 # date      = 2024-11-09
 #
@@ -12,9 +11,6 @@ import maya.cmds as cmds
 from plex import Plex
 from software import Software
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 

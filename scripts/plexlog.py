@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = write loggings into console and files
 # date      = 2024-11-16
 #

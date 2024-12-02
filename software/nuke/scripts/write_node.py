@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = write node functions
 # date      = 2020-06-19
 #
@@ -17,8 +16,6 @@ import nuke
 import arNotice
 from plex import Plex
 
-
-#*********************************************************************
 LOG = Plex().log(script=__name__)
 
 

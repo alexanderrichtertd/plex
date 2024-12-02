@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = create playblast
 #             executes other scripts on PUBLISH (on task in file name)
 # date      = 2020-06-19
@@ -15,9 +14,6 @@ import maya.cmds as cmds
 
 from plex import Plex
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 

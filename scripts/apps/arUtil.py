@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = parent widget
 # date      = 2024-11-09
 #
@@ -14,9 +13,6 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 import plexfunc
 from plex import Plex
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 

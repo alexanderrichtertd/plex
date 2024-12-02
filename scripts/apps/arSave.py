@@ -1,4 +1,3 @@
-#*********************************************************************
 # content   = saves work and publish files
 #             executes other scripts on PUBLISH (on task in file name)
 # date      = 2024-11-09
