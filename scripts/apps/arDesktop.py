@@ -1,10 +1,8 @@
-#*********************************************************************
 # content   = OS startup file
 # date      = 2024-11-08
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
-#*********************************************************************
 
 import os
 import sys
@@ -16,14 +14,9 @@ from Qt import QtWidgets, QtGui, QtCore
 import plexfunc
 from plex import Plex
 
-
-#*********************************************************************
-# VARIABLE
 LOG = Plex().log(script=__name__)
 
 
-#*********************************************************************
-# CLASS
 class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     def __init__(self, parent=None):
@@ -44,7 +37,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menuItem = adminMenu.addAction(QtGui.QIcon(Plex().get_img_path('icons/folder_open')), 'Project Config')
             menuItem.triggered.connect(self.press_btnOpenProjectConfig)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(Plex().get_img_path('icons/app_modify')), 'arConfig')
+            menuItem = adminMenu.addAction(QtGui.QIcon(Plex().get_img_path('icons/app_modify')), 'arSettings')
             menuItem.triggered.connect(self.press_btnConfigApp)
 
         menu.addSeparator()
@@ -91,10 +84,9 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.setContextMenu(menu)
 
 
-    #**********************
-    # PRESS
+    # PRESS ***********************************************************
     def press_btnShowUserSandbox(self):
-        plexfunc.open_folder(Plex().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
+        plexfunc.open_dir(Plex().config_project['PATH']['sandbox'] + '/' + getpass.getuser())
 
     def press_btnLoad(self):
         import arLoad
@@ -116,11 +108,11 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #------------------------------
     def press_btnOpenProjectConfig(self):
-        plexfunc.open_folder(Plex().paths['config_project'])
+        plexfunc.open_dir(Plex().paths['config_project'])
     
     def press_btnConfigApp(self):
-        import arConfig
-        arConfig.start(Plex().config_project['name'])
+        import arSettings
+        arSettings.start(Plex().config_project['name'])
     
     def press_btnChangeProject(self):
         LOG.debug('Change project')
@@ -137,6 +129,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.parent.instance().quit()
 
 
+# START ***********************************************************
 def start():
     app = QtWidgets.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)

@@ -13,7 +13,6 @@ import webbrowser
 import plexfunc
 
 
-# CLASS **************************************************************
 class Plex(plexfunc.Singleton):
    
     # SETUP **************************************************************
@@ -21,7 +20,7 @@ class Plex(plexfunc.Singleton):
         scripts_path = str(pathlib.Path(os.path.dirname(__file__)).resolve())
         config_path = f'{os.path.dirname(scripts_path)}/config'
         plex_path = str(pathlib.Path(os.path.dirname(os.path.dirname(__file__))).resolve())
-
+        
         # LOAD plex config
         plex_config = plexfunc.get_yaml_content(f'{config_path}/plex.yml')
         project_yaml_path = f'{config_path}/projects/{project_id}/project.yml'
@@ -29,25 +28,25 @@ class Plex(plexfunc.Singleton):
         if not os.path.exists(project_yaml_path):
             print(f'WARNING: Set to default project. Project config doesn\'t exist: {project_yaml_path}')
             project_yaml_path = f'{config_path}/projects/default/project.yml'
-
+        
         project_config = plexfunc.get_yaml_content(project_yaml_path)
 
         plex_paths = {'plex' : os.path.dirname(config_path),
                         
-                    'config'          : f'{config_path}/',
+                      'config'          : f'{config_path}/',
                         'config_users'    : f'{config_path}/users/',
                         'config_user'     : f'{config_path}/users/{getpass.getuser()}/',
                         'config_projects' : f'{config_path}/projects/',
                         'config_project'  : f'{os.path.dirname(project_yaml_path)}/',
 
-                    'img' : plex_path + '/img/',
+                      'img' : plex_path + '/img/',
 
-                    'scripts' : scripts_path,
+                      'scripts' : scripts_path,
                         'apps'    : scripts_path + '/apps/',
                         'extern'  : scripts_path + '/extern/',
 
-                    'software' : plex_path + '/software/',
-                    }
+                      'software' : plex_path + '/software/',
+                      }
         
         plex_context = {'project_id'   : project_id,                            # default
                         'project_name' : project_config['name'],                # Plex default
@@ -58,7 +57,7 @@ class Plex(plexfunc.Singleton):
                         'resolution' : project_config['SETTING']['resolution'], # [1920, 1080]
                         'fps'        : project_config['SETTING']['fps'],        # 24
 
-                        'artist'     : getpass.getuser(),                            # arichter
+                        'artist'     : getpass.getuser(),                       # arichter
                         'admin'      : True if getpass.getuser() in plex_config['admin'] else False,  # True or False
 
                         'file_name'       : '', # mike_RIG_v012
@@ -78,10 +77,11 @@ class Plex(plexfunc.Singleton):
         # PATH env: Add plex_paths
         sys.path.extend(plex_paths.values())
 
+        # COMMENT: Avoids circular import with arDesktop
         from plex import Plex
-        self.print_plex()
+        self.plex_print()
 
-    def print_plex(self):
+    def plex_print(self):
         LOG = self.log(script=__name__)
 
         LOG.debug('')
@@ -233,7 +233,7 @@ class Plex(plexfunc.Singleton):
     @property    
     def user_sandbox(self):
         user_sandbox_path = f'{self.config_project["PATH"]["sandbox"]}/{self.user_id}'
-        if not os.path.exists(user_sandbox_path): plexfunc.create_dir(user_sandbox_path)
+        plexfunc.create_dir(user_sandbox_path)
         return user_sandbox_path
 
 
@@ -260,5 +260,4 @@ if args.software:
         import arDesktop
         arDesktop.start()
     else:
-        from plex import Plex
         Plex().software.start(name=args.software)
