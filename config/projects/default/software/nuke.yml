@@ -39,7 +39,7 @@ ENV:
 # MENU:
 #   - Plex:
 #       open_scene_folder:   addCommand('Open Scene Folder', 'import plexfunc; plexfunc.open_dir(nuke.root().knob("name").value())')
-#       open_project_folder: addCommand('Open Project Folder', 'import plexfunc; plexfunc.open_dir(Plex().config_project["path"])')
+#       open_project_folder: addCommand('Open Project Folder', 'import plexfunc; plexfunc.open_dir(plex.config_project["path"])')
 
 #   - break:   addSeparator()
 

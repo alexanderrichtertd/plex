@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>451</height>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,9 +15,9 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget{
-	
+	border-radius: 3px;
     color: rgb(201, 202, 204);
-	background-color: rgb(38, 38, 38); 
+	background-color: rgb(38, 38, 38, 20); 
 	selection-background-color: rgb(1, 79, 131);
 }
 
@@ -35,7 +35,7 @@ QPushButton {
 	border: 2px;
     border-color: rgb(33, 33, 33);
 	border-radius: 3px;
-   background-color: rgb(49, 49, 49); 
+   background-color: rgb(38, 38, 38); 
 }
 
 QPushButton:hover {
@@ -65,7 +65,7 @@ QLineEdit {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
+   <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -80,17 +80,17 @@ QLineEdit {
     </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+      <property name="spacing">
+       <number>6</number>
+      </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>8</number>
+       <number>0</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2"/>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="wgMenu" native="true">
         <property name="minimumSize">
          <size>
           <width>130</width>
@@ -105,10 +105,17 @@ QLineEdit {
     background-color: rgb(33, 33, 33); 
 }
 
-QLabel:hover {
+QPushButton {
+	text-align:left;
+	padding-left: 4px;
+}
+
+QPushButton:hover {
 	border-radius: 3px;
     color: rgb(49, 49, 49); 
 	background-color: rgb(200, 184, 86); 
+	text-align:left;
+	padding-left: 4px;
 }
 </string>
         </property>
@@ -155,7 +162,7 @@ QLabel:hover {
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lblPlex">
+            <widget class="QPushButton" name="btnPlex">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -167,13 +174,22 @@ QLabel:hover {
                <pointsize>9</pointsize>
               </font>
              </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
              <property name="text">
-              <string> plex</string>
+              <string>plex</string>
+             </property>
+             <property name="shortcut">
+              <string>1</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lblProject">
+            <widget class="QPushButton" name="btnProject">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -186,12 +202,15 @@ QLabel:hover {
               </font>
              </property>
              <property name="text">
-              <string> project</string>
+              <string>project</string>
+             </property>
+             <property name="shortcut">
+              <string>2</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lblScripts">
+            <widget class="QPushButton" name="btnScripts">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -204,12 +223,15 @@ QLabel:hover {
               </font>
              </property>
              <property name="text">
-              <string> scripts</string>
+              <string>scripts</string>
+             </property>
+             <property name="shortcut">
+              <string>3</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lblUser">
+            <widget class="QPushButton" name="btnUser">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -222,7 +244,10 @@ QLabel:hover {
               </font>
              </property>
              <property name="text">
-              <string> user</string>
+              <string>user</string>
+             </property>
+             <property name="shortcut">
+              <string>4</string>
              </property>
             </widget>
            </item>
@@ -255,15 +280,23 @@ QLabel:hover {
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lblPlugins">
+            <widget class="QPushButton" name="btnPlugins">
              <property name="minimumSize">
               <size>
                <width>0</width>
                <height>20</height>
               </size>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
              <property name="text">
-              <string> plugins</string>
+              <string>plugins</string>
+             </property>
+             <property name="shortcut">
+              <string>5</string>
              </property>
             </widget>
            </item>
@@ -305,79 +338,99 @@ selection-background-color: rgb(50, 50, 50);
         </layout>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
-      <property name="topMargin">
-       <number>4</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>30</number>
-      </property>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <property name="rightMargin">
-         <number>8</number>
+       <widget class="QWidget" name="wgContent" native="true">
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	background-color: rgb(38, 38, 38); 
+}
+
+QPushButton:hover {
+	border-radius: 3px;
+    color: rgb(49, 49, 49); 
+	background-color: rgb(200, 184, 86); 
+}</string>
         </property>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="lblCancel">
-          <property name="minimumSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>x</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+        <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,1">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="topMargin">
+            <number>6</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnCancel">
+             <property name="minimumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>x</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="shortcut">
+              <string>Esc</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </item>

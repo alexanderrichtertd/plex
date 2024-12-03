@@ -10,11 +10,11 @@ import os
 from Qt import QtWidgets, QtGui, QtCore, __binding__
 
 import plexfunc
-from plex import Plex
+import plex
 
 # VARIABLE ***********************************************************
-LOG = Plex().log(script=__name__)
-DEFAULT_PATH = os.path.normpath(Plex().get_config('config_user') + '/tmp_img.jpg')
+LOG = plex.log(script=__name__)
+DEFAULT_PATH = os.path.normpath(plex.get_config('config_user') + '/tmp_img.jpg')
 
 
 # SCREENSHOT *********************************************************
@@ -55,11 +55,11 @@ def create_screenshot_render(WIDGET, ui=''):
             return False
 
     try:
-        if Plex().software.is_software('maya'):
+        if plex.software.is_software('maya'):
             if not maya_renderSnapshot(DEFAULT_PATH)[1]:
                 LOG.warning("no snapshot no")
                 return False
-        elif Plex().is_software('houdini'): 
+        elif plex.is_software('houdini'): 
             houdini_renderSnapshot(DEFAULT_PATH)
         else: 
             return False
@@ -75,7 +75,7 @@ def create_screenshot_render(WIDGET, ui=''):
 
 def create_screenshot_viewport(WIDGET, ui=''):
     # WIDGET.hide()
-    Plex().software.viewport_snapshot()
+    plex.software.viewport_snapshot()
 
     # TODO: FIX for
     # "HOUDINI": create_screenshot(WIDGET, ui) # houdini_viewportSnapshot(DEFAULT_PATH)
@@ -94,9 +94,9 @@ def create_screenshot_viewport(WIDGET, ui=''):
 def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img = QtGui.QImage()
     img.load(src_path)
-    thumbnail_extension = '.' + Plex().config_project['EXTENSION']['thumbnail']
+    thumbnail_extension = '.' + plex.config_project['EXTENSION']['thumbnail']
 
-    tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(Plex().paths["meta"])}'
+    tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(plex.paths["meta"])}'
     rlt_path =  + f'{tmp_dir}/{os.path.basename(rlt_path).split(".")[0]}{thumbnail_extension}'
 
     plexfunc.create_dir(rlt_path)

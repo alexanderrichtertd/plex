@@ -6,9 +6,9 @@
 
 import maya.cmds as cmds
 
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 # LIGHT LINKER ***************************************************************

@@ -9,8 +9,8 @@ import sys
 import pathlib
 import getpass
 
+import plex
 import plexfunc
-from plex import Plex
 
 
 # SETUP **************************************************************
@@ -79,7 +79,7 @@ def setup(project_id='default'):
 
 
 def plex_print():
-    LOG = Plex().log(script=__name__)
+    LOG = plex.log(script=__name__)
 
     LOG.debug('')
     LOG.debug(200 * '_')
@@ -103,4 +103,4 @@ if args.software:
         import arDesktop
         arDesktop.start()
     else:
-        Plex().software.start(name=args.software)
+        plex.software.start(name=args.software)

@@ -9,9 +9,9 @@ import os
 import nuke
 import importlib
 
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 def add_gizmo_menu(menu):
@@ -28,13 +28,13 @@ def add_write_node():
 
 
 # TOOLBAR ***************************************************************
-menu_config = Plex().config_software['MENU']
-menuNode  = nuke.menu('Nodes').addMenu(Plex().config_project['name'], icon = 'nuke.ico')
+menu_config = plex.config_software['MENU']
+menuNode  = nuke.menu('Nodes').addMenu(plex.config_project['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 
 # ADD menu
-Plex().software.add_menu(menuNode)
+plex.software.add_menu(menuNode)
 menuNode.addSeparator()
 add_gizmo_menu(menuNode)
 

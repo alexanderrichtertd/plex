@@ -10,14 +10,14 @@ import getpass
 import subprocess
 
 import plexfunc
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class Software(plexfunc.Singleton):
     def start(self, name='', open_file=''):
-        Plex().set_context('software', name)
+        plex.set_context('software', name)
 
         # SETUP env
         software_dirs = plexfunc.get_sub_dirs(self.path, full_path=True)
@@ -27,16 +27,16 @@ class Software(plexfunc.Singleton):
         os.environ['PYTHONPATH'] = ';'.join([
             os.environ.get('PYTHONPATH', ''),
             *software_dirs,
-            f'{Plex().paths["software"]}/{self.name}',
-            Plex().paths["scripts"],
-            Plex().paths["apps"],
-            Plex().paths["extern"],
+            f'{plex.paths["software"]}/{self.name}',
+            plex.paths["scripts"],
+            plex.paths["apps"],
+            plex.paths["extern"],
         ])        
 
         sys.path.extend(software_dirs)
 
         # GET software config
-        self.env = Plex().config_software.get('ENV', '')
+        self.env = plex.config_software.get('ENV', '')
 
         # ADD software ENV
         for env, content in self.env.items():
@@ -46,7 +46,7 @@ class Software(plexfunc.Singleton):
                 plexfunc.add_env(env, content)
 
         if open_file: open_file = f'"{open_file}"'
-        cmd = Plex().config_software['start'].format(open_file)
+        cmd = plex.config_software['start'].format(open_file)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
         LOG.debug(f'START : {self.name.upper()} : {cmd}')
@@ -60,35 +60,35 @@ class Software(plexfunc.Singleton):
     
     @property
     def name(self):
-        return Plex().context['software']
+        return plex.context['software']
    
     @property
     def path(self):        
-        return f'{Plex().paths["software"]}/{self.name}'
+        return f'{plex.paths["software"]}/{self.name}'
 
     @property
     def config(self):
-        return Plex().config_software
+        return plex.config_software
 
     @property
     def extension(self):
-        return Plex().config_project['EXTENSION'][self.name]
+        return plex.config_project['EXTENSION'][self.name]
 
     @property
     def menu(self):
-        return Plex().config_software['MENU']
+        return plex.config_software['MENU']
     
     @property
     def version(self):
-        return Plex().config_software['version']
+        return plex.config_software['version']
     
     @property
     def renderer(self):
-        return Plex().config_software.get('renderer', '')
+        return plex.config_software.get('renderer', '')
         
     @property
     def renderer_path(self):        
-        return Plex().config_software.get('renderer_path', '')
+        return plex.config_software.get('renderer_path', '')
 
 
     #*********************************************************************
@@ -125,13 +125,13 @@ class Software(plexfunc.Singleton):
     def print_header(self):
         if self.is_software('max'): return
 
-        project_len = len(Plex().context['project_name'])
+        project_len = len(plex.context['project_name'])
         space = (20-int(project_len/2)) - 1
 
         # project name
         print('')
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
-        print(chr(124) + ' ' * space + Plex().context['project_name'] + ' ' * space + chr(124))
+        print(chr(124) + ' ' * space + plex.context['project_name'] + ' ' * space + chr(124))
         print(chr(124) + '-' * (2 * space + project_len) + chr(124))
 
         # user name & software
@@ -141,13 +141,13 @@ class Software(plexfunc.Singleton):
         space = (20-int(len(f'{self.name} {self.version}')/2)) - 1
         print(' ' * space + f'{self.name.title()} {self.version}')
 
-        print(f'\n\n{Plex().paths["plex"]}')
+        print(f'\n\n{plex.paths["plex"]}')
         print('\n• img')
         print('• scripts')
         print(r'• scripts\apps')
         print(r'• scripts\extern')
 
-        print(f'\n• config\\projects\\{Plex().context["project_id"]}\n')
+        print(f'\n• config\\projects\\{plex.context["project_id"]}\n')
 
         print(fr'• software\{self.name}')
         for sub_dir in plexfunc.get_sub_dirs(self.path):

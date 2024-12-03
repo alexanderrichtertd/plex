@@ -16,13 +16,13 @@ from Qt import QtWidgets, QtGui, QtCore, QtCompat
 import arNotice
 
 import plexfunc
-from plex import Plex
+import plex
 import arUtil
 
 import importlib
 importlib.reload(arUtil)
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class ArLoad(arUtil.ArUtil):
@@ -48,7 +48,7 @@ class ArLoad(arUtil.ArUtil):
         self.clear_context()
 
         # SETUP content
-        self.software_formats = {y:x for x, y in Plex().config_plex['EXTENSION'].items()}
+        self.software_formats = {y:x for x, y in plex.config_plex['EXTENSION'].items()}
         self.software_keys    = list(self.software_formats.keys())
 
         self.wgLoad.btnAssets.clicked.connect(lambda: self.press_btnEntity('assets'))
@@ -70,9 +70,9 @@ class ArLoad(arUtil.ArUtil):
 
         self.wgHeader.setWindowTitle(__name__)
         self.wgHeader.btnAccept.setText('Load')
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("icons/load")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(plex.get_img_path("icons/load")))
 
-        for status in Plex().config_plex['STATUS'].values():
+        for status in plex.config_plex['STATUS'].values():
             self.wgLoad.cbxStatus.addItem(status)
 
         # SELECT start
@@ -102,18 +102,18 @@ class ArLoad(arUtil.ArUtil):
         self.wgHeader.close()
 
         # OPEN in current software
-        if software == Plex().software.name and not self.desktop:
+        if software == plex.software.name and not self.desktop:
             LOG.info(f'OPEN file: {self.load_file}')
-            Plex().software.scene_open(self.load_file)
+            plex.software.scene_open(self.load_file)
         # OPEN in OS
         else:
-            try:    Plex().software.start(name=software, open_file=self.load_file)
+            try:    plex.software.start(name=software, open_file=self.load_file)
             except: LOG.error('FAILED to open software', exc_info=True)
 
         note = arNotice.Notice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
                                msg   = self.wgLoad.edtComment.toPlainText(),
                                img   = self.meta_img_path if os.path.exists(self.meta_img_path)
-                                       else Plex().get_img_path('label/default'),
+                                       else plex.get_img_path('label/default'),
                                img_link = os.path.dirname(self.load_file))
         arNotice.ArNotice(note)
 
@@ -128,7 +128,7 @@ class ArLoad(arUtil.ArUtil):
             self.wgLoad.btnAssets.setStyleSheet("background-color: rgb(41, 43, 51);")
             self.wgLoad.btnShots.setStyleSheet("background-color: rgb(80, 80, 80);")
 
-        self.entity_path = Plex().config_project['PATH'][button_name]
+        self.entity_path = plex.config_project['PATH'][button_name]
 
         for scene in plexfunc.get_sub_dirs(self.entity_path):
             self.wgLoad.lstScene.addItem(scene)
@@ -162,7 +162,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lstVersion.clear()
         self.open_path = f'{self.task_path}/{self.wgLoad.cbxStatus.currentText()}'
 
-        ext = Plex().config_plex['EXTENSION'].values()
+        ext = plex.config_plex['EXTENSION'].values()
         folder = pathlib.Path(self.open_path)
         version_files = sorted(filter(lambda path: path.suffix.replace('.', '') in ext, folder.glob('*')), reverse=True)
         
@@ -180,22 +180,22 @@ class ArLoad(arUtil.ArUtil):
 
         self.extension = self.wgLoad.lstVersion.currentItem().text().split('.')[-1]
 
-        software_img = Plex().get_img_path(f"software/default/{self.software_formats[self.extension]}")
+        software_img = plex.get_img_path(f"software/default/{self.software_formats[self.extension]}")
         self.wgLoad.lblSoftwareIcon.setPixmap(QtGui.QPixmap(QtGui.QImage(software_img)))
 
         comment = ''
         user_id = 'unknown'
 
         current_file = self.wgLoad.lstVersion.currentItem().text()
-        meta_file_path = Plex().config_project['PATH']['meta']
+        meta_file_path = plex.config_project['PATH']['meta']
         self.meta_img_path = f'{meta_file_path}/{os.path.splitext(current_file)[0]}.jpg'
 
         if os.path.exists(self.meta_img_path):
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.meta_img_path)))
         else:
-            self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("labels/default"))))
+            self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("labels/default"))))
 
-        file_config = Plex().config_meta.get(current_file, '')
+        file_config = plex.config_meta.get(current_file, '')
         if file_config:
             comment = file_config.get('comment')
             user_id = file_config.get('user')

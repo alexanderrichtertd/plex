@@ -159,3 +159,7 @@ class Plex(plexfunc.Singleton):
     def help(self, name=''):
         name = name or self.software_name
         webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
+
+
+# Redirect module to singleton instance
+sys.modules[__name__] = Plex()

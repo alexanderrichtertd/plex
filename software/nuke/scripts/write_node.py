@@ -12,9 +12,9 @@ import webbrowser
 import nuke
 
 import arNotice
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 # INIT ***************************************************************
@@ -42,10 +42,10 @@ def openRV(path):
     if not os.path.exists(os.path.dirname(path)) or not os.listdir(os.path.dirname(path)):
         LOG.warning("FOLDER : NOT EXISTS : " + path)
     else:
-        os.system('start "" "' + Plex().config_software['RV']['path'] + '" ' + path)
+        os.system('start "" "' + plex.config_software['RV']['path'] + '" ' + path)
 
 
-# TODO: REPLACE with lib.Plex().openFolder(path)
+# TODO: REPLACE with lib.plex.openFolder(path)
 def openFolder(path):
     path = os.path.dirname(path).replace("/","\\")
     if not os.path.exists(path) or not os.listdir(path):
@@ -112,14 +112,14 @@ def publishRender(file_type):
         if part == 'COMP': break
 
     fileName    = "_".join(fileName)
-    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{Plex().config_plex['publish']}/{file_type}'
+    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{plex.config_plex['publish']}/{file_type}'
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)
 
     if not os.path.exists(publishPath): os.makedirs(publishPath)
 
-    oldFrames = Plex().getFolderList(oldPath, fileType='*' + file_type, ex=True)
+    oldFrames = plex.getFolderList(oldPath, fileType='*' + file_type, ex=True)
 
     for oldFrame in oldFrames:
         framePart    = oldFrame.split(".")

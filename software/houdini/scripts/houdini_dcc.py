@@ -5,10 +5,10 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 
 
-from plex import Plex
+import plex
 from software import Software
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class Houdini(Software):

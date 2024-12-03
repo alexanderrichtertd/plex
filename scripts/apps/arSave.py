@@ -16,10 +16,10 @@ import arNotice
 import snapshot
 
 import plexfunc
-from plex import Plex
+import plex
 from arUtil import ArUtil
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class ArSave(ArUtil):
@@ -40,10 +40,10 @@ class ArSave(ArUtil):
         self.wgSave.btnSnapshotViewport.clicked.connect(self.press_btnSnapshotViewport)
         self.wgSave.btnSnapshotRender.clicked.connect(self.press_btnSnapshotRender)
 
-        self.wgSave.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("lbl/default"))))
-        self.wgSave.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("btn/btn_camera"))))
-        self.wgSave.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("btn/btn_viewport"))))
-        self.wgSave.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(Plex().get_img_path("btn/btn_render"))))
+        self.wgSave.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("lbl/default"))))
+        self.wgSave.btnScreenshot.setIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("btn/btn_camera"))))
+        self.wgSave.btnSnapshotRender.setIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("btn/btn_viewport"))))
+        self.wgSave.btnSnapshotViewport.setIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("btn/btn_render"))))
 
         self.resize_widget(self.wgSave)
 
@@ -55,12 +55,12 @@ class ArSave(ArUtil):
         # self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.wgHeader.setWindowTitle(__name__)
-        self.wgHeader.setWindowIcon(QtGui.QIcon(Plex().get_img_path("btn/btn_save")))
+        self.wgHeader.setWindowIcon(QtGui.QIcon(plex.get_img_path("btn/btn_save")))
 
         self.wgHeader.btnOption.setText('SaveAs')
         self.wgSave.btnSnapshotRender.hide()
 
-        if Plex().software.is_software('nuke'):
+        if plex.software.is_software('nuke'):
             self.wgSave.btnSnapshotRender.hide()
 
         self.wgHeader.layMain.addWidget(self.wgSave, 0)
@@ -93,12 +93,12 @@ class ArSave(ArUtil):
         snapshot.create_screenshot_viewport(self.wgSave, self.wgSave.btnPreviewImg)
 
     def press_btnHelp(self, name=''):
-        Plex().help(__name__)
+        plex.help(__name__)
 
  
     # FUNCTIONS **************************************************************
     def set_path(self):
-        self.save_file = Plex().software.scene_path
+        self.save_file = plex.software.scene_path
         if not self.save_file or self.save_file == "Root": return False
 
         self.save_dir = os.path.dirname(self.save_file)
@@ -112,7 +112,7 @@ class ArSave(ArUtil):
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(Plex().config_plex['version'], os.path.basename(self.save_file))
+        found_version = re.search(plex.config_plex['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
@@ -134,7 +134,7 @@ class ArSave(ArUtil):
         if self.wgHeader.cbxAdd.isChecked(): self.update_version()
         
         try:
-            Plex().software.scene_save_as(self.save_file)
+            plex.software.scene_save_as(self.save_file)
             self.set_meta_config()
             LOG.info(f'SAVE : {self.save_file}')
         except:
@@ -143,14 +143,14 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmp_copy_work = self.save_file.replace('.', f'_{Plex().config_plex['publish']}.')
+            tmp_copy_work = self.save_file.replace('.', f'_{plex.config_plex['publish']}.')
             snapshot.save_snapshot(tmp_copy_work)
             self.set_meta_config(tmp_copy_work)
 
-            found_version = re.search(Plex().config_plex['version'], os.path.basename(self.save_file))
+            found_version = re.search(plex.config_plex['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
-                self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + Plex().software.extension
+                self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + plex.software.extension
 
             plexfunc.create_dir(os.path.dirname(self.save_publish_file))
 
@@ -179,11 +179,11 @@ class ArSave(ArUtil):
     def set_meta_config(self, save_path=''):
         if not save_path: save_path = self.save_file
 
-        meta_path = os.path.dirname(save_path) + Plex().config_plex['meta']
+        meta_path = os.path.dirname(save_path) + plex.config_plex['meta']
         # LOG.info(meta_path)
         comment_dict = {'user': getpass.getuser(),
                         'comment': str(self.wgSave.edtComment.text())}
-        Plex().set_config(meta_path, os.path.basename(save_path), comment_dict)
+        plex.set_config(meta_path, os.path.basename(save_path), comment_dict)
 
 
     def folder_msg_box(self, bpS, configFilter, title = 'Choose file to open', path = ''): #configFilter = "Maya Files (*.mb *.ma)"

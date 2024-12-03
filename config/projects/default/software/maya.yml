@@ -40,7 +40,7 @@ ENV:
 MENU:
     - $project_name:
       - Open Scene Folder:   import plexfunc; plexfunc.open_dir(cmds.file(q=True, sceneName=True))
-      - Open Project Folder: import plexfunc; plexfunc.open_dir(Plex().config_project['PATH']['project'])
+      - Open Project Folder: import plexfunc; plexfunc.open_dir(plex.config_project['PATH']['project'])
       - break:               
       - Reload Pipeline:     print('reload pipeline')
 
@@ -58,13 +58,13 @@ MENU:
       - Light Linker: from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()
 
     - Render:
-      - Rendersetting - Work:    Plex().scene_setup("render", "work")
-      - Rendersetting - Publish: Plex().scene_setup("render", "publish")
+      - Rendersetting - Work:    plex.scene_setup("render", "work")
+      - Rendersetting - Publish: plex.scene_setup("render", "publish")
 
     - break: 
 
-    - Report: from plex import Plex; Plex().help("report")
-    - Help:   from plex import Plex; Plex().help()
+    - Report: import plex; plex.help("report")
+    - Help:   import plex; plex.help()
 
 
 
@@ -77,22 +77,22 @@ MENU:
 #     - load:    l="Load", command="import arLoad; import importlib;importlib.reload(arLoad); arLoad.start()", dcc=", image="shelf_load.png"
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
-#     - folder:  l="Project Folder", command="import webbrowser; webbrowser.open(os.path.dirname(Plex().software.scene_path))", dcc=", image="shelf_open_dir.png"
-#     - folder:  l="Project Folder", command="import plexfunc; plexfunc.open_dir(Plex().config_project["path"])", dcc=", image="shelf_open_dir_project.png"
+#     - folder:  l="Project Folder", command="import webbrowser; webbrowser.open(os.path.dirname(plex.software.scene_path))", dcc=", image="shelf_open_dir.png"
+#     - folder:  l="Project Folder", command="import plexfunc; plexfunc.open_dir(plex.config_project["path"])", dcc=", image="shelf_open_dir_project.png"
 
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
 #   FOOTER:
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
-#     - rs_publish:  l="Rendersetting - Work", command="Plex().software.scene_setup("RENDER", "WORK")", dcc=", image="shelf_render_work.png"
-#     - rs_publish:  l="Rendersetting - Preview", command="Plex().software.scene_setup("RENDER", "PREVIEW")", dcc=", image="shelf_render_preview.png"
-#     - rs_publish:  l="Rendersetting - Publish", command="Plex().software.scene_setup("RENDER", "DELIVER")", dcc=", image="shelf_render_deliver.png"
+#     - rs_publish:  l="Rendersetting - Work", command="plex.software.scene_setup("RENDER", "WORK")", dcc=", image="shelf_render_work.png"
+#     - rs_publish:  l="Rendersetting - Preview", command="plex.software.scene_setup("RENDER", "PREVIEW")", dcc=", image="shelf_render_preview.png"
+#     - rs_publish:  l="Rendersetting - Publish", command="plex.software.scene_setup("RENDER", "DELIVER")", dcc=", image="shelf_render_deliver.png"
 
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
-#     - report:  l="Report", command="from plex import Plex;Plex().help("report")", dcc=", image="shelf_report.png"
-#     - help:    l="Help", command="from plex import Plex;Plex().help()", dcc=", image="shelf_help.png"
+#     - report:  l="Report", command="import plex;plex.help("report")", dcc=", image="shelf_report.png"
+#     - help:    l="Help", command="import plex;plex.help()", dcc=", image="shelf_help.png"
 
 # #*****************************************************************************************************************************
 
@@ -114,9 +114,9 @@ MENU:
 #     - playblast: l="Playblast", command="from ANIM import playblast;import importlib;importlib.reload(playblast); playblast.start()", dcc=", image="shelf_playblast.png"
 
 #   LIGHT:
-#     - render_work:    l="Rendersettings - Work", command="Plex().software.scene_setup("RENDER", WORK")", dcc=", image="shelf_render_work.png"
-#     - render_preview: l="Rendersettings - Work", command="Plex().software.scene_setup("RENDER", "PREVIEW")", dcc=", image="shelf_render_preview.png"
-#     - render_deliver: l="Rendersettings - Work", command="Plex().software.scene_setup("RENDER", "DELIVER")", dcc=", image="shelf_render_deliver.png"
+#     - render_work:    l="Rendersettings - Work", command="plex.software.scene_setup("RENDER", WORK")", dcc=", image="shelf_render_work.png"
+#     - render_preview: l="Rendersettings - Work", command="plex.software.scene_setup("RENDER", "PREVIEW")", dcc=", image="shelf_render_preview.png"
+#     - render_deliver: l="Rendersettings - Work", command="plex.software.scene_setup("RENDER", "DELIVER")", dcc=", image="shelf_render_deliver.png"
 #     - break:          width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 #     - light_linker:   l="Light Linker", command="from LGT import light_linker;import importlib;importlib.reload(light_linker);light_linker.start()", dcc=", image="shelf_light_linker.png"
 
@@ -154,8 +154,8 @@ MENU:
 # SETUP:
 
 #   DEFAULT:
-#     # - defaultResolution.width  : Plex().config_project["resolution"][0]
-#     # - defaultResolution.height : Plex().config_project["resolution"][1]
+#     # - defaultResolution.width  : plex.config_project["resolution"][0]
+#     # - defaultResolution.height : plex.config_project["resolution"][1]
 
 #     - defaultRenderGlobals.animation : 1
 #     - defaultRenderGlobals.putFrameBeforeExt : 1

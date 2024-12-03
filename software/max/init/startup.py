@@ -9,13 +9,13 @@ import shutil
 
 import MaxPlus
 
-from plex import Plex
+import plex
 
 
 # VARIABLE ***************************************************************
-LOG = Plex().log(script=__name__)
-menu_name = Plex().context['project_name']
-Plex().init_software()
+LOG = plex.log(script=__name__)
+menu_name = plex.context['project_name']
+plex.init_software()
 
 
 # MENU ***************************************************************
@@ -34,8 +34,8 @@ def delete_menu():
 
 
 def copy_splash():
-    splash_path = Plex().get_img_path("software/max/splash.bmp")
-    max_path    = os.path.dirname(Plex().software.config['path'])
+    splash_path = plex.get_img_path("software/max/splash.bmp")
+    max_path    = os.path.dirname(plex.software.config['path'])
 
     if not os.path.exists(max_path + '/splash.bmp'):
         try:

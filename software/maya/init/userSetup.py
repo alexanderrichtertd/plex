@@ -6,14 +6,14 @@
 
 import maya.cmds as cmds
 
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 cmds.evalDeferred('print("")')
 cmds.evalDeferred('print("START PLEX -------------------------------------")')
-cmds.evalDeferred(f'from plex import Plex; Plex().software.create_menu()')
+cmds.evalDeferred(f'import plex; plex.software.create_menu()')
 
 cmds.evalDeferred('print("FINISH -----------------------------------------")')
 cmds.evalDeferred('print("")')

@@ -8,9 +8,9 @@ import maya.mel as mel
 import maya.cmds as cmds
 from pymel.core import *
 
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 def start(shader_types=["alSurface", "alLayer"]):

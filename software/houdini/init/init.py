@@ -4,13 +4,13 @@
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 def add_menu():
-    menu_path = f'{Plex().paths["software"]}/houdini/scripts/MainMenuMaster.xml'
+    menu_path = f'{plex.paths["software"]}/houdini/scripts/MainMenuMaster.xml'
 
     def find_inbetween(self, text, first, last):
         try:
@@ -22,7 +22,7 @@ def add_menu():
         with open(menu_path, 'r+') as outfile:
             content = outfile.read()
             find_title = find_inbetween(content, '<label>', '</label>')
-            content = content.replace(f'<label>{find_title}</label>', f'<label>{Plex().context["project_name"]}</label>')
+            content = content.replace(f'<label>{find_title}</label>', f'<label>{plex.context["project_name"]}</label>')
             print(content)
             # WRITE new XML
             outfile.seek(0)

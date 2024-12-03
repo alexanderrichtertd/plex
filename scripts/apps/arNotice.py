@@ -14,9 +14,9 @@ from datetime import datetime
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
-from plex import Plex
+import plex
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class Notice():
@@ -68,7 +68,7 @@ class ArNotice():
         self.open_link = self.notice.img_link
         self.wgNotice.btnPreviewImg.setToolTip(self.open_link)
 
-        # if not os.path.exists(self.notice.img): self.notice.img = Plex().get_img_path(self.notice.img)
+        # if not os.path.exists(self.notice.img): self.notice.img = plex.get_img_path(self.notice.img)
         self.wgNotice.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.notice.img)))
         # if self.notice.func: self.wgNotice.lblFunc.setText(self.notice.func)
         # else:                self.wgNotice.lblFunc.hide()
@@ -147,7 +147,7 @@ def create_changelog_popup():
     notice_msg = notice_config["msg"]
 
     img_name = notice_config["img"] if "img" in notice_config else "changelog"
-    img_path = f'{Plex().get_config_path("img_notice")}/notice_{img_name}.png'
+    img_path = f'{plex.get_config_path("img_notice")}/notice_{img_name}.png'
 
     note = Notice(title    = notice_config["title"],
                   msg      = notice_msg,

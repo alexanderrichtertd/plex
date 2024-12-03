@@ -7,14 +7,14 @@
 import maya.mel as mel
 import maya.cmds as cmds
 
-from plex import Plex
+import plex
 from software import Software
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class Maya(Software):
-    menu_name = Plex().config_plex['name']
+    menu_name = plex.config_plex['name']
     name = 'maya'
 
     @property
@@ -42,7 +42,7 @@ class Maya(Software):
 
         menu = cmds.menu(self.menu_name, parent='MayaWindow', label=self.menu_name, helpMenu=True, tearOff=True)
 
-        menu_config = Plex().config_software['MENU']
+        menu_config = plex.config_software['MENU']
         LOG.debug(f'Menu items: {menu_config}')
 
         for menu_item in menu_config:

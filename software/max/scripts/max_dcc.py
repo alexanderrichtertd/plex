@@ -9,10 +9,10 @@ import os
 import MaxPlus
 
 import plexfunc
-from plex import Plex
+import plex
 from software import Software
 
-LOG = Plex().log(script=__name__)
+LOG = plex.log(script=__name__)
 
 
 class Max(Software):
@@ -52,7 +52,7 @@ class Max(Software):
         arLoad.start()
 
     def get_report():
-        Plex().help('report')
+        plex.help('report')
 
     def get_help():
-        Plex().help()
+        plex.help()
