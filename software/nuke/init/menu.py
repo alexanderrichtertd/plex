@@ -1,6 +1,6 @@
 # 07 Week *********************************************************************
 # content   = menu Nuke
-# date      = 2024-11-08
+# date      = 03.12.2024
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>

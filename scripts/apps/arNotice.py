@@ -1,5 +1,5 @@
 # content   = informs artists about changes
-# date      = 2024-11-13
+# date      = 03.12.2024
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
