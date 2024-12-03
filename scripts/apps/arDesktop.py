@@ -119,7 +119,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #------------------------------
     def press_btnReport(self):
-        Plex().report()
+        Plex().help('report')
 
     def press_btnHelp(self):
         Plex().help(__name__)

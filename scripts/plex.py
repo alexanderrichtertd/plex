@@ -7,90 +7,12 @@
 import os
 import sys
 import getpass
-import pathlib
 import webbrowser
 
 import plexfunc
 
 
 class Plex(plexfunc.Singleton):
-   
-    # SETUP **************************************************************
-    def setup(self, project_id='default'):
-        scripts_path = str(pathlib.Path(os.path.dirname(__file__)).resolve())
-        config_path = f'{os.path.dirname(scripts_path)}/config'
-        plex_path = str(pathlib.Path(os.path.dirname(os.path.dirname(__file__))).resolve())
-        
-        # LOAD plex config
-        plex_config = plexfunc.get_yaml_content(f'{config_path}/plex.yml')
-        project_yaml_path = f'{config_path}/projects/{project_id}/project.yml'
-
-        if not os.path.exists(project_yaml_path):
-            print(f'WARNING: Set to default project. Project config doesn\'t exist: {project_yaml_path}')
-            project_yaml_path = f'{config_path}/projects/default/project.yml'
-        
-        project_config = plexfunc.get_yaml_content(project_yaml_path)
-
-        plex_paths = {'plex' : os.path.dirname(config_path),
-                        
-                      'config'          : f'{config_path}/',
-                        'config_users'    : f'{config_path}/users/',
-                        'config_user'     : f'{config_path}/users/{getpass.getuser()}/',
-                        'config_projects' : f'{config_path}/projects/',
-                        'config_project'  : f'{os.path.dirname(project_yaml_path)}/',
-
-                      'img' : plex_path + '/img/',
-
-                      'scripts' : scripts_path,
-                        'apps'    : scripts_path + '/apps/',
-                        'extern'  : scripts_path + '/extern/',
-
-                      'software' : plex_path + '/software/',
-                      }
-        
-        plex_context = {'project_id'   : project_id,                            # default
-                        'project_name' : project_config['name'],                # Plex default
-                        'project_path' : project_config['PATH']['project'],     # D:/project
-
-                        'software'   : '',                                      # maya, max, nuke, houdini
-
-                        'resolution' : project_config['SETTING']['resolution'], # [1920, 1080]
-                        'fps'        : project_config['SETTING']['fps'],        # 24
-
-                        'artist'     : getpass.getuser(),                       # arichter
-                        'admin'      : True if getpass.getuser() in plex_config['admin'] else False,  # True or False
-
-                        'file_name'       : '', # mike_RIG_v012
-                        'file_path'       : '', # D:/project/asset/mike_RIG_v012.mb
-                        'file_extension'  : '', # mb
-
-                        'step'       : '',      # shots or assets or renders
-                        'scene'      : '',      # s010 or mike
-                        'task'       : '',      # ANIMATION
-                        'status'     : '',      # WORK or PUBLISH
-                        }
-
-        
-        os.environ['PLEX_PATHS'] = str(plex_paths)
-        os.environ['PLEX_CONTEXT'] = str(plex_context)
-
-        # PATH env: Add plex_paths
-        sys.path.extend(plex_paths.values())
-
-        # COMMENT: Avoids circular import with arDesktop
-        from plex import Plex
-        self.plex_print()
-
-    def plex_print(self):
-        LOG = self.log(script=__name__)
-
-        LOG.debug('')
-        LOG.debug(200 * '_')
-        LOG.debug(f'PLEX:     {os.environ["PLEX_PATHS"]}')
-        LOG.debug(f'CONTEXT:  {os.environ["PLEX_CONTEXT"]}')
-        LOG.debug(f"SYS_PATH: {'[%s]' % ', '.join(map(str, sys.path))}")
-        LOG.debug(200 * '-')
-
 
     # SOFTWARE ************************************************************
     @property
@@ -111,10 +33,6 @@ class Plex(plexfunc.Singleton):
     @property
     def software_name(self):
         return self.context['software']
-
-    @property
-    def software_context(self):
-        return self.software.context
 
     @property
     def log(self):
@@ -238,26 +156,6 @@ class Plex(plexfunc.Singleton):
 
 
     # BUTTON **************************************************************
-    def report(self):
-        self.help('report')
-
     def help(self, name=''):
         name = name or self.software_name
         webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
-
-
-# START **************************************************************
-import argparse
-
-parser = argparse.ArgumentParser(description='Setup your plex and start scripts.')
-parser.add_argument('-s','--software', help='add software: nuke/max/maya/houdini')
-args = parser.parse_args()
-
-if args.software:
-    Plex().setup()
-
-    if args.software == 'desktop':
-        import arDesktop
-        arDesktop.start()
-    else:
-        Plex().software.start(name=args.software)

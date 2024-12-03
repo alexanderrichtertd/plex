@@ -49,8 +49,7 @@ class Software(plexfunc.Singleton):
         cmd = Plex().config_software['start'].format(open_file)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
-        LOG.debug(f'{self.name.upper()}{20 * "-"}')
-        LOG.debug(cmd)
+        LOG.debug(f'START : {self.name.upper()} : {cmd}')
         self.print_header()
 
 
@@ -156,5 +155,5 @@ class Software(plexfunc.Singleton):
 
         print('')
 
-        LOG.debug(f'SOFTWARE: {self.name} {self.version} - {self.path}\nENV: {self.env}')
+        LOG.debug(f'SOFTWARE: {self.name} {self.version} : {self.path} | ENV: {self.env}')
         LOG.debug(f'PYTHONPATH: {os.environ["PYTHONPATH"]}')
