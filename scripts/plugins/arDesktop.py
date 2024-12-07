@@ -4,7 +4,6 @@
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 
-import os
 import sys
 import getpass
 import importlib
@@ -126,12 +125,15 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     #------------------------------
     def press_closeStartup(self):
-        self.parent.instance().quit()
+        self.hide()
+        self.setVisible(False)
+        QtWidgets.QApplication.quit()
 
 
 # START ***********************************************************
 def start():
-    app = QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication.instance()
+    if not app: app = QtWidgets.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
 
     trayIcon = SystemTrayIcon(app)

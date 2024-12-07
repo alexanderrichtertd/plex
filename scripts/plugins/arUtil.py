@@ -55,7 +55,9 @@ class ArUtil(object):
         # SETUP
         self.wgHeader.setWindowIcon(QtGui.QIcon(plex.get_img_path("icons/program")))
         self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.wgHeader.show()
+        
+        # NEED to show in used app
+        # self.wgHeader.show()
 
 
     # PRESS ***************************************************************

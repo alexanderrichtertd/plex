@@ -10,6 +10,8 @@ import sys
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
+from QSwitchControl import SwitchControl
+
 import plex
 
 LOG = plex.log(script=__name__)
@@ -40,6 +42,7 @@ class ArSettings():
         # QtWidgets.QShortcut(QtCore.Qt.Key_Escape, self.wgSettings, self.press_lblCancel)
 
         # TODO: select project_name
+        self.wgSettings.layContent.addWidget(SwitchControl(), QtCore.Qt.AlignCenter, QtCore.Qt.AlignCenter)
 
         panel = self.wgSettings.centralwidget
         effect = QtWidgets.QGraphicsDropShadowEffect(panel, enabled=False, blurRadius=5)
@@ -55,7 +58,7 @@ class ArSettings():
 
     def press_setPlugins(self):
         print('plugins')
-        # TODO include all apps
+        # TODO include all plugins
 
     def press_edtSearch(self):
         print('search')

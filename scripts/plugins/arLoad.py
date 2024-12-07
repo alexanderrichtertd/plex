@@ -13,11 +13,11 @@ import datetime
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
 
+import arUtil
 import arNotice
 
-import plexfunc
 import plex
-import arUtil
+import plexfunc
 
 import importlib
 importlib.reload(arUtil)
@@ -77,9 +77,10 @@ class ArLoad(arUtil.ArUtil):
 
         # SELECT start
         self.press_btnEntity()
-
         self.resize_widget(self.wgLoad)
-        self.wgLoad.show()
+
+        # Show arUtil to avoid double show and popping.
+        self.wgHeader.show()
         LOG.info('START : ArLoad')
 
 

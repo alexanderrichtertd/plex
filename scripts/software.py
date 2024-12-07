@@ -29,7 +29,7 @@ class Software(plexfunc.Singleton):
             *software_dirs,
             f'{plex.paths["software"]}/{self.name}',
             plex.paths["scripts"],
-            plex.paths["apps"],
+            plex.paths["plugins"],
             plex.paths["extern"],
         ])        
 
@@ -144,7 +144,7 @@ class Software(plexfunc.Singleton):
         print(f'\n\n{plex.paths["plex"]}')
         print('\n• img')
         print('• scripts')
-        print(r'• scripts\apps')
+        print(r'• scripts\plugins')
         print(r'• scripts\extern')
 
         print(f'\n• config\\projects\\{plex.context["project_id"]}\n')

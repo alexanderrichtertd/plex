@@ -17,7 +17,7 @@
    <string notr="true">QWidget{
 	border-radius: 3px;
     color: rgb(201, 202, 204);
-	background-color: rgb(38, 38, 38, 20); 
+	background-color: rgba(38, 38, 38, 20%); 
 	selection-background-color: rgb(1, 79, 131);
 }
 
@@ -413,7 +413,7 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <layout class="QVBoxLayout" name="layContent">
            <item>
             <spacer name="verticalSpacer_2">
              <property name="orientation">
