@@ -89,6 +89,21 @@ def plex_print():
     LOG.debug(200 * '-')
 
 
+def show_splashscreen():
+    app = QtWidgets.QApplication.instance()
+    if not app:  
+        app = QtWidgets.QApplication(sys.argv)
+
+    import arSplash
+    splash = arSplash.arSplash()
+    
+    # Process events until splash closes
+    while splash.wgSplash.isVisible():
+        app.processEvents()
+        
+    return app
+
+
 # START **************************************************************
 import argparse
 
@@ -98,9 +113,12 @@ args = parser.parse_args()
 
 if args.software:
     setup()
-
+    app = show_splashscreen()
+    
     if args.software == 'desktop':
         import arDesktop
         arDesktop.start()
     else:
         plex.software.start(name=args.software)
+    
+    sys.exit(0)
