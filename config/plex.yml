@@ -5,9 +5,11 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 
 name: Plex
-ver:  2.5.0
+description: Open Source Pipeline
+version: 2.5.0
 
 url: https://github.com/alexanderrichtertd/plex
+credit: Alexander Richter
 
 
 # ANNOUNCEMENT shown in every application
@@ -23,8 +25,8 @@ admin:
 
 
 # RULES
-shots:   s\d\d\d_  # s412_name
-version: _v\d\d\d  # _v001
+shots: s\d\d\d_  # s412_name
+file_version: _v\d\d\d  # _v001
 
 
 STATUS:

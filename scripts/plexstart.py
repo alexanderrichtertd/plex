@@ -12,6 +12,9 @@ import getpass
 import plex
 import plexfunc
 
+from extern.Qt import QtWidgets, QtCore
+QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_ShareOpenGLContexts)
+
 
 # SETUP **************************************************************
 def setup(project_id='default'):
@@ -31,22 +34,30 @@ def setup(project_id='default'):
 
     plex_paths = {'plex' : os.path.dirname(config_path),
                     
-                    'config'          : f'{config_path}/',
+                  'config'          : f'{config_path}/',
                     'config_users'    : f'{config_path}/users/',
                     'config_user'     : f'{config_path}/users/{getpass.getuser()}/',
                     'config_projects' : f'{config_path}/projects/',
                     'config_project'  : f'{os.path.dirname(project_yaml_path)}/',
 
-                    'img' : plex_path + '/img/',
+                  'img' : plex_path + '/img/',
 
-                    'scripts' : scripts_path,
-                    'apps'    : scripts_path + '/apps/',
-                    'extern'  : scripts_path + '/extern/',
+                  'scripts' : scripts_path,
+                  'plugins' : scripts_path + '/plugins/',
+                  'extern'  : scripts_path + '/extern/',
 
-                    'software' : plex_path + '/software/',
-                    }
+                  'software' : plex_path + '/software/',
+                  }
     
-    plex_context = {'project_id'   : project_id,                            # default
+    plex_context = {'name'         : plex_config['name'],           # Plex
+                    'description'  : plex_config['description'],    # Open Source Pipeline
+                    'version'      : plex_config['version'],        # 2.5.0.
+                    'credit'       : plex_config['credit'],         # Alexander Richter
+
+                    'announcement_overwrite' : plex_config['announcement_overwrite'],
+                    'announcement' : plex_config['announcement'],
+        
+                    'project_id'   : project_id,                            # default
                     'project_name' : project_config['name'],                # Plex default
                     'project_path' : project_config['PATH']['project'],     # D:/project
 
@@ -75,7 +86,7 @@ def setup(project_id='default'):
     # PATH env: Add plex_paths
     sys.path.extend(plex_paths.values())
 
-    plex_print()
+    plex_print()    
 
 
 def plex_print():
