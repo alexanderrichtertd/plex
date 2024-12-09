@@ -33,4 +33,6 @@ if !errorlevel! neq 0 (
 )
 
 echo !PYTHON_VERSION! is installed and meets requirements (Python 3.6+).
+echo.
+
 :: exit /b 0

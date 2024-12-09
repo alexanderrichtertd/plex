@@ -29,13 +29,9 @@ The basic idea is to manage the file and folder structure, set the ground rules 
 ![desktop_load](https://user-images.githubusercontent.com/9514022/30782643-477e0060-a136-11e7-883d-eadc16fbf0e0.gif)
 
 ## Pipeline Features
-- [x] **Layered Pipeline**
- - create a company pipeline
- - add a project pipeline
- - test and develop in a personal environment
 - [x] **Scripts**
  - desktop app
- - save (+ publish) | load | create | render
+ - save (+ publish) | load
  - get, set and handle config | img | scripts
  - template UI (user, report, help, accept, comment, color code)
  - setup menu, shelf, toolbar, ...
@@ -53,7 +49,9 @@ The basic idea is to manage the file and folder structure, set the ground rules 
  - inform user about processes
  - debug like a king \*bow\*
 
-![structure](https://cloud.githubusercontent.com/assets/9514022/25559030/6c4396a2-2d33-11e7-90a2-add01a986613.png)
+
+## **Sponsor**
+[Become a sponsor](https://github.com/alexanderrichtertd/plex/wiki/Sponsor) and help us provide a better version of Plex.
 
 ## **Projects**
 - [Breaking Point](https://vimeo.com/178452618) \[VFX short film 2016\]
@@ -64,4 +62,5 @@ The basic idea is to manage the file and folder structure, set the ground rules 
 
 
 ## **License**
-Plex is available under the **MIT License**. You can use it for commercial or non-commercial projects. Be sure to credit me in the project and documentation.
+Plex is available under the **MIT License**. Use it for commercial or non-commercial projects. 
+Be sure to credit me in the project and documentation.

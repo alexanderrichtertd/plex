@@ -142,4 +142,4 @@ def start():
     trayIcon.showMessage(plex.config_plex['name'], '[right click]',
                          QtWidgets.QSystemTrayIcon.Information , 20000)
 
-    app.exec_()
+    app.exec()

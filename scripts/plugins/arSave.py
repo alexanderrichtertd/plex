@@ -74,8 +74,8 @@ class ArSave(ArUtil):
         if self.save_file_path(): self.wgHeader.close()
 
     def press_btnOption(self):
-        import arSaveAs
-        arSaveAs.start()
+        # import arSaveAs
+        # arSaveAs.start()
         self.wgHeader.close()
 
     def press_btnPreviewImg(self):
