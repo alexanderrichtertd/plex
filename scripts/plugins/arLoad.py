@@ -66,6 +66,8 @@ class ArLoad(arUtil.ArUtil):
 
         self.wgLoad.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
         
+        self.wgLoad.edtSearch.textChanged.connect(self.filter_scenes)  # Add search connection
+
         self.wgHeader.layMain.addWidget(self.wgLoad, 0)
 
         self.wgHeader.setWindowTitle(__name__)
@@ -131,6 +133,7 @@ class ArLoad(arUtil.ArUtil):
 
         self.entity_path = plex.config_project['PATH'][button_name]
 
+        # Add items directly
         for scene in plexfunc.get_sub_dirs(self.entity_path):
             self.wgLoad.lstScene.addItem(scene)
         self.wgLoad.lstScene.setCurrentRow(0)
@@ -203,6 +206,19 @@ class ArLoad(arUtil.ArUtil):
 
         self.wgLoad.edtComment.setPlainText(comment)
         self.wgLoad.lblUser.setText(user_id)
+
+
+    def filter_scenes(self, text):
+        """Filter lstScene based on search text"""
+        self.wgLoad.lstScene.clear()
+        search_text = text.lower()
+        
+        for scene in plexfunc.get_sub_dirs(self.entity_path):
+            if search_text in scene.lower():
+                self.wgLoad.lstScene.addItem(scene)
+        
+        if self.wgLoad.lstScene.count() > 0:
+            self.wgLoad.lstScene.setCurrentRow(0)
 
 
 # START ************************************************************************
