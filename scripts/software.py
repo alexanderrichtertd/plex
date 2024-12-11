@@ -36,7 +36,7 @@ class Software(plexfunc.Singleton):
         sys.path.extend(software_dirs)
 
         # GET software config
-        self.env = plex.config_software.get('ENV', '')
+        self.env = plex.config['software'].get('ENV', '')
 
         # ADD software ENV
         for env, content in self.env.items():
@@ -46,7 +46,7 @@ class Software(plexfunc.Singleton):
                 plexfunc.add_env(env, content)
 
         if open_file: open_file = f'"{open_file}"'
-        cmd = plex.config_software['start'].format(open_file)
+        cmd = plex.config['software']['start'].format(open_file)
         subprocess.Popen(cmd, shell=True, env=os.environ)
 
         LOG.debug(f'START : {self.name.upper()} : {cmd}')
@@ -68,27 +68,27 @@ class Software(plexfunc.Singleton):
 
     @property
     def config(self):
-        return plex.config_software
+        return plex.config['software']
 
     @property
     def extension(self):
-        return plex.config_project['EXTENSION'][self.name]
+        return plex.config['project']['EXTENSION'][self.name]
 
     @property
     def menu(self):
-        return plex.config_software['MENU']
+        return plex.config['software']['MENU']
     
     @property
     def version(self):
-        return plex.config_software['version']
+        return plex.config['software']['version']
     
     @property
     def renderer(self):
-        return plex.config_software.get('renderer', '')
+        return plex.config['software'].get('renderer', '')
         
     @property
     def renderer_path(self):        
-        return plex.config_software.get('renderer_path', '')
+        return plex.config['software'].get('renderer_path', '')
 
 
     #*********************************************************************

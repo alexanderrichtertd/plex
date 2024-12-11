@@ -40,7 +40,7 @@ ENV:
 MENU:
     - $project_name:
       - Open Scene Folder:   import plexfunc; plexfunc.open_dir(cmds.file(q=True, sceneName=True))
-      - Open Project Folder: import plexfunc; plexfunc.open_dir(plex.config_project['PATH']['project'])
+      - Open Project Folder: import plexfunc; plexfunc.open_dir(plex.config['project']['PATH']['project'])
       - break:               
       - Reload Pipeline:     print('reload pipeline')
 
@@ -78,7 +78,7 @@ MENU:
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
 #     - folder:  l="Project Folder", command="import webbrowser; webbrowser.open(os.path.dirname(plex.software.scene_path))", dcc=", image="shelf_open_dir.png"
-#     - folder:  l="Project Folder", command="import plexfunc; plexfunc.open_dir(plex.config_project["path"])", dcc=", image="shelf_open_dir_project.png"
+#     - folder:  l="Project Folder", command="import plexfunc; plexfunc.open_dir(plex.config['project']["path"])", dcc=", image="shelf_open_dir_project.png"
 
 #     - break:   width=1, l="break", command="print("empty")", dcc=", image="separator.png"
 
@@ -154,8 +154,8 @@ MENU:
 # SETUP:
 
 #   DEFAULT:
-#     # - defaultResolution.width  : plex.config_project["resolution"][0]
-#     # - defaultResolution.height : plex.config_project["resolution"][1]
+#     # - defaultResolution.width  : plex.config['project']["resolution"][0]
+#     # - defaultResolution.height : plex.config['project']["resolution"][1]
 
 #     - defaultRenderGlobals.animation : 1
 #     - defaultRenderGlobals.putFrameBeforeExt : 1

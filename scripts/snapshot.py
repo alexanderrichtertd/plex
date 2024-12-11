@@ -94,7 +94,7 @@ def create_screenshot_viewport(WIDGET, ui=''):
 def save_snapshot(rlt_path, src_path=DEFAULT_PATH):
     img = QtGui.QImage()
     img.load(src_path)
-    thumbnail_extension = '.' + plex.config_project['EXTENSION']['thumbnail']
+    thumbnail_extension = '.' + plex.config['project']['EXTENSION']['thumbnail']
 
     tmp_dir   = f'{os.path.dirname(rlt_path)}/{os.path.dirname(plex.paths["meta"])}'
     rlt_path =  + f'{tmp_dir}/{os.path.basename(rlt_path).split(".")[0]}{thumbnail_extension}'

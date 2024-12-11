@@ -48,7 +48,7 @@ class ArLoad(arUtil.ArUtil):
         self.clear_context()
 
         # SETUP content
-        self.software_formats = {y:x for x, y in plex.config_plex['EXTENSION'].items()}
+        self.software_formats = {y:x for x, y in plex.config['plex']['EXTENSION'].items()}
         self.software_keys    = list(self.software_formats.keys())
 
         self.wgLoad.btnAssets.clicked.connect(lambda: self.press_btnEntity('assets'))
@@ -74,7 +74,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgHeader.btnAccept.setText('Load')
         self.wgHeader.setWindowIcon(QtGui.QIcon(plex.get_img_path("icons/load")))
 
-        for status in plex.config_plex['STATUS'].values():
+        for status in plex.config['plex']['STATUS'].values():
             self.wgLoad.cbxStatus.addItem(status)
 
         # SELECT start
@@ -131,7 +131,7 @@ class ArLoad(arUtil.ArUtil):
             self.wgLoad.btnAssets.setStyleSheet("background-color: rgb(41, 43, 51);")
             self.wgLoad.btnShots.setStyleSheet("background-color: rgb(80, 80, 80);")
 
-        self.entity_path = plex.config_project['PATH'][button_name]
+        self.entity_path = plex.config['project']['PATH'][button_name]
 
         # Add items directly
         for scene in plexfunc.get_sub_dirs(self.entity_path):
@@ -166,7 +166,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lstVersion.clear()
         self.open_path = f'{self.task_path}/{self.wgLoad.cbxStatus.currentText()}'
 
-        ext = plex.config_plex['EXTENSION'].values()
+        ext = plex.config['plex']['EXTENSION'].values()
         folder = pathlib.Path(self.open_path)
         version_files = sorted(filter(lambda path: path.suffix.replace('.', '') in ext, folder.glob('*')), reverse=True)
         
@@ -191,7 +191,7 @@ class ArLoad(arUtil.ArUtil):
         user_id = 'unknown'
 
         current_file = self.wgLoad.lstVersion.currentItem().text()
-        meta_file_path = plex.config_project['PATH']['meta']
+        meta_file_path = plex.config['project']['PATH']['meta']
         self.meta_img_path = f'{meta_file_path}/{os.path.splitext(current_file)[0]}.jpg'
 
         if os.path.exists(self.meta_img_path):
@@ -199,7 +199,7 @@ class ArLoad(arUtil.ArUtil):
         else:
             self.wgLoad.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("labels/default"))))
 
-        file_config = plex.config_meta.get(current_file, '')
+        file_config = plex.config['meta'].get(current_file, '')
         if file_config:
             comment = file_config.get('comment')
             user_id = file_config.get('user')

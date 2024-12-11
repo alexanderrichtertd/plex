@@ -42,7 +42,7 @@ def openRV(path):
     if not os.path.exists(os.path.dirname(path)) or not os.listdir(os.path.dirname(path)):
         LOG.warning("FOLDER : NOT EXISTS : " + path)
     else:
-        os.system('start "" "' + plex.config_software['RV']['path'] + '" ' + path)
+        os.system('start "" "' + plex.config['software']['RV']['path'] + '" ' + path)
 
 
 # TODO: REPLACE with lib.plex.openFolder(path)
@@ -112,7 +112,7 @@ def publishRender(file_type):
         if part == 'COMP': break
 
     fileName    = "_".join(fileName)
-    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{plex.config_plex['publish']}/{file_type}'
+    publishPath = f'{os.path.dirname(os.path.dirname(nuke.root().name()))}/{plex.config['plex']['publish']}/{file_type}'
     oldPath     = os.path.dirname(this_node[file_type + "Path"].getValue())
 
     LOG.info("PUBLISH: " + publishPath)

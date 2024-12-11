@@ -40,13 +40,13 @@ def setup(project_id='default'):
                     'config_projects' : f'{config_path}/projects/',
                     'config_project'  : f'{os.path.dirname(project_yaml_path)}/',
 
-                  'img' : plex_path + '/img/',
+                  'img' : f'{plex_path}/img/',
 
                   'scripts' : scripts_path,
-                  'plugins' : scripts_path + '/plugins/',
-                  'extern'  : scripts_path + '/extern/',
+                    'plugins' : f'{scripts_path}/plugins/',
+                    'extern'  : f'{scripts_path}/extern/',
 
-                  'software' : plex_path + '/software/',
+                  'software'  : f'{plex_path}/software/',
                   }
     
     plex_context = {'name'         : plex_config['name'],           # Plex
@@ -54,7 +54,6 @@ def setup(project_id='default'):
                     'version'      : plex_config['version'],        # 2.5.0.
                     'credit'       : plex_config['credit'],         # Alexander Richter
 
-                    'announcement_overwrite' : plex_config['announcement_overwrite'],
                     'announcement' : plex_config['announcement'],
         
                     'project_id'   : project_id,                            # default
@@ -85,7 +84,8 @@ def setup(project_id='default'):
 
     # PATH env: Add plex_paths
     sys.path.extend(plex_paths.values())
-
+    plex.config_refresh()
+    
     plex_print()    
 
 

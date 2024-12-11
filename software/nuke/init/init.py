@@ -16,7 +16,7 @@ import plex
 # VARIABLE ***************************************************************
 LOG = plex.log(script=__name__)
 
-PROJECT_CONFIG = plex.config_project
+PROJECT_CONFIG = plex.config['project']
 RESOLUTION   = ' '.join([str(PROJECT_CONFIG['resolution'][0]),
                             str(PROJECT_CONFIG['resolution'][1]),
                             PROJECT_CONFIG['name'].replace(' ', '')])

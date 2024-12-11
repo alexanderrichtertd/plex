@@ -28,8 +28,8 @@ def add_write_node():
 
 
 # TOOLBAR ***************************************************************
-menu_config = plex.config_software['MENU']
-menuNode  = nuke.menu('Nodes').addMenu(plex.config_project['name'], icon = 'nuke.ico')
+menu_config = plex.config['software']['MENU']
+menuNode  = nuke.menu('Nodes').addMenu(plex.config['project']['name'], icon = 'nuke.ico')
 
 nuke.addOnScriptSave(add_write_node)
 

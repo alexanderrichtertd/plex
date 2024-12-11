@@ -112,7 +112,7 @@ class ArSave(ArUtil):
         return True
 
     def update_version(self, add=1):
-        found_version = re.search(plex.config_plex['version'], os.path.basename(self.save_file))
+        found_version = re.search(plex.config['plex']['version'], os.path.basename(self.save_file))
         if found_version:
             old_version = re.search(r'\d+', found_version.group()).group()
             new_version = int(old_version) + add
@@ -143,11 +143,11 @@ class ArSave(ArUtil):
 
         if self.wgHeader.cbxAdd.isChecked():
             # COPY FILE WITH _PUBLISH
-            tmp_copy_work = self.save_file.replace('.', f'_{plex.config_plex['publish']}.')
+            tmp_copy_work = self.save_file.replace('.', f'_{plex.config['plex']['publish']}.')
             snapshot.save_snapshot(tmp_copy_work)
             self.set_meta_config(tmp_copy_work)
 
-            found_version = re.search(plex.config_plex['version'], os.path.basename(self.save_file))
+            found_version = re.search(plex.config['plex']['version'], os.path.basename(self.save_file))
             if found_version:
                 old_version = re.search(r'\d+', found_version.group()).group()
                 self.save_publish_file = self.save_file.split(found_version.group())[0] + '.' + plex.software.extension
@@ -179,7 +179,7 @@ class ArSave(ArUtil):
     def set_meta_config(self, save_path=''):
         if not save_path: save_path = self.save_file
 
-        meta_path = os.path.dirname(save_path) + plex.config_plex['meta']
+        meta_path = os.path.dirname(save_path) + plex.config['plex']['meta']
         # LOG.info(meta_path)
         comment_dict = {'user': getpass.getuser(),
                         'comment': str(self.wgSave.edtComment.text())}

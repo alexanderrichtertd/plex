@@ -85,7 +85,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     # PRESS ***********************************************************
     def press_btnShowUserSandbox(self):
-        plexfunc.open_dir(plex.config_project['PATH']['sandbox'] + '/' + getpass.getuser())
+        plexfunc.open_dir(plex.config['project']['PATH']['sandbox'] + '/' + getpass.getuser())
 
     def press_btnLoad(self):
         import arLoad
@@ -111,7 +111,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     
     def press_btnConfigApp(self):
         import arSettings
-        arSettings.start(plex.config_project['name'])
+        arSettings.start()
     
     def press_btnChangeProject(self):
         LOG.debug('Change project')
@@ -138,8 +138,8 @@ def start():
 
     trayIcon = SystemTrayIcon(app)
     trayIcon.show()
-    trayIcon.setToolTip(plex.config_plex['name'] + ' [right click]')
-    trayIcon.showMessage(plex.config_plex['name'], '[right click]',
+    trayIcon.setToolTip(plex.config['plex']['name'] + ' [right click]')
+    trayIcon.showMessage(plex.config['plex']['name'], '[right click]',
                          QtWidgets.QSystemTrayIcon.Information , 20000)
 
     app.exec()

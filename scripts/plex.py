@@ -42,58 +42,57 @@ class Plex(plexfunc.Singleton):
     @property
     def announcement(self):
         # announcement order: overwrite than plex or project 
-        return self.config_plex['announcement'] if self.config_project['announcement'] == 'None' or self.config_plex['announcement_overwrite'] else self.config_project['announcement']
+        return self.config['plex']['announcement'] if self.config['plex']['announcement'] else self.config['project']['announcement']
     
 
     # CONFIG *************************************************************
     @property
     def config(self):
-        return self.get_config()
+        """Merge all config files into one dictionary
+            RETURN: dict of all config files
+        """
+        if 'PLEX_CONFIG' not in os.environ:
+            return self.config_refresh()
+        all_config = eval(os.environ['PLEX_CONFIG'])
 
-    @property
-    def config_project(self):
-        return self.get_config('project')
-    
-    @property
-    def config_meta(self):
-        return self.get_config('meta')
-    
-    @property
-    def config_plex(self):
-        return self.get_config(file_name='plex', file_dir=self.paths['config'])
+        if all_config.get('software_name') != self.software_name:
+            all_config['software'] = self.config_software
+            all_config['software_name'] = self.software_name
+            os.environ['PLEX_CONFIG'] = str(all_config)
 
+        return all_config
+
+    def config_refresh(self):
+        all_config = {
+            'plex':     self.get_config('plex'),
+            'project':  self.get_config('project'),
+            'script':   self.get_config('script'),
+            'meta':     self.get_config('meta'),
+            'software': self.config_software if self.software_name else {},
+            'software_name': self.software_name
+        }
+        os.environ['PLEX_CONFIG'] = str(all_config)
+        return all_config
+    
     @property
     def config_software(self):
         return self.get_config(f'software/{self.software_name}')
 
 
     # CONFIG: Get & Set **************************************************
-    def get_config(self, file_name='', file_dir='', user_id=getpass.getuser()):
-        if not file_dir: file_dir = self.paths['config_project']
-        file_dir = file_dir.split('.')[0]
+    def get_config(self, file_name='', file_dir=''):
+        if not file_dir:
+            file_dir = self.get_config_path(file_name)
 
-        def get_all_config():
-            configs = {}
-            config_project_files = plexfunc.get_files(path=file_dir, file_type='*' + '.yml')
-
-            for each_file in config_project_files:
-                configs.update({each_file : self.get_config(each_file, file_dir, user_id)})
-                
-            return configs
-
-        if not file_name: return get_all_config()
-
-        file_name = file_name.split('.')[0].lower()
-        file_path = os.path.normpath(f'{file_dir}/{file_name}.yml')
-
-        # OPEN config path
-        if os.path.exists(file_path):
-            # self.LOG.debug(plexfunc.get_yaml_content(file_path, self.paths))
-            return plexfunc.get_yaml_content(file_path, (self.paths | self.context))
-        else: 
-            print(f"CAN'T find file: {file_path}")
+        # Handle file name and extension
+        base_name = os.path.splitext(file_name)[0]
+        file_path = os.path.normpath(os.path.join(file_dir, f"{base_name}.yml"))
         
-        return ''
+        if os.path.exists(file_path):
+            return plexfunc.get_yaml_content(file_path, (self.paths | self.context))
+        
+        print(f"CAN'T find file: {file_path}")
+        return {}
 
 
     def set_config(self, path, key, value):
@@ -105,6 +104,20 @@ class Plex(plexfunc.Singleton):
 
         tmp_content[key] = value
         plexfunc.set_yaml_content(path, tmp_content)
+
+
+    def get_config_path(self, file_name=''):
+        """Get the correct config directory path without file extension"""
+        if file_name == 'plex':
+            file_dir = self.paths['config']
+        elif file_name == 'user':
+            file_dir = self.paths['config_user']
+        else:
+            file_dir = self.paths['config_project']
+
+        # Remove .yml if it exists in file_name
+        file_name = os.path.splitext(file_name)[0]
+        return os.path.normpath(file_dir)
 
 
     def get_img_path(self, end_path='btn/default'):
@@ -150,7 +163,7 @@ class Plex(plexfunc.Singleton):
    
     @property    
     def user_sandbox(self):
-        user_sandbox_path = f'{self.config_project["PATH"]["sandbox"]}/{self.user_id}'
+        user_sandbox_path = f'{self.config["project"]["PATH"]["sandbox"]}/{self.user_id}'
         plexfunc.create_dir(user_sandbox_path)
         return user_sandbox_path
 
@@ -158,7 +171,7 @@ class Plex(plexfunc.Singleton):
     # BUTTON **************************************************************
     def help(self, name=''):
         name = name or self.software_name
-        webbrowser.open(self.config_project['URL'].get(name, self.config_project['URL']['default']))
+        webbrowser.open(self.config['project']['URL'].get(name, self.config['project']['URL']['default']))
 
 
 # Redirect module to singleton instance

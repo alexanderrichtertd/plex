@@ -52,7 +52,7 @@ class Nuke(Software):
         topName ="[file tail [knob [topnode].file]]"
 
         # create writes and define render format
-        write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=plex.config_project['EXTENSION']['thumnail'])
+        write1 = nuke.nodes.Write( file=img_path.replace("\\", "/"), name='writeNode1' , file_type=plex.config['project']['EXTENSION']['thumnail'])
         write1.setInput(0, selInput)
 
         # look up current frame

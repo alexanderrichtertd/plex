@@ -71,7 +71,7 @@ class ArUtil(object):
         plexfunc.open_dir(plex.user_sandbox)
 
     def press_btnProject(self):
-        plexfunc.open_dir(plex.config_project['PATH']['project'])
+        plexfunc.open_dir(plex.config['project']['PATH']['project'])
 
     def press_btnReport(self):
         plex.help('report')
