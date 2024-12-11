@@ -11,6 +11,14 @@ import webbrowser
 
 from extern import yaml
 
+# define & register custom tag handler
+# combine var with strings
+def join(loader, node):
+    seq = loader.construct_sequence(node)
+    return ''.join([str(i) for i in seq])
+
+yaml.add_constructor('!join', join)
+
 
 # SINGLETON ***************************************************************
 class Singleton(object):
@@ -29,41 +37,128 @@ class Singleton(object):
 
 # YAML ***************************************************************
 def set_yaml_content(path, content):
-    with open(path, 'w') as outfile:
-        try:
-            yaml.dump(content, outfile, default_flow_style=False)
-        except yaml.YAMLError as exc:
-            print(exc)
+    if not os.path.exists(path):
+        return False
+
+    try:
+        def format_value(value):
+            if isinstance(value, (list, dict)):
+                return value
+            value_str = str(value).strip()
+            return f'"{value_str}"' if any(c in value_str for c in '{}') else value_str
+
+        with open(path, 'r') as f:
+            lines = f.readlines()
+
+        updates = {}
+        sections = set()
+        def flatten_dict(d, prefix=''):
+            for k, v in d.items():
+                full_key = f"{prefix}{k}" if prefix else k
+                if isinstance(v, dict):
+                    sections.add(full_key)
+                    flatten_dict(v, f"{full_key}/")
+                else:
+                    updates[full_key] = v
+
+        flatten_dict(content)
+
+        output = []
+        section_stack = []
+        last_line_empty = False
+        
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.lstrip()
+            indent = len(line) - len(stripped)
+
+            if not stripped or stripped.startswith('#'):
+                if stripped or not last_line_empty:
+                    output.append(line)
+                    last_line_empty = not stripped
+                i += 1
+                continue
+
+            if ':' in stripped:
+                key = stripped.split(':', 1)[0].strip()
+
+                while section_stack and len(section_stack[-1][1]) >= indent:
+                    section_stack.pop()
+                
+                current_path = '/'.join([s[0] for s in section_stack] + [key])
+                section_stack.append((key, ' ' * indent))
+
+                if '&' in line or '*' in line or '!join' in line:
+                    output.append(line)
+                    last_line_empty = False
+                    i += 1
+                    continue
+
+                if current_path in sections:
+                    output.append(line)
+                    last_line_empty = False
+                elif current_path in updates:
+                    value = updates[current_path]
+                    if isinstance(value, list):
+                        output.append(f"{' ' * indent}{key}:\n")
+                        for item in value:
+                            item_str = format_value(item)
+                            output.append(f"{' ' * (indent + 4)}- {item_str}\n")
+                        last_line_empty = False
+                        i += 1
+                        while i < len(lines) and (lines[i].strip().startswith('-') or not lines[i].strip()):
+                            i += 1
+                        continue
+                    else:
+                        value_str = format_value(value)
+                        output.append(f"{' ' * indent}{key}: {value_str}\n")
+                        last_line_empty = False
+                        i += 1
+                        continue
+
+            i += 1
+
+        if output and not output[-1].endswith('\n'):
+            output.append('\n')
+
+        with open(path, 'w') as f:
+            f.writelines(output)
+        return True
+
+    except Exception as exc:
+        print(f"Failed to write YAML: {exc}")
+        return False
 
 
 def get_yaml_content(path, yaml_variables={}):
     try:
         with open(path, 'r') as stream:
-            # STRING into DICT
-            yaml_content = str(yaml.load(stream, Loader=yaml.Loader))
+            # Load YAML and convert None to empty string
+            yaml_content = yaml.load(stream, Loader=yaml.Loader)
+            
+            def convert_none_to_empty(d):
+                if isinstance(d, dict):
+                    return {k: convert_none_to_empty(v) for k, v in d.items()}
+                elif isinstance(d, list):
+                    return [convert_none_to_empty(x) for x in d]
+                else:
+                    return '' if d is None else d
 
-            for key, value in yaml_variables.items():
-                # Ignore boolean since it breaks
-                if isinstance(value, bool): continue
-                yaml_content = yaml_content.replace(f'${key}', f'{value}')
-            yaml_content = yaml.safe_load(yaml_content)
+            yaml_content = convert_none_to_empty(yaml_content)
 
-            if yaml_content:
-                return yaml_content
-            else:
-                print(f"CAN'T load file: {path}")
+            if yaml_variables:
+                content_str = str(yaml_content)
+                for key, value in yaml_variables.items():
+                    if isinstance(value, bool): continue
+                    content_str = content_str.replace(f'${key}', f'{value}')
+                yaml_content = yaml.safe_load(content_str)
+
+            return yaml_content or {}
 
     except yaml.YAMLError as exc:
         print(exc)
-
-
-# define & register custom tag handler
-# combine var with strings
-def join(loader, node):
-    seq = loader.construct_sequence(node)
-    return ''.join([str(i) for i in seq])
-
-yaml.add_constructor('!join', join)
+        return {}
 
 
 # TIME ***************************************************************

@@ -10,7 +10,6 @@ name: Plex Project
 # ANNOUNCEMENT shown in every application
 announcement: 
 
-
 #*********************************************************************
 SETTING:
     frame_start: 1001
@@ -18,11 +17,9 @@ SETTING:
     resolution:
         - 1920
         - 1080
-
     fps: 24
 
     renderer: arnold
-
 
 #*********************************************************************
 PATH:
@@ -40,7 +37,6 @@ PATH:
 
     post          : !join [*PROJECT, /5_post]
 
-
 # sq010_sky/s020_angle/RIG/WORK/s020_angle_RIG_v001.mb
 # items.format(seq='sq010_sequence', entity='s010_shot',
 #              task='RIG', status='WORK', version='v001',
@@ -50,7 +46,6 @@ file_structure: "{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
     # replace if with sequences
     # shots : "{sequence}/{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
     # render: "{sequence}/{entity}/{task}/{status}/{entity}_{task}_{version}.{frame}.{extension}"
-
 
 #*********************************************************************
 URL:
@@ -63,26 +58,3 @@ URL:
 
     shelf:     !join [*WIKI, /shelf]
     report:    !join [*WIKI, /report]
-
-
-TASK:
-    assets:
-        - GEO
-        - TEX
-        - SHD
-        - RIG
-
-    shots: &SHOT_TASK
-        - ANIM
-        - LGT
-        - FX
-        - RENDER
-        - COMP
-
-    render: *SHOT_TASK
-
-SET:
-    assets:
-        - char
-        - prop
-        - set

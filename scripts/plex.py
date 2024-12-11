@@ -106,7 +106,7 @@ class Plex(plexfunc.Singleton):
         plexfunc.set_yaml_content(path, tmp_content)
 
 
-    def get_config_path(self, file_name=''):
+    def get_config_path(self, file_name='', full_path=False):
         """Get the correct config directory path without file extension"""
         if file_name == 'plex':
             file_dir = self.paths['config']
@@ -115,8 +115,8 @@ class Plex(plexfunc.Singleton):
         else:
             file_dir = self.paths['config_project']
 
-        # Remove .yml if it exists in file_name
-        file_name = os.path.splitext(file_name)[0]
+        if full_path:
+            return os.path.normpath(file_dir + file_name + '.yml') 
         return os.path.normpath(file_dir)
 
 

@@ -18,8 +18,6 @@ announcement: Plex 2.5.0
 admin:
     - alexa
     - arichter
-
-
 STATUS:
     work: WORK
     publish: PUBLISH
