@@ -35,7 +35,7 @@ class arSplash():
         # TIMER
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(15) 
+        self.timer.start(10) 
         self.counter = 0
 
         self.wgSplash.show()

@@ -34,7 +34,7 @@
      <widget class="QFrame" name="fraSplash">
       <property name="styleSheet">
        <string notr="true">QFrame {	
-	background-color: rgba(33, 33, 33, 98%);	
+	background-color: rgb(33, 33, 33);	
 	color: rgb(220, 220, 220);
 	border-radius: 10px;
 }</string>
