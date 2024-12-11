@@ -11,41 +11,31 @@ version: 2.5.0
 url: https://github.com/alexanderrichtertd/plex
 credit: Alexander Richter
 
-
-# ANNOUNCEMENT shown in every application
-# overwrite and show this announcement vs project
-announcement_overwrite: False
+# ANNOUNCEMENT shown in every application if set
 announcement: Plex 2.5.0
 
-
-# ADMIN special rights (user name)
+# ADMIN special rights (user_id)
 admin:
     - alexa
     - arichter
 
 
-# RULES
-shots: s\d\d\d_  # s412_name
-file_version: _v\d\d\d  # _v001
-
-
 STATUS:
-    work:    WORK
+    work: WORK
     publish: PUBLISH
-    render:  RENDER
-
+    render: RENDER
 
 EXTENSION:
-    maya:      ma
-    max :      max
-    nuke:      nk
-    houdini:   hipnc
+    maya: ma
+    max: max
+    nuke: nk
+    houdini: hipnc
     photoshop: psd
     substance: spp
 
     playblast: mov
-    texture:   exr
-    render:    exr
+    texture: exr
+    render: exr
     thumbnail: jpg
 
-    icons:     png
+    icons: png

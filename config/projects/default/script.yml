@@ -46,13 +46,14 @@ arSave:
 arLoad:
     active: True
     img:    *arSave_img
+    close_after: True
 
 
 #*********************************************************************
 arDesktop:
-    active:     True
+    active: True
     auto_start: True
-    style:      "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
+    style: "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
 
     SOFTWARE:
         maya:    self.press_btnOpenMaya

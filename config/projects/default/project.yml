@@ -4,6 +4,7 @@
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 
+active: True
 name: Plex Project
 
 # ANNOUNCEMENT shown in every application
@@ -44,10 +45,7 @@ PATH:
 # items.format(seq='sq010_sequence', entity='s010_shot',
 #              task='RIG', status='WORK', version='v001',
 #              frame='1001', user='ar', extension='mb')
-SCENES:
-    assets: "{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
-    shots : "{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
-    render: "{entity}/{task}/{status}/{entity}_{task}_{version}.{frame}.{extension}"
+file_structure: "{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
 
     # replace if with sequences
     # shots : "{sequence}/{entity}/{task}/{status}/{entity}_{task}_{version}.{extension}"
