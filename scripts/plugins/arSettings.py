@@ -196,7 +196,7 @@ class ArSettings():
         orig_text = self.wgSettings.btnSave.text()
 
         if plexfunc.set_yaml_content(self.config_path, data):
-            LOG.info(f"SAVED: Config {self.config_path}")
+            LOG.info(f"SAVED : Config {self.config_path}")
             self.wgSettings.btnSave.setText("SAVED")
         else:
             LOG.error(f"Failed to save configuration to {self.config_path}")
