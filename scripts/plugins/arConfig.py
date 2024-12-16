@@ -16,7 +16,7 @@ import plexfunc
 LOG = plex.log(script=__name__)
 
 
-class ArSettings():
+class ArConfig():
     def __init__(self):
         path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
         self.wgSettings = QtCompat.loadUi(path_ui)
@@ -46,7 +46,7 @@ class ArSettings():
         panel.setGraphicsEffect(effect)
 
         self.app = QtWidgets.QApplication.instance()
-        LOG.info('START : ArSettings')
+        LOG.info('START : ArConfig')
 
         # Trigger plex config view
         self.press_setConfig('plex')
@@ -107,7 +107,7 @@ class ArSettings():
                     process_dict(v, key)
                 else:
                     last_was_dict = False
-                    rows.append((key, str(v)))
+                    rows.append((key, v))
 
         process_dict(yml_data)
         if rows and rows[0] is None:
@@ -128,7 +128,7 @@ class ArSettings():
 
             key, value = row
             key_item = QtGui.QStandardItem(key)
-            value_item = QtGui.QStandardItem(value)
+            value_item = QtGui.QStandardItem()
 
             # Setup key item
             key_item.setFlags(QtCore.Qt.NoItemFlags)
@@ -139,6 +139,12 @@ class ArSettings():
             # Set alignment
             key_item.setTextAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
             value_item.setTextAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+
+            if isinstance(value, bool):
+                value_item.setCheckable(True)
+                value_item.setCheckState(QtCore.Qt.Checked if value else QtCore.Qt.Unchecked)
+            else:
+                value_item.setText(str(value))
 
             model.setItem(row_idx, 0, key_item)
             model.setItem(row_idx, 1, value_item)
@@ -223,7 +229,7 @@ def start():
         app_started_here = True
     
     global main_widget
-    main_widget = ArSettings()
+    main_widget = ArConfig()
     main_widget.app_started_here = app_started_here
     
     if app_started_here:

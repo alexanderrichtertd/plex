@@ -36,7 +36,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menuItem = adminMenu.addAction(QtGui.QIcon(plex.get_img_path('icons/folder_open')), 'Project Config')
             menuItem.triggered.connect(self.press_btnOpenProjectConfig)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(plex.get_img_path('icons/app_modify')), 'arSettings')
+            menuItem = adminMenu.addAction(QtGui.QIcon(plex.get_img_path('icons/app_modify')), 'arConfig')
             menuItem.triggered.connect(self.press_btnConfigApp)
 
         menu.addSeparator()
@@ -110,8 +110,8 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         plexfunc.open_dir(plex.paths['config_project'])
     
     def press_btnConfigApp(self):
-        import arSettings
-        arSettings.start()
+        import arConfig
+        arConfig.start()
     
     def press_btnChangeProject(self):
         LOG.debug('Change project')

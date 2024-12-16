@@ -56,7 +56,7 @@ class ArUtil(object):
         self.wgHeader.setWindowIcon(QtGui.QIcon(plex.get_img_path("icons/program")))
         self.wgHeader.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         
-        # NEED to show in used app
+        # NEED to show in used app to avoid double popup
         # self.wgHeader.show()
 
 

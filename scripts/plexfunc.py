@@ -42,6 +42,8 @@ def set_yaml_content(path, content):
 
     try:
         def format_value(value):
+            if isinstance(value, bool):
+                return '[x]' if value else '[ ]'
             if isinstance(value, (list, dict)):
                 return value
             value_str = str(value).strip()
