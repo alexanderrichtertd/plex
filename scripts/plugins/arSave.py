@@ -165,12 +165,11 @@ class ArSave(ArUtil):
             snapshot.save_snapshot(self.save_publish_file)
             self.set_meta_config(self.save_publish_file)
 
-        note = arNotice.Notice(title = os.path.basename(self.save_file).split('.')[0],
-                               msg   = self.wgSave.edtComment.text(),
-                               func  = 'SAVE' if not self.wgHeader.cbxAdd.isChecked() else 'PUBLISH',
-                               img   = snapshot.DEFAULT_PATH,
-                               img_link = os.path.dirname(self.save_file))
-        arNotice.ArNotice(note)
+        arNotice.ArNotice(title = os.path.basename(self.save_file).split('.')[0],
+                          msg   = self.wgSave.edtComment.text(),
+                          func  = 'SAVE' if not self.wgHeader.cbxAdd.isChecked() else 'PUBLISH',
+                          img   = snapshot.DEFAULT_PATH,
+                          img_link = os.path.dirname(self.save_file))
 
         snapshot.save_snapshot(self.save_file)
         return True

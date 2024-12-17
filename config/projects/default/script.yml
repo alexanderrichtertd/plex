@@ -7,14 +7,12 @@
 
 # seperate with comma: save,report
 
-# active:   True|False
+# enable:   True|False
 # software: os, maya, max, nuke, houdini, c4d, blender
 
 
 #*********************************************************************
 arUtil:
-    active: True
-
     progress_color:
         - lightblue   # 0-neutral
         - lightgreen  # 1-done
@@ -30,13 +28,12 @@ arUtil:
 
 #*********************************************************************
 arNotice:
-    active: True
+    enable: False
     timer:  7
 
 
 #*********************************************************************
 arSave:
-    active: True
     start:  &arSave import arSave; arSave.start()
     img:    &arSave_img png, jpg, tiff
     just_screenshot: True
@@ -44,14 +41,12 @@ arSave:
 
 #*********************************************************************
 arLoad:
-    active: True
     img:    *arSave_img
     close_after: True
 
 
 #*********************************************************************
 arDesktop:
-    active: True
     auto_start: True
     style: "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
 
@@ -64,12 +59,11 @@ arDesktop:
 
 #*********************************************************************
 arWrite:
-    active: True
     renderthreads: 12
 
 
 achievement:
-    active: True
+    enable: True
 
     # pipeline kid
     script_report:

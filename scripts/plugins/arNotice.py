@@ -5,8 +5,6 @@
 # author    = Alexander Richter <alexanderrichtertd.com>
 
 import os
-import sys
-import glob
 import webbrowser
 
 from threading import Timer
@@ -19,60 +17,40 @@ import plex
 LOG = plex.log(script=__name__)
 
 
-class Notice():
-
+class ArNotice():
     def __init__(self,
                  title    = 'Notice',
-                 msg      = 'This is just a Notice Test',
-                 quote    = 'plex it out',
-                 img      = 'lbl/default',
+                 msg      = 'This is a note test.',
+                 img      = 'labels/default',
                  img_link = 'https://www.alexanderrichtertd.com',
-                 func     = '',
                  timer    = 8):
 
+        # IGNORE arNotice if disabled
+        if not plex.config['script']['arNotice']['enable']: return
+        
         self.title    = str(title)   # Pipeline Update
         self.msg      = str(msg)     # New Features for Pipeline
-        self.quote    = str(quote)   # New Features for Pipeline
         self.img      = img          # lbl/lblPreview131
         self.img_link = img_link     # path
         self.time     = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
-        self.func     = func
-        self.timer    = timer
+        self.timer    = timer        # 8 seconds
 
-    def __call__(self):
-        LOG.debug(  'time:     ' + self.time + '\n' +\
-                    'func:     ' + self.func + '\n\n' +\
-                    'title:    ' + self.title + '\n' +\
-                    'msg:      ' + self.msg + '\n' +\
-                    'quote:    ' + self.quote + '\n' +\
-                    'img_link: ' + self.img_link)
-
-
-# NOTICE UI **********************************************************
-class ArNotice():
-
-    def __init__(self, notice):
         ui_path = '/'.join([os.path.dirname(__file__), __name__ + '.ui'])
         self.wgNotice = QtCompat.loadUi(ui_path)
-        self.notice   = notice
 
         self.wgNotice.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)
 
-        self.wgNotice.edtTitle.setText(self.notice.title)
-        self.wgNotice.edtMsg.setPlainText(self.notice.msg)
-        if self.notice.quote: self.notice.quote = f'"{self.notice.quote}"'
-        self.wgNotice.edtQuote.setPlainText(self.notice.quote)
+        self.wgNotice.edtTitle.setText(self.title)
+        self.wgNotice.edtMsg.setPlainText(self.msg)
 
-        self.wgNotice.edtTitle.setText(self.notice.title)
+        self.wgNotice.edtTitle.setText(self.title)
 
-        self.open_link = self.notice.img_link
+        self.open_link = self.img_link
         self.wgNotice.btnPreviewImg.setToolTip(self.open_link)
 
-        # if not os.path.exists(self.notice.img): self.notice.img = plex.get_img_path(self.notice.img)
-        self.wgNotice.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.notice.img)))
-        # if self.notice.func: self.wgNotice.lblFunc.setText(self.notice.func)
-        # else:                self.wgNotice.lblFunc.hide()
-        if not self.notice.img_link: self.wgNotice.btnPreviewImg.setEnabled(False)
+        # if not os.path.exists(self.img): self.img = plex.get_img_path(self.img)
+        self.wgNotice.btnPreviewImg.setIcon(QtGui.QPixmap(QtGui.QImage(self.img)))
+        if not self.img_link: self.wgNotice.btnPreviewImg.setEnabled(False)
 
         # WIDGET : delete border & always on top
         self.wgNotice.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
@@ -92,8 +70,8 @@ class ArNotice():
 
 
     def start_timer(self):
-        if(self.notice.timer):
-            t = Timer(self.notice.timer, self.press_btnCancel)
+        if(self.timer):
+            t = Timer(self.timer, self.press_btnCancel)
             t.start()
 
 
@@ -102,65 +80,12 @@ class ArNotice():
         self.wgNotice.close()
 
     def press_btnPreviewImg(self):
-        if self.notice.func:
-            exec(self.notice.func)
-        elif self.notice.img_link:
-            webbrowser.open(os.path.realpath(self.notice.img_link))
+        if self.img_link:
+            webbrowser.open(os.path.realpath(self.img_link))
 
-
-def create_changelog_popup():
-    import yaml
-
-    # TODO: changelog_path undefined
-
-    changelog_list = glob.glob(changelog_path + '/*.changelog')
-
-    if changelog_list:
-        last_changelog = changelog_list[-1]
-    else:
-        LOG.warning(f'NO changelog exists at: {changelog_path}')
-        return
-
-    current_date   = ("{}_{:02}_{:02}".format(datetime.now().year, datetime.now().month, datetime.now().day))
-    changelog_date = os.path.basename(last_changelog).split(".")[0]
-
-    if current_date != changelog_date:
-        last_changelog = changelog_path + '/welcome'
-        if not os.path.exists(last_changelog):
-            LOG.warning(f'NO current and welcome changelog exists at: {changelog_path}')
-            return
-
-    # READ YAML file
-    with open(last_changelog, 'r') as stream:
-        changelog_config = yaml.load(stream, Loader=yaml.Loader)
-
-    notice_config = changelog_config["notice"]
-    popup_func  = ''
-
-    if 'changelog' in changelog_config:
-        popup_func  = f"""from Qt import QtWidgets, QtGui, QtCore, QtCompat
-                        widget = QtGui.QMessageBox()
-                        widget.setWindowTitle('{notice_config["title"]}')
-                        widget.setText({changelog_config["changelog"]})
-                        widget.show()"""
-
-    notice_msg = notice_config["msg"]
-
-    img_name = notice_config["img"] if "img" in notice_config else "changelog"
-    img_path = f'{plex.get_config_path("img_notice")}/notice_{img_name}.png'
-
-    note = Notice(title    = notice_config["title"],
-                  msg      = notice_msg,
-                  # func   = popup_func,
-                  img      = img_path,
-                  quote    = notice_config["quote"],
-                  img_link = notice_config["img_link"])
-
-    ArNotice(note)
-
-
-# START ***********************************************************************
-def start(note = Notice()):
-    app = QtWidgets.QApplication(sys.argv)
-    classVar = ArNotice(note)
-    app.exec_()
+    def __call__(self):
+        LOG.debug('title:    ' + self.title + '\n' +\
+                  'msg:      ' + self.msg + '\n' +\
+                  'img:      ' + self.img + '\n' +\
+                  'img_link: ' + self.img_link
+                 )   

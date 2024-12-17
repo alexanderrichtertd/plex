@@ -113,12 +113,11 @@ class ArLoad(arUtil.ArUtil):
             try:    plex.software.start(name=software, open_file=self.load_file)
             except: LOG.error('FAILED to open software', exc_info=True)
 
-        note = arNotice.Notice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
-                               msg   = self.wgLoad.edtComment.toPlainText(),
-                               img   = self.meta_img_path if os.path.exists(self.meta_img_path)
-                                       else plex.get_img_path('label/default'),
-                               img_link = os.path.dirname(self.load_file))
-        arNotice.ArNotice(note)
+        arNotice.ArNotice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
+                          msg   = self.wgLoad.edtComment.toPlainText(),
+                          img   = self.meta_img_path if os.path.exists(self.meta_img_path)
+                                else plex.get_img_path('label/default'),
+                          img_link = os.path.dirname(self.load_file))
 
 
     def press_btnEntity(self, button_name='assets'):

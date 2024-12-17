@@ -92,12 +92,11 @@ def render():
             tmp_job = 'LOCAL'
         except: LOG.error("END    : LOCAL : " + this_node["exrPath"].getValue(), exc_info=True)
 
-    note = arNotice.Notice(title = os.path.basename(nuke.root().name()).split('.')[0],
-                           msg   = notice_status[tmp_job],
-                           func  = tmp_job,
-                           img   = 'lbl/lblNuke131' if tmp_job!='NO JOB' else 'lbl/lblWarning131',
-                           img_link = '')
-    arNotice.ArNotice(note)
+    arNotice.ArNotice(title = os.path.basename(nuke.root().name()).split('.')[0],
+                      msg   = notice_status[tmp_job],
+                      func  = tmp_job,
+                      img   = 'lbl/lblNuke131' if tmp_job!='NO JOB' else 'lbl/lblWarning131',
+                      img_link = '')
 
 
 def publishRender(file_type):
