@@ -47,6 +47,9 @@ def setup(project_id='default'):
                     'extern'  : f'{scripts_path}/extern/',
 
                   'software'  : f'{plex_path}/software/',
+
+                  'plugins_extern'   : plex_config['plugin_extern'],
+                  'project_pipeline' : project_config['PATH']['pipeline'],
                   }
     
     plex_context = {'name'         : plex_config['name'],           # Plex

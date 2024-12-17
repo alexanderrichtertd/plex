@@ -14,6 +14,8 @@ credit: Alexander Richter
 # ANNOUNCEMENT shown in every application if set
 announcement: Plex 2.5.0
 
+plugin_extern: D:/plugins
+
 # ADMIN special rights (user_id)
 admin:
     - alexa
