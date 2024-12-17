@@ -65,7 +65,7 @@ def setup(project_id='default'):
                     'resolution' : project_config['SETTING']['resolution'], # [1920, 1080]
                     'fps'        : project_config['SETTING']['fps'],        # 24
 
-                    'artist'     : getpass.getuser(),                       # arichter
+                    'user_id'    : getpass.getuser(),                       # arichter
                     'admin'      : True if getpass.getuser() in plex_config['admin'] else False,  # True or False
 
                     'file_name'       : '', # mike_RIG_v012

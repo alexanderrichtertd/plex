@@ -135,7 +135,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>28</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
           <number>20</number>
@@ -157,24 +157,6 @@ QPushButton:hover {
            <property name="topMargin">
             <number>0</number>
            </property>
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>7</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"> color: rgb(150, 150, 150);</string>
-             </property>
-             <property name="text">
-              <string> config</string>
-             </property>
-            </widget>
-           </item>
            <item>
             <widget class="QPushButton" name="btnPlex">
              <property name="enabled">
@@ -259,55 +241,6 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <property name="spacing">
-            <number>8</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="label_6">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>7</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"> color: rgb(150, 150, 150);</string>
-             </property>
-             <property name="text">
-              <string> extras</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnPlugins">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>plugins</string>
-             </property>
-             <property name="shortcut">
-              <string>5</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
           <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -319,6 +252,36 @@ QPushButton:hover {
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblProject">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblUser">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -336,7 +299,6 @@ QPushButton:hover {
 QPushButton:disabled {
 	border-radius: 3px;
     color: rgb(49, 49, 49); 
-	background-color: rgb(200, 184, 86); 
 }
 
 QPushButton:hover {
@@ -441,6 +403,9 @@ QPushButton:hover {
            </item>
            <item>
             <widget class="QPushButton" name="btnSave">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>

@@ -27,17 +27,16 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         menu = QtWidgets.QMenu()
         menu.setStyleSheet(plex.config['script'][__name__]['style'])
 
-        # ADMIN UI
-        if plex.admin:
-            adminMenu = QtWidgets.QMenu('Admin')
-            adminMenu.setStyleSheet(plex.config['script'][__name__]['style'])
-            menu.addMenu(adminMenu)
+        # CONTROL UI
+        admin_menu = QtWidgets.QMenu('Setup')
+        admin_menu.setStyleSheet(plex.config['script'][__name__]['style'])
+        menu.addMenu(admin_menu)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(plex.get_img_path('icons/folder_open')), 'Project Config')
-            menuItem.triggered.connect(self.press_btnOpenProjectConfig)
+        menuItem = admin_menu.addAction(QtGui.QIcon(plex.get_img_path('icons/folder_open')), 'Project Config')
+        menuItem.triggered.connect(self.press_btnOpenProjectConfig)
 
-            menuItem = adminMenu.addAction(QtGui.QIcon(plex.get_img_path('icons/app_modify')), 'arConfig')
-            menuItem.triggered.connect(self.press_btnConfigApp)
+        menuItem = admin_menu.addAction(QtGui.QIcon(plex.get_img_path('icons/app_modify')), 'arConfig')
+        menuItem.triggered.connect(self.press_btnConfigApp)
 
         menu.addSeparator()
 

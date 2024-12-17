@@ -22,7 +22,10 @@ class ArConfig():
         self.wgSettings = QtCompat.loadUi(path_ui)
 
         # Add save button to toolbar area
-        self.wgSettings.btnSave.clicked.connect(self.press_save)
+        if plex.context["admin"]:
+            self.wgSettings.btnSave.clicked.connect(self.press_save)
+        else:
+            self.wgSettings.btnSave.setEnabled(False)
 
         self.wgSettings.setWindowIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("icons/app_modify"))))
         self.wgSettings.setWindowTitle(__name__)
@@ -30,13 +33,13 @@ class ArConfig():
         self.wgSettings.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
         self.wgSettings.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
+        self.wgSettings.lblProject.setText(plex.context['project_name'])
+        self.wgSettings.lblUser.setText(f'{plex.context["user_id"]} [{"admin" if plex.context["admin"] else "user"}]')
+
         # config
         self.wgSettings.btnPlex.clicked.connect(lambda: self.press_setConfig('plex'))
         self.wgSettings.btnProject.clicked.connect(lambda: self.press_setConfig('project'))
         self.wgSettings.btnScripts.clicked.connect(lambda: self.press_setConfig('script'))
-
-        # extra
-        self.wgSettings.btnPlugins.clicked.connect(self.press_setPlugins)
 
         self.wgSettings.btnCancel.clicked.connect(self.press_lblCancel)
         # QtWidgets.QShortcut(QtCore.Qt.Key_Escape, self.wgSettings, self.press_lblCancel)
