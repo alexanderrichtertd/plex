@@ -27,15 +27,10 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         menu = QtWidgets.QMenu()
         menu.setStyleSheet(plex.config['script'][__name__]['style'])
 
-        # CONTROL UI
-        admin_menu = QtWidgets.QMenu('Setup')
-        admin_menu.setStyleSheet(plex.config['script'][__name__]['style'])
-        menu.addMenu(admin_menu)
+        menuItem = menu.addAction(QtGui.QIcon(plex.get_img_path('user/default')), plex.user_id)
+        menuItem.triggered.connect(self.press_btnShowUserSandbox)
 
-        menuItem = admin_menu.addAction(QtGui.QIcon(plex.get_img_path('icons/folder_open')), 'Project Config')
-        menuItem.triggered.connect(self.press_btnOpenProjectConfig)
-
-        menuItem = admin_menu.addAction(QtGui.QIcon(plex.get_img_path('icons/app_modify')), 'arConfig')
+        menuItem = menu.addAction(QtGui.QIcon(plex.get_img_path('icons/app_modify')), 'arConfig')
         menuItem.triggered.connect(self.press_btnConfigApp)
 
         menu.addSeparator()
@@ -49,8 +44,6 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
             menuItem = self.project_menu.addAction(QtGui.QIcon(selected_icon), project)
             menuItem.triggered.connect(self.press_btnChangeProject)
 
-        menu.addSeparator()
-
         # SUBMENU: software
         subMenu = QtWidgets.QMenu('Software')
         subMenu.setStyleSheet(plex.config['script'][__name__]['style'])
@@ -59,6 +52,8 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         for soft, soft_func in plex.config['script'][__name__]['SOFTWARE'].items():
             menuItem = subMenu.addAction(QtGui.QIcon(plex.get_img_path('software/default/' + soft)), soft.title())
             menuItem.triggered.connect(eval(soft_func))
+
+        menu.addSeparator()
 
         menuItem = menu.addAction(QtGui.QIcon(plex.get_img_path('icons/load_yellow')), 'Load')
         menuItem.triggered.connect(self.press_btnLoad)
@@ -72,9 +67,6 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         menuItem.triggered.connect(self.press_btnHelp)
 
         menu.addSeparator()
-
-        menuItem = menu.addAction(QtGui.QIcon(plex.get_img_path('user/default')), plex.user_id)
-        menuItem.triggered.connect(self.press_btnShowUserSandbox)
 
         menuItem = menu.addAction(QtGui.QIcon(plex.get_img_path('icons/cancel')), 'Quit')
         menuItem.triggered.connect(self.press_closeStartup)

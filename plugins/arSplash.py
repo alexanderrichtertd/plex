@@ -13,7 +13,7 @@ import plex
 LOG = plex.log(script=__name__)
 
 
-class arSplash():
+class ArSplash():
     def __init__(self):
         path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
         self.wgSplash = QtCompat.loadUi(path_ui)

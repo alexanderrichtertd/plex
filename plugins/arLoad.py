@@ -115,8 +115,7 @@ class ArLoad(arUtil.ArUtil):
 
         arNotice.ArNotice(title = f'LOAD: {os.path.basename(self.load_file).split(".")[0]}',
                           msg   = self.wgLoad.edtComment.toPlainText(),
-                          img   = self.meta_img_path if os.path.exists(self.meta_img_path)
-                                else plex.get_img_path('label/default'),
+                          img   = self.meta_img_path,
                           img_link = os.path.dirname(self.load_file))
 
 

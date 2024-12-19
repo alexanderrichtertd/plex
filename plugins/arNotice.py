@@ -11,6 +11,7 @@ from threading import Timer
 from datetime import datetime
 
 from Qt import QtWidgets, QtGui, QtCore, QtCompat
+from Qt.QtCore import QPropertyAnimation, QEasingCurve
 
 import plex
 
@@ -23,7 +24,7 @@ class ArNotice():
                  msg      = 'This is a note test.',
                  img      = 'labels/default',
                  img_link = 'https://www.alexanderrichtertd.com',
-                 timer    = 8):
+                 duration    = 8):
 
         # IGNORE arNotice if disabled
         if not plex.config['script']['arNotice']['enable']: return
@@ -33,7 +34,7 @@ class ArNotice():
         self.img      = img          # lbl/lblPreview131
         self.img_link = img_link     # path
         self.time     = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
-        self.timer    = timer        # 8 seconds
+        self.duration = duration     # 8 seconds
 
         ui_path = '/'.join([os.path.dirname(__file__), __name__ + '.ui'])
         self.wgNotice = QtCompat.loadUi(ui_path)
@@ -55,9 +56,15 @@ class ArNotice():
         # WIDGET : delete border & always on top
         self.wgNotice.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
 
-        # WIDGET : move to right low corner
-        width, height = QtWidgets.QApplication.screens()[0].size().toTuple()
-        self.wgNotice.move(width - self.wgNotice.width() - 10, height - self.wgNotice.height() - 75)
+        # Store screen dimensions
+        self.screen_width, self.screen_height = QtWidgets.QApplication.screens()[0].size().toTuple()
+        
+        # Position top right corner
+        self.final_x = self.screen_width - self.wgNotice.width() - 10
+        self.final_y = 50
+        
+        # Set initial position (outside screen)
+        self.wgNotice.move(self.screen_width, self.final_y)
         self.wgNotice.setWindowOpacity(0.95)
 
         # round edges
@@ -66,17 +73,24 @@ class ArNotice():
         self.wgNotice.setMask(QtGui.QRegion(path.toFillPolygon().toPolygon()))
 
         self.wgNotice.show()
-        self.start_timer()
+        self.animate_window()
+        self.start_duration()
 
+    def animate_window(self):
+        # Create animation for x position
+        self.anim = QPropertyAnimation(self.wgNotice, b"pos")
+        self.anim.setDuration(500)  # Animation duration in milliseconds
+        self.anim.setStartValue(QtCore.QPoint(self.screen_width, self.final_y))
+        self.anim.setEndValue(QtCore.QPoint(self.final_x, self.final_y))
+        self.anim.setEasingCurve(QEasingCurve.OutCubic)
+        self.anim.start()
 
-    def start_timer(self):
-        if(self.timer):
-            t = Timer(self.timer, self.press_btnCancel)
+    def start_duration(self):
+        if(self.duration):
+            t = Timer(self.duration, self.end_process)
             t.start()
 
-
-    # PRESS ***************************************************************
-    def press_btnCancel(self):
+    def end_process(self):
         self.wgNotice.close()
 
     def press_btnPreviewImg(self):
@@ -88,4 +102,4 @@ class ArNotice():
                   'msg:      ' + self.msg + '\n' +\
                   'img:      ' + self.img + '\n' +\
                   'img_link: ' + self.img_link
-                 )   
+                 )

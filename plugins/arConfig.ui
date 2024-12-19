@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>433</height>
+    <width>798</width>
+    <height>426</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -254,32 +254,30 @@ QPushButton:hover {
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="lblProject">
+          <widget class="QLabel" name="lblContext">
            <property name="enabled">
             <bool>false</bool>
            </property>
            <property name="font">
             <font>
-             <pointsize>8</pointsize>
+             <pointsize>7</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+             <strikeout>false</strikeout>
             </font>
            </property>
-           <property name="text">
-            <string>TextLabel</string>
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblUser">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>8</pointsize>
-            </font>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(150, 150, 150); </string>
            </property>
            <property name="text">
-            <string>TextLabel</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;admin&lt;br/&gt;Plex Project&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>

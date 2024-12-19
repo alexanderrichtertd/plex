@@ -26,6 +26,8 @@ class ArConfig():
             self.wgSettings.btnSave.clicked.connect(self.press_save)
         else:
             self.wgSettings.btnSave.setEnabled(False)
+            self.wgSettings.btnSave.setText('Not Admin')
+            self.wgSettings.btnSave.setToolTip('Need to be admin to save')
 
         self.wgSettings.setWindowIcon(QtGui.QPixmap(QtGui.QImage(plex.get_img_path("icons/app_modify"))))
         self.wgSettings.setWindowTitle(__name__)
