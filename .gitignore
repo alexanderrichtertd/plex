@@ -21,6 +21,8 @@ exe/debug.py
 
 img/img_rc.py
 
+plugins/extern/*
+
 software/max/plugins/*
 software/maya/plugins/*
 software/nuke/plugins/*

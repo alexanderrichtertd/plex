@@ -43,12 +43,13 @@ def setup(project_id='default'):
                   'img' : f'{plex_path}/img/',
 
                   'scripts' : scripts_path,
-                    'plugins' : f'{scripts_path}/plugins/',
                     'extern'  : f'{scripts_path}/extern/',
+
+                  'plugins'        : f'{plex_path}/plugins/',
+                    'plugins_extern' : f'{plex_path}/plugins/extern',
 
                   'software'  : f'{plex_path}/software/',
 
-                  'plugins_extern'   : plex_config['plugin_extern'],
                   'project_pipeline' : project_config['PATH']['pipeline'],
                   }
     
@@ -109,7 +110,7 @@ def show_splashscreen():
         app = QtWidgets.QApplication(sys.argv)
 
     import arSplash
-    splash = arSplash.arSplash()
+    splash = arSplash.ArSplash()
     
     # Process events until splash closes
     while splash.wgSplash.isVisible():

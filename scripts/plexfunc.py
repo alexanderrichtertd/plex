@@ -42,12 +42,15 @@ def set_yaml_content(path, content):
 
     try:
         def format_value(value):
-            if isinstance(value, bool):
-                return '[x]' if value else '[ ]'
             if isinstance(value, (list, dict)):
                 return value
+            if isinstance(value, bool):
+                return str(value)
             value_str = str(value).strip()
-            return f'"{value_str}"' if any(c in value_str for c in '{}') else value_str
+            # Quote strings that contain special characters or spaces
+            if any(c in value_str for c in ' :{}[];,'):
+                return f'"{value_str}"'
+            return value_str
 
         with open(path, 'r') as f:
             lines = f.readlines()

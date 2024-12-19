@@ -4,33 +4,27 @@
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
 
-
 # seperate with comma: save,report
 
 # enable:   True|False
 # software: os, maya, max, nuke, houdini, c4d, blender
 
-
 #*********************************************************************
 arUtil:
     progress_color:
-        - lightblue   # 0-neutral
-        - lightgreen  # 1-done
-        - orange      # 2-warning
-        - red         # 3-failed
-
+        - lightblue
+        - lightgreen
+        - orange
+        - red
     progress_img:
         - btn/btn_write
         - btn/btn_accept
         - btn/btn_warning
         - btn/btn_denial
-
-
 #*********************************************************************
 arNotice:
-    enable: False
-    timer:  7
-
+    enable: True
+    timer: 7
 
 #*********************************************************************
 arSave:
@@ -38,12 +32,10 @@ arSave:
     img:    &arSave_img png, jpg, tiff
     just_screenshot: True
 
-
 #*********************************************************************
 arLoad:
     img:    *arSave_img
     close_after: True
-
 
 #*********************************************************************
 arDesktop:
@@ -51,16 +43,14 @@ arDesktop:
     style: "color: rgb(200, 200, 200);background-color: rgb(26, 30, 33);selection-background-color: rgb(60, 110, 190);"
 
     SOFTWARE:
-        maya:    self.press_btnOpenMaya
-        max:     self.press_btnOpenMax
-        nuke:    self.press_btnOpenNuke
+        maya: self.press_btnOpenMaya
+        max: self.press_btnOpenMax
+        nuke: self.press_btnOpenNuke
         houdini: self.press_btnOpenHoudini
-
 
 #*********************************************************************
 arWrite:
     renderthreads: 12
-
 
 achievement:
     enable: True
@@ -70,7 +60,6 @@ achievement:
         - 20
         - 100
         - 500
-
     # unbreakable
     script_crash:
         - 20

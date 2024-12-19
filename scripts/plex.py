@@ -14,6 +14,11 @@ import plexfunc
 
 class Plex(plexfunc.Singleton):
 
+    def plugin(plugin_name):
+        module = __import__(plugin_name)
+        return getattr(module, plugin_name.title())
+
+
     # SOFTWARE ************************************************************
     @property
     def software(self):
