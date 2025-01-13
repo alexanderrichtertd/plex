@@ -26,8 +26,8 @@ class ArSave(ArUtil):
     def __init__(self, parent=None):
         super(ArSave, self).__init__()
 
-        path_ui     = '/'.join([os.path.dirname(__file__), __name__ + '.ui'])
-        self.wgSave = QtCompat.loadUi(path_ui)
+        ui_path = f"{os.path.dirname(__file__)}/{__name__}.ui"
+        self.wgSave = QtCompat.loadUi(ui_path)
 
         self.save_file = ''
         self.img_path  = snapshot.DEFAULT_PATH

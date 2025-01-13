@@ -36,7 +36,7 @@ class ArNotice():
         self.time     = datetime.now().strftime('%H:%M:%S %Y.%m.%d')
         self.duration = duration     # 8 seconds
 
-        ui_path = '/'.join([os.path.dirname(__file__), __name__ + '.ui'])
+        ui_path = f"{os.path.dirname(__file__)}/{__name__}.ui"
         self.wgNotice = QtCompat.loadUi(ui_path)
 
         self.wgNotice.btnPreviewImg.clicked.connect(self.press_btnPreviewImg)

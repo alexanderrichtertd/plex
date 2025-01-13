@@ -15,8 +15,11 @@ LOG = plex.log(script=__name__)
 
 class ArSplash():
     def __init__(self):
-        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
-        self.wgSplash = QtCompat.loadUi(path_ui)
+        ui_path = f"{os.path.dirname(__file__)}/{__name__}.ui"
+        self.wgSplash = QtCompat.loadUi(ui_path)
+
+        # SKIP splash
+        if not plex.config['plex']['splash']: return
 
         self.wgSplash.setWindowFlags(QtCore.Qt.CustomizeWindowHint | QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
         self.wgSplash.setAttribute(QtCore.Qt.WA_TranslucentBackground)

@@ -18,8 +18,8 @@ LOG = plex.log(script=__name__)
 class ArUtil(object):
 
     def __init__(self):
-        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
-        self.wgHeader = QtCompat.loadUi(path_ui)
+        ui_path = f"{os.path.dirname(__file__)}/{__name__}.ui"
+        self.wgHeader = QtCompat.loadUi(ui_path)
 
         # IMPORTANT variables
         self.open_path = ""

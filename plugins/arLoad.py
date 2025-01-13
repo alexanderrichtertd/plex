@@ -30,8 +30,8 @@ class ArLoad(arUtil.ArUtil):
     def __init__(self, desktop=False):
         super(ArLoad, self).__init__()
 
-        path_ui = "/".join([os.path.dirname(__file__), __name__ + ".ui"])
-        self.wgLoad = QtCompat.loadUi(path_ui)
+        ui_path = f"{os.path.dirname(__file__)}/{__name__}.ui"
+        self.wgLoad = QtCompat.loadUi(ui_path)
 
         self.load_file = ''
         self.task_path = ''
