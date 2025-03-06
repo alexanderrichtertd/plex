@@ -17,7 +17,7 @@ ENV:
     PYTHONPATH:
       - $software
       - $software/scripts
-      - $software/plugins
+      - $software/apps
 
     # HOUDINI_USER_PREF_DIR:
     #  - $config_project/houdini]

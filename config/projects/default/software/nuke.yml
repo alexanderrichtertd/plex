@@ -15,7 +15,7 @@ path:  !join ["C:/Program Files/Nuke", *NUKE_VERSION_LONG,/Nuke, *NUKE_VERSION, 
 ENV:
     PYTHONPATH:
       - $software/scripts
-      - $software/plugins
+      - $software/apps
       - $software/gizmos
 
     NUKE_PATH:

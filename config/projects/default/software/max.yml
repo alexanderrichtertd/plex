@@ -16,7 +16,7 @@ ENV:
 PYTHONPATH:
     - $software
     - $software/scripts
-    - $software/plugins
+    - $software/apps
     - $software/icons
 
 # ADSKFLEX_LICENSE_FILE:

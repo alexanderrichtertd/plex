@@ -45,8 +45,8 @@ def setup(project_id='default'):
                   'scripts' : scripts_path,
                     'extern'  : f'{scripts_path}/extern/',
 
-                  'plugins'        : f'{plex_path}/plugins/',
-                    'plugins_extern' : f'{plex_path}/plugins/extern',
+                  'apps'        : f'{plex_path}/apps/',
+                    'apps_extern' : f'{plex_path}/apps/extern',
 
                   'software'  : f'{plex_path}/software/',
 

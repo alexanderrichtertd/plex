@@ -19,7 +19,7 @@ ENV:
         - $software/maya/scripts
 
     MAYA_PLUG_IN_PATH:
-        - $software/maya/plugins
+        - $software/maya/apps
 
     # MAYA_SHELF_PATH:
     #     - $software/maya/scripts

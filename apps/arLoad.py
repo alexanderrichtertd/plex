@@ -27,7 +27,7 @@ LOG = plex.log(script=__name__)
 
 class ArLoad(arUtil.ArUtil):
 
-    def __init__(self, desktop=False):
+    def __init__(self, desktop: bool = False) -> None:
         super(ArLoad, self).__init__()
 
         ui_path = f"{os.path.dirname(__file__)}/{__name__}.ui"
@@ -86,7 +86,7 @@ class ArLoad(arUtil.ArUtil):
         LOG.info('START : ArLoad')
 
 
-    def clear_context(self):
+    def clear_context(self) -> None:
         self.wgLoad.lblUser.setText('')
         self.wgLoad.lblDate.setText('')
         self.wgLoad.lblFileSize.setText('')
@@ -96,7 +96,7 @@ class ArLoad(arUtil.ArUtil):
 
 
     # PRESS **************************************************************
-    def press_btnAccept(self):
+    def press_btnAccept(self) -> bool | None:
         if not os.path.exists(self.load_file):
             self.set_status(f"FAILED LOADING : Path doesn't exists: {self.load_file}", msg_type=3)
             return False
@@ -119,7 +119,7 @@ class ArLoad(arUtil.ArUtil):
                           img_link = os.path.dirname(self.load_file))
 
 
-    def press_btnEntity(self, button_name='assets'):
+    def press_btnEntity(self, button_name: str = 'assets') -> None:
         self.wgLoad.lstScene.clear()
 
         if button_name == 'assets':
@@ -137,13 +137,13 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lstScene.setCurrentRow(0)
 
 
-    def press_btnPreviewImg(self):
+    def press_btnPreviewImg(self) -> None:
         if os.path.exists(self.meta_img_path):
             webbrowser.open(self.meta_img_path)
 
 
     # CHANGE *************************************************************
-    def change_lstScene(self):
+    def change_lstScene(self) -> None:
         self.wgLoad.cbxTask.clear()
 
         self.scene_path = f'{self.entity_path}/{self.wgLoad.lstScene.currentItem().text()}'
@@ -153,14 +153,14 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.cbxTask.setCurrentIndex(0)
 
 
-    def change_cbxTask(self):
+    def change_cbxTask(self) -> None:
         self.task_path = f'{self.scene_path}/{self.wgLoad.cbxTask.currentText()}'
         self.wgLoad.cbxStatus.setCurrentIndex(0)
 
         self.change_cbxStatus()
 
 
-    def change_cbxStatus(self):
+    def change_cbxStatus(self) -> None:
         self.wgLoad.lstVersion.clear()
         self.open_path = f'{self.task_path}/{self.wgLoad.cbxStatus.currentText()}'
 
@@ -174,7 +174,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lstVersion.setCurrentRow(0)
 
 
-    def change_lstVersion(self):
+    def change_lstVersion(self) -> None:
         self.load_file = f'{self.open_path}/{self.wgLoad.lstVersion.currentItem().text()}'
 
         self.wgLoad.lblDate.setText(str(datetime.datetime.fromtimestamp(os.path.getmtime(self.load_file))).split(".")[0])
@@ -206,7 +206,7 @@ class ArLoad(arUtil.ArUtil):
         self.wgLoad.lblUser.setText(user_id)
 
 
-    def filter_scenes(self, text):
+    def filter_scenes(self, text: str) -> None:
         """Filter lstScene based on search text"""
         self.wgLoad.lstScene.clear()
         search_text = text.lower()
@@ -220,11 +220,10 @@ class ArLoad(arUtil.ArUtil):
 
 
 # START ************************************************************************
-def create():
+def create() -> None:
     app = QtWidgets.QApplication(sys.argv)
     main_widget = ArLoad(desktop=True)
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
-def start():
-    global main_widget
+def start() -> None:
     main_widget = ArLoad()
