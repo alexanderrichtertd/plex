@@ -1,5 +1,5 @@
 # content   = plex config
-# date      = 03.12.2024
+# date      = 01.01.2025
 #
 # license   = MIT <https://github.com/alexanderrichtertd>
 # author    = Alexander Richter <alexanderrichtertd.com>
@@ -14,7 +14,8 @@ credit: Alexander Richter
 # ANNOUNCEMENT shown in every application if set
 announcement: Plex 2.5.0
 
-plugin_extern: D:/plugins
+# Show splash screen on startup
+splash: True
 
 # ADMIN special rights (user_id)
 admin:
