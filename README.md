@@ -2,6 +2,12 @@
 
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
 
+## **In Development**
+Plex is currently in the v1.5 alpha stage, which means it is barely functional. Our goal is to release version 2.0 by the end of the year. This update will enhance every aspect of the pipeline while maintaining it as a free, open-source resource for any visual effects, animation and gaming project.
+
+[Sign up for the wish list to receive future Plex updates.](https://www.alexanderrichtertd.com/plex)
+
+
 ## **Introduction**
 **Plex** is an **Visual Effects, Animation and Games pipeline** that manages critical workflows during production.
 Its core is a flexible and self-contained system for small to medium sized projects and companies.
