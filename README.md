@@ -3,9 +3,9 @@
 ![splashscreen](https://user-images.githubusercontent.com/9514022/29427356-dbd29200-8389-11e7-9731-051ed39d2558.png)
 
 ## **In Development**
-Plex is currently in the v1.5 alpha stage, which means it is barely functional. Our goal is to release version 2.0 by the end of the year. This update will enhance every aspect of the pipeline while maintaining it as a free, open-source resource for any visual effects, animation and gaming project.
+Plex is currently in the v2 pre-alpha stage, which means it is barely functional. Our goal is to release version 2.0 by the end of the year. This update will enhance every aspect of the pipeline while maintaining it as a free, open-source resource for any visual effects, animation and gaming project.
 
-[Sign up for the wish list to receive future Plex updates.](https://www.alexanderrichtertd.com/plex)
+[Sign up to receive future Plex updates.](https://www.alexanderrichtertd.com/plex)
 
 
 ## **Introduction**
@@ -19,8 +19,8 @@ The basic idea is to manage the file and folder structure, set the ground rules 
 [![plex_00_introduction](https://user-images.githubusercontent.com/9514022/29458175-179be8ba-841e-11e7-8be7-a83b0a37b28e.PNG)](https://youtu.be/gqRailvSmtw)
 
 ## Environment
-- [x] **OS**: Windows | Linux
-- [x] **Software**: Maya 2023+ | Houdini 19+ | 3ds Max 2023+ | Nuke 15+ | ...
+- [x] **OS**: Windows | Linux (| Mac)
+- [x] **Software**: Maya | Houdini | 3ds Max | Nuke | ...
 - [x] **Renderer**: Arnold | RenderMan | Mantra | V-Ray | ...
 
 ## Project Features
@@ -58,6 +58,7 @@ The basic idea is to manage the file and folder structure, set the ground rules 
 
 ## **Sponsor**
 [Become a sponsor](https://github.com/alexanderrichtertd/plex/wiki/Sponsor) and help us provide a better version of Plex.
+[Hire me](https://www.alexanderrichtertd.com/contact) to help you integrate Plex into your studio.
 
 ## **Projects**
 - [Breaking Point](https://vimeo.com/178452618) \[VFX short film 2016\]
